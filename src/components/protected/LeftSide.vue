@@ -11,7 +11,7 @@ const items = SIDEBARITEMS.ADMIN_TABS
 </script>
 
 <template>
-  <aside :class="`${barClass} sidebar  bg-gray-50 h-screen`">
+  <aside :class="`${barClass} sidebar  bg-yellow-50 h-[calc(100vh_-_68px)] top-[68px] sticky `">
     <ul class="mt-4">
       <li v-for="(item, index) in items" :key="index" class="mb-2">
         <router-link

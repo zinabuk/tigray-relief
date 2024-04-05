@@ -9,14 +9,17 @@ import { BASE_AVATAR } from '@/config'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 import { ref, onMounted } from 'vue'
-const blogs = ref([])
-const fetchNews = async () => {
+
+const teams = ref([])
+const fetchTeams = async () => {
   try {
-    const response = await ApiService.get('/admin/events')
-    if (response) {
-      blogs.value = response.data
+    const response = await ApiService.get('/admin/our-teams')
+    
+    if (response.success) {
+      teams.value = response.data
     }
   } catch (error) {
+    alert(error)
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
@@ -36,10 +39,6 @@ const editedNew = ref({
   eventOrganizer: '',
   eventImage: null
 })
-const openEditModal = async (event) => {
-  showEditModal.value = true
-  editedNew.value = event
-}
 
 const closeEditModal = () => {
   showEditModal.value = false
@@ -50,9 +49,10 @@ const handleFileChange = (event) => {
   editedNew.value.eventImage = file
 }
 
-const updateNew = async () => {
+const updateNew = async (id) => {
   try {
     const formData = new FormData()
+    alert(editedNew.value.eventTitle)
     formData.append('eventTitle', editedNew.value.eventTitle)
     formData.append('eventDescription', editedNew.value.eventDescription)
     formData.append('category', editedNew.value.category)
@@ -60,13 +60,13 @@ const updateNew = async () => {
     formData.append('eventOrganizer', editedNew.value.eventOrganizer)
     formData.append('eventImage', editedNew.value.eventImage)
 
-    const response = await ApiService.patch('/admin/events/' + editedNew.value._id, formData)
+    const response = await ApiService.patch('/admin/events/' + id, formData)
     if (response.success) {
       alert('EDITED')
       setTimeout(() => {
         closeEditModal()
       }, 3000)
-      fetchNews()
+      fetchTeams()
     }
   } catch (error) {
     alert(error)
@@ -80,24 +80,13 @@ const updateNew = async () => {
   }
 }
 
-// const handleOutsideClick = (event) => {
-//   if (event && event.target && !event.target.closest('.modal')) {
-//     closeEditModal()
-//   }
-
-//   document.addEventListener('click', handleOutsideClick)
-//   return () => {
-//     document.removeEventListener('click', handleOutsideClick)
-//   }
-// }
-
 onMounted(() => {
-  fetchNews()
+  fetchTeams()
 })
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4">
+  <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
     <!-- Services -->
     <router-link
       :to="{ name: 'admin-add-blogs' }"
@@ -107,37 +96,30 @@ onMounted(() => {
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add New | Event</router-link
+      Add Team</router-link
     >
 
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div
-        v-for="(event, i) in blogs"
-        :key="i"
-        class="grid grid-cols-1 bg-white md:grid-cols-2 gap-4"
-      >
-        <div>
-          <img
-            :src="BASE_AVATAR + event.eventImage"
-            alt=""
-            class="max-h-[500px] rounded-xl w-full object-cover"
-          />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+      <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-2 bg-white">
+        <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto"></font-awesome-icon> -->
+        <img
+          v-if="team.image"
+          :src="BASE_AVATAR +team.image"
+          alt=""
+          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
+        />
+        <p v-else class="w-20 h-20 rounded-full text-6xl">{{ team.fullName[0] }}</p>
+        <h1 class="text-2xl font-bold">{{ team.fullName }}</h1>
+        <div class="relative">
+          <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
+          <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
-        <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
-          <h6 class="text-gray-500">{{ event.category }} | {{ event.eventDate }}</h6>
-          <h3 class="text-lg font-bold">
-            {{ event.eventTitle }}
-          </h3>
-          <div class="w-full flex justify-between">
-            <router-link to="/about" class="text-green-600 font-bold">Read More</router-link>
-            <button @click="openEditModal(event)">
-              <font-awesome-icon icon="edit" class="text-blue-700"></font-awesome-icon>
-            </button>
-            <button @click="deleteBlog(event._id)">
-              <font-awesome-icon icon="trash" class="text-red-700"></font-awesome-icon>
-            </button>
-          </div>
-        </div>
+        <p class="line-clamp-5">
+          {{ team.profession }}
+          {{ team.biography }}
+        </p>
+
+        <router-link class="text-[#539000]" to="/">Read More</router-link>
       </div>
     </div>
     <div

@@ -97,14 +97,6 @@ const router = createRouter({
           meta: {
             requiresAuth: false
           }
-        },
-        {
-          path: 'network-error',
-          name: 'NetworkError',
-          component: () => import('../views/NetworkError.vue'),
-          meta: {
-            requiresAuth: false
-          }
         }
       ]
       // children: [
@@ -197,8 +189,36 @@ const router = createRouter({
           path: 'blogs/add',
           component: () => import('@/views/protected/AddBlog.vue'),
           name: 'admin-add-blogs'
+        },
+        {
+          path: 'services',
+          component: () => import('@/views/protected/ServicesView.vue'),
+          name: 'admin-services'
+        },
+        {
+          path: 'team',
+          component: () => import('@/views/protected/TeamsView.vue'),
+          name: 'team'
+        },
+        {
+          path: 'donations',
+          component: () => import('@/views/protected/DonationView.vue'),
+          name: 'donations'
+        },
+        {
+          path: 'messages',
+          component: () => import('@/views/protected/ContactUs.vue'),
+          name: 'messages'
         }
       ]
+    },
+    {
+      path: '/network-error',
+      name: 'NetworkError',
+      component: () => import('../views/NetworkError.vue'),
+      meta: {
+        requiresAuth: false
+      }
     }
   ],
   scrollBehavior(to, from, savedPosition) {

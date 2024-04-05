@@ -8,7 +8,7 @@ defineProps({
 })
 </script>
 <template>
-  <div class="grid w-full px-[6%] py-12 bg-gray-50">
+  <div class="grid w-full px-[6%] py-12 h-screen bg-gray-50">
     <div class="py-12 flex flex-col items-center justify-center gap-4">
       <h1 class="text-center text-5xl font-semibold">OOPs!</h1>
 

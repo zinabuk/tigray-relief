@@ -88,7 +88,7 @@ const originalText = 'Relief Association of Tigray'
   <section class="w-full bg-gray-50 px-[6%] py-12">
     <h1 class="text-center text-3xl">Services we provide</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div v-for="(service, i) in services" :key="i" class="p-4 flex flex-col gap-2">
+      <div v-for="(service, i) in services" :key="i" class="p-4 flex flex-col gap-2 bg-white">
         <img
           v-if="service.serviceImage"
           :src="BASE_AVATAR + service.serviceImage"
@@ -109,7 +109,7 @@ const originalText = 'Relief Association of Tigray'
   </section>
 
   <!-- history -->
-  <section class="w-full px-[6%] relative grid grid-cols-2 gap-4 py-12">
+  <section class="w-full px-[6%] relative grid grid-cols-1 md:grid-cols-2 gap-4 py-12">
     <div class="flex flex-col gap-2 py-8 top-0 z-30">
       <h6 class="text-[#579000]/60">Serving with clarity</h6>
       <h1 class="text-4xl font-semibold">Providing impartial services..</h1>

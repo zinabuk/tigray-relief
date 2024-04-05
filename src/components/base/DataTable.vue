@@ -3,24 +3,24 @@
     <div class="py-2 px-2 w-full bg-white flex flex-col">
       <div class="flex justify-end">
         <div class="">
-          <input type="text" class="border-black border px-4" v-model="searchQuery" />
+          <input
+            type="text"
+            class="outl border px-2 py-0"
+            v-model="searchQuery"
+            placeholder="Search"
+          />
         </div>
       </div>
-      <div class="overflow-x-auto">
+      <div class="overflow-auto w-full">
         <caption class="flex justify-start">
           {{
             caption
           }}
         </caption>
-        <table class="border border-black border-collapse w-full">
-          <thead>
+        <table class="border border-blackf border-collapse w-full overflow-auto">
+          <thead class="w-full">
             <tr class="bg-gray-200">
-              <th
-                v-for="(head, i) in tableHeaders"
-                :key="i"
-                class="py-2 px-4"
-                @click="sortBy(head.field)"
-              >
+              <th v-for="(head, i) in tableHeaders" :key="i" class="" @click="sortBy(head.field)">
                 {{ head.label }}
               </th>
               <th>Actions</th>
@@ -28,20 +28,22 @@
           </thead>
           <tbody v-if="paginatedData && paginatedData.length">
             <tr v-for="(value, i) in paginatedData" :key="i" class="hover:bg-gray-100">
-              <td class="py-2 px-4" v-for="(header, i) in tableHeaders" :key="i">
-                {{ value[header.field] }}
+              <td class="" v-for="(header, i) in tableHeaders" :key="i">
+                <span v-if="header !== 'Applicants'">
+                  {{ value[header.field] }}
+                </span>
+
+                <span v-else>{{ value['Applicants'.applicantId.length] }}</span>
               </td>
-              <td class="py-2 px-4">
+              <td class="flex">
                 <button
                   v-for="(action, i) in actions"
-                  @click="handleAction(action, value)"
-                  :class="{
-                    'hover:cursor-pointer text-blue-500 py-1 px-2': action.duty === 'edit',
-                    'hover:cursor-pointer text-red-500 py-1 px-2': action.duty === 'delete'
-                  }"
+                  @click="action.action(value)"
+                  :class="action.style"
                   :key="i"
                 >
-                  {{ action.label }}
+                  <font-awesome-icon v-if="action.icon" :icon="action.icon"></font-awesome-icon>
+                  <span v-else>{{ action.label }}</span>
                 </button>
               </td>
             </tr>
@@ -56,17 +58,13 @@
           class="flex justify-end gap-3 items-center py-4"
           v-if="paginatedData && paginatedData.length"
         >
-          <button
-            @click="prevPage"
-            class="bg-black text-white px-4 py-2 rounded"
-            v-if="currentPage != 1"
-          >
+          <button @click="prevPage" class="bg-black text-white rounded" v-if="currentPage != 1">
             Previous
           </button>
           <span class="text-gray-600">Page {{ currentPage }} of {{ totalPages }}</span>
           <button
             @click="nextPage"
-            class="bg-black text-white px-4 py-2 rounded"
+            class="bg-black text-white rounded"
             v-if="currentPage < totalPages"
           >
             Next
@@ -78,17 +76,14 @@
             class="border border-gray-300 rounded"
           >
             <option value="Per page" disabled>Per page</option>
+
             <option v-for="option in itemsPerPageOptions" :key="option" :value="option">
               {{ option }}
             </option>
           </select>
           <!-- Input for go to page -->
-          <input
-            type="number"
-            v-model="goToPage"
-            class="border border-gray-300 rounded px-2 py-1"
-          />
-          <button @click="gotoPage" class="bg-gray-600 text-white px-4 py-2 rounded">Go</button>
+          <input type="number" v-model="goToPage" class="border border-gray-300 rounded" />
+          <button @click="gotoPage" class="bg-gray-600 text-white px-2 rounded">Go</button>
         </div>
       </div>
     </div>
@@ -144,14 +139,17 @@ export default {
       }
     },
     itemsPerPageOptions() {
-      return [10, 25, 50] // Add more options if needed
+      return [10, 25, 50, 'All'] // Add more options if needed
     },
     filteredData() {
       if (this.searchQuery) {
         return this.tableValues.filter((item) => {
-          return Object.values(item).some((value) =>
-            value.toString().toLowerCase().includes(this.searchQuery.toLowerCase())
-          )
+          return Object.values(item).some((value) => {
+            if (value !== null && value !== undefined) {
+              return value.toString().toLowerCase().includes(this.searchQuery.toLowerCase())
+            }
+            return false
+          })
         })
       } else {
         return this.tableValues
@@ -168,9 +166,6 @@ export default {
       if (this.currentPage < this.totalPages) {
         this.currentPage++
       }
-    },
-    editData(element) {
-      alert(element.id)
     },
     searchTable() {
       this.currentPage = 1
@@ -191,13 +186,6 @@ export default {
         this.currentPage = this.goToPage
       } else {
         this.goToPage = 1
-      }
-    },
-    handleAction(action, data) {
-      if (action.duty === 'edit') {
-        alert(data.id)
-      } else {
-        alert('Delete')
       }
     }
   }

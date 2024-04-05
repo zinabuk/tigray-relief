@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
-
+import ApiService from '@/services/apiService'
 // const comments = ref([])
 
 let form = ref({
@@ -14,6 +14,26 @@ let form = ref({
   messageSubject: '',
   messageBody: ''
 })
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const submitContact = async () => {
+  try {
+    const response = await ApiService.post('/users/comments')
+    if (response.success) {
+      alert('OK')
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {
+        router.push({ name: 'NetworkError' })
+      }, 2000)
+    }
+  }
+}
 </script>
 
 <template>
@@ -105,16 +125,14 @@ let form = ref({
         <div class="w-full">
           <form @submit.prevent="submitContact" class="w-full flex flex-col gap-4">
             <BaseInput
-              v-model="form.fullName"
-              @handleEnter="submitContact"
+              v-model="form.fullName" 
               type="text"
               inputClass="border border-yellow-300"
               required
               label="Full Name"
             ></BaseInput>
             <BaseInput
-              v-model="form.emailAddress"
-              @handleEnter="submitContact"
+              v-model="form.emailAddress" 
               type="email"
               required
               label="Email address"
@@ -124,16 +142,14 @@ let form = ref({
 
             <div class="flex flex-col md:flex-row gap-2 w-full">
               <BaseInput
-                v-model="form.phoneNumber"
-                @handleEnter="submitContact"
+                v-model="form.phoneNumber" 
                 type="text"
                 required
                 inputClass="border border-yellow-300"
                 label="Phone Number"
               ></BaseInput>
               <BaseInput
-                v-model="form.messageSubject"
-                @handleEnter="submitContact"
+                v-model="form.messageSubject" 
                 type="text"
                 required
                 label="Your message subject"

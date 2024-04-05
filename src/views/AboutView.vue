@@ -1,34 +1,43 @@
 <script setup>
-const teamData = [
-  {
-    name: 'Zinabu Kalayou',
-    role: 'Manager'
-  },
-  {
-    name: 'Haftom Q',
-    role: 'Developer'
-  },
-  {
-    name: 'Shumuye A.',
-    role: 'Designer'
-  },
-  {
-    name: 'Derhotsion',
-    role: 'Marketing Specialist'
-  },
-  {
-    name: 'Michael Wilson',
-    role: 'Sales Representative'
-  },
-  {
-    name: 'Sarah Thompson',
-    role: 'Project Coordinator'
+import ApiService from '@/services/apiService'
+
+import { BASE_AVATAR } from '@/config'
+// const news = async () => {
+//   const response = await ApiService.get()
+// }
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+import { ref, onMounted } from 'vue'
+
+const teams = ref([])
+const fetchTeams = async () => {
+  try {
+    const response = await ApiService.get('/admin/our-teams')
+
+    if (response.success) {
+      teams.value = response.data
+    }
+  } catch (error) {
+    alert(error)
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {
+        router.push({ name: 'NetworkError' })
+      }, 2000)
+    }
   }
-]
+}
+
+ 
+onMounted(() => {
+  fetchTeams()
+})
 </script>
 
 <template>
-  <div class="about w-full min-h-[calc(100vh_-_80px)] relative">
+  <div class="about w-full  relative">
     <img
       src="@/assets/33.jpg"
       alt="rest image"
@@ -131,14 +140,15 @@ const teamData = [
     <h1 class="text-2xl text-center">Our Team</h1>
     <div class="grid grid-cols-3 gap-4 py-8 justify-center items-center">
       <div
-        v-for="(team, index) in teamData"
+        v-for="(team, index) in teams"
         :key="index"
         data-aos="fade-up"
         class="py-6 px-4 text-center bg-gray-50 rounded shadow flex flex-col gap-2 flex-wrap"
       >
-        <img src="@/assets/3.jpg" alt="" class="h-3y/4 w-full" />
-        <h1 class="text-xl font-semibold">{{ team.name }}</h1>
-        <p class="text-gray-700">{{ team.role }}</p>
+        <img :src="BASE_AVATAR + team.image" alt="" class="max-h-[222px] object-cover w-full" />
+        <h1 class="text-xl font-semibold">{{ team.fullName }}</h1>
+        <p class="text-gray-700">{{ team.profession }}</p>
+        <p>{{team.biography }}</p>
       </div>
     </div>
   </section>

@@ -167,7 +167,7 @@ export const OPEN_MENUS = [
   //   name: 'plan'
   // },
   {
-    label: 'gallery',
+    label: 'Gallery',
     name: 'gallery'
   },
   {
