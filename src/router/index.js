@@ -216,6 +216,11 @@ const router = createRouter({
           name: 'team'
         },
         {
+          path: 'partners',
+          component: () => import('@/views/protected/PartnersView.vue'),
+          name: 'partner'
+        },
+        {
           path: 'donations',
           component: () => import('@/views/protected/DonationView.vue'),
           name: 'donations'

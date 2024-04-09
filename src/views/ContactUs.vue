@@ -5,24 +5,27 @@ import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import ApiService from '@/services/apiService'
-// const comments = ref([])
 
 let form = ref({
-  emailAddress: '',
+  email: '',
   fullName: '',
   phoneNumber: '',
-  messageSubject: '',
-  messageBody: ''
+  subject: '',
+  message: ''
 })
 
 import { useRouter } from 'vue-router'
 const router = useRouter()
-
+let success = ref('')
 const submitContact = async () => {
   try {
-    const response = await ApiService.post('/users/comments')
+    const response = await ApiService.post('/users/comments', form.value)
+
     if (response.success) {
-      alert('OK')
+      success.value = response.message
+      setTimeout(() => {
+        success.value = ''
+      }, 3000)
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -122,7 +125,8 @@ const submitContact = async () => {
         <div class="w-full">
           <img src="@/assets/contact2.png" alt="" class="w-full h-[90%]" />
         </div>
-        <div class="w-full">
+        <div class="w-full flex flex-col gap-4">
+          <h1 v-if="success" class="text-green-500 bg-white">{{ success }}</h1>
           <form @submit.prevent="submitContact" class="w-full flex flex-col gap-4">
             <BaseInput
               v-model="form.fullName"
@@ -132,7 +136,7 @@ const submitContact = async () => {
               label="Full Name"
             ></BaseInput>
             <BaseInput
-              v-model="form.emailAddress"
+              v-model="form.email"
               type="email"
               required
               label="Email address"
@@ -150,7 +154,7 @@ const submitContact = async () => {
                 label="Phone Number"
               ></BaseInput>
               <BaseInput
-                v-model="form.messageSubject"
+                v-model="form.subject"
                 type="text"
                 required
                 label="Your message subject"
@@ -158,14 +162,13 @@ const submitContact = async () => {
               ></BaseInput>
             </div>
             <BaseTextarea
-              v-model="form.messageBody"
+              v-model="form.message"
               rows="4"
               placeholder="Enter your message"
               textareaClasses="border border-yellow-300"
             ></BaseTextarea>
 
             <BaseButton type="submit">Send Message</BaseButton>
-            <h1>{{ form.messageBody }}</h1>
           </form>
         </div>
       </div>

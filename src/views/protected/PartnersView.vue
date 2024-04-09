@@ -8,16 +8,18 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
 
+
 // import { useRouter } from 'vue-router'
 const tableHeaders = [
-  { label: 'Service', field: 'service' },
-  { label: 'First Name', field: 'firstName' },
-  { label: 'Last Name', field: 'lastName' },
-  { label: 'Email', field: 'email' },
-  { label: 'Phone Number', field: 'phoneNumber' },
-  { label: 'Address', field: 'address' },
-  { label: 'Amount', field: 'amount' }
+  { label: 'Title', field: 'businessName' },
+  { label: 'Email Address', field: 'email' },
+  { label: 'Phone', field: 'phoneNumber' },
+//   { label: 'Logo', field: 'logo' },
+  { label: 'Link', field: 'website' },
+  { label: 'Service', field: 'specializeArea' },
+  { label: 'Description', field: 'description' }
 ]
+
 const donations = ref([])
 const actions = [
   {
@@ -33,8 +35,8 @@ const actions = [
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   }
 ]
-async function fetchDonations() {
-  const response = await ApiService.get('/users/donations')
+async function fetchPartners() {
+  const response = await ApiService.get('/users/partnerships')
 
   if (response.success) {
     donations.value = response.data
@@ -60,7 +62,7 @@ const updateDonation = async () => {
     )
     alert(response.success)
     if (response.success) {
-      fetchDonations()
+      fetchPartners()
 
       setTimeout(() => {
         closeEditModal()
@@ -76,7 +78,7 @@ async function deleteDonation(donation) {
   if (accept) {
     const response = await ApiService.delete(`/users/donations/${donation._id}`)
     if (response.success) {
-      fetchDonations()
+      fetchPartners()
     }
   }
 }
@@ -99,7 +101,7 @@ function closeEditModal() {
 //   router.push({ name: 'jobApplicants', params: { id: career._id } })
 // }
 
-onMounted(fetchDonations)
+onMounted(fetchPartners)
 </script>
 
 <template>

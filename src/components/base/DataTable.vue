@@ -29,8 +29,14 @@
           <tbody v-if="paginatedData && paginatedData.length">
             <tr v-for="(value, i) in paginatedData" :key="i" class="hover:bg-gray-100">
               <td class="" v-for="(header, i) in tableHeaders" :key="i">
-                <span v-if="header !== 'Applicants'">
+                <span v-if="header !== 'Applicants' && header !== 'Logo'" class="line-clamp-2">
                   {{ value[header.field] }}
+                </span>
+
+                <span v-else-if="header === 'Logo'">
+                  <div class="h-12 w-12 rounded-full overflow-auto">
+                    <img :src="BASE_AVATAR + value[header.field]" alt="" class="w-full h-full" />
+                  </div>
                 </span>
 
                 <span v-else>{{ value['Applicants'.applicantId.length] }}</span>
@@ -91,6 +97,8 @@
 </template>
 
 <script>
+import { BASE_AVATAR } from '@/config'
+
 export default {
   props: {
     tableHeaders: Array,
@@ -105,7 +113,8 @@ export default {
       itemsPerPage: 10,
       goToPage: 1,
       sortByColumn: null,
-      sortDirection: 'asc'
+      sortDirection: 'asc',
+      BASE_AVATAR: BASE_AVATAR
     }
   },
 

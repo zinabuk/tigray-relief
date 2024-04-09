@@ -59,7 +59,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="w-full bg-gray-200">
+  <section class="w-full bg-white">
     <header class="flex items-center justify-between sticky shadow bg-white/100 z-10 top-0 px-2">
       <div class="w-[18%] flex items-center justify-between">
         <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" />

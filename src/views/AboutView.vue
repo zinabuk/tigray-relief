@@ -30,14 +30,13 @@ const fetchTeams = async () => {
   }
 }
 
- 
 onMounted(() => {
   fetchTeams()
 })
 </script>
 
 <template>
-  <div class="about w-full  relative">
+  <div class="about w-full relative">
     <img
       src="@/assets/33.jpg"
       alt="rest image"
@@ -143,12 +142,14 @@ onMounted(() => {
         v-for="(team, index) in teams"
         :key="index"
         data-aos="fade-up"
-        class="py-6 px-4 text-center bg-gray-50 rounded shadow flex flex-col gap-2 flex-wrap"
+        class="py-6 px-4 text-center w-full md:w-1/4 bg-gray-50 rounded shadow"
       >
-        <img :src="BASE_AVATAR + team.image" alt="" class="w-1/5 h-auto object-cover " />
+        <div class="w-32 h-32 rounded-full overflow-hidden mx-auto ring-4 ring-white">
+          <img :src="BASE_AVATAR + team.image" alt="" class="w-full h-full object-cover" />
+        </div>
         <h1 class="text-xl font-semibold">{{ team.fullName }}</h1>
         <p class="text-gray-700">{{ team.profession }}</p>
-        <p>{{team.biography }}</p>
+        <p>{{ team.biography }}</p>
       </div>
     </div>
   </section>

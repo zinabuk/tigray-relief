@@ -4,11 +4,13 @@ const SIDEBARITEMS = {
     { label: 'Services', name: 'admin-services', icon: 'cogs' },
     //   { label: 'Works', name: 'products', icon: 'box-open' },
     { label: 'Team', name: 'team', icon: 'handshake' },
-      { label: 'Donations', name: 'donations', icon: 'quote-left' },
+    { label: 'Partners', name: 'partner', icon: 'handshake' },
+
+    { label: 'Donations', name: 'donations', icon: 'quote-left' },
     //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
     { label: 'Blogs', name: 'admin-blogs', icon: 'newspaper' },
-      { label: 'Messages', name: 'messages', icon: 'comment-dots' },
-      { label: 'Tenders', name: 'messages', icon: 'comment-dots' }
+    { label: 'Messages', name: 'messages', icon: 'comment-dots' },
+    { label: 'Tenders', name: 'messages', icon: 'comment-dots' }
 
     // ],
     // STAFF_TABS: [

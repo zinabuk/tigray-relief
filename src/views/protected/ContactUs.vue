@@ -30,12 +30,6 @@ const actions = [
     icon: 'trash',
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   },
-  {
-    label: 'view',
-    action: viewApplicants,
-    icon: 'eye',
-    style: 'hover:cursor-pointer text-green-500 py-1 px-2'
-  }
 ]
 async function getAllDonations() {
   const response = await ApiService.get('/users/comments')
@@ -64,11 +58,6 @@ async function deleteContact(career) {
   }
 }
 
-const router = useRouter()
-
-async function viewApplicants(career) {
-  router.push({ name: 'jobApplicants', params: { id: career._id } })
-}
 
 // async function submitEdit() {
 //   const response = await ApiService.patch('/admin/donations/' + editForm.value._id, editForm.value)

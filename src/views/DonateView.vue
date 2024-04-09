@@ -20,7 +20,7 @@ let form = ref({
 
 
 const submitDonation = async () => {
-  alert('k')
+   
   try {
     const response = await ApiService.post('/users/donations', form.value)
     alert(response.success)

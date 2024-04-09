@@ -19,7 +19,7 @@ const partners = ref([])
 const getAllPartners = async () => {
   try {
     const response = await ApiService.get('/users/partnerships')
-    alert(response.success)
+    // alert(response.success)
     if (response.success) {
       partners.value = response.data
     }
@@ -68,6 +68,7 @@ async function savePartner() {
       message.value = ''
     }
   } catch (error) {
+    alert(error)
     if (error.response && error.response.status === 404) {
       message.value = error.response.data.message
     } else {
@@ -96,9 +97,9 @@ onMounted(() => {
     </div>
   </section>
   <section
-    class="w-full flex flex-col justify-center items-center px-[1%] md:px-[7%] py-4 md:py-6 gap-8"
+    class="w-full flex flex-col justify-center items-center px-[1%] md:px-[6%] py-4 md:py-12 gap-8"
   >
-    <div class="iq-subtitle"><h1>Our Partners</h1></div>
+    <div class="text-4xl font-bold"><h1>Our Partners</h1></div>
     <div class="w-full flex justify-center items-center">
       <Swiper
         :modules="[Autoplay]"
@@ -133,9 +134,11 @@ onMounted(() => {
       </Swiper>
     </div>
   </section>
-  <section class="w-full b py-12 grid grid-cold-1 md:grid-cols-2 gap-4">
+  <section
+    class="w-full bg-gray-50 px-[1%] md:px-[6%] py-6 md:py-12 grid grid-cold-1 md:grid-cols-2 gap-4"
+  >
     <div
-      class="bg-white shadow-[0_2px_18px_-6px_rgba(0,0,0,0.2)] w-full max-w-sm rounded-lg overflow-hidden mx-auto font-[sans-serif] px-2"
+      class="shadow-[0_2px_18px_-6px_rgba(0,0,0,0.2)] w-full max-w-sm rounded-lg overflow-hidden mx-auto font-[sans-serif] px-2"
     >
       <img src="@/assets/rest-logo.png" class="w-full object-cover object-center" />
       <div class="px-4 py-6">
@@ -148,8 +151,8 @@ onMounted(() => {
       </div>
     </div>
     <div class="w-full flex flex-col items-center justify-center p-6 gap-2 shadow rounded-lg">
-      <h1 class="text-center iq-subtitle">Partnership Form</h1>
-      <p class="justify-self-end text-green-500" v-if="success">{{ success }}</p>
+      <h1 class="text-center text-xl font-semibold">Partnership Form</h1>
+      <p class="justify-self-end text-green-500 bg-white" v-if="success">{{ success }}</p>
       <form @submit.prevent="savePartner" class="w-full flex flex-col gap-4">
         <BaseInput
           v-model="form.businessName"
