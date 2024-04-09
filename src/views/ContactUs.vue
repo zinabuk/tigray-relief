@@ -125,14 +125,14 @@ const submitContact = async () => {
         <div class="w-full">
           <form @submit.prevent="submitContact" class="w-full flex flex-col gap-4">
             <BaseInput
-              v-model="form.fullName" 
+              v-model="form.fullName"
               type="text"
               inputClass="border border-yellow-300"
               required
               label="Full Name"
             ></BaseInput>
             <BaseInput
-              v-model="form.emailAddress" 
+              v-model="form.emailAddress"
               type="email"
               required
               label="Email address"
@@ -142,14 +142,15 @@ const submitContact = async () => {
 
             <div class="flex flex-col md:flex-row gap-2 w-full">
               <BaseInput
-                v-model="form.phoneNumber" 
+                v-model="form.phoneNumber"
                 type="text"
                 required
+                autocomplete="on"
                 inputClass="border border-yellow-300"
                 label="Phone Number"
               ></BaseInput>
               <BaseInput
-                v-model="form.messageSubject" 
+                v-model="form.messageSubject"
                 type="text"
                 required
                 label="Your message subject"

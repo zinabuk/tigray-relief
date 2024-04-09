@@ -1,14 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
-import { useAuthStore } from '@/stores/auth'
+// import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-
       component: () => import('@/views/OpenMaster.vue'),
       meta: {
         requiresAuth: false
@@ -70,6 +69,22 @@ const router = createRouter({
           path: 'blogs',
           name: 'blogs',
           component: () => import('../views/BlogsView.vue'),
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: 'tenders',
+          name: 'tenders',
+          component: () => import('../views/TenderView.vue'),
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: 'partners',
+          name: 'partners',
+          component: () => import('../views/PartnersView.vue'),
           meta: {
             requiresAuth: false
           }
@@ -213,6 +228,23 @@ const router = createRouter({
       ]
     },
     {
+      path: '/404resource/:resource',
+      name: '404resource',
+      component: () => import('@/views/NotFound.vue'),
+      props: true,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('@/views/NotFound.vue'),
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
       path: '/network-error',
       name: 'NetworkError',
       component: () => import('../views/NetworkError.vue'),
@@ -237,39 +269,39 @@ const router = createRouter({
   }
 })
 
-router.beforeEach((to, from, next) => {
-  const { requiresAuth, role } = to.meta
-  const { isAuthenticated, expiryDate } = useAuthStore()
+// router.beforeEach((to, from, next) => {
+//   const { requiresAuth, role } = to.meta
+//   const { isAuthenticated, expiryDate } = useAuthStore()
 
-  if (!requiresAuth) {
-    // If the route doesn't require authentication, allow access
-    // if (isAuthenticated()) {
-    //   return next({ name: 'dashboard' }) //default route
-    // }
-    // Otherwise, allow access to the route
-    return next()
-  }
-  // If the route requires authentication, check if the user is authenticated
+//   if (!requiresAuth) {
+//     // If the route doesn't require authentication, allow access
+//     // if (isAuthenticated()) {
+//     //   return next({ name: 'dashboard' }) //default route
+//     // }
+//     // Otherwise, allow access to the route
+//     return next()
+//   }
+//   // If the route requires authentication, check if the user is authenticated
 
-  if (isAuthenticated()) {
-    // If the user is authenticated, check if the user has the necessary permissions
-    const { userHasPermission } = useAuthStore()
-    const hasPermission = userHasPermission(role) // Replace this with your authorization logic
-    if (expiryDate()) {
-      // logOut()
-      return next({ name: 'login' })
-    }
-    if (hasPermission) {
-      // If the user has the necessary permissions, allow access
-      return next()
-    } else {
-      // If the user doesn't have the necessary permissions, redirect to an error page or show an error message
-      return next({ name: 'login' }) // Replace 'Unauthorized' with the name of your unauthorized access route
-    }
-  }
+//   if (isAuthenticated()) {
+//     // If the user is authenticated, check if the user has the necessary permissions
+//     const { userHasPermission } = useAuthStore()
+//     const hasPermission = userHasPermission(role) // Replace this with your authorization logic
+//     if (expiryDate()) {
+//       // logOut()
+//       return next({ name: 'login' })
+//     }
+//     if (hasPermission) {
+//       // If the user has the necessary permissions, allow access
+//       return next()
+//     } else {
+//       // If the user doesn't have the necessary permissions, redirect to an error page or show an error message
+//       return next({ name: 'login' }) // Replace 'Unauthorized' with the name of your unauthorized access route
+//     }
+//   }
 
-  // If the user is not authenticated, redirect to the login page
-  return next({ name: 'login', params: { nextUrl: to.path } })
-})
+//   // If the user is not authenticated, redirect to the login page
+//   return next({ name: 'login', params: { nextUrl: to.path } })
+// })
 
 export default router

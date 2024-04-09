@@ -136,16 +136,16 @@ onMounted(() => {
   </section>
 
   <!-- Our teams section -->
-  <section class="flex flex-col px-[6%] gap-4 py-12 bg-white">
+  <section class="flex flex-col px-[1%] md:px-[6%] gap-4 py-6 md:py-12 bg-white">
     <h1 class="text-2xl text-center">Our Team</h1>
-    <div class="grid grid-cols-3 gap-4 py-8 justify-center items-center">
+    <div class="flex flex-wrap gap-4 py-8 justify-center items-center">
       <div
         v-for="(team, index) in teams"
         :key="index"
         data-aos="fade-up"
         class="py-6 px-4 text-center bg-gray-50 rounded shadow flex flex-col gap-2 flex-wrap"
       >
-        <img :src="BASE_AVATAR + team.image" alt="" class="max-h-[222px] object-cover w-full" />
+        <img :src="BASE_AVATAR + team.image" alt="" class="w-1/5 h-auto object-cover " />
         <h1 class="text-xl font-semibold">{{ team.fullName }}</h1>
         <p class="text-gray-700">{{ team.profession }}</p>
         <p>{{team.biography }}</p>

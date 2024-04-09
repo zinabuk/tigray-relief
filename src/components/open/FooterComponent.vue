@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 const email = ref('')
 const subscribe = () => {
-  alert(email.value)
+  // alert(email.value)
 }
 </script>
 
@@ -22,9 +22,9 @@ const subscribe = () => {
         </p>
       </div>
 
-      <div class="flex flex-col">
+      <div class="flex flex-col gap-2">
         <h1 class="text-xl">Quick Links</h1>
-        <ul class="flex flex-col">
+        <ul class="flex flex-col ">
           <li class="flex flex-col text-lg">
             <router-link to="/">Home</router-link><router-link to="/">About</router-link
             ><router-link to="/">Team</router-link><router-link to="/">Donate</router-link

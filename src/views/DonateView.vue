@@ -2,6 +2,12 @@
 import { ref } from 'vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+
+import ApiService from '@/services/apiService'
+import { useRouter } from 'vue-router'
+
+
+const router = useRouter()
 let form = ref({
   service: '',
   firstName: '',
@@ -12,13 +18,28 @@ let form = ref({
   amount: ''
 })
 
+
 const submitDonation = async () => {
-  // try {
-  //   const response = 0
-  // } catch (error) {
-  //   alert(error)
-  // }
+  alert('k')
+  try {
+    const response = await ApiService.post('/users/donations', form.value)
+    alert(response.success)
+    if (response.success) {
+      alert('Donation submitted successfully')
+      form.value = {}
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {
+        router.push({ name: 'NetworkError' })
+      }, 2000)
+    }
+  }
 }
+
+
 </script>
 
 <template>
@@ -61,6 +82,8 @@ const submitDonation = async () => {
               inputClass="border border-yellow-300"
               label="Enter a service / branch "
               v-model="form.service"
+              placeholder="service / branch"
+              required
             ></BaseInput>
           </div>
           <div class="grid grid-cols-2 gap-4 mb-4">
@@ -69,13 +92,17 @@ const submitDonation = async () => {
                 inputClass="border border-yellow-300"
                 label="First Name*"
                 v-model="form.firstName"
+                placeholder="First Name"
+                required
               ></BaseInput>
             </div>
             <div>
               <BaseInput
                 inputClass="border border-yellow-300"
                 label="Last Name"
-                v-medel="form.lastName"
+                v-model="form.lastName"
+                placeholder="Last Name"
+                required
               ></BaseInput>
             </div>
             <div>
@@ -83,6 +110,8 @@ const submitDonation = async () => {
                 inputClass="border border-yellow-300"
                 label="Email"
                 v-model="form.email"
+                placeholder="Email"
+                required
               ></BaseInput>
             </div>
             <div>
@@ -90,6 +119,8 @@ const submitDonation = async () => {
                 inputClass="border border-yellow-300"
                 label="Phone Number*"
                 v-model="form.phoneNumber"
+                placeholder="Phone Number"
+                required
               ></BaseInput>
             </div>
             <div>
@@ -97,6 +128,8 @@ const submitDonation = async () => {
                 inputClass="border border-yellow-300"
                 label="Address"
                 v-model="form.address"
+                placeholder="Address"
+                required
               ></BaseInput>
             </div>
             <div>
@@ -104,6 +137,8 @@ const submitDonation = async () => {
                 inputClass="border border-yellow-300"
                 label="Total Amount*"
                 v-model="form.amount"
+                placeholder="Total Amount"
+                required
               ></BaseInput>
             </div>
           </div>

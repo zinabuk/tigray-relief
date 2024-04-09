@@ -1,15 +1,26 @@
 <script setup>
 import ApiService from '@/services/apiService'
 import { BASE_AVATAR } from '@/config'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
+
+import 'swiper/swiper-bundle.css'
+import 'swiper/css/navigation'
+
+
 // const news = async () => {
 //   const response = await ApiService.get()
 // }
+
 import { ref, onMounted } from 'vue'
 
 import { useRouter } from 'vue-router'
 
+const modules = [Autoplay, Pagination, Navigation]
+
 const router = useRouter()
 
+// let isLoading = '';
 const services = ref([])
 const fetchServices = async () => {
   try {
@@ -33,7 +44,8 @@ const blogs = ref([])
 const fetchNews = async () => {
   try {
     const response = await ApiService.get('/admin/events')
-    if (response) {
+    if (response.data) {
+      // isLoading = false
       blogs.value = response.data
     }
   } catch (error) {
@@ -42,13 +54,31 @@ const fetchNews = async () => {
     } else {
       setTimeout(() => {
         router.push({ name: 'NetworkError' })
-      }, 2000)
+      }, 100000)
+    }
+  }
+}
+
+const partners = ref([])
+const fetchPartners = async () => {
+  try {
+    const response = await ApiService.get('/users/partnerships')
+    if (response) {
+      partners.value = response.data
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {
+        router.push({ name: 'NetworkError' })
+      }, 100000)
     }
   }
 }
 
 onMounted(() => {
-  fetchServices(), fetchNews()
+  fetchServices(), fetchNews(), fetchPartners()
 })
 
 const originalText = 'Relief Association of Tigray'
@@ -207,6 +237,40 @@ const originalText = 'Relief Association of Tigray'
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- partners -->
+  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4">
+    <h1 class="text-3xl font-bold">Our Partners</h1>
+    <swiper
+      :slides-per-view="1"
+      :modules="modules"
+      :autoplay="{ delay: 5000 }"
+      class="w-full flex flex-wrap items-center justify-center"
+      :breakpoints="{
+        '768': { slidesPerView: 2, spaceBetween: 20 },
+        '1024': { slidesPerView: 4, spaceBetween: 30 }
+      }"
+    >
+      <swiper-slide
+        v-for="(partner, i) in partners"
+        :key="i"
+        class="relative w-full works group flex items-center justify-center overflow-auto shadow"
+      >
+        <div class="w-full">
+          <img
+            v-if="partner.logo"
+            :src="BASE_AVATAR + partner.logo"
+            :alt="partner.busineName"
+            class="w-32 h-32 rounded-xl object-cover"
+          />
+          <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black">
+            {{ partner.businessName[0] }}
+          </h2>
+        </div>
+        <p>{{ partner.businessName }}</p>
+      </swiper-slide>
+    </swiper>
   </section>
 </template>
 

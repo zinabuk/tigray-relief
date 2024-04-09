@@ -17,7 +17,7 @@ const items = SIDEBARITEMS.ADMIN_TABS
         <router-link
           :to="{ name: item.name }"
           :class="{
-            'text-[#539000] border-r-2 border-r-[#539000] font-bold ': $route.name === item.name
+            'text-[#539000] border-r-2 rounded-none border-r-[#539000] font-bold ': $route.name === item.name
           }"
           exact
           active-class=""

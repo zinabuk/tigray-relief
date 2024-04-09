@@ -1,5 +1,5 @@
 <template>
-  <div class="input-container relative w-full">
+  <div class="input-container relative ">
     <button class="px-4 py-2 bg-[#539000] text-white" v-bind="$attrs">
       <font-awesome-icon
         v-if="icon"

@@ -1,4 +1,4 @@
-export const OPEN_MENUS = [
+const NAV_ITEMS = [
   {
     label: 'Home',
     name: 'home'
@@ -141,27 +141,31 @@ export const OPEN_MENUS = [
     label: 'News | Events',
     name: 'blogs'
   },
-  // {
-  //   label: 'Join Us',
-  //   name: 'join-us',
-  //   SUB_MENUS: [
-  //     {
-  //       label: 'Careers',
-  //       name: 'careers',
-  //       requiresRoute: true
-  //     },
-  //     {
-  //       label: 'Volunteer Opportunities',
-  //       name: 'volunteer-opportunities',
-  //       requiresRoute: true
-  //     },
-  //     {
-  //       label: 'Internship Program',
-  //       name: 'internship-program',
-  //       requiresRoute: true
-  //     }
-  //   ]
-  // },
+  {
+    label: 'Join Us',
+    sub_items: [
+      {
+        label: 'Careers',
+        name: 'blogs'
+      },
+      {
+        label: 'Partnership',
+        name: 'partners'
+      },
+      {
+        label: 'Tender',
+        name: 'tenders'
+      },
+      {
+        label: 'Testimonial',
+        name: 'blogs'
+      },
+      {
+        label: 'FAQs',
+        name: 'blogs'
+      }
+    ]
+  },
   // {
   //   label: 'Plan',
   //   name: 'plan'
@@ -173,5 +177,8 @@ export const OPEN_MENUS = [
   {
     label: 'Contact',
     name: 'contact'
-  }
+  },
+   
 ]
+
+export default NAV_ITEMS

@@ -33,7 +33,6 @@ let showModal = ref(false)
 // }
 
 const userLogOut = () => {
- 
   if (logOut()) {
     router.push('/')
   }
@@ -78,16 +77,17 @@ onUnmounted(() => {
         <div class="relative text-center">
           <font-awesome-icon icon="bell" class="text-blue-500 text-xl"></font-awesome-icon>
         </div>
-        <button @click="userLogOut" class=" relative">Logout</button>
-        <img
-          v-if="avatar"
-          :src="BASE_AVATAR + `${avatar}`"
-          alt="Profile"
-          class="w-full h-full rounded-full"
-        />
+        <button @click="userLogOut" class="relative">Logout</button>
+        <div class="w-20 h-20 overflow-hidden">
+          <img
+            v-if="avatar"
+            :src="BASE_AVATAR + `${avatar}`"
+            alt="Profile"
+            class="w-full h-full rounded-full"
+          />
 
-        <img v-else src="@/assets/5.jpg" alt="my profile" class="w-full h-full rounded-full" />
-
+          <img v-else src="@/assets/5.jpg" alt="my profile" class="w-full h-full rounded-full" />
+        </div>
         <!-- <button @click="showModal = !showModal" class="w-12 h-12 overflow-hidden relative">
 
           <font-awesome-icon
