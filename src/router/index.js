@@ -229,6 +229,15 @@ const router = createRouter({
           path: 'messages',
           component: () => import('@/views/protected/ContactUs.vue'),
           name: 'messages'
+        },
+        {
+          path: 'tenders',
+          component: () => import('@/views/protected/TendersView.vue'),
+          name: 'admin-tenders'
+        }, {
+          path: 'gallery',
+          component: () => import('@/views/protected/GalleryView.vue'),
+          name: 'admin-gallery'
         }
       ]
     },

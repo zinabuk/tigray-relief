@@ -10,7 +10,8 @@ const SIDEBARITEMS = {
     //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
     { label: 'Blogs', name: 'admin-blogs', icon: 'newspaper' },
     { label: 'Messages', name: 'messages', icon: 'comment-dots' },
-    { label: 'Tenders', name: 'messages', icon: 'comment-dots' }
+    { label: 'Tenders', name: 'admin-tenders', icon: 'comment-dots' },
+    { label: 'Gallery', name: 'admin-gallery', icon: 'comment-dots' }
 
     // ],
     // STAFF_TABS: [

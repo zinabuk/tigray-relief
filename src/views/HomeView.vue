@@ -7,7 +7,6 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/swiper-bundle.css'
 import 'swiper/css/navigation'
 
-
 // const news = async () => {
 //   const response = await ApiService.get()
 // }
@@ -91,6 +90,7 @@ const originalText = 'Relief Association of Tigray'
       class="logo absolute h-full object-cover w-full inset-0"
       src="@/assets/hero-3.jpg"
     />
+
     <div
       class="absolute bottom-0 w-full md:w-2/5 h-d py-12 flex flex-col text-black justify-center px-4 bg-white/80 md:bg-white rounded-tr-[100px]"
     >
@@ -257,12 +257,12 @@ const originalText = 'Relief Association of Tigray'
         :key="i"
         class="relative w-full works group flex items-center justify-center overflow-auto shadow"
       >
-        <div class="w-full">
+        <div class="w-24 h-24">
           <img
             v-if="partner.logo"
             :src="BASE_AVATAR + partner.logo"
             :alt="partner.busineName"
-            class="w-32 h-32 rounded-xl object-cover"
+            class="w-full h-full rounded-xl object-cover"
           />
           <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black">
             {{ partner.businessName[0] }}

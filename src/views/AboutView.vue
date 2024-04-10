@@ -144,7 +144,7 @@ onMounted(() => {
         data-aos="fade-up"
         class="py-6 px-4 text-center w-full md:w-1/4 bg-gray-50 rounded shadow"
       >
-        <div class="w-32 h-32 rounded-full overflow-hidden mx-auto ring-4 ring-white">
+        <div class="w-32 h-32 rounded-full overflow-hidden mx-auto ring-2 ring-yellow-300">
           <img :src="BASE_AVATAR + team.image" alt="" class="w-full h-full object-cover" />
         </div>
         <h1 class="text-xl font-semibold">{{ team.fullName }}</h1>

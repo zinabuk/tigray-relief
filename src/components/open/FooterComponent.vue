@@ -18,13 +18,14 @@ const subscribe = () => {
           class="px-4 py-2 w-52 h-28"
         />
         <p class="text-lg">
-          We offer crisis response and development programs, including food aid, healthcare, education, water and sanitation, and livelihood initiatives.
+          We offer crisis response and development programs, including food aid, healthcare,
+          education, water and sanitation, and livelihood initiatives.
         </p>
       </div>
 
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">Quick Links</h1>
-        <ul class="flex flex-col ">
+        <ul class="flex flex-col">
           <li class="flex flex-col text-lg">
             <router-link to="/">Home</router-link><router-link to="/">About</router-link
             ><router-link to="/">Team</router-link><router-link to="/">Donate</router-link
@@ -48,8 +49,16 @@ const subscribe = () => {
           placeholder="enter your email"
           class="px-4 py-3 text-black"
         />
+        <div class="my-4">
+          <h1 class="text-xl font bold text-white">Follow Us:</h1>
+          <font-awesome-icon :icon="['fab', 'facebook']" class="text-white p-2">
+          </font-awesome-icon>
+          <font-awesome-icon :icon="['fab', 'twitter']" class="text-white p-2"> </font-awesome-icon>
+          <font-awesome-icon :icon="['fab', 'linkedin']" class="text-white p-2">
+          </font-awesome-icon>
+        </div>
       </div>
     </div>
-    <p class="text-center p-4">© 2024 Relief Resources. All rights reserved.</p>
+    <p class="text-center p-4">© 2024 REST. All rights reserved.</p>
   </section>
 </template>

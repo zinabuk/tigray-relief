@@ -89,7 +89,7 @@ onMounted(() => {
   <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
     <!-- Services -->
     <router-link
-      :to="{ name: 'admin-add-blogs' }"
+      :to="{ name: 'admin-add-team' }"
       class="text-[#539000] self-end border flex items-center px-2 py-1 bg-white border-[#539000]"
     >
       <font-awesome-icon
@@ -101,7 +101,7 @@ onMounted(() => {
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-2 bg-white">
-        <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto"></font-awesome-icon> -->
+        
         <img
           v-if="team.image"
           :src="BASE_AVATAR +team.image"

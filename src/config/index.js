@@ -1,6 +1,6 @@
-const BASE_URL = 'http://192.168.137.1:4000/api/v1/'
-const BASE_AVATAR = 'http://192.168.137.1:4000/api/v1/images/'
-const BASE_UPLOAD = 'http://192.168.137.1:4000/api/v1/uploads/'
+const BASE_URL = 'http://127.0.0.1:5000/api/v1/'
+const BASE_AVATAR = 'http://127.0.0.1:5000/api/v1/images/'
+const BASE_UPLOAD = 'http://127.0.0.1:5000/api/v1/uploads/'
 
 const TOKEN_KEY = 'access_token'
 

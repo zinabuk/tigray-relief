@@ -40,6 +40,7 @@ const emit = defineEmits(['image-update'])
 const onFileChange = ($event) => {
   let file = $event.target.files[0]
   if (file) {
+    alert(file)
     emit('image-update', file)
   }
 }

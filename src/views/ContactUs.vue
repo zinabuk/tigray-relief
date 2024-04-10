@@ -97,9 +97,9 @@ const submitContact = async () => {
           icon="map-marker-alt"
           class="text-yellow-300 p-4 text-xl rounded-full bg-gray-50 group-hover:bg-[#539000] group-hover:text-white"
         ></font-awesome-icon>
-        <h1 class="text-2xl font-semibold">Visit Here</h1>
+        <h1 class="text-2xl font-semibold">Visit Us Here</h1>
         <div class="font-extralight">
-          <p>FFPF+P2W, Mekele, Ethiopia</p>
+          <p>Tigray, northern Ethiopia</p>
         </div>
       </div>
       <div

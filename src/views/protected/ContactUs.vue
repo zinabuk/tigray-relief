@@ -8,7 +8,7 @@ import ApiService from '@/services/apiService'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
 
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 const tableHeaders = [
   { label: 'Full Name', field: 'fullName' },
   { label: 'Email', field: 'email' },
@@ -29,11 +29,12 @@ const actions = [
     action: deleteContact,
     icon: 'trash',
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
-  },
+  }
 ]
 async function getAllDonations() {
-  const response = await ApiService.get('/users/comments')
+  // alert('K')
 
+  const response = await ApiService.get('/users/comments')
   if (response.success) {
     donations.value = response.data
   }
@@ -57,7 +58,6 @@ async function deleteContact(career) {
     }
   }
 }
-
 
 // async function submitEdit() {
 //   const response = await ApiService.patch('/admin/donations/' + editForm.value._id, editForm.value)
