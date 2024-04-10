@@ -66,9 +66,27 @@ const router = createRouter({
           }
         },
         {
+          path: 'service/:title',
+          name: 'service-detail',
+          props: true,
+          component: () => import('../views/ServiceDetail.vue'),
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
           path: 'blogs',
           name: 'blogs',
           component: () => import('../views/BlogsView.vue'),
+          meta: {
+            requiresAuth: false
+          }
+        },
+        {
+          path: 'blogs/:title',
+          name: 'blog-detail',
+          props: true,
+          component: () => import('../views/BlogDetail.vue'),
           meta: {
             requiresAuth: false
           }
@@ -216,6 +234,11 @@ const router = createRouter({
           name: 'team'
         },
         {
+          path: 'team/add',
+          component: () => import('@/views/protected/AddTeam.vue'),
+          name: 'admin-add-team'
+        },
+        {
           path: 'partners',
           component: () => import('@/views/protected/PartnersView.vue'),
           name: 'partner'
@@ -234,7 +257,8 @@ const router = createRouter({
           path: 'tenders',
           component: () => import('@/views/protected/TendersView.vue'),
           name: 'admin-tenders'
-        }, {
+        },
+        {
           path: 'gallery',
           component: () => import('@/views/protected/GalleryView.vue'),
           name: 'admin-gallery'

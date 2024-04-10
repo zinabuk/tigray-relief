@@ -60,7 +60,11 @@ onMounted(() => {
           {{ service.serviceDescription }}
         </p>
 
-        <router-link class="text-[#539000]" to="/">Read More</router-link>
+        <router-link
+          class="text-[#539000]"
+          :to="{ name: 'service-detail', params: { title: service.serviceTitle } }"
+          >Read More</router-link
+        >
       </div>
     </div>
   </section>

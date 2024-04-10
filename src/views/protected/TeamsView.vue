@@ -14,7 +14,7 @@ const teams = ref([])
 const fetchTeams = async () => {
   try {
     const response = await ApiService.get('/admin/our-teams')
-    
+
     if (response.success) {
       teams.value = response.data
     }
@@ -26,6 +26,17 @@ const fetchTeams = async () => {
       setTimeout(() => {
         router.push({ name: 'NetworkError' })
       }, 2000)
+    }
+  }
+}
+
+const deleteTeam = async (id) => {
+  const sure = window.confirm('Are you sure to delete this team?')
+  if (sure) {
+    const res = await ApiService.delete('/admin/our-teams/' + id)
+    if (res.success) {
+      alert('DELETED Successfuly')
+      fetchTeams()
     }
   }
 }
@@ -101,10 +112,9 @@ onMounted(() => {
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-2 bg-white">
-        
         <img
           v-if="team.image"
-          :src="BASE_AVATAR +team.image"
+          :src="BASE_AVATAR + team.image"
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
         />
@@ -120,6 +130,12 @@ onMounted(() => {
         </p>
 
         <router-link class="text-[#539000]" to="/">Read More</router-link>
+        <div class="flex gap-4">
+          <button @click="deleteTeam(team._id)">
+            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+          </button>
+          <button><font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon></button>
+        </div>
       </div>
     </div>
     <div

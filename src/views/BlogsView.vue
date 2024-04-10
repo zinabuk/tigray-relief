@@ -56,7 +56,11 @@ onMounted(() => {
           <h3 class="text-lg font-bold">
             {{ event.eventTitle }}
           </h3>
-          <router-link to="/about" class="text-green-600 font-bold">Read More</router-link>
+          <router-link
+            :to="{ name: 'blog-detail', params: { title: event.eventTitle } }"
+            class="text-green-600 font-bold"
+            >Read More</router-link
+          >
         </div>
       </div>
     </div>

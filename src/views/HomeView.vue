@@ -145,7 +145,7 @@ const originalText = 'Relief Association of Tigray'
       <h1 class="text-4xl font-semibold">Providing impartial services..</h1>
       <p>
         Rest is a highly acclaimed non-profit organization dedicated to supporting the international
-        Tigrai community in overcoming the broad range of conditions related to mental illness.
+        Tigrai community in overcoming the broad range of conditions ...
       </p>
 
       <div class="flex flex-wrap py-2 gap-4 justify-betweden items-center">

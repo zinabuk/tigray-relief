@@ -82,7 +82,7 @@ onMounted(() => {
         >Get in touch</router-link
       >
     </div>
-    <img src="@/assets/3.jpg" alt="" class="w-full object-cover h-auto" data-aos="fade-left" />
+    <img src="@/assets/d.jpg" alt="" class="w-full object-cover h-auto" data-aos="fade-left" />
   </section>
 
   <section class="flex flex-col px-[6%] gap-4 py-12 bg-gray-50 items-center">

@@ -10,45 +10,28 @@
   
           <!-- Event Title -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="eventTitle" label="Event Title" v-model="event.eventTitle" />
+            <BaseInput type="text" id="eventTitle" label="Event Title" v-model="team.fullName" />
           </div>
   
           <!-- Event Category -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="category" label="Category" v-model="event.category" />
+            <BaseInput type="text" id="category" label="Category" v-model="team.profession" />
           </div>
   
           <!-- Event Date -->
-          <div class="flex justify-center">
-            <BaseInput type="date" id="eventDate" label="Event Date" v-model="event.eventDate" />
-          </div>
-  
-          <!-- Event Organizer -->
-          <div class="flex justify-center">
-            <BaseInput
-              type="text"
-              id="eventOrganizer"
-              label="Event Organizer"
-              v-model="event.eventOrganizer"
-            />
-          </div>
+         
+   
           <!-- Event Description -->
   
           <div>
             <BaseTextarea
-              v-model="event.eventDescription"
+              v-model="team.biography"
               placeholder="Write an event Description"
               label="Description"
             ></BaseTextarea>
-            <!-- <textarea
-              id="eventDescription"
-              v-model="event.eventDescription"
-              class="h-40 w-full px-4 py-2 mt-2 text-purple-700 bg-white rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 border border-black-600"
-              placeholder="Write an event Description"
-            ></textarea> -->
+            
           </div>
           <!-- Event Image -->
-  
           <div class="flex justify-between">
             <div class="flex">
               <input
@@ -67,12 +50,7 @@
             </div>
             <!-- Submit Button -->
             <div class="flex justify-end">
-              <button
-                type="submit"
-                class="bg-[#539000]/80 hover:bg-[#539000] text-white font-medium py-2 px-4 rounded"
-              >
-                Save Blog
-              </button>
+              <BaseButton label="">Submit</BaseButton>
             </div>
           </div>
         </form>
@@ -84,23 +62,24 @@
   <script>
   import BaseInput from '@/components/base/BaseInput.vue'
   import BaseTextarea from '@/components/base/BaseTextarea.vue'
+  import BaseButton from '@/components/base/BaseButton.vue'
   import apiService from '@/services/apiService'
   
   export default {
     components: {
       BaseInput,
-      BaseTextarea
+      BaseTextarea,
+      BaseButton
     },
     data() {
       return {
         toggleMobileMenu: true,
-        event: {
-          eventTitle: '',
-          eventImage: null,
-          eventDescription: '',
-          category: '',
-          eventDate: null,
-          eventOrganizer: ''
+        team: {
+          fullName: '',
+          profession: '',
+          biography: '',
+          image: '',
+         
         }
       }
     },
@@ -109,21 +88,19 @@
     },
     methods: {
       handleFileChange(event) {
-        this.event.eventImage = event.target.files[0]
+        this.team.image = event.target.files[0]
       },
       async submitForm() {
         try {
           const formData = new FormData()
-          formData.append('eventTitle', this.event.eventTitle)
-          formData.append('eventImage', this.event.eventImage)
-          formData.append('eventDescription', this.event.eventDescription)
-          formData.append('category', this.event.category)
-          formData.append('eventDate', this.event.eventDate)
-          formData.append('eventOrganizer', this.event.eventOrganizer)
+          formData.append('fullName', this.team.fullName)
+          formData.append('profession', this.team.profession)
+          formData.append('biography', this.team.biography)
+          formData.append('image', this.team.image) 
   
           const request = {
             method: 'POST',
-            url: '/admin/events',
+            url: '/admin/our-teams',
             headers: {
               'Content-Type': 'multipart/form-data'
             },
@@ -133,13 +110,7 @@
   
           if (response.success) {
             alert('OK')
-            this.event = {
-              eventTitle: '',
-              eventImage: null,
-              eventDescription: '',
-              category: '',
-              eventDate: null,
-              eventOrganizer: ''
+            this.team = { 
             }
           }
         } catch (error) {
