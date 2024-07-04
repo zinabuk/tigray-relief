@@ -26,7 +26,6 @@ const fetchServices = async () => {
   }
 }
 
-let showEditModal = ref(false)
 let showAddModal = ref(false)
 
 const form = ref({
@@ -44,6 +43,13 @@ const handleFileChange = (file) => {
 const errorMessage = ref('')
 const successMessage = ref('')
 
+let edit = ref(false)
+const editService = (service) => {
+  form.value = service
+  edit.value = true
+  showAddModal.value = true
+}
+
 const saveService = async () => {
   const formData = new FormData()
   formData.append('serviceTitle', form.value.serviceTitle)
@@ -51,12 +57,40 @@ const saveService = async () => {
   if (form.value.serviceImage) {
     formData.append('serviceImage', form.value.serviceImage)
   }
-
   try {
-    const response = await ApiService.post('/admin/services', formData)
+    if (edit.value) {
+      const response = await ApiService.patch('/admin/services/' + form.value.id, formData)
+      if (response.success) {
+        successMessage.value = response.message
+        fetchServices()
+        form.value = {}
+        edit.value = false
+        logo.value = ''
+      } else {
+        errorMessage.value = 'Failed to save Partner'
+      }
+    } else {
+      const res = await ApiService.post('/admin/services', formData)
+      if (res.success) {
+        successMessage.value = res.message
+        fetchServices()
+        form.value = {}
+        edit.value = false
+        logo.value = ''
+      } else {
+        errorMessage.value = 'Failed to save Partner'
+      }
+    }
+  } catch (error) {
+    errorMessage.value = 'Failed to save Partner'
+  }
+}
+
+const deleteService = async (id) => {
+  try {
+    const response = await ApiService.delete('/admin/services/' + id)
 
     if (response.success) {
-      successMessage.value = response.message
       fetchServices()
     } else {
       errorMessage.value = 'Failed to save Partner'
@@ -65,13 +99,14 @@ const saveService = async () => {
     errorMessage.value = 'Failed to save Partner'
   }
 }
-
-const closeEditModal = () => {
-  showEditModal.value = false
-}
+// const closeEditModal = () => {
+//   showEditModal.value = false
+// }
 
 const closeModal = () => {
   showAddModal.value = false
+  form.value = {}
+  edit.value = false
 }
 
 onMounted(() => {
@@ -94,24 +129,34 @@ onMounted(() => {
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div v-for="(service, i) in services" :key="i" class="p-4 flex flex-col gap-2 bg-white">
+      <div
+        v-for="(service, i) in services"
+        :key="i"
+        class="p-4 flex flex-col gap-2 bg-white hover:bg-green-900 hover:text-white justify-between"
+      >
         <img
           v-if="service.serviceImage"
           :src="BASE_AVATAR + service.serviceImage"
           alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
+          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
         <p v-else class="w-20 h-20 rounded-full text-6xl">{{ service.serviceTitle[0] }}</p>
         <h1 class="text-2xl font-bold">{{ service.serviceTitle }}</h1>
-        <div class="relative">
+        <!-- <div class="relative">
           <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
-        </div>
+        </div> -->
         <p class="line-clamp-5">
           {{ service.serviceDescription }}
         </p>
 
-        <router-link class="text-[#539000]" to="/">Read More</router-link>
+        <div class="flex gap-2 justify-end">
+          <button @click="editService(service)">
+            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon></button
+          ><button @click="deleteService(service.id)">
+            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+          </button>
+        </div>
       </div>
     </div>
     <div
@@ -122,9 +167,9 @@ onMounted(() => {
         <div class="text-center">
           <div class="flex justify-between">
             <h3 class="text-lg font-medium text-gray-900">Add Service</h3>
-            <BaseButton @click="closeModal" type="button" class="p-1 text-yellow-400 rounded">
+            <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">
               Cancel
-            </BaseButton>
+            </button>
           </div>
           <div class="bg-white">
             <form @submit.prevent="saveService" class="flex flex-col gap-4">
@@ -149,7 +194,7 @@ onMounted(() => {
                   label="add logo"
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
-                <BaseButton type="submit" class="bg-[#539000] text-yellow-500 px-2 py-2 rounded">
+                <BaseButton type="submit" class="w-full px-2 py-2 rounded">
                   Save Service
                 </BaseButton>
               </div>

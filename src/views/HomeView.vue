@@ -93,7 +93,7 @@ onMounted(() => {
   fetchServices(), fetchNews(), fetchPartners(), fetchHeroes()
 })
 
-const originalText = 'Relief Society of Tigray'
+//const originalText = 'Relief Society of Tigray'
 </script>
 
 <template>
@@ -137,63 +137,63 @@ const originalText = 'Relief Society of Tigray'
   </main>
 
   <!-- Services -->
-  <section class="w-full bg-green-900/10 px-[6%] py-12">
-    <h1 class="text-center text-3xl">Services we provide</h1>
+  <section class="w-full bg-green-900/10 px-[6%] flex flex-col gap-4 py-12">
+    <h1 class="text-center text-4xl font-semibold">Services we provide</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div v-for="(service, i) in services" :key="i" class="p-4 flex flex-col gap-2 bg-white">
+      <div
+        v-for="(service, i) in services"
+        :key="i"
+        class="flex flex-col gap-2 relative shadow-xl bg-white h-64 border rounded-xl"
+      >
         <img
           v-if="service.serviceImage"
           :src="BASE_AVATAR + service.serviceImage"
           alt=""
-          class="w-full h-24 rounded-md object-cover self-start"
+          class="w-full h-full absolute inset-0 border rounded-xl object-cover"
         />
-        <font-awesome-icon v-else icon="user" class="text-green-600 mr-auto"></font-awesome-icon>
-        <h1 class="text-2xl font-bold">{{ service.serviceTitle }}</h1>
-        <div class="relative">
+
+        <div
+          class="absolute inset-0 flex flex-col justify-end bg-black/60 p-4 hover:bg-green-900/90"
+        >
+          <h1 class="text-2xl font-bold text-white line-clamp-2">{{ service.serviceTitle }}</h1>
+        </div>
+        <!-- <div class="relative">
           <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
-        </div>
-        <p class="line-clamp-5">
+        </div> -->
+        <!-- <p class="line-clamp-5">
           {{ service.serviceDescription }}
-        </p>
+        </p> -->
       </div>
     </div>
   </section>
 
   <!-- history -->
-  <section class="w-full px-[6%] relative grid grid-cols-1 md:grid-cols-2 gap-4 py-12">
-    <div class="flex flex-col gap-2 py-8 top-0 z-30 shadow">
-      <h6 class="text-[#579000]">Serving with clarity</h6>
-      <h1 class="text-4xl font-semibold">Providing impartial services..</h1>
-      <p>
+  <section class="w-full px-[6%] relative grid grid-cols-1 gap-4 py-12">
+    <div class="flex flex-col gap-2 py-8 top-0 z-30">
+      <h1 class="text-4xl font-semibold text-center">Our Impact</h1>
+      <!-- <p>
         Rest is a highly acclaimed non-profit organization dedicated to supporting the international
         Tigrai community in overcoming the broad range of conditions ...
-      </p>
+      </p> -->
 
       <div class="grid grid-cols-3 gap-4 w-full">
-        <div class="bg-green-900 font-bold text-white px-4 py-2">
-          <h1>20 +</h1>
-          <p>Years of service</p>
+        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center">
+          <h1 class="text-green-900 text-8xl">20 +</h1>
+          <p class="text-xl">Years of service</p>
         </div>
-        <div class="bg-green-900 font-bold text-white px-4 py-2">
-          <h1>300 +</h1>
-          <p>Projects</p>
+        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center">
+          <h1 class="text-green-900 text-8xl">300 +</h1>
+          <p class="text-xl text-ce">Projects</p>
         </div>
-        <div class="bg-green-900 font-bold text-white px-4 py-2">
-          <h1>5 +</h1>
-          <p>Services</p>
+        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center">
+          <h1 class="text-green-900 text-8xl">5 +</h1>
+          <p class="text-xl">Services</p>
         </div>
       </div>
-      <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold self-start"
+      <!-- <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold self-start"
         >Learn More About us</router-link
-      >
-    </div>
-    <div class="w-full overflow-hidden">
-      <img
-        src="@/assets/hero.jpg"
-        alt=""
-        class="w-full inset-0 h-full object-cover hover:scale-[1.2] transition-transform duration-500 ease-in-out"
-      />
+      > -->
     </div>
   </section>
 

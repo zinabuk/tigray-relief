@@ -141,7 +141,7 @@ onMounted(() => {
     </div>
     <div
       v-if="showEditModal"
-      class="fixed inset-0 overflow-auto flex items-center z-40 justify-center modal bg-black bg-opacity-50"
+      class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/70"
     >
       <div class="bg-white p-4">
         <h2 class="text-lg font-bold mb-4">Edit News</h2>
