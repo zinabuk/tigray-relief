@@ -19,12 +19,12 @@ const fetchTeams = async () => {
       teams.value = response.data
     }
   } catch (error) {
-    alert(error)
+    // alert(error)
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }
@@ -38,7 +38,7 @@ onMounted(() => {
 <template>
   <div class="about w-full relative">
     <img
-      src="@/assets/33.jpg"
+      src="@/assets/3.jpg"
       alt="rest image"
       class="absolute inset-0 w-full h-full object-cover"
     />
@@ -59,8 +59,11 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <section class="w-full py-12 px-[6%] grid grid-cols-1 md:grid-cols-2 gap-4" id="establishment">
-    <div class="flex flex-col">
+  <section
+    class="w-full py-12 px-[6%] grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden"
+    id="establishment"
+  >
+    <div class="flex flex-col shadow-xl p-4">
       <h1 class="text-4xl font-bold mb-4">Who we are.</h1>
       <p class="text-lg" data-aos="fade-right">
         The Tigray Relief Association (TRA) is a humanitarian organization based in Tigray, a region
@@ -76,24 +79,24 @@ onMounted(() => {
         <br />
       </p>
       <router-link
-        to="/"
+        :to="{ name: 'contact' }"
         class="bg-[#539000] self-center px-4 py-2 text-white font-bold"
         data-aos="fade-right"
         >Get in touch</router-link
       >
     </div>
-    <img src="@/assets/d.jpg" alt="" class="w-full object-cover h-auto" data-aos="fade-left" />
+    <img src="@/assets/d.jpg" alt="" class="w-full object-cover h-auto shadow-xl" data-aos="fade-left" />
   </section>
 
-  <section class="flex flex-col px-[6%] gap-4 py-12 bg-gray-50 items-center">
+  <section class="flex flex-col px-[6%] gap-4 py-12 bg-green-900/10 items-center">
     <div class="w-full mx-auto">
-      <h1 class="text-center text-2xl font-semibold">
+      <h1 class="text-center text-4xl font-semibold lowercase">
         CAUSES AND POSITIVE CHANGE ALL OVER THE REGION
       </h1>
     </div>
     <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
       <div
-        class="p-6 flex flex-col gap-4 shadow bg-white items-center justify-center"
+        class="p-6 flex flex-col gap-4 bg-white items-center justify-center shadow-xl"
         data-aos="fade-right"
       >
         <!-- <font-awesome-icon icon="bullseye" class="text-6xl text-[#539000]"></font-awesome-icon> -->
@@ -103,10 +106,14 @@ onMounted(() => {
           class="w-24 h-24"
         />
         <h1 class="text-2xl font-bold">Our Mission</h1>
-        <p>Rest's mission is to empower the local church to serve the most vulnerable.</p>
+        <p class="lowercase">
+          TO PROVIDE RELIEF AND CHARITABLE AID TO CIVILIAN TIGRAYANS INCLUDING TIGRAYAN REFUGEES IN
+          THE UNITED KINGDOM AND ELSEWHERE WHO ARE IN NEED AS A RESULT OF NATURAL DISASTERS AND
+          ARMED CONFLICTS IN TIGRAY, NORTHERN ETHIOPIA
+        </p>
       </div>
       <div
-        class="p-6 flex flex-col gap-4 shadow bg-white items-center justify-center"
+        class="p-6 flex flex-col gap-4 shadow-xl bg-white items-center justify-center"
         data-aos="fade-up"
       >
         <!-- <font-awesome-icon icon="eye" class="text-6xl text-[#539000]"></font-awesome-icon> -->
@@ -116,10 +123,14 @@ onMounted(() => {
           class="w-24 h-24"
         />
         <h1 class="text-2xl font-bold">Our Vision</h1>
-        <p>Rest's mission is to empower the local church to serve the most vulnerable.</p>
+        <p class="lowercase">
+          TO PROVIDE RELIEF AND CHARITABLE AID TO CIVILIAN TIGRAYANS INCLUDING TIGRAYAN REFUGEES IN
+          THE UNITED KINGDOM AND ELSEWHERE WHO ARE IN NEED AS A RESULT OF NATURAL DISASTERS AND
+          ARMED CONFLICTS IN TIGRAY, NORTHERN ETHIOPIA
+        </p>
       </div>
       <div
-        class="p-6 flex flex-col gap-4 shadow bg-white items-center justify-center"
+        class="p-6 flex flex-col gap-4 shadow-xl bg-white items-center justify-center"
         data-aos="fade-right"
       >
         <!-- <font-awesome-icon icon="balance-scale" class="text-6xl text-[#539000]"></font-awesome-icon> -->
@@ -129,26 +140,30 @@ onMounted(() => {
           class="w-24 h-24"
         />
         <h1 class="text-2xl font-bold">Our Values</h1>
-        <p>Rest's mission is to empower the local church to serve the most vulnerable.</p>
+        <p class="lowercase">
+          TO PROVIDE RELIEF AND CHARITABLE AID TO CIVILIAN TIGRAYANS INCLUDING TIGRAYAN REFUGEES IN
+          THE UNITED KINGDOM AND ELSEWHERE WHO ARE IN NEED AS A RESULT OF NATURAL DISASTERS AND
+          ARMED CONFLICTS IN TIGRAY, NORTHERN ETHIOPIA
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Our teams section -->
   <section class="flex flex-col px-[1%] md:px-[6%] gap-4 py-6 md:py-12 bg-white">
-    <h1 class="text-2xl text-center">Our Team</h1>
+    <h1 class="text-4xl font-bold text-center">Our Team</h1>
     <div class="flex flex-wrap gap-4 py-8 justify-center items-center">
       <div
         v-for="(team, index) in teams"
         :key="index"
         data-aos="fade-up"
-        class="py-6 px-4 text-center w-full md:w-1/4 bg-gray-50 rounded shadow"
+        class="py-6 px-4 text-center w-full md:w-1/4 bg-green-900/10 rounded shadow-xl hover:bg-green-900 hover:text-white"
       >
         <div class="w-32 h-32 rounded-full overflow-hidden mx-auto ring-2 ring-yellow-300">
           <img :src="BASE_AVATAR + team.image" alt="" class="w-full h-full object-cover" />
         </div>
         <h1 class="text-xl font-semibold">{{ team.fullName }}</h1>
-        <p class="text-gray-700">{{ team.profession }}</p>
+        <p class="text-blue-700">{{ team.profession }}</p>
         <p>{{ team.biography }}</p>
       </div>
     </div>

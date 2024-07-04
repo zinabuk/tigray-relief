@@ -5,7 +5,7 @@
       accept="image/*"
       id="label"
       @change="onFileChange($event)"
-      class="absolute w-[1px] h-[1px] p-0 border-none focus:outline-iq-color1"
+      class="absolute w-[1px] h-[1px] p-0 border-none "
       :class="fileClass"
     />
     <font-awesome-icon

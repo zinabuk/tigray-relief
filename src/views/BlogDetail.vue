@@ -20,7 +20,7 @@ const event = ref({})
 
 async function getBlog() {
   try {
-    const response = await ApiService.get('/admin/events/' + route.params.title)
+    const response = await ApiService.get('/admin/event/' + route.params.title)
     if (response.success) {
       event.value = response.data
     }
@@ -29,7 +29,7 @@ async function getBlog() {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 5000)
     }
   }
@@ -51,7 +51,7 @@ async function getNews() {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 5000)
     }
   }
@@ -113,7 +113,7 @@ onMounted(() => {
           {{ event.eventTitle }}
         </h3>
         <router-link
-          :to="{ name: 'blog-detail', params: { id: event._id } }"
+          :to="{ name: 'blog-detail', params: { title: event.eventTitle } }"
           class="text-green-600 font-bold"
           >Read More</router-link
         >

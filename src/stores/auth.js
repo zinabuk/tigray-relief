@@ -5,13 +5,13 @@ import { ref } from 'vue'
 // import { useRouter } from 'vue-router'
 import router from '@/router/index'
 import AuthService from '@/services/AuthService'
-import ApiService from '@/services/apiService'
-
 import { jwtDecode } from 'jwt-decode'
+import ApiService from '@/services/apiService'
 
 export const useAuthStore = defineStore('auth', () => {
   // const router = useRouter()
 
+  const language = ref(localStorage.getItem('lang') || 'en')
   const token = ref(localStorage.getItem('access_token') || '')
   const user = ref({})
   let errorMessage = ref('')
@@ -23,23 +23,24 @@ export const useAuthStore = defineStore('auth', () => {
       if (response.success) {
         user.value = response.data
         token.value = response.token
-
         localStorage.setItem('access_token', response.token)
-
         const decodedToken = jwtDecode(token.value)
         exp.value = decodedToken.exp
         localStorage.setItem('role', user.value.role)
         localStorage.setItem('avatar', user.value.avatar)
+        localStorage.setItem('name', user.value.name)
+
         ApiService.setHeader(token.value)
+
         return true
       }
     } catch (error) {
       // alert('error.response.data.message')
-       
+
       if (error.response && error.response.data && error.response.status === 404) {
         errorMessage.value = error.response.data.message
       } else {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
         // errorMessage.value = 'An unexpected error occurred.'
       }
     }
@@ -48,6 +49,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function logOut() {
+    // alert("logout z")
     token.value = ''
     user.value = {}
     ApiService.removeHeader()
@@ -76,6 +78,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     user,
     token,
+    language,
     logIn,
     logOut,
     isAuthenticated,

@@ -34,6 +34,7 @@ let showModal = ref(false)
 
 const userLogOut = () => {
   if (logOut()) {
+    // alert('Logout')
     router.push('/')
   }
 }
@@ -59,7 +60,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="w-full bg-white">
+  <section class="w-full bg-green-900/10">
     <header class="flex items-center justify-between sticky shadow bg-white/100 z-10 top-0 px-2">
       <div class="w-[18%] flex items-center justify-between">
         <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" />
@@ -80,13 +81,18 @@ onUnmounted(() => {
         <button @click="userLogOut" class="relative">Logout</button>
         <div class="w-20 h-20 overflow-hidden">
           <img
-            v-if="avatar"
+            v-if="0"
             :src="BASE_AVATAR + `${avatar}`"
             alt="Profile"
             class="w-full h-full rounded-full"
           />
 
-          <img v-else src="@/assets/5.jpg" alt="my profile" class="w-full h-full rounded-full" />
+          <img
+            v-else
+            src="@/assets/account.png"
+            alt="my profile"
+            class="w-full h-full rounded-full"
+          />
         </div>
         <!-- <button @click="showModal = !showModal" class="w-12 h-12 overflow-hidden relative">
 
@@ -162,7 +168,7 @@ onUnmounted(() => {
         </div> -->
       </div>
     </header>
-    <div class="w-full flex flex-wrap">
+    <div class="w-full flex flex-wrap ">
       <LeftSide bar-class="w-[18%]"></LeftSide>
       <router-view></router-view>
     </div>

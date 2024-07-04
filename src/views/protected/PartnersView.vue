@@ -3,18 +3,18 @@
 import DataTable from '@/components/base/DataTable.vue'
 import ApiService from '@/services/apiService'
 import BaseInput from '@/components/base/BaseInput.vue'
-// import BaseTextarea from '@/components/base/BaseTextarea.vue'
+import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
-
 
 // import { useRouter } from 'vue-router'
 const tableHeaders = [
   { label: 'Title', field: 'businessName' },
   { label: 'Email Address', field: 'email' },
   { label: 'Phone', field: 'phoneNumber' },
-//   { label: 'Logo', field: 'logo' },
+  //   { label: 'Logo', field: 'logo' },
   { label: 'Link', field: 'website' },
   { label: 'Service', field: 'specializeArea' },
   { label: 'Description', field: 'description' }
@@ -30,13 +30,13 @@ const actions = [
   },
   {
     label: 'delete',
-    action: deleteDonation,
+    action: deletePartner,
     icon: 'trash',
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   },
   {
     label: 'verify',
-    action: deleteDonation,
+    action: deletePartner,
     icon: 'eye',
     style: 'hover:cursor-pointer text-green-500 py-1 px-2'
   }
@@ -66,7 +66,7 @@ const updateDonation = async () => {
       '/users/donations/' + editForm.value._id,
       editForm.value
     )
-    alert(response.success)
+    // alert(response.success)
     if (response.success) {
       fetchPartners()
 
@@ -79,14 +79,19 @@ const updateDonation = async () => {
   }
 }
 
-async function deleteDonation(donation) {
+async function deletePartner(partner) {
   const accept = window.confirm('Undo is not possible')
   if (accept) {
-    const response = await ApiService.delete(`/users/donations/${donation._id}`)
+    const response = await ApiService.delete(`/users/partnerships/${partner._id}`)
     if (response.success) {
       fetchPartners()
     }
   }
+}
+
+const image = ref('')
+const handleFileChange = (file) => {
+  image.value = file
 }
 
 function closeEditModal() {
@@ -98,7 +103,9 @@ function closeEditModal() {
     email: '',
     phoneNumber: '',
     address: '',
-    amount: ''
+    amount: '',
+    logo: ''
+
   }
 }
 // const router = useRouter()
@@ -107,14 +114,35 @@ function closeEditModal() {
 //   router.push({ name: 'jobApplicants', params: { id: career._id } })
 // }
 
+const isAdd = ref(false)
+const toggleAdd = () => {
+  isAdd.value = true
+}
+
+const form = ref({})
+const submitPartner = async () => {
+  const formData = new FormData()
+  formData.append('businessName', form.value.businessName)
+  formData.append('email', form.value.email)
+  formData.append('phoneNumber', form.value.phoneNumber)
+  formData.append('website', form.value.website)
+  formData.append('specializeArea', form.value.specializeArea)
+  formData.append('description', form.value.description)
+  formData.append('logo', image.value)
+
+  const res = await ApiService.post('/users/partnerships', formData)
+  if (res.success) {
+    fetchPartners()
+  }
+}
 onMounted(fetchPartners)
 </script>
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <router-link :to="{ name: 'home' }" class="bg-[#539000] text-white self-end px-2 py-1"
-      >Add Donation</router-link
-    >
+    <button class="bg-[#539000] text-white self-end px-2 py-1" @click="toggleAdd">
+      Add Partner
+    </button>
     <DataTable :tableHeaders="tableHeaders" :tableValues="donations" :actions="actions">
     </DataTable>
   </section>
@@ -179,6 +207,69 @@ onMounted(fetchPartners)
           inputClass="px-4 py-3"
         ></BaseInput>
         <BaseButton type="submit">Save Changes</BaseButton>
+      </form>
+    </div>
+  </div>
+
+  <div
+    v-if="isAdd"
+    class="w-full z-30 bg-white/80 fixed inset-0 flex flex-col items-center justify-center p-6 gap-2 shadow rounded-lg"
+  >
+    <div class="w-1/2 bg-white">
+      <h1 class="text-center text-xl font-semibold">Partnership Form</h1>
+      <p class="justify-self-end text-green-500 bg-white" v-if="success">{{ success }}</p>
+      <form @submit.prevent="submitPartner" class="w-full flex flex-col gap-4">
+        <BaseInput
+          v-model="form.businessName"
+          type="text"
+          required
+          inputClass="px-8 py-3 "
+          placeholder="Your business name"
+        ></BaseInput>
+        <BaseInput
+          v-model="form.email"
+          type="email"
+          inputClass="px-8 py-3"
+          required
+          placeholder="Enter Your Email"
+          autocomplete="true"
+        ></BaseInput>
+
+        <BaseInput
+          v-model="form.phoneNumber"
+          type="text"
+          inputClass="px-8 py-3"
+          required
+          placeholder="Enter Your Phone number"
+        ></BaseInput>
+        <BaseInput
+          v-model="form.website"
+          inputClass="px-8 py-3"
+          placeholder="Enter your website's link"
+        ></BaseInput>
+        <BaseInput
+          v-model="form.specializeArea"
+          required
+          inputClass="px-8 py-3"
+          placeholder="Specialize area"
+        ></BaseInput>
+
+        <BaseTextarea
+          v-model="form.description"
+          rows="4"
+          class=""
+          textareaClasses="px-8 "
+          placeholder="Description"
+        ></BaseTextarea>
+
+        <BaseFileInput @image-update="handleFileChange($event)" label="add logo"></BaseFileInput>
+        <p v-if="message" class="text-red-700">{{ message }}</p>
+        <div class="flex gap-4">
+          <BaseButton type="submit" class="self-start">Submit</BaseButton>
+          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="isAdd = false">
+            cancel
+          </button>
+        </div>
       </form>
     </div>
   </div>

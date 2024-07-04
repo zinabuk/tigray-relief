@@ -1,11 +1,13 @@
 <script setup>
 import ApiService from '@/services/apiService'
 import { BASE_AVATAR } from '@/config'
-import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 
-import 'swiper/swiper-bundle.css'
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/pagination'
 import 'swiper/css/navigation'
+import 'swiper/css/effect-fade'
 
 // const news = async () => {
 //   const response = await ApiService.get()
@@ -13,13 +15,24 @@ import 'swiper/css/navigation'
 
 import { ref, onMounted } from 'vue'
 
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 
 const modules = [Autoplay, Pagination, Navigation]
 
-const router = useRouter()
+// const router = useRouter()
 
 // let isLoading = '';
+const heroes = ref([])
+const errorMessage = ref('')
+const fetchHeroes = async () => {
+  try {
+    const response = await ApiService.get('users/home')
+    // alert(response.data.length)
+    heroes.value = response.data
+  } catch (error) {
+    errorMessage.value = 'Failed to fetch achievements'
+  }
+}
 const services = ref([])
 const fetchServices = async () => {
   try {
@@ -32,7 +45,7 @@ const fetchServices = async () => {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }
@@ -52,8 +65,8 @@ const fetchNews = async () => {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
-      }, 100000)
+        // router.push({ name: 'NetworkError' })
+      }, 1000)
     }
   }
 }
@@ -70,52 +83,61 @@ const fetchPartners = async () => {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 100000)
     }
   }
 }
 
 onMounted(() => {
-  fetchServices(), fetchNews(), fetchPartners()
+  fetchServices(), fetchNews(), fetchPartners(), fetchHeroes()
 })
 
-const originalText = 'Relief Association of Tigray'
+const originalText = 'Relief Society of Tigray'
 </script>
 
 <template>
-  <main class="w-full relative min-h-[calc(100vh_-_80px)] flex flex-col">
-    <img
-      alt="Vue logo"
-      class="logo absolute h-full object-cover w-full inset-0"
-      src="@/assets/hero-3.jpg"
-    />
-
-    <div
-      class="absolute bottom-0 w-full md:w-2/5 h-d py-12 flex flex-col text-black justify-center px-4 bg-white/80 md:bg-white rounded-tr-[100px]"
+  <main class="w-full h-full flex flex-col">
+    <Swiper
+      :slides-per-view="1"
+      :modules="[Autoplay, Pagination, Navigation]"
+      :autoplay="{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: false }"
+      loop
+      class="w-full h-screen md:h-[calc(100vh_-_80px)]"
     >
-      <div class="wave-container w-full" data-aos="fade-left">
-        <p class="wave-text font-bold text-4xl">{{ originalText }}</p>
-      </div>
-      <h6 class="font-extralight">
-        Rest is a highly acclaimed non-profit organization dedicated to supporting the international
-        Tigrai community in overcoming...
-      </h6>
-      <div class="flex gap-4 p-4">
-        <router-link
-          class="bg-yellow-300 rounded-xl text-white px-4 py-2 self-start font-bold"
-          to="/donate"
-          >Donate Now</router-link
+      <swiper-slide v-for="(hero, i) in heroes" :key="i" class="w-full relative h-full"
+        ><img
+          v-if="hero.heroImage"
+          alt="Vue logo"
+          class="logo absolute h-full object-cover w-full inset-0"
+          :src="BASE_AVATAR + hero.heroImage"
+        />
+        <div
+          class="absolute bottom-16 w-full md:w-2/5 h-d py-6 flex flex-col text-green-900 justify-center px-4 bg-yellow-500/80 zmd:bg-white/0 rounded-tr-[100px]z left-4"
         >
-        <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold"
-          >Learn More</router-link
-        >
-      </div>
-    </div>
+          <div class="wave-container w-full" zdata-aos="fade-left">
+            <p class="zwave-text font-bold text-4xl">{{ hero.heroTitle }}</p>
+          </div>
+          <h6 class="font-extralight">
+            {{ hero.heroDescription }}
+          </h6>
+          <div class="flex gap-4 p-4">
+            <router-link
+              class="bg-green-900 rounded-xl text-yellow-500 px-4 py-2 self-start font-bold"
+              to="/donate"
+              >Donate Now</router-link
+            >
+            <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold"
+              >Learn More</router-link
+            >
+          </div>
+        </div>
+      </swiper-slide>
+    </Swiper>
   </main>
 
   <!-- Services -->
-  <section class="w-full bg-gray-50 px-[6%] py-12">
+  <section class="w-full bg-green-900/10 px-[6%] py-12">
     <h1 class="text-center text-3xl">Services we provide</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div v-for="(service, i) in services" :key="i" class="p-4 flex flex-col gap-2 bg-white">
@@ -140,24 +162,24 @@ const originalText = 'Relief Association of Tigray'
 
   <!-- history -->
   <section class="w-full px-[6%] relative grid grid-cols-1 md:grid-cols-2 gap-4 py-12">
-    <div class="flex flex-col gap-2 py-8 top-0 z-30">
-      <h6 class="text-[#579000]/60">Serving with clarity</h6>
+    <div class="flex flex-col gap-2 py-8 top-0 z-30 shadow">
+      <h6 class="text-[#579000]">Serving with clarity</h6>
       <h1 class="text-4xl font-semibold">Providing impartial services..</h1>
       <p>
         Rest is a highly acclaimed non-profit organization dedicated to supporting the international
         Tigrai community in overcoming the broad range of conditions ...
       </p>
 
-      <div class="flex flex-wrap py-2 gap-4 justify-betweden items-center">
-        <div class="bg-[#539000] font-bold text-white px-4 py-2">
+      <div class="grid grid-cols-3 gap-4 w-full">
+        <div class="bg-green-900 font-bold text-white px-4 py-2">
           <h1>20 +</h1>
           <p>Years of service</p>
         </div>
-        <div class="bg-[#539000] font-bold text-white px-4 py-2">
+        <div class="bg-green-900 font-bold text-white px-4 py-2">
           <h1>300 +</h1>
           <p>Projects</p>
         </div>
-        <div class="bg-[#539000] font-bold text-white px-4 py-2">
+        <div class="bg-green-900 font-bold text-white px-4 py-2">
           <h1>5 +</h1>
           <p>Services</p>
         </div>
@@ -166,14 +188,19 @@ const originalText = 'Relief Association of Tigray'
         >Learn More About us</router-link
       >
     </div>
-    <img src="@/assets/hero.jpg" alt="" class="w-full inset-0 h-full object-cover" />
+    <div class="w-full overflow-hidden">
+      <img
+        src="@/assets/hero.jpg"
+        alt=""
+        class="w-full inset-0 h-full object-cover hover:scale-[1.2] transition-transform duration-500 ease-in-out"
+      />
+    </div>
   </section>
 
   <!-- Donation section -->
-
-  <section class="w-full px-[6%] py-12">
+  <section class="w-full px-[6%] py-12 bg-green-900/10 overflow-hidden">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div class="p-4 flex flex-col gap-2 bg-gray-50">
+      <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-right">
         <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon>
         <h1 class="text-2xl font-bold">Become a volunteer</h1>
         <p>
@@ -182,7 +209,7 @@ const originalText = 'Relief Association of Tigray'
 
         <router-link to="/donate" class="text-green-600 underline font-bold"> Join Now</router-link>
       </div>
-      <div class="p-4 flex flex-col gap-2 bg-gray-50">
+      <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-up">
         <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon>
         <h1 class="text-2xl font-bold">Send donation</h1>
 
@@ -192,9 +219,9 @@ const originalText = 'Relief Association of Tigray'
 
         <router-link to="/donate" class="text-green-600 underline font-bold"> Send Now</router-link>
       </div>
-      <div class="p-4 flex flex-col gap-2 bg-gray-50">
+      <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-left">
         <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon>
-        <h1 class="text-2xl font-bold">Contact us now</h1>
+        <h1 class="text-2xl font-bold">Contact us</h1>
 
         <p>
           If the application's data and workload grow beyond the capabilities of the local servers
@@ -217,10 +244,14 @@ const originalText = 'Relief Association of Tigray'
   </section> -->
 
   <!-- Start of news section -->
-  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4">
+  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5">
     <h1 class="text-3xl font-bold">News and stories from us</h1>
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div
+        v-for="(event, i) in blogs.slice(0, 4)"
+        :key="i"
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-2 shadow"
+      >
         <div>
           <img
             :src="BASE_AVATAR + event.eventImage"
@@ -255,20 +286,20 @@ const originalText = 'Relief Association of Tigray'
       <swiper-slide
         v-for="(partner, i) in partners"
         :key="i"
-        class="relative w-full works group flex items-center justify-center overflow-auto shadow"
+        class="relative w-full works mx-auto shadow-xl gap-6 bg-green-900/10 p-4"
       >
-        <div class="w-24 h-24">
+        <div class="w-32 h-32 mx-auto overflow-hidden">
           <img
             v-if="partner.logo"
             :src="BASE_AVATAR + partner.logo"
             :alt="partner.busineName"
-            class="w-full h-full rounded-xl object-cover"
+            class="w-full h-full rounded-full object-cover"
           />
           <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black">
             {{ partner.businessName[0] }}
           </h2>
         </div>
-        <p>{{ partner.businessName }}</p>
+        <p class="text-center font-bold">{{ partner.businessName }}</p>
       </swiper-slide>
     </swiper>
   </section>

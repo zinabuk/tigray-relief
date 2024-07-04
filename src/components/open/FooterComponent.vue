@@ -7,9 +7,9 @@ const subscribe = () => {
 </script>
 
 <template>
-  <section class="w-full px-12 bg-[#579000] font-bodld text-white">
+  <section class="w-full px-12 bg-green-900 font-bodld text-white">
     <div class="w-full grid grid-cols-1 md:grid-cols-4 py-8 gap-4">
-      <div>
+      <!-- <div>
         <img
           src="@/assets/rest-logo.png"
           alt=""
@@ -21,7 +21,7 @@ const subscribe = () => {
           We offer crisis response and development programs, including food aid, healthcare,
           education, water and sanitation, and livelihood initiatives.
         </p>
-      </div>
+      </div> -->
 
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">Quick Links</h1>

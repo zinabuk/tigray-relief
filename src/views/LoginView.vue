@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 // import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
@@ -7,50 +7,57 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 
 import { useAuthStore } from '@/stores/auth'
+const role = ref(localStorage.getItem('role') || '')
 
+const router = useRouter()
+
+watchEffect(() => {
+  if (role.value === 'admin') {
+    router.push({ name: 'admin-home' })
+  } else {
+    router.push({ name: 'staff-home' })
+  }
+})
 const { logIn } = useAuthStore()
 // const { errorMessage, } = storeToRefs(useAuthStore())
 const formData = ref({
-  email: '',
+  username: '',
   password: ''
 })
-
-const router = useRouter()
 
 const loginLoader = ref(false)
 
 async function handleLogin() {
-  loginLoader.value = true
+  // loginLoader.value = true
   //   errorMessage.value = ''
   const res = await logIn(formData.value)
   if (res) {
-    router.push({ name: 'admin-home' })
+    router.push({ name: 'dashboard' })
     formData.value = {}
   }
 }
 </script>
 
 <template>
-  <section class="w-full py-12 bg-gray-50 px-[6%] flex items-center justify-center">
+  <section class="w-full py-12 bg-green-900/10 h-screen px-[6%] flex items-center justify-center">
     <div
-      class="shadow-inner border-2 flex flex-col justify-center rounded-md p-12 space-y-4 md:w-4/12 bg-white"
+      class="shadow-innerz border-2 flex flex-col justify-center rounded-md p-12 space-y-4 md:w-4/12 bg-white shadow-xl"
     >
-      <!-- <img
-        src="@/assets/iq-logo.png"
-        class="w-20 rounded-full h-20 mx-auto object-fit bg-cover object-center"
+      <img
+        src="@/assets/rest-logo.png"
+        class="w- h- mx-auto object-fit bg-cover object-center"
         width="200px"
         height="200px"
-      /> -->
+      />
       <h1 class="font-bold text-center">Sign In</h1>
       <!-- <p v-if="errorMessage" class="text-sm text-red-400 text-center">{{ errorMessage }}</p> -->
       <form @submit.prevent="handleLogin" class="w-full flex flex-col gap-4 items-center">
         <BaseInput
-          type="email"
-          v-model="formData.email"
+          v-model="formData.username"
           inputClass="focus:border focus:outline-none border-yellow-300 bg-[#539000]/30 border-iq-color1 focus:bg-white focus:text-black px-4 py-3 w-full"
-          placeholder="your email address"
+          placeholder="Email / phone number"
           required
-          label="Email"
+          label="Username"
         ></BaseInput>
         <BaseInput
           type="password"

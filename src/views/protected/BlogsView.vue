@@ -21,7 +21,7 @@ const fetchNews = async () => {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }
@@ -61,20 +61,19 @@ const updateNew = async () => {
     formData.append('eventImage', editedNew.value.eventImage)
 
     const response = await ApiService.patch('/admin/events/' + editedNew.value._id, formData)
-    if (response.success) {
-      alert('EDITED')
+    if (response.success) { 
       setTimeout(() => {
         closeEditModal()
       }, 3000)
       fetchNews()
     }
   } catch (error) {
-    alert(error)
+    
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }

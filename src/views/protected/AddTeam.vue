@@ -10,12 +10,12 @@
   
           <!-- Event Title -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="eventTitle" label="Event Title" v-model="team.fullName" />
+            <BaseInput type="text" id="fullName" label="Full Name" v-model="team.fullName" />
           </div>
   
           <!-- Event Category -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="category" label="Category" v-model="team.profession" />
+            <BaseInput type="text" id="Profession" label="Profession" v-model="team.profession" />
           </div>
   
           <!-- Event Date -->
@@ -26,8 +26,8 @@
           <div>
             <BaseTextarea
               v-model="team.biography"
-              placeholder="Write an event Description"
-              label="Description"
+              placeholder="Biography"
+              label="Biography"
             ></BaseTextarea>
             
           </div>
@@ -109,7 +109,7 @@
           const response = await apiService.request(request)
   
           if (response.success) {
-            alert('OK')
+            // alert('OK')
             this.team = { 
             }
           }

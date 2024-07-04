@@ -6,7 +6,6 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import ApiService from '@/services/apiService'
 import { useRouter } from 'vue-router'
 
-
 const router = useRouter()
 let form = ref({
   service: '',
@@ -18,9 +17,7 @@ let form = ref({
   amount: ''
 })
 
-
 const submitDonation = async () => {
-   
   try {
     const response = await ApiService.post('/users/donations', form.value)
     alert(response.success)
@@ -33,13 +30,16 @@ const submitDonation = async () => {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }
 }
 
-
+let showModal = ref(false)
+let fName = ref('')
+let telebirrAccount = ref('')
+let cAmount = ref('')
 </script>
 
 <template>
@@ -66,7 +66,9 @@ const submitDonation = async () => {
           <h4 class="text-lg font-bold mb-2">
             Partner With Us As We Bring Relief To Our Communities
           </h4>
-
+          <div class="text-white bg-blue-700 p-2 inline-block self-start" @click="showModal = true">
+            <button>Use telebirr</button>
+          </div>
           <h2 class="text-2xl font-bold mb-2">Donation Form</h2>
           <p class="text-gray-500 mb-4">"*" indicates required fields</p>
           <h5 class="text-lg font-bold mb-2">Donation Amount</h5>
@@ -148,6 +150,29 @@ const submitDonation = async () => {
         </form>
       </div>
     </section>
+
+    <div
+      id="telebirr_modal"
+      class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
+      v-if="showModal"
+    >
+      <form @submit.prevent="" class="flex flex-col gap-4 bg-white w-1/2 p-8 shadow-xl border rounded-xl">
+        <div class="flex flex-col">
+        <BaseInput v-model="fName" placeholder="Full Name" required></BaseInput>   
+        </div>
+        <div class="flex flex-col ">
+         <BaseInput v-model="telebirrAccount" placeholder="Telebirr Account"></BaseInput>
+        </div>
+        <div class="flex flex-col ">
+         <BaseInput v-model="cAmount" placeholder="Contribution Amount"></BaseInput>
+        </div>
+
+        <div class="flex justify-between">
+        <BaseButton type="submit">Submit</BaseButton>
+        <button class="bg-gray-700 text-white p-2" @click="showModal=false">Cancel</button>
+        </div>
+      </form>
+    </div>
   </section>
 </template>
 

@@ -22,7 +22,6 @@ class ApiService {
     const response = await api.delete(endpoint)
     return response.data
   }
-
   async request(req) {
     const response = await api.request(req)
     return response.data

@@ -32,7 +32,7 @@ const submitContact = async () => {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }
@@ -78,7 +78,7 @@ const submitContact = async () => {
       class="px-24 grid grid-cols-1 md:grid-cols-3 gap-4 itemss-center justify-center py-12 bg-gray-50"
     >
       <div
-        class="bg-white flex flex-col shadow-2xl items-center py-6 gap-4 group transition-all duration-700 hover:-translate-y-2"
+        class="bg-white flex flex-col shadow-2xl items-center py-6 gap-4 group transition-allz duration-700z hover:-translate-y-2"
       >
         <font-awesome-icon
           icon="envelope"

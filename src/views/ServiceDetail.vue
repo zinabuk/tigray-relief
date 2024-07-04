@@ -1,6 +1,4 @@
 <script setup>
-
-
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -22,8 +20,8 @@ const service = ref({})
 
 async function getService() {
   try {
-    const response = await ApiService.get('/admin/services/' + route.params.title)
-    if (response.success) {
+    const response = await ApiService.get('/admin/service/' + route.params.title)
+    if (response.success) { 
       service.value = response.data
     }
   } catch (error) {
@@ -31,7 +29,7 @@ async function getService() {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 5000)
     }
   }
@@ -41,19 +39,19 @@ async function getService() {
 //   return dayjs(date).locale('en').format('MMMM D, YYYY')
 // }
 
-const news = ref([])
+const services = ref([])
 async function getServices() {
   try {
     const response = await ApiService.get('/admin/services')
     if (response.success) {
-      news.value = response.data
+      services.value = response.data
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
       return
     } else {
       setTimeout(() => {
-        router.push({ name: 'NetworkError' })
+        // router.push({ name: 'NetworkError' })
       }, 5000)
     }
   }
@@ -94,21 +92,22 @@ onMounted(() => {
     </div>
   </section>
   <div class="w-full px-[6%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div v-for="(event, i) in news" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div v-for="(service, i) in services" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <img
-          :src="BASE_AVATAR + event.eventImage"
+          :src="BASE_AVATAR + service.serviceImage"
           alt=""
           class="max-h-[500px] rounded-xl w-full object-cover"
         />
       </div>
       <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
-        <h6 class="text-gray-500">{{ event.category }} | {{ event.eventDate }}</h6>
+        <h6 class="text-gray-500"></h6>
         <h3 class="text-lg font-bold">
-          {{ event.eventTitle }}
+          {{ service.serviceTitle }}
         </h3>
+        <p class="line-clamp-4">{{ service.serviceDescription }}</p>
         <router-link
-          :to="{ name: 'blog-detail', params: { id: event._id } }"
+          :to="{ name: 'service-detail', params: { title: service.serviceTitle } }"
           class="text-green-600 font-bold"
           >Read More</router-link
         >

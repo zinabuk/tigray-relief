@@ -2,7 +2,11 @@
   <header class="w-full hidden md:flex sticky top-0 z-50">
     <nav class="w-full px-[1%] flex justify-between items-center py-4 font-bold bg-white/100">
       <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
-        <img src="@/assets/rest-logo.png" alt="Logo of REST" class="rounded-full w-32 h-20" />
+        <img
+          src="@/assets/rest-logo.png"
+          alt="Logo of REST"
+          class="rounded-fullz h-24 object-contain"
+        />
       </router-link>
       <ul :class="['flex space-x-4 font-bold ']">
         <li v-for="(item, i) in items" :key="i" :class="[' ']">
@@ -49,9 +53,9 @@
       <div>
         <router-link
           :to="{ name: 'donate' }"
-          class="bg-yellow-300 rounded-xl text-black px-4 py-2"
-          >Donate</router-link
-        >
+          class="bg-green-900 rounded-xl text-yellow-500 px-4 py-2 pulse"
+          >Donate <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
+        ></router-link>
       </div>
       <!-- <div class="relative group">
         

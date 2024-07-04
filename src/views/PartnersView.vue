@@ -27,7 +27,7 @@ const getAllPartners = async () => {
     if (error.response && error.response.status === 404 && error.response.data) {
       partners.value = []
     } else {
-      router.push({ name: 'NetworkError' })
+      // router.push({ name: 'NetworkError' })
     }
   }
 }
@@ -38,13 +38,13 @@ const form = ref({
   logo: '',
   website: '',
   specializeArea: '',
-  description: ''
+  description: '',
 })
 
 const message = ref('')
 const success = ref('')
 
-const router = useRouter()
+// const router = useRouter()
 async function savePartner() {
   try {
     const response = await ApiService.post('/users/partnerships', form.value)
@@ -68,11 +68,11 @@ async function savePartner() {
       message.value = ''
     }
   } catch (error) {
-    alert(error)
+    // alert(error)
     if (error.response && error.response.status === 404) {
       message.value = error.response.data.message
     } else {
-      router.push({ name: 'NetworkError' })
+      // router.push({ name: 'NetworkError' })
     }
   }
 }
@@ -121,13 +121,13 @@ onMounted(() => {
             <img
               :src="BASE_AVATAR + `${partner.logo}`"
               :alt="partner.businessName"
-              class="w-24 md:w-16 h-auto mx-auto"
+              class="w-56 md:w-56 h-50 mx-auto"
           /></a>
           <img
             v-else
             :src="BASE_AVATAR + `${partner.logo}`"
             :alt="partner.businessName"
-            class="w-24 md:w-16 h-auto mx-auto"
+            class="w-56 md:w-56 h-auto mx-auto"
           />
           <h4 class="text-center">{{ partner.businessName }}</h4>
         </swiper-slide>

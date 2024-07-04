@@ -54,7 +54,8 @@ import {
   faBinoculars,
   faBalanceScale,
   faBrain,
-  faPlus
+  faPlus,
+  faHeart
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -112,10 +113,11 @@ library.add(
   faBinoculars,
   faBalanceScale,
   faBrain,
-  faPlus
+  faPlus,
+  faHeart
 )
 
-AOS.init({ duration: 2000 })
+AOS.init({ duration: 1000 })
 //Fontawesomes importing end
 
 import App from './App.vue'

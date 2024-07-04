@@ -1,6 +1,10 @@
 <script setup>
 import ApiService from '@/services/apiService'
 
+import BaseInput from '@/components/base/BaseInput.vue'
+import BaseButton from '@/components/base/BaseButton.vue'
+// import BaseTextarea from '@/components/base/BaseTextarea.vue'
+
 import { BASE_AVATAR } from '@/config'
 // const news = async () => {
 //   const response = await ApiService.get()
@@ -11,10 +15,12 @@ const router = useRouter()
 import { ref, onMounted } from 'vue'
 
 const teams = ref([])
-const fetchTeams = async () => {
-  try {
-    const response = await ApiService.get('/admin/our-teams')
+const user = ref({})
+const isAdding = ref(false)
 
+const fetchUsers = async () => {
+  try {
+    const response = await ApiService.get('/admin/staff/all')
     if (response.success) {
       teams.value = response.data
     }
@@ -35,7 +41,8 @@ const deleteTeam = async (id) => {
   if (sure) {
     const res = await ApiService.delete('/admin/our-teams/' + id)
     if (res.success) {
-      fetchTeams()
+    
+      fetchUsers()
     }
   }
 }
@@ -61,7 +68,7 @@ const handleFileChange = (event) => {
 
 const updateNew = async (id) => {
   try {
-    const formData = new FormData() 
+    const formData = new FormData()
     formData.append('eventTitle', editedNew.value.eventTitle)
     formData.append('eventDescription', editedNew.value.eventDescription)
     formData.append('category', editedNew.value.category)
@@ -75,7 +82,7 @@ const updateNew = async (id) => {
       setTimeout(() => {
         closeEditModal()
       }, 3000)
-      fetchTeams()
+      fetchUsers()
     }
   } catch (error) {
     // alert(error)
@@ -89,45 +96,51 @@ const updateNew = async (id) => {
   }
 }
 
+const submitUser = async () => {
+  user.value.role = 'staff'
+  const response = await ApiService.post('/admin/register', user.value)
+  if (response.success) {
+    alert('OK')
+  }
+}
+
 onMounted(() => {
-  fetchTeams()
+  fetchUsers()
 })
 </script>
 
 <template>
   <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
-    <!-- Services -->
-    <router-link
-      :to="{ name: 'admin-add-team' }"
+    <button
+      @click="isAdding = true"
       class="text-[#539000] self-end border flex items-center px-2 py-1 bg-white border-[#539000]"
     >
       <font-awesome-icon
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add Team</router-link
-    >
+      Add User
+    </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-2 bg-white">
         <img
-          v-if="team.image"
+          v-if="team.avatar"
           :src="BASE_AVATAR + team.image"
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
         />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">{{ team.fullName[0] }}</p>
-        <h1 class="text-2xl font-bold">{{ team.fullName }}</h1>
+        <p v-else class="w-20 h-20 rounded-full text-6xl">{{ team.name[0] }}</p>
+        <h1 class="text-2xl font-bold">{{ team.name }}</h1>
         <div class="relative">
           <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
         <p class="line-clamp-5">
-          {{ team.profession }}
-          {{ team.biography }}
+          {{ team.email }}
         </p>
-
-        <router-link class="text-[#539000]" to="/">Read More</router-link>
+        <p>{{ team.phoneNumber }}</p>
+        <!-- <router-link class="text-[#539000]" to="/">Read More</router-link> -->
         <div class="flex gap-4">
           <button @click="deleteTeam(team._id)">
             <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
@@ -196,6 +209,72 @@ onMounted(() => {
             <button @click="closeEditModal" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">
               Cancel
             </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="bg-white/80 inset-0 fixed z-40 w-full flex items-center justify-center"
+      v-if="isAdding"
+    >
+      <div class="w-1/2">
+        <form
+          @submit.prevent="submitUser"
+          class="w-full bg-white rounded-lg p-6 shadow flex flex-col gap-2"
+          enctype="multipart/form-data"
+        >
+          <h1 class="flex justify-center font-bold font-serif">Add User</h1>
+
+          <div class="flex justify-center">
+            <BaseInput type="text" id="fullName" label="Full Name" v-model="user.name" />
+          </div>
+
+          <div class="flex justify-center">
+            <BaseInput type="text" id="email" label="Email" v-model="user.email" />
+          </div>
+          <div class="flex justify-center">
+            <BaseInput
+              type="text"
+              id="phoneNumber"
+              label="Phone Number"
+              v-model="user.phoneNumber"
+            />
+          </div>
+          <!-- <div class="flex justify-center">
+            <BaseInput type="text" id="role" label="Role" v-model="user.role" />
+          </div> -->
+          <div class="flex justify-center">
+            <BaseInput type="password" id="password" label="Password" v-model="user.password" />
+          </div>
+          <!-- <div>
+            <BaseTextarea 
+              v-model="user.description"
+              placeholder="Biography"
+              label="Biography"
+            ></BaseTextarea>
+          </div> -->
+          <!-- Event Image -->
+          <div class="flex justify-between">
+            <div class="flex">
+              <input
+                type="file"
+                id="eventImage"
+                @change="handleFileChange"
+                class="hidden"
+                ref="eventImageInput"
+              />
+              <label
+                for="eventImage"
+                class="cursor-pointer bg-[#539000]/70 hover:bg-white text-white hover:text-[#539000] font-medium py-2 px-4 rounded"
+              >
+                image
+              </label>
+            </div>
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+              <BaseButton label="">Submit</BaseButton>
+            </div>
           </div>
         </form>
       </div>

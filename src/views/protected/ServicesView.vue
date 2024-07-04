@@ -2,12 +2,12 @@
 import ApiService from '@/services/apiService'
 
 import { BASE_AVATAR } from '@/config'
-// const news = async () => {
-//   const response = await ApiService.get()
-// }
 
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import BaseInput from '@/components/base/BaseInput.vue'
+import BaseButton from '@/components/base/BaseButton.vue'
+import BaseTextarea from '@/components/base/BaseTextarea.vue'
+import BaseFileInput from '@/components/base/BaseFileInput.vue'
+
 import { ref, onMounted } from 'vue'
 
 const services = ref([])
@@ -18,81 +18,61 @@ const fetchServices = async () => {
       services.value = response.data
     }
   } catch (error) {
-    
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
-      setTimeout(() => {
-        router.push({ name: 'NetworkError' })
-      }, 2000)
+      setTimeout(() => {}, 2000)
     }
   }
 }
 
 let showEditModal = ref(false)
-const editedNew = ref({
-  eventTitle: '',
-  eventDescription: '',
-  category: '',
-  eventDate: '',
-  eventOrganizer: '',
-  eventImage: null
+let showAddModal = ref(false)
+
+const form = ref({
+  serviceTitle: '',
+  serviceDescription: '',
+  serviceImage: ''
 })
-// const openEditModal = async (event) => {
-//   showEditModal.value = true
-//   editedNew.value = event
-// }
+
+let logo = ref('')
+const handleFileChange = (file) => {
+  form.value.serviceImage = file
+  logo.value = file.name
+}
+
+const errorMessage = ref('')
+const successMessage = ref('')
+
+const saveService = async () => {
+  const formData = new FormData()
+  formData.append('serviceTitle', form.value.serviceTitle)
+  formData.append('serviceDescription', form.value.serviceDescription)
+  if (form.value.serviceImage) {
+    formData.append('serviceImage', form.value.serviceImage)
+  }
+
+  try {
+    const response = await ApiService.post('/admin/services', formData)
+
+    if (response.success) {
+      successMessage.value = response.message
+      fetchServices()
+    } else {
+      errorMessage.value = 'Failed to save Partner'
+    }
+  } catch (error) {
+    errorMessage.value = 'Failed to save Partner'
+  }
+}
 
 const closeEditModal = () => {
   showEditModal.value = false
 }
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0]
-  editedNew.value.eventImage = file
+const closeModal = () => {
+  showAddModal.value = false
 }
-
-const updateNew = async (id) => {
-  try {
-    const formData = new FormData()
-    alert(editedNew.value.eventTitle)
-    formData.append('eventTitle', editedNew.value.eventTitle)
-    formData.append('eventDescription', editedNew.value.eventDescription)
-    formData.append('category', editedNew.value.category)
-    formData.append('eventDate', editedNew.value.eventDate)
-    formData.append('eventOrganizer', editedNew.value.eventOrganizer)
-    formData.append('eventImage', editedNew.value.eventImage)
-
-    const response = await ApiService.patch('/admin/events/' + id, formData)
-    if (response.success) {
-      alert('EDITED')
-      setTimeout(() => {
-        closeEditModal()
-      }, 3000)
-      fetchServices()
-    }
-  } catch (error) {
-    alert(error)
-    if (error.response && error.response.data && error.response.status === 404) {
-      return
-    } else {
-      setTimeout(() => {
-        router.push({ name: 'NetworkError' })
-      }, 2000)
-    }
-  }
-}
-
-// const handleOutsideClick = (event) => {
-//   if (event && event.target && !event.target.closest('.modal')) {
-//     closeEditModal()
-//   }
-
-//   document.addEventListener('click', handleOutsideClick)
-//   return () => {
-//     document.removeEventListener('click', handleOutsideClick)
-//   }
-// }
 
 onMounted(() => {
   fetchServices()
@@ -102,20 +82,19 @@ onMounted(() => {
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4">
     <!-- Services -->
-    <router-link
-      :to="{ name: 'admin-add-blogs' }"
+    <button
+      @click="showAddModal = true"
       class="text-[#539000] self-end border flex items-center px-2 py-1 bg-white border-[#539000]"
     >
       <font-awesome-icon
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add Service</router-link
-    >
+      Add Service
+    </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div v-for="(service, i) in services" :key="i" class="p-4 flex flex-col gap-2 bg-white">
-        <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto"></font-awesome-icon> -->
         <img
           v-if="service.serviceImage"
           :src="BASE_AVATAR + service.serviceImage"
@@ -136,68 +115,63 @@ onMounted(() => {
       </div>
     </div>
     <div
-      v-if="showEditModal"
-      class="fixed inset-0 overflow-auto flex items-center z-40 justify-center modal bg-black bg-opacity-50"
+      v-if="showAddModal"
+      class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/50 bg-opacity-50 modal"
     >
-      <div class="bg-white p-4">
-        <h2 class="text-lg font-bold mb-4">Edit News</h2>
-        <form @submit.prevent="updateNew" class="grid grid-cols-2 gap-4">
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventTitle">Title</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.eventTitle"
-              required
-            />
-          </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventDescription">Description</label>
-            <textarea
-              class="border rounded px-2 py-1 w-full h-40"
-              type="text"
-              v-model="editedNew.eventDescription"
-              required
-            ></textarea>
-          </div>
-          <div class="col-span-1 mb-4">
-            <label class="block mb-2" for="category">Category</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.category"
-              required
-            />
-          </div>
-          <div class="col-span-1 mb-4">
-            <label class="block mb-2" for="eventDate">Date</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="date"
-              v-model="editedNew.eventDate"
-              required
-            />
-          </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventOrganizer">Organizer</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.eventOrganizer"
-            />
-          </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventImage">Image</label>
-            <input class="border rounded px-2 py-1 w-full" type="file" @change="handleFileChange" />
-          </div>
-          <div class="col-span-2 flex justify-end">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-            <button @click="closeEditModal" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">
+      <div class="bg-white shadow-lg w-full max-w-md p-6">
+        <div class="text-center">
+          <div class="flex justify-between">
+            <h3 class="text-lg font-medium text-gray-900">Add Service</h3>
+            <BaseButton @click="closeModal" type="button" class="p-1 text-yellow-400 rounded">
               Cancel
-            </button>
+            </BaseButton>
           </div>
-        </form>
+          <div class="bg-white">
+            <form @submit.prevent="saveService" class="flex flex-col gap-4">
+              <div class="flex flex-col gap-6">
+                <BaseInput
+                  v-model="form.serviceTitle"
+                  type="text"
+                  required
+                  inputClass="p-2 border border-gray-300 rounded"
+                  placeholder="Service Title"
+                ></BaseInput>
+
+                <BaseTextarea
+                  v-model="form.serviceDescription"
+                  inputClass="p-2 border border-gray-300 rounded"
+                  placeholder="Service Description "
+                ></BaseTextarea>
+              </div>
+              <div class="flex justify-end gap-2 flex-col">
+                <BaseFileInput
+                  @image-update="handleFileChange($event)"
+                  label="add logo"
+                ></BaseFileInput>
+                <span>{{ logo }}</span>
+                <BaseButton type="submit" class="bg-[#539000] text-yellow-500 px-2 py-2 rounded">
+                  Save Service
+                </BaseButton>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </template>
+
+<style>
+.modal {
+  animation: modal 0.3s;
+}
+
+@keyframes modal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

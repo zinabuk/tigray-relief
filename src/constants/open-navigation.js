@@ -142,24 +142,34 @@ const NAV_ITEMS = [
     name: 'blogs'
   },
   {
-    label: 'Join Us',
+    label: 'Get Involved',
     sub_items: [
       {
         label: 'Careers',
-        name: 'blogs'
+        name: 'jobs'
       },
+      // {
+      //   label: 'Partnership',
+      //   name: 'partners'
+      // },
+
+      // {
+      //   label: 'Sponsors',
+      //   name: 'blogs'
+      // },
+
       {
-        label: 'Partnership',
-        name: 'partners'
+        label: 'Volunteer',
+        name: 'blogs'
       },
       {
         label: 'Tender',
         name: 'tenders'
       },
-      {
-        label: 'Testimonial',
-        name: 'blogs'
-      },
+      // {
+      //   label: 'Testimonial',
+      //   name: 'blogs'
+      // },
       {
         label: 'FAQs',
         name: 'blogs'

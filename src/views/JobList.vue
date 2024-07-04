@@ -1,32 +1,74 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
 
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
-import SpinningCard from '@/components/open/SpinningCard.vue'
-import CareerService from '@/services/CareerService'
+// import CareerService from '@/services/CareerService'
 
-import dayjs from 'dayjs'
+// import dayjs from 'dayjs'
 
-const careers = ref([])
-
-const allCareers = async () => {
-  try {
-    const response = await CareerService.getAllCareers()
-    if (response.success) {
-      careers.value = response.data
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404 && error.response.data) {
-      return
-    } else {
-      // router.push({ name: 'NetworkError' })
-    }
+const jobs = [
+  {
+    title: 'Financial Offiecer',
+    experience: '2-4 years',
+    deadline: '2024-05-31',
+    requirement:
+      'Proficient in HTML, CSS, and JavaScript. Experience with front-end frameworks like React or Vue is preferred.',
+    description:
+      'Responsible for developing user interfaces for web applications. Collaborate with designers and backend developers to implement and maintain responsive and interactive front-end components.',
+    salary: '$60,000 - $80,000 per year',
+    employmentType: 'Full-time'
+  },
+  {
+    title: 'Secretary',
+    experience: '3-5 years',
+    deadline: '2024-06-15',
+    requirement:
+      'Strong knowledge of server-side programming languages such as Node.js or Python. Experience with databases and RESTful APIs is required.',
+    description:
+      'Responsible for designing, developing, and maintaining the server-side logic of web applications. Implement efficient and scalable backend systems and integrate with external services.',
+    salary: '$70,000 - $90,000 per year',
+    employmentType: 'Full-time'
+  },
+  {
+    title: 'HR',
+    experience: '4-6 years',
+    deadline: '2024-07-10',
+    requirement:
+      'Proficient in both front-end and back-end technologies. Familiarity with frameworks like React, Node.js, and Express is essential.',
+    description:
+      'Responsible for handling both client-side and server-side development tasks. Collaborate with cross-functional teams to deliver end-to-end solutions and ensure seamless integration between front-end and back-end systems.',
+    salary: '$80,000 - $100,000 per year',
+    employmentType: 'Full-time'
+  },
+  {
+    title: 'IT support',
+    experience: '2-4 years',
+    deadline: '2024-06-30',
+    requirement:
+      'Strong understanding of user-centered design principles. Proficiency in design tools like Sketch or Figma. Experience with prototyping tools and front-end development skills are a plus.',
+    description:
+      'Responsible for creating intuitive and visually appealing user interfaces. Conduct user research, create wireframes and prototypes, and collaborate with developers to ensure a seamless user experience.',
+    salary: '$50,000 - $70,000 per year',
+    employmentType: 'Full-time'
+  },
+  {
+    title: 'Driver',
+    experience: '5-8 years',
+    deadline: '2024-08-15',
+    requirement:
+      'Strong background in statistics, mathematics, and machine learning. Proficiency in programming languages like Python or R. Experience with data manipulation, visualization, and modeling techniques is required.',
+    description:
+      'Responsible for analyzing complex datasets, developing predictive models, and extracting insights from data. Collaborate with cross-functional teams to drive data-driven decision-making and solve business problems.',
+    salary: '$90,000 - $120,000 per year',
+    employmentType: 'Full-time'
   }
-}
+]
+
+// const careers = ref([])
 
 const isApply = ref(false)
 const jobToApply = ref({})
@@ -40,9 +82,9 @@ const toggleApply = (career) => {
   successMessage.value = ''
   errorMessage.value = 0
 }
-const formattedDate = (date) => {
-  return dayjs(date).format('YYYY-MM-DD')
-}
+// const formattedDate = (date) => {
+//   return dayjs(date).format('YYYY-MM-DD')
+// }
 
 const letter = ref('')
 const resume = ref('')
@@ -60,101 +102,70 @@ const captureResume = (file) => {
 
 // import { useToast } from 'vue-toastify'
 
-const submitApplication = async () => {
-  try {
-    const formData = new FormData()
-    formData.append('fullName', form.value.fullName)
-    formData.append('email', form.value.email)
-    formData.append('phoneNumber', form.value.phoneNumber)
-    formData.append('applicationLetter', form.value.applicationLetter)
-    formData.append('cv', form.value.cv)
-    const response = await CareerService.apply(jobToApply.value._id, formData)
-    if (response.success) {
-      // alert(response.message)
-      form.value = {}
-      setTimeout(() => {
-        successMessage.value = response.message
-        errorMessage.value = ''
-      }, 2000)
-      setTimeout(() => {
-        isApply.value = false
-      }, 5000)
-      // const toast = useToast()
-      // toast.success('This is a success message!', {
-      //   position: 'top-right',
-      //   duration: 3000 // 3 seconds
-      // })
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404 && error.response.data) {
-      errorMessage.value = error.response.data.message
-    } else {
-      // router.push({ name: 'NetworkError' })
-    }
-  }
-}
+// const submitApplication = async () => {
+//   try {
+//     const formData = new FormData()
+//     formData.append('fullName', form.value.fullName)
+//     formData.append('email', form.value.email)
+//     formData.append('phoneNumber', form.value.phoneNumber)
+//     formData.append('applicationLetter', form.value.applicationLetter)
+//     formData.append('cv', form.value.cv)
+//     const response = await CareerService.apply(jobToApply.value._id, formData)
+//     if (response.success) {
+//       // alert(response.message)
+//       form.value = {}
+//       setTimeout(() => {
+//         successMessage.value = response.message
+//         errorMessage.value = ''
+//       }, 2000)
+//       setTimeout(() => {
+//         isApply.value = false
+//       }, 5000)
+//       // const toast = useToast()
+//       // toast.success('This is a success message!', {
+//       //   position: 'top-right',
+//       //   duration: 3000 // 3 seconds
+//       // })
+//     }
+//   } catch (error) {
+//     if (error.response && error.response.status === 404 && error.response.data) {
+//       errorMessage.value = error.response.data.message
+//     } else {
+//       router.push({ name: 'NetworkError' })
+//     }
+//   }
+// }
 
 onMounted(() => {
-  allCareers()
+  //   allCareers()
 })
 </script>
 
 <template>
-  <div class="grid w-full grid-cols-1 md:grid-cols-3 justify-between py-4 bg-[#1d4354]/5">
-    
-    <div class="relative bgs-green-500 overflow-hiddden">
-      <img
-        src="https://startp-next.envytheme.com/_next/static/media/shape1.754ca456.png"
-        alt=""
-        class="w-1/4 h-auto object-cover absolute top-0 left-1/4 img-1"
-      />
-      <img
-        src="https://startp-next.envytheme.com/_next/static/media/shape4.0580e2ef.svg"
-        alt=""
-        class="absolute right-0 img-2"
-      />
-    </div>
-    <div class="py-12 flex flex-col items-center justify-center gap-4">
-      <h1 class="text-center text-3xl font-semibold">{{ $t('Vacancies at IQ') }}</h1>
-      <SpinningCard />
-
-      <p class="text-center" id="it" v-if="careers.length === 0">
-        We don't have vacancies this time.
-      </p>
-    </div>
-    <div class="py-4 md:py-12 relative">
-      <img
-        src="https://startp-next.envytheme.com/_next/static/media/shape4.0580e2ef.svg"
-        alt=""
-        class="absolute top-0 right-1/2 h-auto img-2"
-      />
-    </div>
-  </div>
-
   <div class="w-full md:p-[4%] bg-gray-50 a">
     <div
       class="w-full lg:w-[80%] lg:mx-auto py-2 flex flex-col gap-5 bg-red-40r0 justify-center items-start"
     >
       <div
         class="w-full flex flex-col mx-auto lg:w-3/4 shadow"
-        v-for="(career, index) in careers"
+        v-for="(career, index) in jobs"
         :key="index"
       >
         <div class="bg-white w-full p-4">
           <div class="w-full flex justify-between p-4">
             <ul>
               <li class="md:text-[18px] font-bold">
-                <h1>{{ career.jobTitle }}</h1>
+                <h1>{{ career.title }}</h1>
               </li>
-              <li class="md:text-[16px] font-semibolfd">IQ Business Group</li>
+              <li class="md:text-[16px] font-semibolfd">Tigray Relief Society</li>
               <!-- <li class="text-gray-700 text-[14px]">Posted 17 Days ago ???</li> -->
               <li class="mt-4 bg-gray-500 text-white inline-block text-sm px-2 py-1">
-                {{ career.employmentType }}
+                {{ career.experience }}
               </li>
             </ul>
             <img
-              src="@/assets/iq-logo.png"
-              class="w-20 rounded-full h-20 object-fit bg-cover object-center"
+              src="@/assets/00.png"
+              class="w-20 rounded-full h-20 object-conatin"
               width="200px"
               height="200px"
             />
@@ -197,15 +208,7 @@ onMounted(() => {
               Employment Type:
               <span class="pl-2 text-sm font-semibold">{{ career.employmentType }}</span>
             </li>
-            <li class="divide-x-2 w-full md:basis-1/2">
-              Posted on:
-              <!-- <span class="font-semibold">
-                {{ new Date(Job.createdAt).getDate() }} -
-                {{ new Date(Job.createdAt).getMonth() + 1 }} -
-                {{ new Date(Job.createdAt).getFullYear() }}</span
-              > -->
-              {{ formattedDate(career.createdAt) }}
-            </li>
+
             <li class="divide-x-2 w-full md:basis-1/2">
               Deadline:
               <span class="text-red-500 text-sm font-semibold">{{ career.deadline }}</span>
@@ -252,8 +255,16 @@ onMounted(() => {
       <h1 class="iq-subtitle text-center font-light">Application Page</h1>
       <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
       <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
-        <BaseInput v-model="form.fullName" inputClass="px-4 py-2 border-2 outline-none border-iq-color1" label="Full Name"></BaseInput>
-        <BaseInput v-model="form.email" inputClass="px-4 py-2 border-2 outline-none border-iq-color1" label="Email"></BaseInput>
+        <BaseInput
+          v-model="form.fullName"
+          inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+          label="Full Name"
+        ></BaseInput>
+        <BaseInput
+          v-model="form.email"
+          inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+          label="Email"
+        ></BaseInput>
         <BaseInput
           v-model="form.phoneNumber"
           inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
