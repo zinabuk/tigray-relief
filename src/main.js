@@ -117,7 +117,7 @@ library.add(
   faHeart
 )
 
-AOS.init({ duration: 1000 })
+AOS.init({ duration: 2000 })
 //Fontawesomes importing end
 
 import App from './App.vue'

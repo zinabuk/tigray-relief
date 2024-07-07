@@ -160,7 +160,7 @@ const NAV_ITEMS = [
 
       {
         label: 'Volunteer',
-        name: 'blogs'
+        name: 'volunteer'
       },
       {
         label: 'Tender',
@@ -180,15 +180,14 @@ const NAV_ITEMS = [
   //   label: 'Plan',
   //   name: 'plan'
   // },
-  {
-    label: 'Gallery',
-    name: 'gallery'
-  },
+  // {
+  //   label: 'Gallery',
+  //   name: 'gallery'
+  // },
   {
     label: 'Contact',
     name: 'contact'
-  },
-   
+  }
 ]
 
 export default NAV_ITEMS

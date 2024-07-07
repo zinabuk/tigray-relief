@@ -6,7 +6,7 @@ const SIDEBARITEMS = {
     { label: 'Services', name: 'admin-services', icon: 'cogs' },
     //   { label: 'Works', name: 'products', icon: 'box-open' },
     { label: 'Team', name: 'team', icon: 'handshake' },
-    { label: 'Partners', name: 'partner', icon: 'handshake' },
+    { label: 'Partiners', name: 'partner', icon: 'handshake' },
     
 
     { label: 'Donations', name: 'donations', icon: 'quote-left' },

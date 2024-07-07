@@ -61,6 +61,14 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'volunteer',
+        name: 'volunteer',
+        component: () => import('@/views/VolunteerPage.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'service/:title',
         name: 'service-detail',
         props: true,
@@ -78,7 +86,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'jobs',
+        path: 'careers',
         name: 'jobs',
         component: () => import('@/views/JobList.vue'),
         meta: {
@@ -103,7 +111,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'partinership',
+        path: 'partnership',
         name: 'partners',
         component: () => import('@/views/PartnersView.vue'),
         meta: {

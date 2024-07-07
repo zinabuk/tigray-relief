@@ -105,7 +105,6 @@ function closeEditModal() {
     address: '',
     amount: '',
     logo: ''
-
   }
 }
 // const router = useRouter()
@@ -147,7 +146,7 @@ onMounted(fetchPartners)
     </DataTable>
   </section>
   <div
-    class="w-full modal fixed inset-0 flex z-30 justify-center items-center bg-white/80 overflow-auto md:py-12"
+    class="w-full modal fixed inset-0 flex z-50 justify-center items-center bg-black/80 overflow-auto md:py-12"
     v-if="isEditing"
   >
     <div
@@ -159,15 +158,15 @@ onMounted(fetchPartners)
 
       <form @submit.prevent="updateDonation" class="w-full flex flex-col gap-4 px-2">
         <BaseInput
-          v-model="editForm.service"
+          v-model="editForm.businessName"
           type="text"
-          label="Service"
+          label="Business Name"
           inputClass="px-4 py-3"
         ></BaseInput>
         <BaseInput
-          v-model="editForm.firstName"
+          v-model="editForm.email"
           type="text"
-          label="First Name"
+          label="Email"
           inputClass="px-4 py-3"
           required
         ></BaseInput>
@@ -213,7 +212,7 @@ onMounted(fetchPartners)
 
   <div
     v-if="isAdd"
-    class="w-full z-30 bg-white/80 fixed inset-0 flex flex-col items-center justify-center p-6 gap-2 shadow rounded-lg"
+    class="w-full z-30 bg-black/80 fixed inset-0 flex flex-col items-center justify-center p-6 gap-2 shadow rounded-lg modal"
   >
     <div class="w-1/2 bg-white">
       <h1 class="text-center text-xl font-semibold">Partnership Form</h1>
@@ -274,3 +273,17 @@ onMounted(fetchPartners)
     </div>
   </div>
 </template>
+<style scoped>
+.modal {
+  animation: modal 0.3s;
+}
+
+@keyframes modal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

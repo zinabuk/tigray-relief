@@ -6,6 +6,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import ApiService from '@/services/apiService'
 
+import swal from 'sweetalert'
 let form = ref({
   email: '',
   fullName: '',
@@ -22,10 +23,11 @@ const submitContact = async () => {
     const response = await ApiService.post('/users/comments', form.value)
 
     if (response.success) {
-      success.value = response.message
-      setTimeout(() => {
-        success.value = ''
-      }, 3000)
+      swal({
+        icon: 'success',
+        title: response.message
+      })
+      form.value = {}
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -75,10 +77,11 @@ const submitContact = async () => {
       ></iframe>
     </section>
     <div
-      class="px-24 grid grid-cols-1 md:grid-cols-3 gap-4 itemss-center justify-center py-12 bg-gray-50"
+      class="px-24 grid grid-cols-1 md:grid-cols-3 gap-4 itemss-center justify-center py-12 bg-[#53900F]/10 overflow-hidden"
     >
       <div
         class="bg-white flex flex-col shadow-2xl items-center py-6 gap-4 group transition-allz duration-700z hover:-translate-y-2"
+        data-aos="fade-right"
       >
         <font-awesome-icon
           icon="envelope"
@@ -92,6 +95,7 @@ const submitContact = async () => {
       </div>
       <div
         class="bg-white flex flex-col shadow-2xl items-center py-12 gap-4 group transition-all duration-700 hover:-translate-y-2"
+        data-aos="fade-up"
       >
         <font-awesome-icon
           icon="map-marker-alt"
@@ -104,6 +108,7 @@ const submitContact = async () => {
       </div>
       <div
         class="bg-white flex flex-col shadow-2xl items-center py-6 gap-4 group transition-all duration-700 hover:-translate-y-2"
+        data-aos="fade-left"
       >
         <font-awesome-icon
           icon="phone"
@@ -122,10 +127,10 @@ const submitContact = async () => {
         <h1 class="text-2xl font-semibold">Get In Touch With Us</h1>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 py-12 gap-4">
-        <div class="w-full">
-          <img src="@/assets/contact2.png" alt="" class="w-full h-[90%]" />
+        <div class="w-full shadow-xl p-4">
+          <img src="@/assets/contact.png" alt="" class="w-full h-[90%]" />
         </div>
-        <div class="w-full flex flex-col gap-4">
+        <div class="w-full flex flex-col gap-4 shadow-xl zborder zrounded-xl p-4">
           <h1 v-if="success" class="text-green-500 bg-white">{{ success }}</h1>
           <form @submit.prevent="submitContact" class="w-full flex flex-col gap-4">
             <BaseInput

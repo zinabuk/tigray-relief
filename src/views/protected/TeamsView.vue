@@ -2,12 +2,17 @@
 import ApiService from '@/services/apiService'
 
 import { BASE_AVATAR } from '@/config'
+import BaseInput from '@/components/base/BaseInput.vue'
+import BaseFileInput from '@/components/base/BaseFileInput.vue'
+import BaseTextarea from '@/components/base/BaseTextarea.vue'
+import BaseButton from '@/components/base/BaseButton.vue'
 // const news = async () => {
 //   const response = await ApiService.get()
 // }
 
-import { useRouter } from 'vue-router'
-const router = useRouter()
+import swal from 'sweetalert'
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
 import { ref, onMounted } from 'vue'
 
 const teams = ref([])
@@ -31,61 +36,64 @@ const fetchTeams = async () => {
 }
 
 const deleteTeam = async (id) => {
-  const sure = window.confirm('Are you sure to delete this team?')
-  if (sure) {
+  // const sure = window.confirm('Are you sure to delete this team?')
+  // if (sure) {
     const res = await ApiService.delete('/admin/our-teams/' + id)
     if (res.success) {
       fetchTeams()
     }
-  }
+  // }
 }
 
-let showEditModal = ref(false)
-const editedNew = ref({
-  eventTitle: '',
-  eventDescription: '',
-  category: '',
-  eventDate: '',
-  eventOrganizer: '',
-  eventImage: null
+let team = ref({
+  fullName: '',
+  profession: '',
+  biography: '',
+  image: ''
 })
+let showEditModal = ref(false)
 
-const closeEditModal = () => {
-  showEditModal.value = false
+let eTeam = ref({ fullName: '', profession: '', biography: '', image: '' })
+const editTeam = (team) => {
+  eTeam.value = team
+  showEditModal.value = true
 }
 
+// const closeEditModal = () => {
+//   showEditModal.value = false
+// }
+
+let image = ref('')
 const handleFileChange = (event) => {
-  const file = event.target.files[0]
-  editedNew.value.eventImage = file
+  eTeam.value.image = event
+  image.value = event.name
 }
 
-const updateNew = async (id) => {
-  try {
-    const formData = new FormData() 
-    formData.append('eventTitle', editedNew.value.eventTitle)
-    formData.append('eventDescription', editedNew.value.eventDescription)
-    formData.append('category', editedNew.value.category)
-    formData.append('eventDate', editedNew.value.eventDate)
-    formData.append('eventOrganizer', editedNew.value.eventOrganizer)
-    formData.append('eventImage', editedNew.value.eventImage)
+const imageEntry = (event) => {
+  team.value.image = event
+}
 
-    const response = await ApiService.patch('/admin/events/' + id, formData)
-    if (response.success) {
-      // alert('EDITED')
-      setTimeout(() => {
-        closeEditModal()
-      }, 3000)
-      fetchTeams()
-    }
-  } catch (error) {
-    // alert(error)
-    if (error.response && error.response.data && error.response.status === 404) {
-      return
-    } else {
-      setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
-      }, 2000)
-    }
+let showAddModal = ref(false)
+
+const submitForm = async () => {
+  const formData = new FormData()
+
+  formData.append('fullName', team.value.fullName)
+  formData.append('profession', team.value.profession)
+  formData.append('biography', team.value.biography)
+
+  if (team.value.image) {
+    formData.append('image', team.value.image)
+  }
+
+  const res = await ApiService.post('/admin/our-teams', formData)
+  if (res) {
+    fetchTeams()
+    team.value = {}
+    swal({
+      icon: 'success',
+      title: 'Team created successfully'
+    })
   }
 }
 
@@ -97,15 +105,9 @@ onMounted(() => {
 <template>
   <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
     <!-- Services -->
-    <router-link
-      :to="{ name: 'admin-add-team' }"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 bg-white border-[#539000]"
-    >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add Team</router-link
+    <BaseButton @click="showAddModal = true" class="self-end">
+      <font-awesome-icon icon="add" class="text-yellow-500"></font-awesome-icon>
+      Add Team</BaseButton
     >
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
@@ -119,7 +121,7 @@ onMounted(() => {
         <p v-else class="w-20 h-20 rounded-full text-6xl">{{ team.fullName[0] }}</p>
         <h1 class="text-2xl font-bold">{{ team.fullName }}</h1>
         <div class="relative">
-          <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
+          <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
         <p class="line-clamp-5">
@@ -127,78 +129,136 @@ onMounted(() => {
           {{ team.biography }}
         </p>
 
-        <router-link class="text-[#539000]" to="/">Read More</router-link>
+        <!-- <router-link class="text-[#539000]" to="/">Read More</router-link> -->
         <div class="flex gap-4">
-          <button @click="deleteTeam(team._id)">
+          <button @click="deleteTeam(team.id)">
             <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
           </button>
-          <button><font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon></button>
+          <button @click="editTeam(team)">
+            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+          </button>
         </div>
       </div>
     </div>
     <div
       v-if="showEditModal"
-      class="fixed inset-0 overflow-auto flex items-center z-40 justify-center modal bg-black bg-opacity-50"
+      class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/80"
     >
-      <div class="bg-white p-4">
-        <h2 class="text-lg font-bold mb-4">Edit News</h2>
-        <form @submit.prevent="updateNew" class="grid grid-cols-2 gap-4">
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventTitle">Title</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.eventTitle"
-              required
-            />
+      <div class="bg-white p-4 flex flex-col">
+        <button @click="showEditModal = false" class="bg-gray-500 text-white self-end p-2">
+          cancel
+        </button>
+        <h2 class="text-lg font-bold mb-4">Edit Team</h2>
+        <form
+          @submit.prevent="updateTeam"
+          class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
+          enctype="multipart/form-data"
+        >
+          <!-- <h1 class="flex justify-center font-bold font-serif">Add Team</h1> -->
+
+          <!-- Event Title -->
+          <div class="flex justify-center">
+            <BaseInput type="text" id="fullName" label="Full Name" v-model="eTeam.fullName" />
           </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventDescription">Description</label>
-            <textarea
-              class="border rounded px-2 py-1 w-full h-40"
-              type="text"
-              v-model="editedNew.eventDescription"
-              required
-            ></textarea>
+
+          <!-- Event Category -->
+          <div class="flex justify-center">
+            <BaseInput type="text" id="Profession" label="Profession" v-model="eTeam.profession" />
           </div>
-          <div class="col-span-1 mb-4">
-            <label class="block mb-2" for="category">Category</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.category"
-              required
-            />
+
+          <!-- Event Date -->
+
+          <!-- Event Description -->
+
+          <div>
+            <BaseTextarea
+              v-model="eTeam.biography"
+              placeholder="Biography"
+              label="Biography"
+            ></BaseTextarea>
           </div>
-          <div class="col-span-1 mb-4">
-            <label class="block mb-2" for="eventDate">Date</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="date"
-              v-model="editedNew.eventDate"
-              required
-            />
+          <!-- Event Image -->
+          <div class="flex justify-between">
+            <div class="flex">
+              <BaseFileInput
+                @image-update="handleFileChange($event)"
+                label="Add Picture"
+              ></BaseFileInput>
+              <span>{{ image }}</span>
+            </div>
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+              <BaseButton label="">Submit</BaseButton>
+            </div>
           </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventOrganizer">Organizer</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.eventOrganizer"
-            />
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="fixed modal inset-0 flex flex-wrap items-center justify-center z-50 bg-black/80"
+      v-if="showAddModal"
+    >
+      <div class="w-1/2 bg-white p-4 flex flex-col">
+        <button @click="showAddModal = false" class="bg-gray-500 text-white self-end p-2">
+          cancel
+        </button>
+
+        <form
+          @submit.prevent="submitForm"
+          class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
+          enctype="multipart/form-data"
+        >
+          <h1 class="flex justify-center font-bold font-serif">Add Team</h1>
+
+          <!-- Event Title -->
+          <div class="flex justify-center">
+            <BaseInput type="text" id="fullName" label="Full Name" v-model="team.fullName" />
           </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventImage">Image</label>
-            <input class="border rounded px-2 py-1 w-full" type="file" @change="handleFileChange" />
+
+          <!-- Event Category -->
+          <div class="flex justify-center">
+            <BaseInput type="text" id="Profession" label="Profession" v-model="team.profession" />
           </div>
-          <div class="col-span-2 flex justify-end">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-            <button @click="closeEditModal" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">
-              Cancel
-            </button>
+
+          <!-- Event Date -->
+
+          <!-- Event Description -->
+
+          <div>
+            <BaseTextarea
+              v-model="team.biography"
+              placeholder="Biography"
+              label="Biography"
+            ></BaseTextarea>
+          </div>
+          <!-- Event Image -->
+          <div class="flex justify-between">
+            <div class="flex">
+              <BaseFileInput @image-update="imageEntry($event)" label="Add Picture"></BaseFileInput>
+            </div>
+            <!-- Submit Button -->
+            <div class="flex justify-end">
+              <BaseButton label="">Submit</BaseButton>
+            </div>
           </div>
         </form>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.modal {
+  animation: modal 0.3s;
+}
+
+@keyframes modal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

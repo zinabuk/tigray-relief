@@ -7,7 +7,7 @@ import ApiService from '@/services/apiService'
 // import BaseButton from '@/components/base/BaseButton.vue'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
-
+import swal from 'sweetalert'
 // import { useRouter } from 'vue-router'
 const tableHeaders = [
   { label: 'Full Name', field: 'fullName' },
@@ -18,12 +18,7 @@ const tableHeaders = [
 ]
 const donations = ref([])
 const actions = [
-  {
-    label: 'edit',
-    action: editContact,
-    icon: 'edit',
-    style: 'hover:cursor-pointer text-blue-500 py-1 px-2'
-  },
+  // d
   {
     label: 'delete',
     action: deleteContact,
@@ -31,7 +26,7 @@ const actions = [
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   }
 ]
-async function getAllDonations() {
+async function fetchComments() {
   // alert('K')
 
   const response = await ApiService.get('/users/comments')
@@ -49,14 +44,25 @@ function editContact(career) {
   formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD')
 }
 
-async function deleteContact(career) {
-  const accept = window.confirm('Undo is not possible')
-  if (accept) {
-    const response = await ApiService.delete(career._id)
-    if (response.success) {
-      getAllDonations()
+function deleteContact(message) {
+  swal({
+    title: 'Are you sure?',
+    text: 'Once deleted, you will not be able to recover this FAQ',
+    icon: 'warning',
+    buttons: true,
+    dangerMode: true
+  }).then((confirmDelete) => {
+    if (confirmDelete) {
+      ApiService.delete('/users/comments/' + message.id).then((res) => {
+        if (res.success) {
+          fetchComments()
+          swal('Message has been deleted!', {
+            icon: 'success'
+          })
+        }
+      })
     }
-  }
+  })
 }
 
 // async function submitEdit() {
@@ -68,7 +74,7 @@ async function deleteContact(career) {
 //   }
 // }
 
-onMounted(getAllDonations)
+onMounted(fetchComments)
 </script>
 
 <template>

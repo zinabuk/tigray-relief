@@ -177,16 +177,16 @@ onMounted(() => {
         Tigrai community in overcoming the broad range of conditions ...
       </p> -->
 
-      <div class="grid grid-cols-3 gap-4 w-full">
-        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center">
-          <h1 class="text-green-900 text-8xl">20 +</h1>
+      <div class="grid grid-cols-3 gap-4 w-full overflow-hidden">
+        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center shadow-2xlz" data-aos="fade-right">
+          <h1 class="text-green-900 text-8xl">30 +</h1>
           <p class="text-xl">Years of service</p>
         </div>
-        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center">
+        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">
           <h1 class="text-green-900 text-8xl">300 +</h1>
           <p class="text-xl text-ce">Projects</p>
         </div>
-        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center">
+        <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-left">
           <h1 class="text-green-900 text-8xl">5 +</h1>
           <p class="text-xl">Services</p>
         </div>
@@ -207,7 +207,7 @@ onMounted(() => {
           If the application's data and workload grow beyond the capabilities of the local servers
         </p>
 
-        <router-link to="/donate" class="text-green-600 underline font-bold"> Join Now</router-link>
+        <router-link to="/volunteer" class="text-green-600 underline font-bold"> Join Now</router-link>
       </div>
       <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-up">
         <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon>
@@ -268,6 +268,8 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <router-link to="/blogs" class="text-green-900 underline text-xl">View All</router-link>
   </section>
 
   <!-- partners -->

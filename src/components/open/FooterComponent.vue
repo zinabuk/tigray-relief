@@ -7,7 +7,7 @@ const subscribe = () => {
 </script>
 
 <template>
-  <section class="w-full px-12 bg-green-900 font-bodld text-white">
+  <section class="w-full px-12 bg-[#53900F] font-bodld text-white py-12">
     <div class="w-full grid grid-cols-1 md:grid-cols-4 py-8 gap-4">
       <!-- <div>
         <img

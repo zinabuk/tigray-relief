@@ -142,7 +142,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full md:p-[4%] bg-gray-50 a">
+  <div class="w-full md:p-[4%] bg-[#53900F]/10">
     <div
       class="w-full lg:w-[80%] lg:mx-auto py-2 flex flex-col gap-5 bg-red-40r0 justify-center items-start"
     >
@@ -151,7 +151,7 @@ onMounted(() => {
         v-for="(career, index) in jobs"
         :key="index"
       >
-        <div class="bg-white w-full p-4">
+        <div class="bg-white w-full p-4 shadow-xl">
           <div class="w-full flex justify-between p-4">
             <ul>
               <li class="md:text-[18px] font-bold">
@@ -165,7 +165,7 @@ onMounted(() => {
             </ul>
             <img
               src="@/assets/00.png"
-              class="w-20 rounded-full h-20 object-conatin"
+              class="w-20 zrounded-full h-20 object-conatin"
               width="200px"
               height="200px"
             />
@@ -175,7 +175,7 @@ onMounted(() => {
             <ul class="flex space-x-4 justify-center items-center">
               <li>
                 <button
-                  class="bg-blue-900 rounded text-white px-2 py-1"
+                  class="bg-[#53900F] rounded text-white px-2 py-1"
                   @click="toggleApply(career)"
                 >
                   {{ $t('Apply Now') }}
@@ -234,7 +234,10 @@ onMounted(() => {
         <div class="w-full flex justify-between bg-white p-4">
           <ul class="flex space-x-4 p-4 justify-center items-center">
             <li>
-              <button class="bg-blue-900 rounded text-white px-2 py-1" @click="toggleApply(career)">
+              <button
+                class="bg-[#53900F] rounded text-white px-2 py-1"
+                @click="toggleApply(career)"
+              >
                 {{ $t('Apply Now') }}
               </button>
             </li>
@@ -245,14 +248,12 @@ onMounted(() => {
   </div>
 
   <div
-    class="fixed items-center justify-center inset-0 z-20 bg-gray-50/60 flex flex-col gap-4 overflow-auto"
+    class="fixed items-center justify-center inset-0 z-50 bg-[#53900F]/40 flex flex-col gap-4 overflow-auto modal"
     v-if="isApply"
   >
     <div class="bg-white flex flex-col md:p-12 gap-2 overflow-auto">
-      <button class="text-gray-900 text-xl self-end bg-white" @click="isApply = !isApply">
-        Cancel
-      </button>
-      <h1 class="iq-subtitle text-center font-light">Application Page</h1>
+      <button class="text-gray-900 self-end bg-white" @click="isApply = !isApply">Cancel</button>
+      <h1 class="text-center font-semibold">Application Page</h1>
       <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
       <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
         <BaseInput
@@ -271,7 +272,7 @@ onMounted(() => {
           label="Phone Number"
         ></BaseInput>
 
-        <span class="text-sm text-blue-400">*Only pdf files</span>
+        <span class="text-sm text-red-600">*Only pdf files</span>
 
         <BaseFileInput
           @image-update="captureLetter($event)"
@@ -328,6 +329,19 @@ onMounted(() => {
     transform: rotate(360deg);
     top: 0%;
     right: 0;
+  }
+}
+
+.modal {
+  animation: modal 0.3s;
+}
+
+@keyframes modal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>

@@ -2,6 +2,7 @@
 import ApiService from '@/services/apiService'
 
 import { BASE_AVATAR } from '@/config'
+import BaseButton from '@/components/base/BaseButton.vue'
 // const news = async () => {
 //   const response = await ApiService.get()
 // }
@@ -60,15 +61,14 @@ const updateNew = async () => {
     formData.append('eventOrganizer', editedNew.value.eventOrganizer)
     formData.append('eventImage', editedNew.value.eventImage)
 
-    const response = await ApiService.patch('/admin/events/' + editedNew.value._id, formData)
-    if (response.success) { 
+    const response = await ApiService.patch('/admin/events/' + editedNew.value.id, formData)
+    if (response.success) {
       setTimeout(() => {
         closeEditModal()
       }, 3000)
       fetchNews()
     }
   } catch (error) {
-    
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
@@ -109,45 +109,41 @@ onMounted(() => {
       Add New | Event</router-link
     >
 
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div
-        v-for="(event, i) in blogs"
-        :key="i"
-        class="grid grid-cols-1 bg-white md:grid-cols-2 gap-4"
-      >
-        <div>
-          <img
-            :src="BASE_AVATAR + event.eventImage"
-            alt=""
-            class="max-h-[500px] rounded-xl w-full object-cover"
-          />
+    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 bg-white gap- ">
+        <div class="h-48">
+          <img :src="BASE_AVATAR + event.eventImage" alt="" class="h-full w-full object-cover" />
         </div>
-        <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
+        <div class="flex flex-col flex-wrap gap-2 items-start justify-censter">
           <h6 class="text-gray-500">{{ event.category }} | {{ event.eventDate }}</h6>
           <h3 class="text-lg font-bold">
             {{ event.eventTitle }}
           </h3>
-          <div class="w-full flex justify-between">
-            <router-link to="/about" class="text-green-600 font-bold">Read More</router-link>
-            <button @click="openEditModal(event)">
-              <font-awesome-icon icon="edit" class="text-blue-700"></font-awesome-icon>
-            </button>
-            <button @click="deleteBlog(event._id)">
-              <font-awesome-icon icon="trash" class="text-red-700"></font-awesome-icon>
-            </button>
-          </div>
+          <p>{{ event.eventDescription }}</p>
+        </div>
+        <div class="w-full flex justify-end gap-6">
+          <!-- <router-link to="/about" class="text-green-600 font-bold">Read More</router-link> -->
+          <button @click="openEditModal(event)">
+            <font-awesome-icon icon="edit" class="text-blue-700"></font-awesome-icon>
+          </button>
+          <button @click="deleteBlog(event._id)">
+            <font-awesome-icon icon="trash" class="text-red-700"></font-awesome-icon>
+          </button>
         </div>
       </div>
     </div>
     <div
       v-if="showEditModal"
-      class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/70"
+      class="fixed inset-0 flex items-center z-50 justify-center modal bg-black/70"
     >
-      <div class="bg-white p-4">
-        <h2 class="text-lg font-bold mb-4">Edit News</h2>
+      <div class="bg-white p-6">
+        <!-- <h2 class="text-lg font-bold">Edit News</h2> -->
+        <button @click="closeEditModal" class="bg-gray-500 text-white px-4 py-2 rounded mr-auto">
+          Cancel
+        </button>
         <form @submit.prevent="updateNew" class="grid grid-cols-2 gap-4">
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventTitle">Title</label>
+          <div class="col-span-2">
+            <label class="block" for="eventTitle">Title</label>
             <input
               class="border rounded px-2 py-1 w-full"
               type="text"
@@ -155,8 +151,8 @@ onMounted(() => {
               required
             />
           </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventDescription">Description</label>
+          <div class="col-span-2">
+            <label class="block" for="eventDescription">Description</label>
             <textarea
               class="border rounded px-2 py-1 w-full h-40"
               type="text"
@@ -164,8 +160,8 @@ onMounted(() => {
               required
             ></textarea>
           </div>
-          <div class="col-span-1 mb-4">
-            <label class="block mb-2" for="category">Category</label>
+          <div class="col-span-1">
+            <label class="block" for="category">Category</label>
             <input
               class="border rounded px-2 py-1 w-full"
               type="text"
@@ -173,8 +169,8 @@ onMounted(() => {
               required
             />
           </div>
-          <div class="col-span-1 mb-4">
-            <label class="block mb-2" for="eventDate">Date</label>
+          <div class="col-sp">
+            <label class="b" for="eventDate">Date</label>
             <input
               class="border rounded px-2 py-1 w-full"
               type="date"
@@ -182,26 +178,38 @@ onMounted(() => {
               required
             />
           </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventOrganizer">Organizer</label>
+          <div class="col-span-2">
+            <label class="block" for="eventOrganizer">Organizer</label>
             <input
               class="border rounded px-2 py-1 w-full"
               type="text"
               v-model="editedNew.eventOrganizer"
             />
           </div>
-          <div class="col-span-2 mb-4">
-            <label class="block mb-2" for="eventImage">Image</label>
+          <div class="col-span-2">
+            <label class="block" for="eventImage">Image</label>
             <input class="border rounded px-2 py-1 w-full" type="file" @change="handleFileChange" />
           </div>
           <div class="col-span-2 flex justify-end">
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
-            <button @click="closeEditModal" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">
-              Cancel
-            </button>
+            <BaseButton type="submit" class="w-full px-4 py-2 rounded">Save</BaseButton>
           </div>
         </form>
       </div>
     </div>
   </section>
 </template>
+
+<style>
+.modal {
+  animation: modal 0.3s;
+}
+
+@keyframes modal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

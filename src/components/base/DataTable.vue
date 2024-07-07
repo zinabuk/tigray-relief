@@ -1,6 +1,6 @@
 <template>
   <section class="w-full">
-    <div class="py-2 px-2 w-full bg-white flex flex-col">
+    <div class="py-2 px-2 w-full bg-white  flex flex-col gap-2">
       <div class="flex justify-end">
         <div class="">
           <input
@@ -17,7 +17,7 @@
             caption
           }}
         </caption>
-        <table class="border border-blackf border-collapse w-full overflow-auto">
+        <table class="border  border-collapse w-full overflow-auto p-8">
           <thead class="w-full">
             <tr class="bg-gray-200">
               <th v-for="(head, i) in tableHeaders" :key="i" class="" @click="sortBy(head.field)">

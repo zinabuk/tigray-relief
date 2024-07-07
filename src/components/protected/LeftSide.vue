@@ -13,7 +13,6 @@ defineProps({
 
 const items = SIDEBARITEMS.ADMIN_TABS
 const stafItems = SIDEBARITEMS.STAFF_TABS
-
 const navigationItems = ref([])
 watchEffect(()=>{
 if(role.value ==='admin'){
@@ -22,18 +21,19 @@ if(role.value ==='admin'){
   navigationItems.value = stafItems
 }
 })
+
 </script>
 
 <template>
   <aside
-    :class="`${barClass} sidebar bg-white border-r-2  bg-yellow-50s h-[calc(100vh_-_68px)] top-[68px] sticky text-[16px] shadow-xl border rounded-xl`"
+    :class="`${barClass} sidebar bg-white border-r-2  bg-yellow-50s h-[calc(100vh_-_68px)] top-[68px] sticky text-[16px] shadow-xl border rounded-xl p-2`"
   >
-    <ul class="mt-4">
+    <ul class=" ">
       <li v-for="(item, index) in navigationItems" :key="index" class="mb-2">
         <router-link
           :to="{ name: item.name }"
           :class="{
-            'text-[#539000] border-r-2 rounded-none border-r-[#539000] font-bold ':
+            'text-[#53900F] border-l-2 rounded-none border-l-[#53900F] font-bold ':
               $route.name === item.name
           }"
           exact

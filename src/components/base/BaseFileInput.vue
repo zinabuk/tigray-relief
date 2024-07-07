@@ -16,7 +16,7 @@
     <label
       for="label"
       v-if="label"
-      class="font-semibold border border-iq-color1 bg-white py-3 px-6 text-iq-color1 self-start"
+      class="font-semibold border  bg-white py-3 px-6 self-start"
       >{{ label }}</label
     >
   </div>

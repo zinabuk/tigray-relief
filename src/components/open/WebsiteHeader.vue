@@ -1,6 +1,8 @@
 <template>
-  <header class="w-full hidden md:flex sticky top-0 z-50">
-    <nav class="w-full px-[1%] flex justify-between items-center py-4 font-bold bg-white/100">
+  <header class="w-full hidden md:flex sticky top-0 z-50 shadow-4xl rounded-xl">
+    <nav
+      class="w-full px-[1%] flex justify-between items-center py- font-bold bg-white/100 shadow-2xl"
+    >
       <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
         <img
           src="@/assets/rest-logo.png"
@@ -8,55 +10,180 @@
           class="rounded-fullz h-24 object-contain"
         />
       </router-link>
-      <ul :class="['flex space-x-4 font-bold ']">
-        <li v-for="(item, i) in items" :key="i" :class="[' ']">
-          <template v-if="hasChildItems(item)">
-            <router-link
-              :to="{ name: item.name }"
-              class="relative parent-item"
-              :class="[{ '': isParentActive(item) }]"
-            >
-              <span class="hover:text-[#37a000]"> {{ $t(item.label) }}</span>
-              <font-awesome-icon icon="chevron-down" class="text-sm"></font-awesome-icon>
-              <div
-                class="absolute child z-50 top-[100%] min-w-48 hidden transition-all delay-75 opacity-0 left-0 bg-white py-4"
-                v-if="item.sub_items && showModal"
-                ref="dropdown"
-              >
-                <router-link
-                  v-for="(el, j) in item.sub_items"
-                  :key="j"
-                  :to="{ name: el.name }"
-                  class="px-4 py-2 hover:text-[#37a000]"
-                  @click="toggleDropdown"
-                  :class="[
-                    { 'iq-active-menu': $route.name === el.name },
-                    { 'text-black': changeBackground }
-                  ]"
-                  >{{ $t(el.label) }}
-                </router-link>
-              </div></router-link
-            >
-          </template>
-          <template v-else>
-            <router-link
-              :to="{ name: item.name }"
-              class="relative hover:text-[#37a000]"
-              :class="{ 'iq-active-menu': $route.name === item.name }"
-            >
-              {{ $t(item.label) }}
+      <ul class="flex gap-8 font-bold zuppercase">
+        <li>
+          <router-link
+            :to="{ name: 'home' }"
+            class="relative parent-item"
+            :class="[{ 'text-[#53900F]': isActive('home') }]"
+          >
+            Home</router-link
+          >
+        </li>
+        <li class="relative group">
+          <router-link
+            :to="{ name: 'about' }"
+            class="relative parent-item h-full w-full"
+            :class="[{ 'text-[#53900F]': isActive('about') }]"
+          >
+            About Us</router-link
+          >
+          <div
+            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
+            data-aos="fade-left"
+          >
+            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
+            <router-link to="/" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('Our Governance') }} </span>
+              <hr class="text-[#001F3F]" />
             </router-link>
-          </template>
+            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Our Mission, Vision and Strategy') }}
+              </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Our Beneficiaries') }}
+              </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Policy strategy and Framework') }}
+              </span>
+              <!-- <hr class="text-[#001F3F]" /> -->
+            </router-link>
+          </div>
+        </li>
+        <li class="relative group">
+          <router-link
+            :to="{ name: 'services' }"
+            class="relative parent-item"
+            :class="[{ 'text-[#53900F]': isActive('services') }]"
+          >
+            Services</router-link
+          >
+          <div
+            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
+            data-aos="fade-left"
+          >
+            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
+            <router-link to="/" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('Humanitarian response ') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Recovery and Rehabilitation ') }}
+              </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+
+            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Community based development ') }}
+              </span>
+              <!-- <hr class="text-[#001F3F]" /> -->
+            </router-link>
+          </div>
+        </li>
+        <li class="relative group">
+          <router-link
+            :to="{ name: 'blogs' }"
+            class="relative parent-item"
+            :class="[{ 'text-[#53900F]': isActive('blogs') }]"
+          >
+            Resources and Media</router-link
+          >
+          <div
+            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
+            data-aos="fade-left"
+          >
+            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
+            <router-link to="/" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('News and Events') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Gallery') }}
+              </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+          </div>
+        </li>
+        <li class="relative group">
+          <router-link
+            :to="{ name: 'tenders' }"
+            class="relative parent-item"
+            :class="[{ 'text-[#53900F]': isActive('tenders') }]"
+          >
+            Get Involved</router-link
+          >
+          <div
+            class="absolute hidden group-hover:flex bg-[#53900F]Z bg-white p-6 flex-col gap-4 min-w-56 child top-[100%] border rounded-xl"
+            data-aos="fade-left"
+          >
+            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
+            <router-link :to="{ name: 'jobs' }" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('Careers') }} </span>
+              <hr class="text-[#53900F]" />
+            </router-link>
+            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Volunteers') }}
+              </span>
+              <hr class="text-[#53900F]" />
+            </router-link>
+            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('Tenders') }}
+              </span>
+              <hr class="text-[#53900F]" />
+            </router-link>
+            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('FAQs') }}
+              </span>
+              <!-- <hr class="text-[#001F3F]" /> -->
+            </router-link>
+          </div>
+        </li>
+        <li>
+          <router-link
+            :to="{ name: 'contact' }"
+            class="relative parent-item"
+            :class="[{ 'text-[#53900F]': isActive('contact') }]"
+          >
+            Contact Us</router-link
+          >
+        </li>
+
+        <li>
+          <router-link
+            :to="{ name: 'donate' }"
+            class="bg-[#53900F] rounded-xl text-yellow-400 px-4 py-2 pulse"
+            >Donate
+            <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
+          ></router-link>
         </li>
       </ul>
 
-      <div>
-        <router-link
-          :to="{ name: 'donate' }"
-          class="bg-green-900 rounded-xl text-yellow-500 px-4 py-2 pulse"
-          >Donate <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
-        ></router-link>
-      </div>
       <!-- <div class="relative group">
         
         <font-awesome-icon icon="globe" class="text-xl relative group"
@@ -113,7 +240,7 @@
       >
         x
       </button>
-      <div
+      <!-- <div
         :class="[
           'w-full justify-self-end px-[1%] md:px-[7%] flex flex-col gap-2 text-black bg-white/100 items-end h-full'
         ]"
@@ -175,7 +302,7 @@
         >
           ትግርኛ
         </button>
-      </div>
+      </div> -->
     </div>
   </header>
 </template>
@@ -212,8 +339,8 @@ const route = useRoute()
 function hasChildItems(item) {
   return item.sub_items && item.sub_items.length > 0
 }
-function isParentActive(item) {
-  return route.name === item.name
+function isActive(item) {
+  return route.name === item
 }
 
 function toggleDropdown() {
@@ -258,11 +385,30 @@ onMounted(() => {
 
 <style scoped>
 .iq-active-menu {
-  color: #2aa000;
+  color: #53900f;
 }
 a {
   transition: border 0.6s;
 }
+
+.child {
+  animation-name: slideUp;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Show the dropdown content when its parent is hovered */
 .parent-item:hover > .child {
   display: flex;

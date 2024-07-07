@@ -6,7 +6,6 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import ApiService from '@/services/apiService'
 import { useRouter } from 'vue-router'
 
-import swal from 'sweetalert'
 const router = useRouter()
 let form = ref({
   service: '',
@@ -23,13 +22,8 @@ const submitDonation = async () => {
     const response = await ApiService.post('/users/donations', form.value)
     alert(response.success)
     if (response.success) {
-      
+    //   alert('Donation submitted successfully')
       form.value = {}
-      swal({
-        icon: "success",
-        title: "Donation information submitted successfuly",
-        text: "We will contact you through your phone number or/and email."
-      })
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -55,11 +49,11 @@ let cAmount = ref('')
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">Donation</h1>
+        <h1 class="text-4xl font-bold">Volunteer</h1>
         <div class="flex gap-4">
           <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">Home</router-link>
 
-          <router-link to="/donate" class="text-[#539000] px-4 py-2">Donate</router-link>
+          <router-link to="/donate" class="text-[#539000] px-4 py-2">Volunteer</router-link>
         </div>
       </div>
     </div>
@@ -68,7 +62,7 @@ let cAmount = ref('')
 
     <section class="w-full px-[6%] py-12 bg-gray-50">
       <div class="shadow bg-white rounded-lg p-6">
-        <div>
+        <!-- <div>
           <h4 class="text-lg font-bold mb-2">
             Partner With Us As We Bring Relief To Our Communities
           </h4>
@@ -78,12 +72,12 @@ let cAmount = ref('')
           <h2 class="text-2xl font-bold mb-2">Donation Form</h2>
           <p class="text-gray-500 mb-4">"*" indicates required fields</p>
           <h5 class="text-lg font-bold mb-2">Donation Amount</h5>
-        </div>
+        </div> -->
 
         <form class="flex flex-col" @submit.prevent="submitDonation">
           <div class="mb-4">
             <label class="text-gray-600"
-              >To which branch or in honor of whom would you like to allocate your donation?</label
+              >To which branch or in honor of whom would you like to provide a volunteer service?</label
             >
             <BaseInput
               type="text"
@@ -140,7 +134,7 @@ let cAmount = ref('')
                 required
               ></BaseInput>
             </div>
-            <div>
+            <!-- <div>
               <BaseInput
                 inputClass="border border-yellow-300"
                 label="Total Amount*"
@@ -148,10 +142,10 @@ let cAmount = ref('')
                 placeholder="Total Amount"
                 required
               ></BaseInput>
-            </div>
+            </div> -->
           </div>
           <base-button type="submit" class="bg-[#539000]z rounded px-8 py-2 self-start"
-            >Donate</base-button
+            >Submit</base-button
           >
         </form>
       </div>
@@ -159,23 +153,26 @@ let cAmount = ref('')
 
     <div
       id="telebirr_modal"
-      class="fixed inset-0 flex items-center justify-center bg-black/40 z-50 modal"
+      class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"
       v-if="showModal"
     >
-      <form @submit.prevent="" class="flex flex-col gap-4 bg-white w-1/2 p-8 shadow-xl border rounded-xl">
+      <form
+        @submit.prevent=""
+        class="flex flex-col gap-4 bg-white w-1/2 p-8 shadow-xl border rounded-xl"
+      >
         <div class="flex flex-col">
-        <BaseInput v-model="fName" placeholder="Full Name" required></BaseInput>   
+          <BaseInput v-model="fName" placeholder="Full Name" required></BaseInput>
         </div>
-        <div class="flex flex-col ">
-         <BaseInput v-model="telebirrAccount" placeholder="Telebirr Account"></BaseInput>
+        <div class="flex flex-col">
+          <BaseInput v-model="telebirrAccount" placeholder="Telebirr Account"></BaseInput>
         </div>
-        <div class="flex flex-col ">
-         <BaseInput v-model="cAmount" placeholder="Contribution Amount"></BaseInput>
+        <div class="flex flex-col">
+          <BaseInput v-model="cAmount" placeholder="Contribution Amount"></BaseInput>
         </div>
 
         <div class="flex justify-between">
-        <BaseButton type="submit">Submit</BaseButton>
-        <button class="bg-gray-700 text-white p-2" @click="showModal=false">Cancel</button>
+          <BaseButton type="submit">Submit</BaseButton>
+          <button class="bg-gray-700 text-white p-2" @click="showModal = false">Cancel</button>
         </div>
       </form>
     </div>

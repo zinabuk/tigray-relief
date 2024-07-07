@@ -191,7 +191,7 @@ onMounted(() => {
               <div class="flex justify-end gap-2 flex-col">
                 <BaseFileInput
                   @image-update="handleFileChange($event)"
-                  label="add logo"
+                  label="Add Picture"
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">

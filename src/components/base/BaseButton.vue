@@ -1,6 +1,6 @@
 <template>
   <div class="input-container relative ">
-    <button class="px-4 py-2 bg-green-900 text-yellow-500" v-bind="$attrs">
+    <button class="px-4 py-2 bg-[#53900F] text-yellow-400" v-bind="$attrs">
       <font-awesome-icon
         v-if="icon"
         :icon="icon"
