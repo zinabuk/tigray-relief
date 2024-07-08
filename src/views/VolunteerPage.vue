@@ -2,24 +2,22 @@
 import { ref } from 'vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+import BaseTextarea from '@/components/base/BaseTextarea.vue'
 
-import ApiService from '@/services/apiService'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
+import ApiService from '@/services/apiService' 
+ 
 let form = ref({
-  service: '',
+  interestedIn: '',
   firstName: '',
   lastName: '',
   email: '',
   phoneNumber: '',
-  address: '',
-  amount: ''
+  description: '', 
 })
 
-const submitDonation = async () => {
+const submitVolunteer = async () => {
   try {
-    const response = await ApiService.post('/users/donations', form.value)
+    const response = await ApiService.post('/users/volunteer', form.value)
     alert(response.success)
     if (response.success) {
     //   alert('Donation submitted successfully')
@@ -36,10 +34,7 @@ const submitDonation = async () => {
   }
 }
 
-let showModal = ref(false)
-let fName = ref('')
-let telebirrAccount = ref('')
-let cAmount = ref('')
+let showModal = ref(false) 
 </script>
 
 <template>
@@ -53,7 +48,7 @@ let cAmount = ref('')
         <div class="flex gap-4">
           <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">Home</router-link>
 
-          <router-link to="/donate" class="text-[#539000] px-4 py-2">Volunteer</router-link>
+          <router-link to="/volunteer" class="text-[#539000] px-4 py-2">Volunteer</router-link>
         </div>
       </div>
     </div>
@@ -77,14 +72,14 @@ let cAmount = ref('')
         <form class="flex flex-col" @submit.prevent="submitDonation">
           <div class="mb-4">
             <label class="text-gray-600"
-              >To which branch or in honor of whom would you like to provide a volunteer service?</label
+              >To which branch  would you like to provide a volunteer service?</label
             >
             <BaseInput
               type="text"
               inputClass="border border-yellow-300"
-              label="Enter a service / branch "
+              label="Enter your area of interest "
               v-model="form.service"
-              placeholder="service / branch"
+              placeholder="Interested in"
               required
             ></BaseInput>
           </div>
@@ -126,13 +121,13 @@ let cAmount = ref('')
               ></BaseInput>
             </div>
             <div>
-              <BaseInput
+              <BaseTextarea
                 inputClass="border border-yellow-300"
-                label="Address"
-                v-model="form.address"
-                placeholder="Address"
+                label="Description"
+                v-model="form.description"
+                placeholder="Description"
                 required
-              ></BaseInput>
+              ></BaseTextarea>
             </div>
             <!-- <div>
               <BaseInput

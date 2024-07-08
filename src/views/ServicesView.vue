@@ -14,7 +14,7 @@ const fetchServices = async () => {
       services.value = response.data
     }
   } catch (error) {
-    alert(error)
+    // alert(error)
   }
 }
 

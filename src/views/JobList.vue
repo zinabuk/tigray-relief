@@ -2,13 +2,11 @@
 import { ref, onMounted } from 'vue'
 // import { useRouter } from 'vue-router'
 // const router = useRouter()
-
+import swal from 'sweetalert'
+import ApiService from '@/services/apiService'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
-// import CareerService from '@/services/CareerService'
-
-// import dayjs from 'dayjs'
 
 const jobs = [
   {
@@ -68,23 +66,18 @@ const jobs = [
   }
 ]
 
-// const careers = ref([])
-
 const isApply = ref(false)
-const jobToApply = ref({})
+const career = ref({})
 
 const successMessage = ref('')
 const errorMessage = ref('')
 
-const toggleApply = (career) => {
+const toggleApply = (job) => {
   isApply.value = true
-  jobToApply.value = career
+  career.value = job
   successMessage.value = ''
   errorMessage.value = 0
 }
-// const formattedDate = (date) => {
-//   return dayjs(date).format('YYYY-MM-DD')
-// }
 
 const letter = ref('')
 const resume = ref('')
@@ -100,44 +93,62 @@ const captureResume = (file) => {
   form.value.cv = file
 }
 
-// import { useToast } from 'vue-toastify'
-
-// const submitApplication = async () => {
-//   try {
-//     const formData = new FormData()
-//     formData.append('fullName', form.value.fullName)
-//     formData.append('email', form.value.email)
-//     formData.append('phoneNumber', form.value.phoneNumber)
-//     formData.append('applicationLetter', form.value.applicationLetter)
-//     formData.append('cv', form.value.cv)
-//     const response = await CareerService.apply(jobToApply.value._id, formData)
-//     if (response.success) {
-//       // alert(response.message)
-//       form.value = {}
-//       setTimeout(() => {
-//         successMessage.value = response.message
-//         errorMessage.value = ''
-//       }, 2000)
-//       setTimeout(() => {
-//         isApply.value = false
-//       }, 5000)
-//       // const toast = useToast()
-//       // toast.success('This is a success message!', {
-//       //   position: 'top-right',
-//       //   duration: 3000 // 3 seconds
-//       // })
-//     }
-//   } catch (error) {
-//     if (error.response && error.response.status === 404 && error.response.data) {
-//       errorMessage.value = error.response.data.message
-//     } else {
-//       router.push({ name: 'NetworkError' })
-//     }
-//   }
-// }
+const allCareers = async () => {
+  try {
+    const response = await ApiService.get('/users/careers')
+    if (response.success) {
+      careers.value = response.data
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 404 && error.response.data) {
+      return
+    } else {
+      // router.push({ name: 'NetworkError' })
+    }
+  }
+}
+const submitApplication = async () => {
+  try {
+    const formData = new FormData()
+    formData.append('fullName', form.value.fullName)
+    formData.append('email', form.value.email)
+    formData.append('phoneNumber', form.value.phoneNumber)
+    formData.append('applicationLetter', form.value.applicationLetter)
+    formData.append('cv', form.value.cv)
+    const response = await ApiService.applyJob('users/careeres/' + career.value.id, formData)
+    if (response.success) {
+      form.value = {}
+      resume.value = ''
+      letter.value = ''
+      swal({
+        icon: 'success',
+        title: 'You have successfully applied.',
+        text: 'Job Application'
+      })
+      errorMessage.value = ''
+      setTimeout(() => {}, 5000)
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 404 && error.response.data) {
+      swal({
+        icon: 'error',
+        title: error.response.data.message,
+        text: 'Job Application'
+      })
+    } else if (error.response && error.response.status === 400 && error.response.data) {
+      swal({
+        icon: 'error',
+        title: error.response.data.error,
+        text: 'Job Application'
+      })
+    } else {
+      // router.push({ name: 'NetworkError' })
+    }
+  }
+}
 
 onMounted(() => {
-  //   allCareers()
+  allCareers()
 })
 </script>
 
@@ -254,42 +265,52 @@ onMounted(() => {
     <div class="bg-white flex flex-col md:p-12 gap-2 overflow-auto">
       <button class="text-gray-900 self-end bg-white" @click="isApply = !isApply">Cancel</button>
       <h1 class="text-center font-semibold">Application Page</h1>
-      <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
+      <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
       <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
-        <BaseInput
-          v-model="form.fullName"
-          inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
-          label="Full Name"
-        ></BaseInput>
-        <BaseInput
-          v-model="form.email"
-          inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
-          label="Email"
-        ></BaseInput>
-        <BaseInput
-          v-model="form.phoneNumber"
-          inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
-          label="Phone Number"
-        ></BaseInput>
+        <div class="flex gap-6">
+          <div>
+            <BaseInput
+              v-model="form.fullName"
+              inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+              label="Full Name"
+              required
+            ></BaseInput>
+            <BaseInput
+              v-model="form.email"
+              inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+              label="Email"
+              required
+            ></BaseInput>
+            <BaseInput
+              v-model="form.phoneNumber"
+              inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+              label="Phone Number"
+              required
+            ></BaseInput>
+          </div>
+          <div>
+            <span class="text-sm text-red-600">*Only pdf files</span>
 
-        <span class="text-sm text-red-600">*Only pdf files</span>
-
-        <BaseFileInput
-          @image-update="captureLetter($event)"
-          label="Application Letter"
-          type="required"
-          accept="application/pdf"
-        ></BaseFileInput>
-        <span>{{ letter.name }}</span>
-        <BaseFileInput
-          @image-update="captureResume($event)"
-          label="Resume"
-          type="required"
-          accept="application/pdf"
-        ></BaseFileInput>
-        <span>{{ resume.name }}</span>
+            <BaseFileInput
+              @image-update="captureLetter($event)"
+              label="Application Letter"
+              type="file"
+              accept="application/pdf"
+              required
+            ></BaseFileInput>
+            <span>{{ letter.name }}</span>
+            <BaseFileInput
+              @image-update="captureResume($event)"
+              label="Resume"
+              type="file"
+              accept="application/pdf"
+              required
+            ></BaseFileInput>
+            <span>{{ resume.name }}</span>
+          </div>
+        </div>
         <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
-        <BaseButton>Apply</BaseButton>
+        <BaseButton type="submit">Apply</BaseButton>
       </form>
     </div>
   </div>

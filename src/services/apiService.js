@@ -11,19 +11,29 @@ class ApiService {
     return response.data
   }
   async post(endpoint, data) {
-    const response = await api.post(endpoint, data)
+    const response = await api.post(endpoint, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
     return response.data
   }
   async patch(endpoint, data) {
     const response = await api.patch(endpoint, data)
     return response.data
   }
+
   async delete(endpoint) {
     const response = await api.delete(endpoint)
     return response.data
   }
   async request(req) {
     const response = await api.request(req)
+    return response.data
+  }
+
+  async applyJob(endpoint, data) {
+    const response = await api.post(endpoint, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
     return response.data
   }
 
