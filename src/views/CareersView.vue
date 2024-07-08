@@ -1,21 +1,23 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
 
+import ApiService from '@/services/apiService'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 import SpinningCard from '@/components/open/SpinningCard.vue'
-import CareerService from '@/services/CareerService'
+// import CareerService from '@/services/CareerService'
 
+import swal from 'sweetalert'
 import dayjs from 'dayjs'
 
 const careers = ref([])
 
 const allCareers = async () => {
   try {
-    const response = await CareerService.getAllCareers()
+    const response = await ApiService.get('/users/careers')
     if (response.success) {
       careers.value = response.data
     }
@@ -29,14 +31,14 @@ const allCareers = async () => {
 }
 
 const isApply = ref(false)
-const jobToApply = ref({})
+const career = ref({})
 
 const successMessage = ref('')
 const errorMessage = ref('')
 
 const toggleApply = (career) => {
   isApply.value = true
-  jobToApply.value = career
+  career.value = career
   successMessage.value = ''
   errorMessage.value = 0
 }
@@ -54,7 +56,7 @@ const captureLetter = (file) => {
 }
 
 const captureResume = (file) => {
-  resume.value = file
+  resume.value = file.name
   form.value.cv = file
 }
 
@@ -68,16 +70,21 @@ const submitApplication = async () => {
     formData.append('phoneNumber', form.value.phoneNumber)
     formData.append('applicationLetter', form.value.applicationLetter)
     formData.append('cv', form.value.cv)
-    const response = await CareerService.apply(jobToApply.value._id, formData)
+    const response = await ApiService.apply(career.value.id, formData)
     if (response.success) {
       // alert(response.message)
       form.value = {}
+      resume.value = ''
+      letter.value = ''
+      // successMessage.value = response.message
+      swal({
+        icon: 'success',
+        title: 'You have successfully applied.',
+        text: 'Job Application'
+      })
+      errorMessage.value = ''
       setTimeout(() => {
-        successMessage.value = response.message
-        errorMessage.value = ''
-      }, 2000)
-      setTimeout(() => {
-        isApply.value = false
+        // isApply.value = false
       }, 5000)
       // const toast = useToast()
       // toast.success('This is a success message!', {
@@ -87,7 +94,19 @@ const submitApplication = async () => {
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
-      errorMessage.value = error.response.data.message
+      // console.log(error.response.data.message);
+      swal({
+        icon: 'error',
+        title: error.response.data.message,
+        text: 'Job Application'
+      })
+      // errorMessage.value = error.response.data.message
+    } else if (error.response && error.response.status === 400 && error.response.data) {
+      swal({
+        icon: 'error',
+        title: error.response.data.error,
+        text: 'Job Application'
+      })
     } else {
       // router.push({ name: 'NetworkError' })
     }
@@ -101,7 +120,6 @@ onMounted(() => {
 
 <template>
   <div class="grid w-full grid-cols-1 md:grid-cols-3 justify-between py-4 bg-[#1d4354]/5">
-    
     <div class="relative bgs-green-500 overflow-hiddden">
       <img
         src="https://startp-next.envytheme.com/_next/static/media/shape1.754ca456.png"
@@ -242,42 +260,56 @@ onMounted(() => {
   </div>
 
   <div
-    class="fixed items-center justify-center inset-0 z-20 bg-gray-50/60 flex flex-col gap-4 overflow-auto"
+    class="fixed items-center justify-center modal inset-0 z-50 bg-gray-50/60 flex flex-col gap-4 overflow-auto"
     v-if="isApply"
   >
     <div class="bg-white flex flex-col md:p-12 gap-2 overflow-auto">
-      <button class="text-gray-900 text-xl self-end bg-white" @click="isApply = !isApply">
+      <button class="text-gray-900 text-xl self-end zbg-white" @click="isApply = !isApply">
         Cancel
       </button>
       <h1 class="iq-subtitle text-center font-light">Application Page</h1>
-      <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p>
-      <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
-        <BaseInput v-model="form.fullName" inputClass="px-4 py-2 border-2 outline-none border-iq-color1" label="Full Name"></BaseInput>
-        <BaseInput v-model="form.email" inputClass="px-4 py-2 border-2 outline-none border-iq-color1" label="Email"></BaseInput>
-        <BaseInput
-          v-model="form.phoneNumber"
-          inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
-          label="Phone Number"
-        ></BaseInput>
 
-        <span class="text-sm text-blue-400">*Only pdf files</span>
+      <form @submit.prevent="submitApplication" class="bg-green-900">
+        <div>
+          <BaseInput
+            v-model="form.fullName"
+            inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+            label="Full Name"
+          ></BaseInput>
+          <BaseInput
+            v-model="form.email"
+            inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+            label="Email"
+          ></BaseInput>
+          <BaseInput
+            v-model="form.phoneNumber"
+            inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
+            label="Phone Number"
+          ></BaseInput>
+        </div>
 
-        <BaseFileInput
-          @image-update="captureLetter($event)"
-          label="Application Letter"
-          type="required"
-          accept="application/pdf"
-        ></BaseFileInput>
-        <span>{{ letter.name }}</span>
-        <BaseFileInput
-          @image-update="captureResume($event)"
-          label="Resume"
-          type="required"
-          accept="application/pdf"
-        ></BaseFileInput>
-        <span>{{ resume.name }}</span>
-        <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
-        <BaseButton>Apply</BaseButton>
+        <div>
+          <span class="text-sm text-blue-700">*Only pdf files</span>
+
+          <BaseFileInput
+            @image-update="captureLetter($event)"
+            label="Application Letter"
+            type="file"
+            accept="application/pdf"
+            required
+          ></BaseFileInput>
+          <span>{{ letter.name }}</span>
+          <BaseFileInput
+            @image-update="captureResume($event)"
+            label="Resume"
+            type="file"
+            accept="application/pdf"
+            required
+          ></BaseFileInput>
+          <span>{{ resume.name }}</span>
+          <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
+        </div>
+        <BaseButton type="submit">Apply</BaseButton>
       </form>
     </div>
   </div>

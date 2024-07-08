@@ -42,13 +42,16 @@ const subscribe = () => {
       </div>
       <div>
         <h1 class="text-lg">Subscribe for Newsletter</h1>
-        <input
-          type="email"
-          v-model="email"
-          @keyup.enter="subscribe"
-          placeholder="enter your email"
-          class="px-4 py-3 text-black"
-        />
+        <form action="" class="flex flex-col gap-2">
+          <input
+            type="email"
+            v-model="email"
+            @keyup.enter="subscribe"
+            placeholder="enter your email"
+            class="px-4 py-1 text-black"
+          />
+          <BaseButton class="border-2 border-white self-start px-2">SUBSCRIBE</BaseButton>
+        </form>
         <div class="my-4">
           <h1 class="text-xl font bold text-white">Follow Us:</h1>
           <font-awesome-icon :icon="['fab', 'facebook']" class="text-white p-2">

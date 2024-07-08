@@ -139,19 +139,27 @@
             data-aos="fade-left"
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <router-link :to="{ name: 'jobs' }" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'jobs' }"
+              :class="[{ 'text-[#53900F]': isActive('jobs') }]"
+              class="hover:text-[#288FB2]z"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]"> {{ $t('Careers') }} </span>
               <hr class="text-[#53900F]" />
             </router-link>
-            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'volunteer' }"
+              :class="[{ 'text-[#53900F]': isActive('volunteer') }]"
+              class="hover:text-[#288FB2]z"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('Volunteers') }}
               </span>
               <hr class="text-[#53900F]" />
             </router-link>
-            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+            <router-link :to="{name: 'tenders'}" href="#structure_section" class="hover:text-[#288FB2]z">
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('Tenders') }}
