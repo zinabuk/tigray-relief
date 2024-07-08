@@ -87,7 +87,16 @@ const PROTECTED_ROUTES = [
         }
       },
       {
-        path: 'partiners',
+        path: 'volunteers',
+        component: () => import('@/views/protected/VolunteersView.vue'),
+        name: 'admin-volunteers',
+        meta: {
+          requiresAuth: true,
+          role: ['admin', 'staff']
+        }
+      },
+      {
+        path: 'partners',
         component: () => import('@/views/protected/PartnersView.vue'),
         name: 'partner',
         meta: {

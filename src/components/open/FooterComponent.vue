@@ -48,9 +48,9 @@ const subscribe = () => {
             v-model="email"
             @keyup.enter="subscribe"
             placeholder="enter your email"
-            class="px-4 py-1 text-black"
+            class="px-4 py-2 text-black"
           />
-          <BaseButton class="border-2 border-white self-start px-2">SUBSCRIBE</BaseButton>
+          <BaseButton class="border-2 border-white self-start px-2 py-1">SUBSCRIBE</BaseButton>
         </form>
         <div class="my-4">
           <h1 class="text-xl font bold text-white">Follow Us:</h1>

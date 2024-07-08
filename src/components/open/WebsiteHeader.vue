@@ -77,25 +77,15 @@
             data-aos="fade-left"
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <router-link to="/" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'service-detail', params: { title: service.serviceTitle } }"
+              class="hover:text-[#288FB2]z"
+              v-for="(service, i) in services"
+              :key="i"
+            >
               <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Humanitarian response ') }} </span>
+              <span class="hover:text-[#53900F]"> {{ $t(`${service.serviceTitle}`) }} </span>
               <hr class="text-[#001F3F]" />
-            </router-link>
-            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('Recovery and Rehabilitation ') }}
-              </span>
-              <hr class="text-[#001F3F]" />
-            </router-link>
-
-            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('Community based development ') }}
-              </span>
-              <!-- <hr class="text-[#001F3F]" /> -->
             </router-link>
           </div>
         </li>
@@ -159,7 +149,11 @@
               </span>
               <hr class="text-[#53900F]" />
             </router-link>
-            <router-link :to="{name: 'tenders'}" href="#structure_section" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'tenders' }"
+              href="#structure_section"
+              class="hover:text-[#288FB2]z"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('Tenders') }}
@@ -385,13 +379,25 @@ const handleScroll = () => {
   changeBackground.value = window.scrollY > 80 && window.scrollY < 3600
 }
 
+import ApiService from '@/services/apiService'
+const services = ref([])
+const fetchServices = async () => {
+  try {
+    const response = await ApiService.get('/admin/services')
+    if (response) {
+      services.value = response.data
+    }
+  } catch (error) {
+    // alert(error)
+  }
+}
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 onMounted(() => {
   // getSettings()
   window.addEventListener('scroll', handleScroll)
-})
+}, fetchServices())
 </script>
 
 <style scoped>
