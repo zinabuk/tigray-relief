@@ -15,7 +15,11 @@ const fetchServices = async () => {
   try {
     const response = await ApiService.get('/admin/services')
     if (response) {
-      services.value = response.data
+      services.value = response.data.map((item) => ({
+        ...item,
+        serviceTitle: JSON.parse(item.serviceTitle),
+        serviceDescription: JSON.parse(item.serviceDescription),
+      }))
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -27,10 +31,15 @@ const fetchServices = async () => {
 }
 
 let showAddModal = ref(false)
+const currentLanguage = ref('en'); 
 
+const toggleLanguage = (lang) => {
+  currentLanguage.value = lang;
+};
 const form = ref({
-  serviceTitle: '',
-  serviceDescription: '',
+  id: null,
+  serviceTitle: { en: '', ti: '', am: '' },
+  serviceDescription: { en: '', ti: '', am: '' },
   serviceImage: ''
 })
 
@@ -45,15 +54,20 @@ const successMessage = ref('')
 
 let edit = ref(false)
 const editService = (service) => {
-  form.value = service
+  form.value = {
+    id: service.id,
+    serviceTitle: { ...service.serviceTitle },
+    serviceDescription: { ...service.serviceDescription },
+    serviceImage: service.serviceImage
+  }
   edit.value = true
   showAddModal.value = true
 }
 
 const saveService = async () => {
   const formData = new FormData()
-  formData.append('serviceTitle', form.value.serviceTitle)
-  formData.append('serviceDescription', form.value.serviceDescription)
+  formData.append('serviceTitle', JSON.stringify(form.value.serviceTitle))
+  formData.append('serviceDescription', JSON.stringify(form.value.serviceDescription))
   if (form.value.serviceImage) {
     formData.append('serviceImage', form.value.serviceImage)
   }
@@ -63,26 +77,22 @@ const saveService = async () => {
       if (response.success) {
         successMessage.value = response.message
         fetchServices()
-        form.value = {}
-        edit.value = false
-        logo.value = ''
+        closeModal()
       } else {
-        errorMessage.value = 'Failed to save Partner'
+        errorMessage.value = 'Failed to save Service'
       }
     } else {
       const res = await ApiService.post('/admin/services', formData)
       if (res.success) {
         successMessage.value = res.message
         fetchServices()
-        form.value = {}
-        edit.value = false
-        logo.value = ''
+        closeModal()
       } else {
-        errorMessage.value = 'Failed to save Partner'
+        errorMessage.value = 'Failed to save Service'
       }
     }
   } catch (error) {
-    errorMessage.value = 'Failed to save Partner'
+    errorMessage.value = 'Failed to save Service'
   }
 }
 
@@ -99,14 +109,17 @@ const deleteService = async (id) => {
     errorMessage.value = 'Failed to save Partner'
   }
 }
-// const closeEditModal = () => {
-//   showEditModal.value = false
-// }
 
 const closeModal = () => {
   showAddModal.value = false
-  form.value = {}
+  form.value = {
+    id: null,
+    serviceTitle: { en: '', ti: '', am: '' },
+    serviceDescription: { en: '', ti: '', am: '' },
+    serviceImage: ''
+  }
   edit.value = false
+  logo.value = ''
 }
 
 onMounted(() => {
@@ -140,25 +153,22 @@ onMounted(() => {
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">{{ service.serviceTitle[0] }}</p>
-        <h1 class="text-2xl font-bold">{{ service.serviceTitle }}</h1>
-        <!-- <div class="relative">
-          <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
-          <hr class="h-[2px] absolute inset-0 bg-gray-200" />
-        </div> -->
+        <p v-else class="w-20 h-20 rounded-full text-6xl">{{ service.serviceTitle[currentLanguage] }}</p>
+        <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
         <p class="line-clamp-5">
-          {{ service.serviceDescription }}
+          {{ service.serviceDescription[currentLanguage] }}
         </p>
-
         <div class="flex gap-2 justify-end">
           <button @click="editService(service)">
-            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon></button
-          ><button @click="deleteService(service.id)">
+            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+          </button>
+          <button @click="deleteService(service.id)">
             <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
           </button>
         </div>
       </div>
     </div>
+
     <div
       v-if="showAddModal"
       class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/50 bg-opacity-50 modal"
@@ -166,16 +176,21 @@ onMounted(() => {
       <div class="bg-white shadow-lg w-full max-w-md p-6">
         <div class="text-center">
           <div class="flex justify-between">
-            <h3 class="text-lg font-medium text-gray-900">Add Service</h3>
+            <h3 class="text-lg font-medium text-gray-900">{{ edit.value ? 'Edit Service' : 'Add Service' }}</h3>
             <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">
               Cancel
             </button>
           </div>
           <div class="bg-white">
+            <div class="flex justify-center gap-4 mb-4">
+              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
+              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
+              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+            </div>
             <form @submit.prevent="saveService" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
-                  v-model="form.serviceTitle"
+                  v-model="form.serviceTitle[currentLanguage]"
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
@@ -183,9 +198,9 @@ onMounted(() => {
                 ></BaseInput>
 
                 <BaseTextarea
-                  v-model="form.serviceDescription"
+                  v-model="form.serviceDescription[currentLanguage]"
                   inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Service Description "
+                  placeholder="Service Description"
                 ></BaseTextarea>
               </div>
               <div class="flex justify-end gap-2 flex-col">
@@ -220,3 +235,5 @@ onMounted(() => {
   }
 }
 </style>
+
+
