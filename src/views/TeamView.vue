@@ -1,46 +1,5 @@
 <script setup>
-const teamData = [
-  {
-    name: 'John Doe',
-    role: 'Manager'
-  },
-  {
-    name: 'Jane Smith',
-    role: 'Developer'
-  },
-  {
-    name: 'Alex Johnson',
-    role: 'Designer'
-  },
-  {
-    name: 'Emily Davis',
-    role: 'Marketing Specialist'
-  },
-  {
-    name: 'Michael Wilson',
-    role: 'Sales Representative'
-  },
-  {
-    name: 'Sarah Thompson',
-    role: 'Project Coordinator'
-  },
-  {
-    name: 'David Brown',
-    role: 'Accountant'
-  },
-  {
-    name: 'Olivia Lee',
-    role: 'HR Manager'
-  },
-  {
-    name: 'Daniel Taylor',
-    role: 'Quality Assurance Analyst'
-  },
-  {
-    name: 'Sophia Rodriguez',
-    role: 'Customer Support Representative'
-  }
-]
+
 </script>
 
 <template>

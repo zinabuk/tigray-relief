@@ -115,11 +115,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4">
+  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
     <!-- Services -->
     <button
       @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 bg-white border-[#539000]"
+      class="text-[#539000] self-end border flex items-center px-2 py-1  border-[#539000]"
     >
       <font-awesome-icon
         icon="add"
@@ -132,7 +132,7 @@ onMounted(() => {
       <div
         v-for="(service, i) in services"
         :key="i"
-        class="p-4 flex flex-col gap-2 bg-white hover:bg-green-900 hover:text-white justify-between"
+        class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
       >
         <img
           v-if="service.serviceImage"

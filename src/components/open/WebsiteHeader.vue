@@ -33,7 +33,10 @@
             data-aos="fade-left"
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <router-link to="/" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'governance' }"
+              :class="[{ 'text-[#53900F]': isActive('governance') }]"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]"> {{ $t('Our Governance') }} </span>
               <hr class="text-[#001F3F]" />

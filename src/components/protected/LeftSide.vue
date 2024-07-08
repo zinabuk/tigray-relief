@@ -1,9 +1,8 @@
 <script setup>
- 
 import SIDEBARITEMS from '@/constants/protected-sidebar'
-import { watchEffect, ref } from 'vue';
+import { watchEffect, ref } from 'vue'
 
-const role = ref(localStorage.getItem('role'));
+const role = ref(localStorage.getItem('role'))
 defineProps({
   barClass: {
     type: String,
@@ -14,31 +13,30 @@ defineProps({
 const items = SIDEBARITEMS.ADMIN_TABS
 const stafItems = SIDEBARITEMS.STAFF_TABS
 const navigationItems = ref([])
-watchEffect(()=>{
-if(role.value ==='admin'){
-  navigationItems.value = items
-}else{
-  navigationItems.value = stafItems
-}
+watchEffect(() => {
+  if (role.value === 'admin') {
+    navigationItems.value = items
+  } else {
+    navigationItems.value = stafItems
+  }
 })
-
 </script>
 
 <template>
   <aside
-    :class="`${barClass} sidebar bg-white border-r-2  bg-yellow-50s h-[calc(100vh_-_68px)] top-[68px] sticky text-[16px] shadow-xl border rounded-xl p-2`"
+    :class="`${barClass} sidebar zbg-white border-r-2  bg-yellow-50s h-[calc(100vh_-_68px)] top-[68px] sticky text-[16px] shadow-xl border rounded-xl p-2`"
   >
     <ul class=" ">
       <li v-for="(item, index) in navigationItems" :key="index" class="mb-2">
         <router-link
           :to="{ name: item.name }"
           :class="{
-            'text-[#53900F] border-l-2 rounded-none border-l-[#53900F] font-bold ':
+            'bg-[#53900F]/50 text-[#53900F] border   rounded-r-2xl font-bold ':
               $route.name === item.name
           }"
           exact
           active-class=""
-          class="block py-1 px-2 rounded-lg hover:bg-yellow-300 hover:text-white transition-colors duration-200"
+          class="block py-1 px-2 zrounded-lg hover:bg-[#53900F]/30 hover:text-white transition-colors duration-200 "
           exact-path="true"
         >
           <font-awesome-icon v-if="item.icon" :icon="item.icon" />
@@ -57,4 +55,3 @@ if(role.value ==='admin'){
   background-size: cover;
 }
 </style>
-

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-
+import { useRoute,  } from 'vue-router'
+// useRouter
 // import dayjs from 'dayjs'
 
 import ApiService from '@/services/apiService'
@@ -15,13 +15,13 @@ defineProps({
 })
 
 const route = useRoute()
-const router = useRouter()
+//const router = useRouter()
 const service = ref({})
 
 async function getService() {
   try {
     const response = await ApiService.get('/admin/service/' + route.params.title)
-    if (response.success) { 
+    if (response.success) {
       service.value = response.data
     }
   } catch (error) {
@@ -66,13 +66,36 @@ onMounted(() => {
 })
 </script>
 <template>
-  <section class="w-full px-[6%] py-12">
-    <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-4 py-12 bg-[#1d4354]/5 px-[7%]">
-      <div class="relative w-full flex flex-col gap-4 group md:col-span-12">
-        <h2 class="text-4xl font-semibold text-center whitespace-normal break-al">
-          {{ service.serviceTitle }}
-        </h2>
+  <section class="w-full">
+    <div class="w-full relative max-h-[222px] overflow-hidden">
+      <img
+        v-if="service.serviceImage"
+        :src="BASE_AVATAR + `${service.serviceImage}`"
+        alt="My company"
+        class="w-full h-full object-cover object-center"
+        loading="lazy"
+      />
+      <div
+        class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
+      >
+        <h1 class="text-4xl font-bold">{{ service.serviceTitle }}</h1>
+        <div class="flex gap-4 items-center justify-center">
+          <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">Home</router-link>
+          <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
+          <router-link to="/services" class="px-4 py-2">Services</router-link>
 
+          <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
+
+          <router-link to="/services" class="text-[#539000] px-4 py-2">{{
+            service.serviceTitle
+          }}</router-link>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="w-full px-[6%] py-12 bg-[#53900F]/10">
+    <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-4 bg-white">
+      <div class="relative w-full flex flex-col gap-4 group md:col-span-12">
         <div class="w-full max-h-[600px] overflow-hiddden">
           <img
             v-if="service.serviceImage"

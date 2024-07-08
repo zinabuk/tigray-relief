@@ -60,8 +60,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="w-full bg-green-900/10">
-    <header class="flex items-center justify-between sticky shadow bg-white/100 z-10 top-0 px-2">
+  <section class="w-full bg-[#53900F]/15">
+    <header class="flex items-center justify-between sticky shadow zbg-white/100 z-10 top-0 px-2">
       <div class="w-[18%] flex items-center justify-between">
         <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" />
         <div><font-awesome-icon icon="bars" class="text-yellow-300"></font-awesome-icon></div>

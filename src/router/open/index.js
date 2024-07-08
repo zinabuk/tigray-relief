@@ -86,6 +86,14 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'our-governance',
+        name: 'governance',
+        component: () => import('@/views/OurGovernance.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'careers',
         name: 'jobs',
         component: () => import('@/views/JobList.vue'),
