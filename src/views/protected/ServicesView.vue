@@ -32,12 +32,7 @@ const fetchServices = async () => {
 }
 
 let showAddModal = ref(false)
-<<<<<<< HEAD
 const currentLanguage = ref('en')
-=======
->>>>>>> 6aa1b35f0b947b61a415dc311ee4c75b0720aed2
-
-const currentLanguage = ref('en'); 
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang
 }
@@ -193,7 +188,6 @@ onMounted(() => {
               Cancel
             </button>
           </div>
-<<<<<<< HEAD
           <div class="bg-white flex flex-col gap-2 w-full">
             <div class="flex w-full justify-between">
               <button
@@ -228,13 +222,6 @@ onMounted(() => {
               >
                 አማርኛ
               </button>
-=======
-          <div class="bg-white">
-            <div class="flex justify-center gap-16 py-2">
-              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
-              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
-              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
->>>>>>> 6aa1b35f0b947b61a415dc311ee4c75b0720aed2
             </div>
             <form @submit.prevent="saveService" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
