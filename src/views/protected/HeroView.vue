@@ -16,10 +16,14 @@ import swal from 'sweetalert'
 
 const router = useRouter()
 const heroData = ref({
-  heroTitle: '',
-  heroDescription: '',
+  heroTitle: {en:'',ti:'',am:''},
+  heroDescription: {en:'',ti:'',am:''},
   heroImage: null
 })
+const currentLanguage=ref('en')
+const toggleLanguage = (lang) => {
+  currentLanguage.value = lang;
+};
 
 const heroes = ref([])
 const errorMessage = ref('')
@@ -30,8 +34,8 @@ const showModal = ref(false)
 
 const saveHero = async () => {
   const formData = new FormData()
-  formData.append('heroTitle', heroData.value.heroTitle)
-  formData.append('heroDescription', heroData.value.heroDescription)
+  formData.append('heroTitle', JSON.stringify(heroData.value.heroTitle))
+  formData.append('heroDescription', JSON.stringify(heroData.value.heroDescription))
   if (heroData.value.heroImage) {
     formData.append('heroImage', heroData.value.heroImage)
   }
@@ -66,7 +70,12 @@ const fetchHeroes = async () => {
   try {
     const response = await ApiService.get('users/home')
     // alert(response.data.length)
-    heroes.value = response.data
+    heroes.value = response.data.map((item) => ({
+        ...item,
+        heroTitle: JSON.parse(item.heroTitle),
+        heroDescription: JSON.parse(item.heroDescription),
+
+    }))
   } catch (error) {
     errorMessage.value = 'Failed to fetch achievements'
   }
@@ -80,8 +89,8 @@ const editItem = (item) => {
 
 const updateHero = async () => {
   const formData = new FormData()
-  formData.append('heroTitle', heroData.value.heroTitle)
-  formData.append('heroDescription', heroData.value.heroDescription)
+  formData.append('heroTitle', JSON.stringify(heroData.value.heroTitle))
+  formData.append('heroDescription', JSON.stringify(heroData.value.heroDescription))
   if (heroData.value.heroImage) {
     formData.append('heroImage', heroData.value.heroImage)
   }
@@ -98,8 +107,8 @@ const updateHero = async () => {
   }
 }
 const deleteItem = async (id) => {
-  //   const sure = window.confirm('Are you sure? This operation cannot be undone.')
-  //   if (sure) {
+    const sure = window.confirm('Are you sure? This operation cannot be undone.')
+    if (sure) {
   try {
     const response = await ApiService.delete('users/home/' + id)
     if (response.success) {
@@ -109,7 +118,7 @@ const deleteItem = async (id) => {
   } catch (error) {
     errorMessage.value = 'Failed to delete hero'
   }
-  //   }
+    }
 }
 
 const resetForm = () => {
@@ -161,10 +170,9 @@ onMounted(() => {
                 class="w-full h-36 object-cover mb-4"
               />
               <div>
-                <h3 class="font-bold">{{ hero.heroTitle }}</h3>
-                <p class="break-words">{{ hero.heroDescription }}</p>
+                <h3 class="font-bold">{{ hero.heroTitle[currentLanguage] }}</h3>
+                <p class="break-words">{{ hero.heroDescription[currentLanguage] }}</p>
               </div>
-              mo
               <div class="flex justify-end space-x-2">
                 <button @click="editItem(hero)" class="text-blue-500">edit</button>
                 <button @click="deleteItem(hero.id)" class="text-red-500">delete</button>
@@ -187,11 +195,16 @@ onMounted(() => {
             >
           </div>
           <div class="">
+            <div class="flex justify-center gap-16 py-2">
+              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
+              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
+              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+        </div>
             <form @submit.prevent="saveHero" class="flex flex-col gap-4">
               <div class="">
                 <div class="w-full zmd:w-1/2 py-4 flex px-2">
                   <BaseInput
-                    v-model="heroData.heroTitle"
+                    v-model="heroData.heroTitle[currentLanguage]"
                     type="text"
                     required
                     inputClass="p-2 border border-gray-300 rounded"
@@ -201,7 +214,7 @@ onMounted(() => {
 
                 <div class="w-full zmd:w-1/2 py-4 px-2">
                   <BaseTextarea
-                    v-model="heroData.heroDescription"
+                    v-model="heroData.heroDescription[currentLanguage]"
                     inputClass="p-2 border border-gray-300 rounded h-30"
                     placeholder="Hero Description"
                   ></BaseTextarea>
@@ -244,11 +257,16 @@ onMounted(() => {
             </button>
           </div>
           <div class="">
+            <div class="flex justify-center gap-16 py-2">
+              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
+              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
+              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+        </div>
             <form @submit.prevent="updateHero" class="flex flex-col gap-4">
               <div class="">
                 <div class="w-full zmd:w-1/2 py-4 flex px-2">
                   <BaseInput
-                    v-model="heroData.heroTitle"
+                    v-model="heroData.heroTitle[currentLanguage]"
                     type="text"
                     required
                     inputClass="p-2 border border-gray-300 rounded"
@@ -258,7 +276,7 @@ onMounted(() => {
 
                 <div class="w-full zmd:w-1/2 py-4 px-2">
                   <BaseTextarea
-                    v-model="heroData.heroDescription"
+                    v-model="heroData.heroDescription[currentLanguage]"
                     inputClass="p-2 border border-gray-300 rounded h-30"
                     placeholder="Hero Description"
                   ></BaseTextarea>

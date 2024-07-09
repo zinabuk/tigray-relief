@@ -10,6 +10,18 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 import { ref, onMounted } from 'vue'
+const currentLanguage = ref('en'); 
+
+const toggleLanguage = (lang) => {
+  currentLanguage.value = lang;
+};
+const form = ref({
+  id: null,
+  serviceTitle: { en: '', ti: '', am: '' },
+  serviceDescription: { en: '', ti: '', am: '' },
+  serviceImage: ''
+})
+
 const blogs = ref([])
 const fetchNews = async () => {
   try {

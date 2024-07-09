@@ -12,7 +12,7 @@ class ApiService {
   }
   async post(endpoint, data) {
     const response = await api.post(endpoint, data, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      // headers: { 'Content-Type': 'multipart/form-data' }
     })
     return response.data
   }

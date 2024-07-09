@@ -1,6 +1,6 @@
-const BASE_URL = 'http://localhost:7000/api/v1/'
-const BASE_AVATAR = 'http://localhost:7000/api/v1/images/'
-const BASE_UPLOAD = 'http://localhost:7000/api/v1/uploads/'
+const BASE_URL = 'http://127.0.0.1:7000/api/v1/'
+const BASE_AVATAR = 'http://127.0.0.1:7000/api/v1/images/'
+const BASE_UPLOAD = 'http://127.0.0.1:7000/api/v1/uploads/'
 
 const TOKEN_KEY = 'access_token'
 

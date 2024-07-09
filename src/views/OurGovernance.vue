@@ -39,7 +39,13 @@ export default {
                   { name: 'Team Member 3' }
                 ]
               },
-              { name: 'Team Lead 4' }
+              { name: 'Team Lead 4',
+              children: [
+                  { name: 'Team Member 1' },
+                  { name: 'Team Member 2' },
+                  { name: 'Team Member 3' }
+                ]
+            }
             ]
           },
           {

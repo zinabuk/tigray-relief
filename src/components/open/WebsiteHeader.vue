@@ -78,13 +78,13 @@
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
             <router-link
-              :to="{ name: 'service-detail', params: { title: service.serviceTitle } }"
+              :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
               class="hover:text-[#288FB2]z"
               v-for="(service, i) in services"
               :key="i"
             >
               <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t(`${service.serviceTitle}`) }} </span>
+              <span class="hover:text-[#53900F]"> {{ $t(`${service.serviceTitle[currentLanguage]}`) }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
           </div>
@@ -339,7 +339,7 @@ defineProps({
 })
 let isSmall = ref(false)
 let showModal = ref(true)
-
+const currentLanguage=ref('en')
 const route = useRoute()
 function hasChildItems(item) {
   return item.sub_items && item.sub_items.length > 0
@@ -385,7 +385,11 @@ const fetchServices = async () => {
   try {
     const response = await ApiService.get('/admin/services')
     if (response) {
-      services.value = response.data
+      services.value = response.data.map((item) => ({
+        ...item,
+        serviceTitle: JSON.parse(item.serviceTitle),
+        serviceDescription: JSON.parse(item.serviceDescription),
+      }))
     }
   } catch (error) {
     // alert(error)

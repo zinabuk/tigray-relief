@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import router from '@/router/index'
 import AuthService from '@/services/AuthService'
 import { jwtDecode } from 'jwt-decode'
+import ApiService from '@/services/apiService'
 
 export const useAuthStore = defineStore('auth', () => {
   // const router = useRouter()
@@ -29,7 +30,8 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.setItem('avatar', user.value.avatar)
         localStorage.setItem('name', user.value.name)
 
-        AuthService.setHeader(token.value)
+        ApiService.setHeader(token.value)
+
         return true
       }
     } catch (error) {
@@ -47,9 +49,10 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   function logOut() {
+    // alert("logout z")
     token.value = ''
     user.value = {}
-    AuthService.removeHeader()
+    ApiService.removeHeader()
 
     return true
   }

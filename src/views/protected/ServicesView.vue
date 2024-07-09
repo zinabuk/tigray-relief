@@ -31,8 +31,8 @@ const fetchServices = async () => {
 }
 
 let showAddModal = ref(false)
-const currentLanguage = ref('en'); 
 
+const currentLanguage = ref('en'); 
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang;
 };
@@ -159,7 +159,7 @@ onMounted(() => {
           {{ service.serviceDescription[currentLanguage] }}
         </p>
         <div class="flex gap-2 justify-end">
-          <button @click="editService(service)">
+          <button @click="editService(service)">biography
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
           </button>
           <button @click="deleteService(service.id)">
@@ -182,7 +182,7 @@ onMounted(() => {
             </button>
           </div>
           <div class="bg-white">
-            <div class="flex justify-center gap-4 mb-4">
+            <div class="flex justify-center gap-16 py-2">
               <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
               <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
               <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
