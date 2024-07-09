@@ -30,7 +30,7 @@
             <tr v-for="(value, i) in paginatedData" :key="i" class="hover:bg-gray-100 border">
               <td class="" v-for="(header, i) in tableHeaders" :key="i">
                 <span v-if="header !== 'Applicants' && header !== 'Logo'" class="line-clamp-2">
-                  {{ value[header.field][currentLanguage] || value[header.field] }}
+                  {{ value[header.field] }}
                 </span>
 
                 <span v-else-if="header === 'Logo'">
@@ -104,8 +104,7 @@ export default {
     tableHeaders: Array,
     tableValues: Array,
     actions: Array,
-    caption: String,
-    currentLanguage: String,
+    caption: String
   },
   data() {
     return {
