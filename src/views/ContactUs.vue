@@ -169,7 +169,8 @@ const submitContact = async () => {
             <BaseTextarea
               v-model="form.message"
               rows="4"
-              placeholder="Enter your message"
+              label="Enter your message"
+              placeholder=""
               textareaClasses="border border-yellow-300"
             ></BaseTextarea>
 

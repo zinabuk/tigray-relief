@@ -3,7 +3,7 @@
     <label for="label" v-if="label" class="font-semibold">{{ label }}</label>
     <input
       v-bind="$attrs"
-      class="px-6 py-2 w-full border border-yellow-300"
+      class="px-4 py-2 w-full border border-[#53900F] focus:border-[#260efa] focus:outline-none"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @focus="$emit('handleFocus')"
