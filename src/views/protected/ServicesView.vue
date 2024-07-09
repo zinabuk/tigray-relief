@@ -97,6 +97,8 @@ const saveService = async () => {
 }
 
 const deleteService = async (id) => {
+   const sure = window.confirm('Are you sure to delete this team?')
+  if (sure) {e
   try {
     const response = await ApiService.delete('/admin/services/' + id)
 
@@ -108,6 +110,7 @@ const deleteService = async (id) => {
   } catch (error) {
     errorMessage.value = 'Failed to save Partner'
   }
+}
 }
 
 const closeModal = () => {
@@ -159,7 +162,7 @@ onMounted(() => {
           {{ service.serviceDescription[currentLanguage] }}
         </p>
         <div class="flex gap-2 justify-end">
-          <button @click="editService(service)">biography
+          <button @click="editService(service)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
           </button>
           <button @click="deleteService(service.id)">

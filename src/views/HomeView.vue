@@ -169,9 +169,9 @@ onMounted(() => {
           <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
-        <p class="line-clamp-5">
+        <!-- <p class="line-clamp-5">
           {{ service.serviceDescription[currentLanguage] }}
-        </p>
+        </p> -->
       </div>
     </div>
 

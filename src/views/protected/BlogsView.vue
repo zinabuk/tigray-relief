@@ -1,58 +1,86 @@
 <script setup>
 import ApiService from '@/services/apiService'
-
-import { BASE_AVATAR } from '@/config'
 import BaseButton from '@/components/base/BaseButton.vue'
-// const news = async () => {
-//   const response = await ApiService.get()
-// }
-
 import { useRouter } from 'vue-router'
-const router = useRouter()
 import { ref, onMounted } from 'vue'
-const currentLanguage = ref('en'); 
+import { BASE_AVATAR } from '@/config'
+const router = useRouter()
+const currentLanguage = ref('en')
 
 const toggleLanguage = (lang) => {
-  currentLanguage.value = lang;
-};
+  currentLanguage.value = lang
+}
+
 const form = ref({
   id: null,
-  serviceTitle: { en: '', ti: '', am: '' },
-  serviceDescription: { en: '', ti: '', am: '' },
-  serviceImage: ''
+  eventTitle: { en: '', ti: '', am: '' },
+  eventDescription: { en: '', ti: '', am: '' },
+  category: { en: '', ti: '', am: '' },
+  eventDate: '',
+  eventOrganizer: { en: '', ti: '', am: '' },
+  eventImage: null
 })
 
 const blogs = ref([])
+
 const fetchNews = async () => {
   try {
     const response = await ApiService.get('/admin/events')
-    if (response) {
-      blogs.value = response.data
+    if (response.data) {
+      blogs.value = response.data.map((item) => ({
+        ...item,
+        eventTitle: JSON.parse(item.eventTitle),
+        eventDescription: JSON.parse(item.eventDescription),
+        category: JSON.parse(item.category),
+        eventOrganizer: JSON.parse(item.eventOrganizer),
+      }))
     }
   } catch (error) {
+    console.error(error)
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
       setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
+        router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }
 }
 
-let showEditModal = ref(false)
+const deleteBlog = async (id) => {
+   const sure = window.confirm('Are you sure to delete this team?')
+  if (sure) {
+  try {
+    const response = await ApiService.delete('/admin/events/' + id)
+
+    if (response.success) {
+      fetchNews()
+    } else {
+  
+    }
+  } catch (error) {
+    
+  }
+}
+}
+
+const showEditModal = ref(false)
 const editedNew = ref({
-  eventTitle: '',
-  eventDescription: '',
-  category: '',
+  id: null,
+  eventTitle: { en: '', ti: '', am: '' },
+  eventDescription: { en: '', ti: '', am: '' },
+  category: { en: '', ti: '', am: '' },
   eventDate: '',
-  eventOrganizer: '',
+  eventOrganizer: { en: '', ti: '', am: '' },
   eventImage: null
 })
-const openEditModal = async (event) => {
+
+const openEditModal = (event) => {
   showEditModal.value = true
-  editedNew.value = event
+  editedNew.value = { ...event }
+  console.log('Editing event with ID:', editedNew.value.id)
 }
+
 
 const closeEditModal = () => {
   showEditModal.value = false
@@ -62,45 +90,43 @@ const handleFileChange = (event) => {
   const file = event.target.files[0]
   editedNew.value.eventImage = file
 }
-
 const updateNew = async () => {
   try {
     const formData = new FormData()
-    formData.append('eventTitle', editedNew.value.eventTitle)
-    formData.append('eventDescription', editedNew.value.eventDescription)
-    formData.append('category', editedNew.value.category)
+    formData.append('eventTitle', JSON.stringify(editedNew.value.eventTitle))
+    formData.append('eventDescription', JSON.stringify(editedNew.value.eventDescription))
+    formData.append('category', JSON.stringify(editedNew.value.category))
     formData.append('eventDate', editedNew.value.eventDate)
-    formData.append('eventOrganizer', editedNew.value.eventOrganizer)
-    formData.append('eventImage', editedNew.value.eventImage)
+    formData.append('eventOrganizer', JSON.stringify(editedNew.value.eventOrganizer))
+    if (editedNew.value.eventImage) {
+      formData.append('eventImage', editedNew.value.eventImage)
+    }
 
-    const response = await ApiService.patch('/admin/events/' + editedNew.value.id, formData)
-    if (response.success) {
-      setTimeout(() => {
-        closeEditModal()
-      }, 3000)
+    console.log(`FormData contents before sending:`);
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    const response = await ApiService.patch(`/admin/events/${editedNew.value.id}`, formData)
+    console.log('Server response:', response.data);
+
+    if (response.data.success) {
+      closeEditModal()
       fetchNews()
+    } else {
+      console.error('Update failed:', response.data.message);
     }
   } catch (error) {
+    console.error('Error updating event:', error)
     if (error.response && error.response.data && error.response.status === 404) {
-      return
+      console.error('Data not found error:', error.response.data)
     } else {
       setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
+        router.push({ name: 'NetworkError' })
       }, 2000)
     }
   }
 }
-
-// const handleOutsideClick = (event) => {
-//   if (event && event.target && !event.target.closest('.modal')) {
-//     closeEditModal()
-//   }
-
-//   document.addEventListener('click', handleOutsideClick)
-//   return () => {
-//     document.removeEventListener('click', handleOutsideClick)
-//   }
-// }
 
 onMounted(() => {
   fetchNews()
@@ -109,94 +135,65 @@ onMounted(() => {
 
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4">
-    <!-- Services -->
     <router-link
       :to="{ name: 'admin-add-blogs' }"
       class="text-[#539000] self-end border flex items-center px-2 py-1 bg-white border-[#539000]"
     >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add New | Event</router-link
-    >
+      <font-awesome-icon icon="add" class="bg-white text-[#539000] p-2 rounded-full"></font-awesome-icon>
+      Add New | Event
+    </router-link>
 
     <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 bg-white gap- ">
+      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 bg-white gap-">
         <div class="h-48">
           <img :src="BASE_AVATAR + event.eventImage" alt="" class="h-full w-full object-cover" />
         </div>
-        <div class="flex flex-col flex-wrap gap-2 items-start justify-censter">
-          <h6 class="text-gray-500">{{ event.category }} | {{ event.eventDate }}</h6>
-          <h3 class="text-lg font-bold">
-            {{ event.eventTitle }}
-          </h3>
-          <p>{{ event.eventDescription }}</p>
+        <div class="flex flex-col flex-wrap gap-2 items-start justify-center">
+          <h6 class="text-gray-500">{{ event.category[currentLanguage] || '' }} | {{ event.eventDate }}</h6>
+          <h3 class="text-lg font-bold">{{ event.eventTitle[currentLanguage] || '' }}</h3>
+          <p>{{ event.eventDescription[currentLanguage] || '' }}</p>
         </div>
         <div class="w-full flex justify-end gap-6">
-          <!-- <router-link to="/about" class="text-green-600 font-bold">Read More</router-link> -->
           <button @click="openEditModal(event)">
             <font-awesome-icon icon="edit" class="text-blue-700"></font-awesome-icon>
           </button>
-          <button @click="deleteBlog(event._id)">
+          <button @click="deleteBlog(event.id)">
             <font-awesome-icon icon="trash" class="text-red-700"></font-awesome-icon>
           </button>
         </div>
       </div>
     </div>
-    <div
-      v-if="showEditModal"
-      class="fixed inset-0 flex items-center z-50 justify-center modal bg-black/70"
-    >
+
+    <div v-if="showEditModal" class="fixed inset-0 flex items-center z-50 justify-center modal bg-black/70">
       <div class="bg-white p-6">
-        <!-- <h2 class="text-lg font-bold">Edit News</h2> -->
         <button @click="closeEditModal" class="bg-gray-500 text-white px-4 py-2 rounded mr-auto">
           Cancel
         </button>
+        <div class="flex justify-center gap-16 py-2">
+          <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage.value === 'en', 'bg-gray-200': currentLanguage.value !== 'en' }">English</BaseButton>
+          <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage.value === 'am', 'bg-gray-200': currentLanguage.value !== 'am' }">Amharic</BaseButton>
+          <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage.value === 'ti', 'bg-gray-200': currentLanguage.value !== 'ti' }">Tigrigna</BaseButton>
+        </div>
         <form @submit.prevent="updateNew" class="grid grid-cols-2 gap-4">
           <div class="col-span-2">
             <label class="block" for="eventTitle">Title</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.eventTitle"
-              required
-            />
+            <input class="border rounded px-2 py-1 w-full" type="text" v-model="editedNew.eventTitle[currentLanguage]" required />
           </div>
           <div class="col-span-2">
             <label class="block" for="eventDescription">Description</label>
-            <textarea
-              class="border rounded px-2 py-1 w-full h-40"
-              type="text"
-              v-model="editedNew.eventDescription"
-              required
-            ></textarea>
+            <textarea class="border rounded px-2 py-1 w-full h-40" type="text" v-model="editedNew.eventDescription[currentLanguage]" required></textarea>
           </div>
           <div class="col-span-1">
             <label class="block" for="category">Category</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.category"
-              required
-            />
+            <input class="border rounded px-2 py-1 w-full" type="text" v-model="editedNew.category[currentLanguage]" required />
           </div>
-          <div class="col-sp">
-            <label class="b" for="eventDate">Date</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="date"
-              v-model="editedNew.eventDate"
-              required
-            />
+          <div class="col-span-1">
+            <label class="block" for="eventDate">Date</label>
+            <input class="border rounded px-2 py-1 w-full" type="date" v-model="editedNew.eventDate" required />
           </div>
           <div class="col-span-2">
             <label class="block" for="eventOrganizer">Organizer</label>
-            <input
-              class="border rounded px-2 py-1 w-full"
-              type="text"
-              v-model="editedNew.eventOrganizer"
-            />
+            <input class="border rounded px-2 py-1 w-full" type="text" v-model="editedNew.eventOrganizer[currentLanguage]" />
           </div>
           <div class="col-span-2">
             <label class="block" for="eventImage">Image</label>
@@ -225,3 +222,4 @@ onMounted(() => {
   }
 }
 </style>
+
