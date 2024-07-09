@@ -1,8 +1,19 @@
 <script setup>
 import { ref } from 'vue'
-const email = ref('')
-const subscribe = () => {
-  // alert(email.value)
+import apiService from '@/services/apiService';
+
+const Subscriber = ref({ email: '' })
+// const message = ref('')
+const subscribe = async () => {
+  const response = await apiService.post(Subscriber.value)
+  if (response.success) {
+    swal({ icon: 'success', title: 'Successfuly subscribed!', text: response.message })
+    // message.value = response.message
+    Subscriber.value = {}
+    setTimeout(() => {
+      // message.value = ''
+    }, 3000)
+  }
 }
 </script>
 

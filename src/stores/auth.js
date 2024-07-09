@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 // import { useRouter } from 'vue-router'
 // import router from '@/router/index'
+import ApiService from '@/services/apiService'
 import AuthService from '@/services/AuthService'
 import { jwtDecode } from 'jwt-decode'
 
@@ -29,7 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.setItem('avatar', user.value.avatar)
         localStorage.setItem('name', user.value.name)
 
-        AuthService.setHeader(token.value)
+        ApiService.setHeader(token.value)
         return true
       }
     } catch (error) {
@@ -49,7 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
   function logOut() {
     token.value = ''
     user.value = {}
-    AuthService.removeHeader()
+    ApiService.removeHeader()
 
     return true
   }
