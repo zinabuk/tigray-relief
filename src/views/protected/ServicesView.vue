@@ -10,6 +10,7 @@ import BaseFileInput from '@/components/base/BaseFileInput.vue'
 
 import { ref, onMounted } from 'vue'
 
+// let language = ref(localStorage.getItem('lang') || '')
 const services = ref([])
 const fetchServices = async () => {
   try {
@@ -18,7 +19,7 @@ const fetchServices = async () => {
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription),
+        serviceDescription: JSON.parse(item.serviceDescription)
       }))
     }
   } catch (error) {
@@ -31,11 +32,15 @@ const fetchServices = async () => {
 }
 
 let showAddModal = ref(false)
+<<<<<<< HEAD
+const currentLanguage = ref('en')
+=======
+>>>>>>> 6aa1b35f0b947b61a415dc311ee4c75b0720aed2
 
 const currentLanguage = ref('en'); 
 const toggleLanguage = (lang) => {
-  currentLanguage.value = lang;
-};
+  currentLanguage.value = lang
+}
 const form = ref({
   id: null,
   serviceTitle: { en: '', ti: '', am: '' },
@@ -135,7 +140,7 @@ onMounted(() => {
     <!-- Services -->
     <button
       @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1  border-[#539000]"
+      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
     >
       <font-awesome-icon
         icon="add"
@@ -156,7 +161,9 @@ onMounted(() => {
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">{{ service.serviceTitle[currentLanguage] }}</p>
+        <p v-else class="w-20 h-20 rounded-full text-6xl">
+          {{ service.serviceTitle[currentLanguage] }}
+        </p>
         <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
         <p class="line-clamp-5">
           {{ service.serviceDescription[currentLanguage] }}
@@ -179,16 +186,55 @@ onMounted(() => {
       <div class="bg-white shadow-lg w-full max-w-md p-6">
         <div class="text-center">
           <div class="flex justify-between">
-            <h3 class="text-lg font-medium text-gray-900">{{ edit.value ? 'Edit Service' : 'Add Service' }}</h3>
+            <h3 class="text-lg font-medium text-gray-900">
+              {{ edit ? 'Edit Service' : 'Add Service' }}
+            </h3>
             <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">
               Cancel
             </button>
           </div>
+<<<<<<< HEAD
+          <div class="bg-white flex flex-col gap-2 w-full">
+            <div class="flex w-full justify-between">
+              <button
+                @click="toggleLanguage('en')"
+                :class="{
+                  'border-2 border-b-[#53900F]': currentLanguage === 'en',
+                  'bg-gray-200': currentLanguage !== 'en'
+                }"
+                class="px-4 py-1"
+              >
+                English
+              </button>
+
+              <button
+                @click="toggleLanguage('tg')"
+                :class="{
+                  'border-2 border-b-[#53900F]': currentLanguage === 'ti',
+                  'bg-gray-200': currentLanguage !== 'ti'
+
+                }"
+                class="px-4 py-1"
+              >
+                ትግርኛ
+              </button>
+              <button
+                @click="toggleLanguage('am')"
+                :class="{
+                  'border-2 border-b-[#53900F]': currentLanguage === 'am',
+                  'bg-gray-200': currentLanguage !== 'am'
+                }"
+                class="px-4 py-1"
+              >
+                አማርኛ
+              </button>
+=======
           <div class="bg-white">
             <div class="flex justify-center gap-16 py-2">
               <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
               <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
               <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+>>>>>>> 6aa1b35f0b947b61a415dc311ee4c75b0720aed2
             </div>
             <form @submit.prevent="saveService" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
@@ -197,7 +243,7 @@ onMounted(() => {
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Service Title"
+                  :placeholder="$t('Service Title')"
                 ></BaseInput>
 
                 <BaseTextarea
@@ -238,5 +284,3 @@ onMounted(() => {
   }
 }
 </style>
-
-

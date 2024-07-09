@@ -3,7 +3,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 // import { useRouter } from 'vue-router'
-import router from '@/router/index'
+// import router from '@/router/index'
 import AuthService from '@/services/AuthService'
 import { jwtDecode } from 'jwt-decode'
 
