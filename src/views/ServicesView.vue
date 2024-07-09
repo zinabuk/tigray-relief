@@ -6,12 +6,17 @@ import { BASE_AVATAR } from '@/config'
 // }
 import { ref, onMounted } from 'vue'
 
+const currentLanguage=ref('en')
 const services = ref([])
 const fetchServices = async () => {
   try {
     const response = await ApiService.get('/admin/services')
     if (response) {
-      services.value = response.data
+      services.value = response.data.map((item) => ({
+        ...item,
+        serviceTitle: JSON.parse(item.serviceTitle),
+        serviceDescription: JSON.parse(item.serviceDescription),
+      }))
     }
   } catch (error) {
     // alert(error)
@@ -62,7 +67,7 @@ onMounted(() => {
             class="w-full h-full zring-2 zring-yellow-300 zrounded-full object-cover hover:scale-[1.2] transition-transform duration-500 ease-in-out hover:bg-[#53900F]"
           />
 
-          <p v-else class="w-20 h-20 rounded-full text-6xl">{{ service.serviceTitle[0] }}</p>
+          <p v-else class="w-20 h-20 rounded-full text-6xl">{{ service.serviceTitle[currentLanguage] }}</p>
         </div>
         <div
           :class="[
@@ -71,18 +76,18 @@ onMounted(() => {
             'flex flex-col gap-4 p-8 shadow-xl'
           ]"
         >
-          <h1 class="text-2xl font-bold">{{ service.serviceTitle }}</h1>
+          <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
           <div class="relative">
             <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-[#53900F]"></span>
             <hr class="h-[2px] absolute inset-0 bg-gray-200" />
           </div>
           <p class="line-clamp-5z">
-            {{ service.serviceDescription }}
+            {{ service.serviceDescription[currentLanguage] }}
           </p>
 
           <router-link
             class="text-[#53900F]"
-            :to="{ name: 'service-detail', params: { title: service.serviceTitle } }"
+            :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
             >Read More</router-link
           >
         </div>

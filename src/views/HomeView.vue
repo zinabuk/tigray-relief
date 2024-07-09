@@ -12,7 +12,7 @@ import 'swiper/css/effect-fade'
 // const news = async () => {
 //   const response = await ApiService.get()
 // }
-
+const currentLanguage=ref('en')
 import { ref, onMounted } from 'vue'
 
 // import { useRouter } from 'vue-router'
@@ -28,7 +28,11 @@ const fetchHeroes = async () => {
   try {
     const response = await ApiService.get('users/home')
     // alert(response.data.length)
-    heroes.value = response.data
+    heroes.value = response.data.map((item) => ({
+      ...item,
+        heroTitle: JSON.parse(item.heroTitle),
+        heroDescription:JSON.parse(item.heroDescription)
+    }))
   } catch (error) {
     errorMessage.value = 'Failed to fetch achievements'
   }
@@ -38,7 +42,11 @@ const fetchServices = async () => {
   try {
     const response = await ApiService.get('/admin/services')
     if (response) {
-      services.value = response.data
+      services.value = response.data.map((item) => ({
+        ...item,
+        serviceTitle: JSON.parse(item.serviceTitle),
+        serviceDescription: JSON.parse(item.serviceDescription),
+      }))
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -116,10 +124,10 @@ onMounted(() => {
           class="absolute bottom-16 w-full md:w-2/5 h-d py-6 flex flex-col text-green-900 justify-center px-4 bg-yellow-500/80 zmd:bg-white/0 rounded-tr-[100px]z left-4"
         >
           <div class="wave-container w-full" zdata-aos="fade-left">
-            <p class="zwave-text font-bold text-4xl">{{ hero.heroTitle }}</p>
+            <p class="zwave-text font-bold text-4xl">{{ hero.heroTitle[currentLanguage] }}</p>
           </div>
           <h6 class="font-extralight">
-            {{ hero.heroDescription }}
+            {{ hero.heroDescription [currentLanguage]}}
           </h6>
           <div class="flex gap-4 p-4">
             <router-link
@@ -155,17 +163,18 @@ onMounted(() => {
         <div
           class="absolute inset-0 flex flex-col justify-end bg-black/60 p-4 hover:bg-green-900/90"
         >
-          <h1 class="text-2xl font-bold text-white line-clamp-2">{{ service.serviceTitle }}</h1>
+          <h1 class="text-2xl font-bold text-white line-clamp-2">{{ service.serviceTitle[currentLanguage] }}</h1>
         </div>
-        <!-- <div class="relative">
+        <div class="relative">
           <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
-        </div> -->
+        </div>
         <!-- <p class="line-clamp-5">
-          {{ service.serviceDescription }}
+          {{ service.serviceDescription[currentLanguage] }}
         </p> -->
       </div>
     </div>
+
   </section>
 
   <!-- history -->

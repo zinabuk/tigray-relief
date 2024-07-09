@@ -14,14 +14,23 @@ import swal from 'sweetalert'
 // import { useRouter } from 'vue-router'
 // const router = useRouter()
 import { ref, onMounted } from 'vue'
+const currentLanguage = ref('en'); 
 
+const toggleLanguage = (lang) => {
+  currentLanguage.value = lang;
+};        
 const teams = ref([])
 const fetchTeams = async () => {
   try {
     const response = await ApiService.get('/admin/our-teams')
 
     if (response.success) {
-      teams.value = response.data
+      teams.value = response.data.map((item) => ({
+        ...item,
+        fullName: JSON.parse(item.fullName),
+        profession: JSON.parse(item.profession),
+        biography: JSON.parse(item.biography),
+      }))
     }
   } catch (error) {
     // alert(error)
@@ -46,16 +55,22 @@ const deleteTeam = async (id) => {
 }
 
 let team = ref({
-  fullName: '',
-  profession: '',
-  biography: '',
-  image: ''
+    fullName: { en: '', ti: '', am: '' },
+    profession: { en: '', ti: '', am: '' },
+    biography: { en: '', ti: '', am: '' },
+    image: ''
 })
 let showEditModal = ref(false)
 
 let eTeam = ref({ fullName: '', profession: '', biography: '', image: '' })
 const editTeam = (team) => {
-  eTeam.value = team
+  eTeam.value =
+  { id:team.id,
+    fullName: { ...team.fullName },
+    profession: { ...team.profession },
+    biography: { ...team.biography },
+    image: team.image
+  }
   showEditModal.value = true
 }
 
@@ -76,11 +91,11 @@ const imageEntry = (event) => {
 let showAddModal = ref(false)
 
 const submitForm = async () => {
-  const formData = new FormData()
 
-  formData.append('fullName', team.value.fullName)
-  formData.append('profession', team.value.profession)
-  formData.append('biography', team.value.biography)
+      const formData = new FormData()
+      formData.append('fullName', JSON.stringify(team.value.fullName))
+      formData.append('profession', JSON.stringify(team.value.profession))
+      formData.append('biography', JSON.stringify(team.value.biography))
 
   if (team.value.image) {
     formData.append('image', team.value.image)
@@ -118,15 +133,15 @@ onMounted(() => {
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
         />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">{{ team.fullName[0] }}</p>
-        <h1 class="text-2xl font-bold">{{ team.fullName }}</h1>
+        <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
+        <h1 class="text-2xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
         <div class="relative">
           <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
         <p class="line-clamp-5">
-          {{ team.profession }}
-          {{ team.biography }}
+          {{ team.profession[currentcurrentLanguageLanguage] }}
+          {{ team.biography[currentLanguage] }}
         </p>
 
         <!-- <router-link class="text-[#539000]" to="/">Read More</router-link> -->
@@ -149,6 +164,11 @@ onMounted(() => {
           cancel
         </button>
         <h2 class="text-lg font-bold mb-4">Edit Team</h2>
+        <div class="flex justify-center gap-16 py-2">
+              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
+              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
+              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+        </div>
         <form
           @submit.prevent="updateTeam"
           class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
@@ -158,12 +178,12 @@ onMounted(() => {
 
           <!-- Event Title -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="fullName" label="Full Name" v-model="eTeam.fullName" />
+            <BaseInput type="text" id="fullName" label="Full Name" v-model="eTeam.fullName[currentLanguage]" />
           </div>
 
           <!-- Event Category -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="Profession" label="Profession" v-model="eTeam.profession" />
+            <BaseInput type="text" id="Profession" label="Profession" v-model="eTeam.profession[currentLanguage]" />
           </div>
 
           <!-- Event Date -->
@@ -172,7 +192,7 @@ onMounted(() => {
 
           <div>
             <BaseTextarea
-              v-model="eTeam.biography"
+              v-model="eTeam.biography[currentLanguage]"
               placeholder="Biography"
               label="Biography"
             ></BaseTextarea>
@@ -203,7 +223,11 @@ onMounted(() => {
         <button @click="showAddModal = false" class="bg-gray-500 text-white self-end p-2">
           cancel
         </button>
-
+        <div class="flex justify-center gap-16 py-2">
+              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
+              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
+              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+        </div>
         <form
           @submit.prevent="submitForm"
           class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
@@ -213,12 +237,12 @@ onMounted(() => {
 
           <!-- Event Title -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="fullName" label="Full Name" v-model="team.fullName" />
+            <BaseInput type="text" id="fullName" label="Full Name" v-model="team.fullName[currentLanguage]" />
           </div>
 
           <!-- Event Category -->
           <div class="flex justify-center">
-            <BaseInput type="text" id="Profession" label="Profession" v-model="team.profession" />
+            <BaseInput type="text" id="Profession" label="Profession" v-model="team.profession[currentLanguage]" />
           </div>
 
           <!-- Event Date -->
@@ -227,7 +251,7 @@ onMounted(() => {
 
           <div>
             <BaseTextarea
-              v-model="team.biography"
+              v-model="team.biography[currentLanguage]"
               placeholder="Biography"
               label="Biography"
             ></BaseTextarea>

@@ -34,6 +34,7 @@ async function handleLogin() {
   const res = await logIn(formData.value)
   if (res) {
     router.push({ name: 'dashboard' })
+
     formData.value = {}
   }
 }
