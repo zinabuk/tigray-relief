@@ -119,6 +119,30 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'beneficiaries',
+        name: 'beneficiaries',
+        component: () => import('@/views/BeneficiariesView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: 'policy',
+        name: 'policy',
+        component: () => import('@/views/PolicyView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: 'faqs',
+        name: 'faqs',
+        component: () => import('@/views/FAQsView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'partnership',
         name: 'partners',
         component: () => import('@/views/PartnersView.vue'),

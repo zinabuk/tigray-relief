@@ -10,7 +10,7 @@ const galleries = ref([])
 
 const fetchGallers = async () => {
   try {
-    const response = await ApiService.get('/admin/gallary')
+    const response = await ApiService.get('/admin/gallery')
     if (response) {
       galleries.value = response.data
     }
@@ -46,7 +46,7 @@ onMounted(() => {
       <div v-for="(gallery, i) in galleries" :key="i" class="p-4 flex flex-col gap-2">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto"></font-awesome-icon> -->
         <img
-          :src="BASE_AVATAR + gallery.gallary"
+          :src="BASE_AVATAR + gallery.gallery"
           alt=""
           class="roudnded-full object-cover object-center transition-all duration-1000 hover:scale-[110%]"
         />

@@ -1,19 +1,31 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import FAQsService from '@/services/FAQsService'
+
+import apiService from '@/services/apiService'
+
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 
 const { language } = storeToRefs(useAuthStore())
+
 const faqs = ref([])
-const getAllFaqs = async () => {
-  const response = await FAQsService.getFaqs()
-  if (response.success) {
-    faqs.value = response.data.map((item) => ({
-      ...item,
-      question: JSON.parse(item.question),
-      answer: JSON.parse(item.answer)
-    }))
+
+const fetchFaqs = async () => {
+  try {
+    const response = await apiService.get('/admin/faqs')
+    if (response) {
+      faqs.value = response.data.map((item) => ({
+        ...item,
+        question: JSON.parse(item.question),
+        answer: JSON.parse(item.answer)
+      }))
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {}, 2000)
+    }
   }
 }
 
@@ -22,33 +34,35 @@ const faqIndex = ref(null)
 const toggleAccordion = (index) => {
   faqIndex.value = faqIndex.value === index ? '' : index
 }
-onMounted(getAllFaqs)
+onMounted(fetchFaqs)
 </script>
 
 <template>
-  <section class="w-full bg-[#288fb2]/10  md:py-4">
-    <!-- <img
-      src="@/assets/faqs.jpg"
-      alt=""
-      class="absolute inset-0 object-cover object-center w-full h-full"
-    /> -->
-
-    <div class="px-[1%] md:px-[7%] py-2">
+  <section class="w-full">
+    <div class="w-full relative">
+      <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
-        class="w-full grid grid-cols-2 h-[140px] bg-[#288fb2] items-center justify-center place-content-center rounded-xl px-[2%] md:px-[4%]"
+        class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl text-white">{{ $t('FAQs') }}</h1>
+        <h1 class="text-4xl font-bold">Frequently asked questions</h1>
+        <div class="flex gap-4">
+          <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">{{
+            $t('Home')
+          }}</router-link>
+          <router-link to="/faqs" class="text-[#539000] px-4 py-2">{{
+            $t('Frequently asked questions')
+          }}</router-link>
+        </div>
       </div>
     </div>
   </section>
-
-  <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8">
+  <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8 bg-[#53900F]/10">
     <ul class="grid grid-cols-1 gap-6 w-full">
       <li v-for="(faq, index) in faqs" :key="index" class="w-full">
         <button
-          class="w-full  border border-t-0 border-r-0 border-l-0 rounded p-2 flex flex-col"
+          class="w-full border border-t-0 border-r-0 border-l-0 rounded p-2 flex flex-col"
           @click="toggleAccordion(index)"
-          :class="[{ 'bg-[#288FB2]/30x bg-[#F5F5F5]': faqIndex === index }]"
+          :class="[{ 'bg-[#288FB2]/30x bg-white': faqIndex === index }]"
         >
           <div :class="['w-full flex justify-between font-semibold']">
             <!-- <span
