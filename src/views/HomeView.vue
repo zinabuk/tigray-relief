@@ -199,19 +199,21 @@ onMounted(() => {
 
       <div class="grid grid-cols-3 gap-4 w-full overflow-hidden">
         <div
-          class="font-bold px-4 py-2 flex flex-col gap-4 items-center shadow-2xlz"
+          class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
           data-aos="fade-right"
         >
-          <h1 class="text-green-900 text-8xl">30 +</h1>
-          <p class="text-xl">{{ $t('Years of service') }}</p>
+          <h1 class="text-green-900 text-xl">1978</h1>
+          <p class="text-xl">{{ $t('A decades of expertise') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">
-          <h1 class="text-green-900 text-8xl">300 +</h1>
-          <p class="text-xl text-ce">{{ $t('Projects') }}</p>
+          <h1 class="text-green-900 text-4xl">1,000
+            +</h1>
+          <p class="text-xl text-ce">{{ $t('Completed Projects') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-left">
-          <h1 class="text-green-900 text-8xl">5 +</h1>
-          <p class="text-xl">{{ $t('Services') }}</p>
+          <h1 class="text-green-900 text-4xl">3,000,000
+             +</h1>
+          <p class="text-xl">{{ $t('Impacted Beneficiaries') }}</p>
         </div>
       </div>
       <!-- <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold self-start"

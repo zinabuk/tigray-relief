@@ -6,7 +6,10 @@ import { BASE_AVATAR } from '@/config'
 // }
 import { ref, onMounted } from 'vue'
 
-const currentLanguage=ref('en')
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+const { currentLanguage } = storeToRefs(useAuthStore())
+
 const services = ref([])
 const fetchServices = async () => {
   try {
@@ -15,7 +18,7 @@ const fetchServices = async () => {
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription),
+        serviceDescription: JSON.parse(item.serviceDescription)
       }))
     }
   } catch (error) {
@@ -35,10 +38,14 @@ onMounted(() => {
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">Services we provide</h1>
+        <h1 class="text-4xl font-bold">{{ $t('Services we provide') }}</h1>
         <div class="flex gap-4">
-          <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">Home</router-link>
-          <router-link to="/services" class="text-[#539000] px-4 py-2">Services</router-link>
+          <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">{{
+            $t('Home')
+          }}</router-link>
+          <router-link to="/services" class="text-[#539000] px-4 py-2">{{
+            $t('Services')
+          }}</router-link>
         </div>
       </div>
     </div>
@@ -67,7 +74,9 @@ onMounted(() => {
             class="w-full h-full zring-2 zring-yellow-300 zrounded-full object-cover hover:scale-[1.2] transition-transform duration-500 ease-in-out hover:bg-[#53900F]"
           />
 
-          <p v-else class="w-20 h-20 rounded-full text-6xl">{{ service.serviceTitle[currentLanguage] }}</p>
+          <p v-else class="w-20 h-20 rounded-full text-6xl">
+            {{ service.serviceTitle[currentLanguage] }}
+          </p>
         </div>
         <div
           :class="[
@@ -87,12 +96,14 @@ onMounted(() => {
 
           <router-link
             class="text-[#53900F]"
-            :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
-            >Read More</router-link
+            :to="{
+              name: 'service-detail',
+              params: { title: service.serviceTitle[currentLanguage] }
+            }"
+            >{{ $t('Read More') }}</router-link
           >
         </div>
       </div>
     </div>
   </section>
 </template>
-
