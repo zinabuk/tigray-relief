@@ -13,6 +13,7 @@ const SIDEBARITEMS = {
     { label: 'Tenders', name: 'admin-tenders', icon: 'comment-dots' },
 
     { label: 'Donations', name: 'donations', icon: 'quote-left' },
+    { label: 'Vacancy', name: 'admin-jobs', icon: 'quote-left' },
     //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
     { label: 'volunteers', name: 'admin-volunteers', icon: 'comment-dots' },
 

@@ -1,158 +1,3 @@
-<script setup>
-import { ref, onMounted } from 'vue'
-import BaseInput from '@/components/base/BaseInput.vue'
-import BaseTextarea from '@/components/base/BaseTextarea.vue'
-import BaseButton from '@/components/base/BaseButton.vue'
-import ApiService from '@/services/apiService'
-
-import { BASE_AVATAR } from '@/config'
-import swal from 'sweetalert'
-
-const aboutUsData = ref({
-  establishment: { en: '', ti: '', am: '' },
-  mission: { en: '', ti: '', am: '' },
-  vision: { en: '', ti: '', am: '' },
-  coreValues: { en: '', ti: '', am: '' },
-  expertise: { en: '', ti: '', am: '' },
-  images: null
-})
-const currentLanguage = ref('en')
-const errorMessage = ref('')
-const successMessage = ref('')
-const editMode = ref(false)
-const editId = ref(null)
-const showModal = ref(false)
-
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
-
-const saveAboutUs = async () => {
-  const formData = new FormData()
-  formData.append('establishment', JSON.stringify(aboutUsData.value.establishment))
-  formData.append('mission', JSON.stringify(aboutUsData.value.mission))
-  formData.append('vision', JSON.stringify(aboutUsData.value.vision))
-  formData.append('coreValues', JSON.stringify(aboutUsData.value.coreValues))
-  formData.append('expertise', JSON.stringify(aboutUsData.value.expertise))
-  if (aboutUsData.value.images) {
-    formData.append('images', aboutUsData.value.images)
-  }
-
-  try {
-    const response = await ApiService.post('admin/aboutus', formData)
-    if (response.success) {
-      successMessage.value = response.message
-      swal({
-        title: response.message,
-        icon: 'success'
-      })
-      fetchAboutUs()
-      resetForm()
-      closeModal()
-      aboutUsData.value = {}
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      errorMessage.value = error.response.data.message
-    } else {
-      // Handle other errors
-    }
-  }
-}
-
-const captureImage = (event) => {
-  aboutUsData.value.images = event.target.files[0]
-}
-
-const fetchAboutUs = async () => {
-  try {
-    const response = await ApiService.get('admin/aboutus')
-    aboutUsData.value = response.data.map((item) => ({
-        ...item,
-        establishment: JSON.parse(item.establishment),
-        mission: JSON.parse(item.mission),
-        vision: JSON.parse(item.mission),
-        coreValues: JSON.parse(item.mission),
-        expertise: JSON.parse(item.mission),
-
-
-
-       
-
-    }))
-  } catch (error) {
-    errorMessage.value = 'Failed to fetch about us content'
-  }
-}
-
-const showEditModal = ref(false)
-const editItem = (item) => {
-  aboutUsData.value = item
-  showEditModal.value = true
-}
-
-const updateAboutUs = async () => {
-  const formData = new FormData()
-  formData.append('establishment', JSON.stringify(aboutUsData.value.establishment))
-  formData.append('mission', JSON.stringify(aboutUsData.value.mission))
-  formData.append('vision', JSON.stringify(aboutUsData.value.vision))
-  formData.append('coreValues', JSON.stringify(aboutUsData.value.coreValues))
-  formData.append('expertise', JSON.stringify(aboutUsData.value.expertise))
-  if (aboutUsData.value.images) {
-    formData.append('images', aboutUsData.value.images)
-  }
-
-  const response = await ApiService.patch('admin/aboutus/' + aboutUsData.value.id, formData)
-  if (response.success) {
-    swal({
-      icon: 'success',
-      title: 'Updating about us content',
-      text: 'Content successfully updated.'
-    })
-    fetchAboutUs()
-    showEditModal.value = false
-    aboutUsData.value = {}
-  }
-}
-
-const deleteItem = async (id) => {
-  const sure = window.confirm('Are you sure? This operation cannot be undone.')
-  if (sure) {
-    try {
-      const response = await ApiService.delete('admin/aboutus/' + id)
-      if (response.success) {
-        successMessage.value = response.message
-        fetchAboutUs()
-      }
-    } catch (error) {
-      errorMessage.value = 'Failed to delete about us content'
-    }
-  }
-}
-
-const resetForm = () => {
-  aboutUsData.value = {
-    establishment: '',
-    mission: '',
-    vision: '',
-    coreValues: '',
-    expertise: '',
-    images: null
-  }
-  editMode.value = false
-  editId.value = null
-}
-
-const closeModal = () => {
-  showModal.value = false
-  showEditModal.value = false
-  resetForm()
-}
-
-onMounted(() => {
-  fetchAboutUs()
-})
-</script>
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white">
     <div class="flex justify-between w-full">
@@ -330,7 +175,157 @@ onMounted(() => {
   </section>
 </template>
 
+<script setup>
+import { ref, onMounted } from 'vue'
+import BaseInput from '@/components/base/BaseInput.vue'
+import BaseTextarea from '@/components/base/BaseTextarea.vue'
+import BaseButton from '@/components/base/BaseButton.vue'
+import ApiService from '@/services/apiService'
 
+import { BASE_AVATAR } from '@/config'
+import swal from 'sweetalert'
+
+const aboutUsData = ref({
+  establishment: { en: '', ti: '', am: '' },
+  mission: { en: '', ti: '', am: '' },
+  vision: { en: '', ti: '', am: '' },
+  coreValues: { en: '', ti: '', am: '' },
+  expertise: { en: '', ti: '', am: '' },
+  images: null,
+});
+const currentLanguage = ref('en')
+const errorMessage = ref('')
+const successMessage = ref('')
+const editMode = ref(false)
+const editId = ref(null)
+const showModal = ref(false)
+
+const toggleLanguage = (lang) => {
+  currentLanguage.value = lang
+}
+
+const saveAboutUs = async () => {
+  const formData = new FormData()
+  formData.append('establishment', JSON.stringify(aboutUsData.value.establishment))
+  formData.append('mission', JSON.stringify(aboutUsData.value.mission))
+  formData.append('vision', JSON.stringify(aboutUsData.value.vision))
+  formData.append('coreValues', JSON.stringify(aboutUsData.value.coreValues))
+  formData.append('expertise', JSON.stringify(aboutUsData.value.expertise))
+  if (aboutUsData.value.images) {
+    formData.append('images', aboutUsData.value.images)
+  }
+
+  try {
+    const response = await ApiService.post('admin/aboutus', formData)
+    if (response.success) {
+      successMessage.value = response.message
+      swal({
+        title: response.message,
+        icon: 'success'
+      })
+      fetchAboutUs()
+      resetForm()
+      closeModal()
+      aboutUsData.value = {}
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      errorMessage.value = error.response.data.message
+    } else {
+      // Handle other errors
+    }
+  }
+}
+
+const captureImage = (event) => {
+  aboutUsData.value.images = event.target.files[0]
+}
+
+const fetchAboutUs = async () => {
+  try {
+    const response = await ApiService.get('admin/aboutus');
+    aboutUsData.value = response.data.map(item => ({
+      ...item,
+      establishment: JSON.parse(item.establishment),
+      mission: JSON.parse(item.mission),
+      vision: JSON.parse(item.vision),
+      coreValues: JSON.parse(item.coreValues),
+      expertise: JSON.parse(item.expertise),
+    }));
+  } catch (error) {
+    errorMessage.value = 'Failed to fetch about us content';
+  }
+};
+
+
+const showEditModal = ref(false)
+const editItem = (item) => {
+  aboutUsData.value = item
+  showEditModal.value = true
+}
+
+const updateAboutUs = async () => {
+  const formData = new FormData()
+  formData.append('establishment', JSON.stringify(aboutUsData.value.establishment))
+  formData.append('mission', JSON.stringify(aboutUsData.value.mission))
+  formData.append('vision', JSON.stringify(aboutUsData.value.vision))
+  formData.append('coreValues', JSON.stringify(aboutUsData.value.coreValues))
+  formData.append('expertise', JSON.stringify(aboutUsData.value.expertise))
+  if (aboutUsData.value.images) {
+    formData.append('images', aboutUsData.value.images)
+  }
+
+  const response = await ApiService.patch('admin/aboutus/' + aboutUsData.value.id, formData)
+  if (response.success) {
+    swal({
+      icon: 'success',
+      title: 'Updating about us content',
+      text: 'Content successfully updated.'
+    })
+    fetchAboutUs()
+    showEditModal.value = false
+    aboutUsData.value = {}
+  }
+}
+
+const deleteItem = async (id) => {
+  const sure = window.confirm('Are you sure? This operation cannot be undone.')
+  if (sure) {
+    try {
+      const response = await ApiService.delete('admin/aboutus/' + id)
+      if (response.success) {
+        successMessage.value = response.message
+        fetchAboutUs()
+      }
+    } catch (error) {
+      errorMessage.value = 'Failed to delete about us content'
+    }
+  }
+}
+
+const resetForm = () => {
+  aboutUsData.value = {
+    establishment: '',
+    mission: '',
+    vision: '',
+    coreValues: '',
+    expertise: '',
+    images: null
+  }
+  editMode.value = false
+  editId.value = null
+}
+
+const closeModal = () => {
+  showModal.value = false
+  showEditModal.value = false
+  resetForm()
+}
+
+onMounted(() => {
+  fetchAboutUs()
+})
+</script>
 
 <style scoped>
 /* Your scoped styles here */
