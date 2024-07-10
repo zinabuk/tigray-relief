@@ -5,9 +5,11 @@ import { BASE_AVATAR } from '@/config'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
-import 'swiper/css/pagination'
-import 'swiper/css/navigation'
-import 'swiper/css/effect-fade'
+import 'swiper/swiper-bundle.css'
+
+// import 'swiper/css/pagination'
+// import 'swiper/css/navigation'
+// import 'swiper/css/effect-fade'
 
 // const news = async () => {
 //   const response = await ApiService.get()
@@ -119,7 +121,7 @@ onMounted(() => {
     <Swiper
       :slides-per-view="1"
       :modules="[Autoplay, Pagination, Navigation]"
-      :autoplay="{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: false }"
+      :autoplay="{ delay: 1000, disableOnInteraction: false, pauseOnMouseEnter: false }"
       loop
       class="w-full h-screen md:h-[calc(100vh_-_80px)]"
     >
@@ -206,13 +208,11 @@ onMounted(() => {
           <p class="text-xl">{{ $t('A decades of expertise') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">
-          <h1 class="text-green-900 text-4xl">1,000
-            +</h1>
+          <h1 class="text-green-900 text-4xl">1,000 +</h1>
           <p class="text-xl text-ce">{{ $t('Completed Projects') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-left">
-          <h1 class="text-green-900 text-4xl">3,000,000
-             +</h1>
+          <h1 class="text-green-900 text-4xl">3,000,000 +</h1>
           <p class="text-xl">{{ $t('Impacted Beneficiaries') }}</p>
         </div>
       </div>
@@ -326,7 +326,7 @@ onMounted(() => {
     <swiper
       :slides-per-view="1"
       :modules="modules"
-      :autoplay="{ delay: 5000 }"
+      :autoplay="{ delay: 1000 }"
       class="w-full flex flex-wrap items-center justify-center"
       :breakpoints="{
         '768': { slidesPerView: 2, spaceBetween: 20 },
