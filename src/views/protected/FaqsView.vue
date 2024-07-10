@@ -1,25 +1,20 @@
 <script setup>
 import ApiService from '@/services/apiService'
-
-import { BASE_AVATAR } from '@/config'
-
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
-import BaseFileInput from '@/components/base/BaseFileInput.vue'
-
 import { ref, onMounted } from 'vue'
 
-// let language = ref(localStorage.getItem('lang') || '')
-const services = ref([])
-const fetchServices = async () => {
+const faqs = ref([])
+
+const fetchFaqs = async () => {
   try {
-    const response = await ApiService.get('/admin/services')
+    const response = await ApiService.get('/admin/faqs')
     if (response) {
-      services.value = response.data.map((item) => ({
+      faqs.value = response.data.map((item) => ({
         ...item,
-        serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription)
+        question: JSON.parse(item.question),
+        answer: JSON.parse(item.answer)
       }))
     }
   } catch (error) {
@@ -36,78 +31,63 @@ const currentLanguage = ref('en')
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang
 }
-const form = ref({ 
-  serviceTitle: { en: '', ti: '', am: '' },
-  serviceDescription: { en: '', ti: '', am: '' },
-  serviceImage: ''
+const form = ref({
+  id: null,
+  question: { en: '', ti: '', am: '' },
+  answer: { en: '', ti: '', am: '' }
 })
-
-let logo = ref('')
-const handleFileChange = (file) => {
-  form.value.serviceImage = file
-  logo.value = file.name
-}
 
 const errorMessage = ref('')
 const successMessage = ref('')
 
 let edit = ref(false)
-const editService = (service) => {
-  form.value = { 
-    serviceTitle: { ...service.serviceTitle },
-    serviceDescription: { ...service.serviceDescription },
-    serviceImage: service.serviceImage
+const editFaq = (faq) => {
+  form.value = {
+    id: faq.id,
+    question: { ...faq.question },
+    answer: { ...faq.answer },
   }
   edit.value = true
   showAddModal.value = true
 }
 
-const saveService = async () => {
-  // console.log(form.value)
-  const formData = new FormData()
-  formData.append('serviceTitle', JSON.stringify(form.value.serviceTitle))
-  formData.append('serviceDescription', JSON.stringify(form.value.serviceDescription))
-  if (form.value.serviceImage) {
-    formData.append('serviceImage', form.value.serviceImage)
+const saveFaq = async () => {
+  const formData = {
+    question: JSON.stringify(form.value.question),
+    answer: JSON.stringify(form.value.answer)
   }
   try {
     if (edit.value) {
-      const response = await ApiService.patch('/admin/services/' + form.value.id, formData)
-      if (response.success) {
-        successMessage.value = response.message
-        fetchServices()
-        closeModal()
-      } else {
-        errorMessage.value = 'Failed to save Service'
-      }
+      console.log('Editing FAQ with ID:', form.value.id)
+      const response = await ApiService.patch('/admin/faqs/' + form.value.id, formData)
+
+        fetchFaqs()
+        closeModal()  // Close modal after successful edit
+
     } else {
-      const res = await ApiService.postRequest('/admin/services', formData)
-      if (res.success) {
-        successMessage.value = res.message
-        fetchServices()
-        closeModal()
-      } else {
-        errorMessage.value = 'Failed to save Service'
-      }
+      const res = await ApiService.post('/admin/faqs', formData)
+
+        fetchFaqs()
+        closeModal()  // Close modal after successful save
+
     }
   } catch (error) {
-    errorMessage.value = 'Failed to save Service'
+    errorMessage.value = 'Failed to save FAQ'
   }
 }
 
-const deleteService = async (id) => {
-  const sure = window.confirm('Are you sure to delete this team?')
+const deleteFaq = async (id) => {
+  const sure = window.confirm('Are you sure to delete this FAQ?')
   if (sure) {
     try {
-      const response = await ApiService.delete('/admin/services/' + id)
-
-      if (response.success) {
-        fetchServices()
+      const response = await ApiService.delete('/admin/faqs/' + id)
+      if (response.data.success) {
+        fetchFaqs()
       } else {
-        errorMessage.value = 'Failed to save Partner'
+        errorMessage.value = 'Failed to delete FAQ'
       }
     } catch (error) {
-      errorMessage.value = 'Failed to save Partner'
+      errorMessage.value = 'Failed to delete FAQ'
     }
   }
 }
@@ -116,22 +96,20 @@ const closeModal = () => {
   showAddModal.value = false
   form.value = {
     id: null,
-    serviceTitle: { en: '', ti: '', am: '' },
-    serviceDescription: { en: '', ti: '', am: '' },
-    serviceImage: ''
+    question: { en: '', ti: '', am: '' },
+    answer: { en: '', ti: '', am: '' }
   }
   edit.value = false
-  logo.value = ''
 }
 
 onMounted(() => {
-  fetchServices()
+  fetchFaqs()
 })
 </script>
 
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
-    <!-- Services -->
+    <!-- FAQs -->
     <button
       @click="showAddModal = true"
       class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
@@ -140,33 +118,24 @@ onMounted(() => {
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add Service
+      Add FAQ
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
-        v-for="(service, i) in services"
+        v-for="(faq, i) in faqs"
         :key="i"
         class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
       >
-        <img
-          v-if="service.serviceImage"
-          :src="BASE_AVATAR + service.serviceImage"
-          alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
-        />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">
-          {{ service.serviceTitle[currentLanguage] }}
-        </p>
-        <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
+        <h1 class="text-2xl font-bold">{{ faq.question[currentLanguage] }}</h1>
         <p class="line-clamp-5">
-          {{ service.serviceDescription[currentLanguage] }}
+          {{ faq.answer[currentLanguage] }}
         </p>
         <div class="flex gap-2 justify-end">
-          <button @click="editService(service)">
+          <button @click="editFaq(faq)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
           </button>
-          <button @click="deleteService(service.id)">
+          <button @click="deleteFaq(faq.id)">
             <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
           </button>
         </div>
@@ -181,7 +150,7 @@ onMounted(() => {
         <div class="text-center">
           <div class="flex justify-between">
             <h3 class="text-lg font-medium text-gray-900">
-              {{ edit ? 'Edit Service' : 'Add Service' }}
+              {{ edit ? 'Edit FAQ' : 'Add FAQ' }}
             </h3>
             <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">
               Cancel
@@ -220,30 +189,24 @@ onMounted(() => {
                 አማርኛ
               </button>
             </div>
-            <form @submit.prevent="saveService" class="flex flex-col gap-4">
+            <form @submit.prevent="saveFaq" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
-                  v-model="form.serviceTitle[currentLanguage]"
+                  v-model="form.question[currentLanguage]"
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
-                  :placeholder="$t('Service Title')"
+                  :placeholder="$t('Question')"
                 ></BaseInput>
-
                 <BaseTextarea
-                  v-model="form.serviceDescription[currentLanguage]"
+                  v-model="form.answer[currentLanguage]"
                   inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Service Description"
+                  placeholder="Answer"
                 ></BaseTextarea>
               </div>
               <div class="flex justify-end gap-2 flex-col">
-                <BaseFileInput
-                  @image-update="handleFileChange($event)"
-                  label="Add Picture"
-                ></BaseFileInput>
-                <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
-                  Save Service
+                  Save FAQ
                 </BaseButton>
               </div>
             </form>

@@ -10,16 +10,15 @@ import BaseFileInput from '@/components/base/BaseFileInput.vue'
 
 import { ref, onMounted } from 'vue'
 
-// let language = ref(localStorage.getItem('lang') || '')
-const services = ref([])
-const fetchServices = async () => {
+const policies = ref([])
+const fetchPolicies = async () => {
   try {
-    const response = await ApiService.get('/admin/services')
+    const response = await ApiService.get('/users/policy-and-strategy')
     if (response) {
-      services.value = response.data.map((item) => ({
+      policies.value = response.data.map((item) => ({
         ...item,
-        serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription)
+        title: JSON.parse(item.title),
+        description: JSON.parse(item.description)
       }))
     }
   } catch (error) {
@@ -36,15 +35,16 @@ const currentLanguage = ref('en')
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang
 }
-const form = ref({ 
-  serviceTitle: { en: '', ti: '', am: '' },
-  serviceDescription: { en: '', ti: '', am: '' },
-  serviceImage: ''
+const form = ref({
+  id: null,
+  title: { en: '', ti: '', am: '' },
+  description: { en: '', ti: '', am: '' },
+  image: ''
 })
 
 let logo = ref('')
 const handleFileChange = (file) => {
-  form.value.serviceImage = file
+  form.value.image = file
   logo.value = file.name
 }
 
@@ -52,62 +52,62 @@ const errorMessage = ref('')
 const successMessage = ref('')
 
 let edit = ref(false)
-const editService = (service) => {
-  form.value = { 
-    serviceTitle: { ...service.serviceTitle },
-    serviceDescription: { ...service.serviceDescription },
-    serviceImage: service.serviceImage
+const editPolicy = (policy) => {
+  form.value = {
+    id: policy.id,
+    title: { ...policy.title },
+    description: { ...policy.description },
+    image: policy.image
   }
   edit.value = true
   showAddModal.value = true
 }
 
-const saveService = async () => {
-  // console.log(form.value)
+const savePolicy = async () => {
   const formData = new FormData()
-  formData.append('serviceTitle', JSON.stringify(form.value.serviceTitle))
-  formData.append('serviceDescription', JSON.stringify(form.value.serviceDescription))
-  if (form.value.serviceImage) {
-    formData.append('serviceImage', form.value.serviceImage)
+  formData.append('title', JSON.stringify(form.value.title))
+  formData.append('description', JSON.stringify(form.value.description))
+  if (form.value.image) {
+    formData.append('image', form.value.image)
   }
   try {
     if (edit.value) {
-      const response = await ApiService.patch('/admin/services/' + form.value.id, formData)
+      const response = await ApiService.patch('/users/policy-and-strategy/' + form.value.id, formData)
       if (response.success) {
         successMessage.value = response.message
-        fetchServices()
+        fetchPolicies()
         closeModal()
       } else {
-        errorMessage.value = 'Failed to save Service'
+        errorMessage.value = 'Failed to save Policy'
       }
     } else {
-      const res = await ApiService.postRequest('/admin/services', formData)
+      const res = await ApiService.post('/users/policy-and-strategy', formData)
       if (res.success) {
         successMessage.value = res.message
-        fetchServices()
+        fetchPolicies()
         closeModal()
       } else {
-        errorMessage.value = 'Failed to save Service'
+        errorMessage.value = 'Failed to save Policy'
       }
     }
   } catch (error) {
-    errorMessage.value = 'Failed to save Service'
+    errorMessage.value = 'Failed to save Policy'
   }
 }
 
-const deleteService = async (id) => {
-  const sure = window.confirm('Are you sure to delete this team?')
+const deletePolicy = async (id) => {
+  const sure = window.confirm('Are you sure to delete this policy?')
   if (sure) {
     try {
-      const response = await ApiService.delete('/admin/services/' + id)
+      const response = await ApiService.delete('/users/policy-and-strategy/' + id)
 
       if (response.success) {
-        fetchServices()
+        fetchPolicies()
       } else {
-        errorMessage.value = 'Failed to save Partner'
+        errorMessage.value = 'Failed to delete Policy'
       }
     } catch (error) {
-      errorMessage.value = 'Failed to save Partner'
+      errorMessage.value = 'Failed to delete Policy'
     }
   }
 }
@@ -116,22 +116,22 @@ const closeModal = () => {
   showAddModal.value = false
   form.value = {
     id: null,
-    serviceTitle: { en: '', ti: '', am: '' },
-    serviceDescription: { en: '', ti: '', am: '' },
-    serviceImage: ''
+    title: { en: '', ti: '', am: '' },
+    description: { en: '', ti: '', am: '' },
+    image: ''
   }
   edit.value = false
   logo.value = ''
 }
 
 onMounted(() => {
-  fetchServices()
+  fetchPolicies()
 })
 </script>
 
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
-    <!-- Services -->
+    <!-- Policies -->
     <button
       @click="showAddModal = true"
       class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
@@ -140,33 +140,33 @@ onMounted(() => {
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add Service
+      Add Policy
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
-        v-for="(service, i) in services"
+        v-for="(policy, i) in policies"
         :key="i"
         class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
       >
         <img
-          v-if="service.serviceImage"
-          :src="BASE_AVATAR + service.serviceImage"
+          v-if="policy.image"
+          :src="BASE_AVATAR + policy.image"
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
         <p v-else class="w-20 h-20 rounded-full text-6xl">
-          {{ service.serviceTitle[currentLanguage] }}
+          {{ policy.title[currentLanguage] }}
         </p>
-        <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
+        <h1 class="text-2xl font-bold">{{ policy.title[currentLanguage] }}</h1>
         <p class="line-clamp-5">
-          {{ service.serviceDescription[currentLanguage] }}
+          {{ policy.description[currentLanguage] }}
         </p>
         <div class="flex gap-2 justify-end">
-          <button @click="editService(service)">
+          <button @click="editPolicy(policy)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
           </button>
-          <button @click="deleteService(service.id)">
+          <button @click="deletePolicy(policy.id)">
             <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
           </button>
         </div>
@@ -181,7 +181,7 @@ onMounted(() => {
         <div class="text-center">
           <div class="flex justify-between">
             <h3 class="text-lg font-medium text-gray-900">
-              {{ edit ? 'Edit Service' : 'Add Service' }}
+              {{ edit ? 'Edit Policy' : 'Add Policy' }}
             </h3>
             <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">
               Cancel
@@ -199,6 +199,7 @@ onMounted(() => {
               >
                 English
               </button>
+
               <button
                 @click="toggleLanguage('ti')"
                 :class="{
@@ -220,20 +221,20 @@ onMounted(() => {
                 አማርኛ
               </button>
             </div>
-            <form @submit.prevent="saveService" class="flex flex-col gap-4">
+            <form @submit.prevent="savePolicy" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
-                  v-model="form.serviceTitle[currentLanguage]"
+                  v-model="form.title[currentLanguage]"
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
-                  :placeholder="$t('Service Title')"
+                  :placeholder="$t('Policy Title')"
                 ></BaseInput>
 
                 <BaseTextarea
-                  v-model="form.serviceDescription[currentLanguage]"
+                  v-model="form.description[currentLanguage]"
                   inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Service Description"
+                  placeholder="Policy Description"
                 ></BaseTextarea>
               </div>
               <div class="flex justify-end gap-2 flex-col">
@@ -243,7 +244,7 @@ onMounted(() => {
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
-                  Save Service
+                  Save Policy
                 </BaseButton>
               </div>
             </form>

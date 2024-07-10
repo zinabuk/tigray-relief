@@ -30,6 +30,7 @@ const captureImage = (file) => {
 const saveGallery = async () => {
   const formData = new FormData()
   formData.append('gallary', image.value)
+  console.log(image.value)
   const response = await ApiService.post('/admin/gallary', formData)
   if (response.success) {
     alert('Saved')
