@@ -1,16 +1,15 @@
 <script setup>
 // import SpinningCard from '@/components/open/SpinningCard.vue'
-// import slugify from '@/utils/slugify'
+import slugify from '@/utils/slugify'
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-// import dayjs from 'dayjs'
-import ApiService from '@/services/apiService'
-
+import dayjs from 'dayjs'
+import NewsService from '@/services/NewsService'
+import { BASE_AVATAR } from '@/config'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
-const { currentLanguage } = storeToRefs(useAuthStore())
+const { language } = storeToRefs(useAuthStore())
 
-import { BASE_AVATAR } from '@/config'
 defineProps({
   title: {
     type: String,
@@ -22,19 +21,19 @@ const route = useRoute()
 const router = useRouter()
 const event = ref({})
 
-async function getBlog() {
+async function getNew() {
   try {
-    const response = await ApiService.get('/admin/event/' + route.params.title)
+    const response = await NewsService.getNewByTitle(route.params.title)
     if (response.success) {
-      event.value = response.data.map((item) => ({
-        ...item,
-        category: JSON.parse(item.category),
-        eventTitle: JSON.parse(item.eventTitle)
-      }))
+      event.value = response.data
+      event.value.title = JSON.parse(event.value.title)
+      event.value.body = JSON.parse(event.value.body)
+      event.value.title = JSON.parse(event.value.title)
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      return
+      router.push({ name: '404resource', params: { resource: 'new' } })
+      setTimeout(() => {}, 3000)
     } else {
       setTimeout(() => {
         // router.push({ name: 'NetworkError' })
@@ -43,20 +42,28 @@ async function getBlog() {
   }
 }
 
-// function formattedDate(date) {
-//   return dayjs(date).locale('en').format('MMMM D, YYYY')
-// }
+function formattedDate(date) {
+  return dayjs(date).locale('en').format('MMMM D, YYYY')
+}
 
 const news = ref([])
+const events = ref([])
 async function getNews() {
   try {
-    const response = await ApiService.get('/admin/events')
+    const response = await NewsService.getAllNews()
     if (response.success) {
-      news.value = response.data
+      events.value = response.data.map((item) => ({
+        ...item,
+        title: JSON.parse(item.title),
+        category: JSON.parse(item.category),
+        body: JSON.parse(item.body)
+      }))
+      news.value = events.value.length > 3 ? events.value.splice(0, 3) : events.value
     }
+    // news.value = response.data.length > 3 ? response.data.splice(0, 3) : response.data
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
-      return
+      router.push({ name: '404resource', params: { resource: 'Product' } })
     } else {
       setTimeout(() => {
         // router.push({ name: 'NetworkError' })
@@ -66,14 +73,11 @@ async function getNews() {
 }
 watchEffect(() => {
   if (route.params.title) {
-    getBlog()
+    getNew()
   }
 })
-onMounted(() => {
-  getNews()
-})
+onMounted(getNews(), getNew())
 </script>
-
 <template>
   <section class="w-full bg-[#288fb2]/10">
     <div class="flex justify-center py-12 px-[7%]">
@@ -93,7 +97,7 @@ onMounted(() => {
             <!-- <p>{{ event }}</p> -->
             <!-- <p>{{ language }}</p> -->
             <h2 class="meyla-subtitle whitespace-normal break-all text-[#288FB2]">
-              {{ language === 'en' ? events[0]?.title.en : events[0]?.title.ti }}
+             {{ language === 'en' ? events[0]?.title.en : events[0]?.title.ti }}
             </h2>
             <div class="flex gap-2 text-gray-400">
               <h1 class="">
@@ -103,7 +107,7 @@ onMounted(() => {
               <!-- <h3>By <span>meyla admin</span></h3> -->
             </div>
             <p class="text-gray-700 selection:bg-[#288FB2] selection:text-white">
-              <span> </span> {{ language === 'en' ? events[0]?.body.en : events[0]?.body.ti }}
+              <span> </span>  {{ language === 'en' ? events[0]?.body.en : events[0]?.body.ti }}
             </p>
           </div>
         </div>
@@ -124,16 +128,7 @@ onMounted(() => {
             data-aos="fade-upx"
             class="relative group bg-white/100x border rounded bg-white"
           >
-            <router-link
-              :to="{
-                name: 'new-detail',
-                params: {
-                  title:
-                    language === 'en' ? slugify(events[0].title.en) : slugify(events[0].title.ti)
-                }
-              }"
-              class="block"
-            >
+            <router-link :to="{ name: 'new-detail', params: { title: language === 'en' ? slugify(events[0].title.en) : slugify(events[0].title.ti) } }" class="block">
               <div class="w-full h-[160px] p-1">
                 <img
                   :src="BASE_AVATAR + `${event.image}`"
@@ -149,23 +144,12 @@ onMounted(() => {
               <div class="flex flex-col gap-2 py-2">
                 <router-link
                   class="text-lgx whitespace-normal break-all hover:text-[#288FB2] text-meyla-color1 line-clamp-2"
-                  :to="{
-                    name: 'new-detail',
-                    params: {
-                      title:
-                        language === 'en'
-                          ? slugify(events[0].title.en)
-                          : slugify(events[0].title.ti)
-                    }
-                  }"
-                  >{{ language === 'en' ? events[0]?.title.en : events[0]?.title.ti }}inhale
-                  confidence exhale doubtinhale confidence exhale doubtinhale confidence exhale
-                  doubt</router-link
+                  :to="{ name: 'new-detail', params: { title: language === 'en' ? slugify(events[0].title.en) : slugify(events[0].title.ti)  } }"
+                  >{{ language === 'en' ? events[0]?.title.en : events[0]?.title.ti }}inhale confidence exhale doubtinhale confidence exhale
+                  doubtinhale confidence exhale doubt</router-link
                 >
 
-                <h4 class="text-[#001F3F]X text-[#87CEFA]">
-                  {{ language === 'en' ? events[0]?.category.en : events[0]?.category.ti }}
-                </h4>
+                <h4 class="text-[#001F3F]X text-[#87CEFA]"> {{ language === 'en' ? events[0]?.category.en : events[0]?.category.ti }}</h4>
               </div>
             </div>
           </div>

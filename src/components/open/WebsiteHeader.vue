@@ -1,6 +1,6 @@
 <template>
   <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
-    <ul>
+    <ul class="w-full bg-white flex justify-end">
       <li class="flex">
         <button
           @click="changeLanguage('en')"
@@ -51,7 +51,7 @@
               :class="[{ 'text-[#53900F]': isActive('governance') }]"
             >
               <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Our Governance') }} </span>
+              <span class="hover:text-[#53900F]"> {{ $t('Organizational Structure') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
             <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
@@ -83,7 +83,7 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('services') }]"
           >
-            Services</router-link
+            {{ $t('Services') }}</router-link
           >
           <div
             class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
@@ -113,7 +113,7 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('blogs') }]"
           >
-            Resources and Media</router-link
+            {{ $t('News and Media') }}</router-link
           >
           <div
             class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
@@ -140,7 +140,7 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('tenders') }]"
           >
-            Get Involved</router-link
+            {{ $t('Get Involved') }}</router-link
           >
           <div
             class="absolute hidden group-hover:flex bg-[#53900F]Z bg-white p-6 flex-col gap-4 min-w-56 child top-[100%] border rounded-xl"
@@ -373,7 +373,7 @@ function changeLanguage(lang) {
   showLang.value = false
   localStorage.setItem('lang', lang)
   currentLanguage.value = lang
- 
+
   showDropdown.value = !showDropdown.value
   setTimeout(() => {
     showDropdown.value = true

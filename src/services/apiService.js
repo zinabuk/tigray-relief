@@ -32,6 +32,13 @@ class ApiService {
     const response = await api.delete(endpoint)
     return response.data
   }
+  // async postRequest(endpoint, data) {
+  //   // console.log(data)
+  //   const response = await api.post(endpoint, data, {
+  //     headers: { 'Content-Type': 'multipart/form-data' }
+  //   })
+  //   return response.datas
+  // }
   async request(req) {
     const response = await api.request(req)
     return response.data

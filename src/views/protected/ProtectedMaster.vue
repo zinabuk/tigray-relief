@@ -6,8 +6,6 @@ import LeftSide from '@/components/protected/LeftSide.vue'
 import { BASE_AVATAR } from '@/config'
 
 import { useAuthStore } from '@/stores/auth'
-// import BaseFileInput from '@/components/base/BaseFileInput.vue'
-// import ApiService from '@/services/apiService'
 const avatar = ref(localStorage.getItem('avatar'))
 const { logOut } = useAuthStore()
 const router = useRouter()
