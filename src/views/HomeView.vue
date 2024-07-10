@@ -67,7 +67,7 @@ const blogs = ref([])
 const fetchNews = async () => {
   try {
     const response = await ApiService.get('/admin/events')
-    if (response.data) {
+    if (response.success) {
       // isLoading = false
       blogs.value = response.data.map((item) => ({
         ...item,
@@ -306,9 +306,11 @@ onMounted(() => {
           <h3 class="text-lg font-bold">
             {{ event.eventTitle[currentLanguage] }}
           </h3>
-          <router-link to="/about" class="text-[#53900F] font-bold">{{
-            $t('Read More')
-          }}</router-link>
+          <router-link
+            :to="{ name: 'blog-detail', params: { title: event.eventTitle[currentLanguage] } }"
+            class="text-[#53900F] font-bold"
+            >{{ $t('Read More') }}</router-link
+          >
         </div>
       </div>
     </div>

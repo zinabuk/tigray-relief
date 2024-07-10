@@ -1,10 +1,13 @@
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
-import { useRoute,  } from 'vue-router'
+import { useRoute } from 'vue-router'
 // useRouter
 // import dayjs from 'dayjs'
 
 import ApiService from '@/services/apiService'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+const { currentLanguage } = storeToRefs(useAuthStore())
 
 import { BASE_AVATAR } from '@/config'
 defineProps({
@@ -23,6 +26,8 @@ async function getService() {
     const response = await ApiService.get('/admin/service/' + route.params.title)
     if (response.success) {
       service.value = response.data
+      service.value.serviceTitle = JSON.parse(service.value.serviceTitle)
+      service.value.serviceDescription = JSON.parse(service.value.serviceDescription)
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -44,7 +49,11 @@ async function getServices() {
   try {
     const response = await ApiService.get('/admin/services')
     if (response.success) {
-      services.value = response.data
+      services.value = response.data.map((item) => ({
+        ...item,
+        serviceTitle: JSON.parse(item.serviceTitle),
+        serviceDescription: JSON.parse(item.serviceDescription)
+      }))
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
@@ -62,7 +71,7 @@ watchEffect(() => {
   }
 })
 onMounted(() => {
-  getServices()
+  getServices(), getService()
 })
 </script>
 <template>
@@ -78,16 +87,18 @@ onMounted(() => {
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">{{ service.serviceTitle }}</h1>
+        <h1 class="text-4xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
         <div class="flex gap-4 items-center justify-center">
-          <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">Home</router-link>
+          <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">{{
+            $t('Home')
+          }}</router-link>
           <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
-          <router-link to="/services" class="px-4 py-2">Services</router-link>
+          <router-link to="/services" class="px-4 py-2">{{ $t('Services') }}</router-link>
 
           <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
 
           <router-link to="/services" class="text-[#539000] px-4 py-2">{{
-            service.serviceTitle
+            service.serviceTitle[currentLanguage]
           }}</router-link>
         </div>
       </div>
@@ -108,7 +119,9 @@ onMounted(() => {
 
         <div class="flex flex-col gap-2 py-6 bg-white translation-all duration-1000 px-4 relative">
           <div class="flex flex-col gap-4 py-2">
-            <p class="text-gray-700"><span> </span> {{ service.serviceDescription }}</p>
+            <p class="text-gray-700">
+              <span> </span> {{ service.serviceDescription[currentLanguage] }}
+            </p>
           </div>
         </div>
       </div>
@@ -126,13 +139,13 @@ onMounted(() => {
       <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
         <h6 class="text-gray-500"></h6>
         <h3 class="text-lg font-bold">
-          {{ service.serviceTitle }}
+          {{ service.serviceTitle[currentLanguage] }}
         </h3>
-        <p class="line-clamp-4">{{ service.serviceDescription }}</p>
+        <p class="line-clamp-4">{{ service.serviceDescription[currentLanguage] }}</p>
         <router-link
-          :to="{ name: 'service-detail', params: { title: service.serviceTitle } }"
+          :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
           class="text-green-600 font-bold"
-          >Read More</router-link
+          >{{ $t('Read More') }}</router-link
         >
       </div>
     </div>
