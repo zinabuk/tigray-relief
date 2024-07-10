@@ -48,18 +48,21 @@ onMounted(() => {
     </div>
   </section>
   <!-- Services -->
-  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4">
+  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
     <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1>
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 bg-white shadow-xl">
+      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4 shadow-xl p-4">
+        <div z:class="[i % 2 === 0 ? 'order-2' : 'order-1']">
           <img
             :src="BASE_AVATAR + event.eventImage"
             alt=""
-            class="max-h-[500px] rounded-xl w-full object-cover"
+            class="max-h-[500px] rounded-xl w-full object-cover hover:scale-[1.2] transition-transform delay-500 duration-500"
           />
         </div>
-        <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
+        <div
+          class="flex flex-col flex-wrap gap-4 items-start justify-censter"
+          z:class="[i % 2 === 0 ? 'order-1' : 'order-2']"
+        >
           <h6 class="text-gray-500">
             {{ event.category[currentLanguage] }} | {{ event.eventDate }}
           </h6>
