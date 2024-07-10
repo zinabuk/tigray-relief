@@ -19,7 +19,9 @@ const SIDEBARITEMS = {
     { label: 'Messages', name: 'messages', icon: 'comment-dots' },
     { label: 'Gallery', name: 'admin-gallery', icon: 'comment-dots' },
     { label: 'Users', name: 'users', icon: 'user' },
-
+    { label: 'FAQs', name: 'admin-faqs', icon: 'comment-dots' },
+    { label: 'beneficiary', name: 'admin-beneficiary', icon: 'comment-dots' },
+    { label: 'policy', name: 'admin-policy', icon: 'comment-dots' },
   ],
     // ],
      STAFF_TABS: [
@@ -34,6 +36,7 @@ const SIDEBARITEMS = {
       { label: 'Messages', name: 'messages', icon: 'comment-dots' },
       { label: 'Tenders', name: 'admin-tenders', icon: 'comment-dots' },
       { label: 'Gallery', name: 'admin-gallery', icon: 'comment-dots' },
+     
      
   
   
