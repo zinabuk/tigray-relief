@@ -28,13 +28,9 @@ const formData = ref({
 const loginLoader = ref(false)
 
 async function handleLogin() {
-  // loginLoader.value = true
-  //   errorMessage.value = ''
-  console.log(formData.value);
   const res = await logIn(formData.value)
   if (res) {
     router.push({ name: 'dashboard' })
-
     formData.value = {}
   }
 }

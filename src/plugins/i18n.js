@@ -10,7 +10,7 @@ const i18n = createI18n({
   fallbackLocale: 'en', // fallback locale
   messages: {
     en: enMessages,
-    tg: tigMessages,
+    ti: tigMessages,
     am: amMessages
   }
 })

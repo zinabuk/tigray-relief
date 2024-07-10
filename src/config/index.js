@@ -1,4 +1,3 @@
-
 const BASE_URL = 'http://192.168.137.1:7000/api/v1/'
 const BASE_AVATAR = 'http://192.168.137.1:7000/api/v1/images/'
 const BASE_UPLOAD = 'http://192.168.137.1:7000/api/v1/uploads/'

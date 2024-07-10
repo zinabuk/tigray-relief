@@ -36,8 +36,7 @@ const currentLanguage = ref('en')
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang
 }
-const form = ref({
-  id: null,
+const form = ref({ 
   serviceTitle: { en: '', ti: '', am: '' },
   serviceDescription: { en: '', ti: '', am: '' },
   serviceImage: ''
@@ -54,8 +53,7 @@ const successMessage = ref('')
 
 let edit = ref(false)
 const editService = (service) => {
-  form.value = {
-    id: service.id,
+  form.value = { 
     serviceTitle: { ...service.serviceTitle },
     serviceDescription: { ...service.serviceDescription },
     serviceImage: service.serviceImage
@@ -65,6 +63,7 @@ const editService = (service) => {
 }
 
 const saveService = async () => {
+  console.log(form.value)
   const formData = new FormData()
   formData.append('serviceTitle', JSON.stringify(form.value.serviceTitle))
   formData.append('serviceDescription', JSON.stringify(form.value.serviceDescription))
@@ -82,7 +81,7 @@ const saveService = async () => {
         errorMessage.value = 'Failed to save Service'
       }
     } else {
-      const res = await ApiService.post('/admin/services', formData)
+      const res = await ApiService.postRequest('/admin/services', formData)
       if (res.success) {
         successMessage.value = res.message
         fetchServices()
@@ -97,20 +96,20 @@ const saveService = async () => {
 }
 
 const deleteService = async (id) => {
-   const sure = window.confirm('Are you sure to delete this team?')
-  if (sure) {e
-  try {
-    const response = await ApiService.delete('/admin/services/' + id)
+  const sure = window.confirm('Are you sure to delete this team?')
+  if (sure) {
+    try {
+      const response = await ApiService.delete('/admin/services/' + id)
 
-    if (response.success) {
-      fetchServices()
-    } else {
+      if (response.success) {
+        fetchServices()
+      } else {
+        errorMessage.value = 'Failed to save Partner'
+      }
+    } catch (error) {
       errorMessage.value = 'Failed to save Partner'
     }
-  } catch (error) {
-    errorMessage.value = 'Failed to save Partner'
   }
-}
 }
 
 const closeModal = () => {
@@ -200,13 +199,11 @@ onMounted(() => {
               >
                 English
               </button>
-
               <button
-                @click="toggleLanguage('tg')"
+                @click="toggleLanguage('ti')"
                 :class="{
                   'border-2 border-b-[#53900F]': currentLanguage === 'ti',
                   'bg-gray-200': currentLanguage !== 'ti'
-
                 }"
                 class="px-4 py-1"
               >

@@ -1,5 +1,18 @@
 <template>
-  <header class="w-full hidden md:flex sticky top-0 z-50 shadow-4xl rounded-xl">
+  <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
+    <ul>
+      <li class="flex">
+        <button
+          @click="changeLanguage('en')"
+          v-if="currentLanguage !== 'en'"
+          class="flex items-center justify-center"
+        >
+          <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English</button
+        ><button @click="changeLanguage('ti')" v-else class="flex items-center justify-center">
+          <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ትግርኛ
+        </button>
+      </li>
+    </ul>
     <nav
       class="w-full px-[1%] flex justify-between items-center py- font-bold bg-white/100 shadow-2xl"
     >
@@ -17,7 +30,7 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('home') }]"
           >
-            Home</router-link
+            {{ $t('Home') }}</router-link
           >
         </li>
         <li class="relative group">
@@ -26,7 +39,7 @@
             class="relative parent-item h-full w-full"
             :class="[{ 'text-[#53900F]': isActive('about') }]"
           >
-            About Us</router-link
+            {{ $t('About Us') }}</router-link
           >
           <div
             class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
@@ -78,13 +91,18 @@
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
             <router-link
-              :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
+              :to="{
+                name: 'service-detail',
+                params: { title: service.serviceTitle[currentLanguage] }
+              }"
               class="hover:text-[#288FB2]z"
               v-for="(service, i) in services"
               :key="i"
             >
               <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t(`${service.serviceTitle[currentLanguage]}`) }} </span>
+              <span class="hover:text-[#53900F]">
+                {{ $t(`${service.serviceTitle[currentLanguage]}`) }}
+              </span>
               <hr class="text-[#001F3F]" />
             </router-link>
           </div>
@@ -175,7 +193,7 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('contact') }]"
           >
-            Contact Us</router-link
+            {{ $t('Contact Us') }}</router-link
           >
         </li>
 
@@ -183,7 +201,7 @@
           <router-link
             :to="{ name: 'donate' }"
             class="bg-[#53900F] rounded-xl text-yellow-400 px-4 py-2 pulse"
-            >Donate
+            >{{ $t('Donate') }}
             <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
           ></router-link>
         </li>
@@ -316,21 +334,15 @@
 // props are automatically provided in `<script setup>` block
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
-// import { useRouter } from 'vue-router'
-// import SettingsService from '@/services/SettingsService'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+const { currentLanguage } = storeToRefs(useAuthStore())
 
 import { useI18n } from 'vue-i18n'
 
 let showDropdown = ref(true)
 const { locale } = useI18n()
-function changeLang(lang) {
-  locale.value = lang
-  localStorage.setItem('lang', lang)
-  showDropdown.value = !showDropdown.value
-  setTimeout(() => {
-    showDropdown.value = true
-  }, 300)
-}
+
 defineProps({
   items: {
     type: Array,
@@ -339,7 +351,7 @@ defineProps({
 })
 let isSmall = ref(false)
 let showModal = ref(true)
-const currentLanguage=ref('en')
+
 const route = useRoute()
 function hasChildItems(item) {
   return item.sub_items && item.sub_items.length > 0
@@ -352,6 +364,19 @@ function toggleDropdown() {
   showModal.value = !showModal.value
   setTimeout(() => {
     showModal.value = true
+  }, 300)
+}
+
+let showLang = ref(false)
+function changeLanguage(lang) {
+  locale.value = lang
+  showLang.value = false
+  localStorage.setItem('lang', lang)
+  currentLanguage.value = lang
+ 
+  showDropdown.value = !showDropdown.value
+  setTimeout(() => {
+    showDropdown.value = true
   }, 300)
 }
 
@@ -388,7 +413,7 @@ const fetchServices = async () => {
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription),
+        serviceDescription: JSON.parse(item.serviceDescription)
       }))
     }
   } catch (error) {
