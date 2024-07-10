@@ -41,7 +41,7 @@ onMounted(fetchServices)
 </script>
 
 <template>
-  <section class="w-full px-12 bg-[#53900F] font-bodld text-white py-12">
+  <section class="w-full px-12 bg-[#53900F] font-bodld text-white py-12 text-[14px]">
     <div class="w-full grid grid-cols-1 md:grid-cols-4 py-8 gap-4">
       <!-- <div>
         <img
@@ -135,6 +135,15 @@ onMounted(fetchServices)
         </div>
       </div>
     </div>
-    <p class="text-center p-4">© 2024 REST. All rights reserved.</p>
   </section>
+
+  <div class="w-full bg-[#53900F]/10 flex justify-between px-12">
+    <p class="text-center p-4">© 2024 REST. All rights reserved.</p>
+    <div class="flex gap-2 items-center justify-center">
+      <h1>Powered by</h1>
+      <a href="https://iq-businesses.com/" target="_blank" class="text-black/70"
+        >IQ Business Group PLC</a
+      >
+    </div>
+  </div>
 </template>

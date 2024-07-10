@@ -33,7 +33,7 @@ const saveGallery = async () => {
   console.log(image.value)
   const response = await ApiService.post('/admin/gallary', formData)
   if (response.success) {
-    alert('Saved')
+    // alert('Saved')
     fetchGallers()
   }
 }
