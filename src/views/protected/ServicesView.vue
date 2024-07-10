@@ -32,7 +32,10 @@ const fetchServices = async () => {
 }
 
 let showAddModal = ref(false)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 408fad63df529d12d9a393c58d316d9c277b6815
 const currentLanguage = ref('en')
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang

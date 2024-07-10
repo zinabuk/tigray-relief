@@ -245,8 +245,11 @@ onMounted(() => {
         <h1 class="text-2xl font-bold">{{ $t('Send donation') }}</h1>
 
         <p>
-          {{$t('
-          If the applications data and workload grow beyond the capabilities of the local servers')}}
+          {{
+            $t(
+              'If the applications data and workload grow beyond the capabilities of the local servers'
+            )
+          }}
         </p>
 
         <router-link to="/donate" class="text-green-600 underline font-bold"> Send Now</router-link>

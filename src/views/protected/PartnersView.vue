@@ -1,26 +1,29 @@
 <script setup>
-// import { ref } from 'vue'/
-import DataTable from '@/components/base/DataTable.vue'
-import ApiService from '@/services/apiService'
-import BaseInput from '@/components/base/BaseInput.vue'
-import BaseTextarea from '@/components/base/BaseTextarea.vue'
-import BaseButton from '@/components/base/BaseButton.vue'
-import BaseFileInput from '@/components/base/BaseFileInput.vue'
-import dayjs from 'dayjs'
-import { onMounted, ref } from 'vue'
+import { ref, onMounted } from 'vue';
+import DataTable from '@/components/base/DataTable.vue';
+import ApiService from '@/services/apiService';
+import BaseInput from '@/components/base/BaseInput.vue';
+import BaseTextarea from '@/components/base/BaseTextarea.vue';
+import BaseButton from '@/components/base/BaseButton.vue';
+import BaseFileInput from '@/components/base/BaseFileInput.vue';
+import dayjs from 'dayjs';
 
-// import { useRouter } from 'vue-router'
+const currentLanguage = ref('en'); 
+
+const toggleLanguage = (lang) => {
+  currentLanguage.value = lang;
+};
+
 const tableHeaders = [
   { label: 'Title', field: 'businessName' },
   { label: 'Email Address', field: 'email' },
   { label: 'Phone', field: 'phoneNumber' },
-  //   { label: 'Logo', field: 'logo' },
   { label: 'Link', field: 'website' },
   { label: 'Service', field: 'specializeArea' },
   { label: 'Description', field: 'description' }
-]
+];
 
-const donations = ref([])
+const partnerships = ref([]);
 const actions = [
   {
     label: 'edit',
@@ -40,101 +43,117 @@ const actions = [
     icon: 'eye',
     style: 'hover:cursor-pointer text-green-500 py-1 px-2'
   }
-]
+];
+
 async function fetchPartners() {
-  const response = await ApiService.get('/users/partnerships')
+  const response = await ApiService.get('/users/partnerships');
 
   if (response.success) {
-    donations.value = response.data
+    partnerships.value = response.data.map((item) => ({
+      ...item,
+      businessName: JSON.parse(item.businessName),
+      description: JSON.parse(item.description),
+      specializeArea: JSON.parse(item.specializeArea),
+    }));
   }
 }
 
-const isEditing = ref(false)
-const editForm = ref(null)
-let formatDate = ref('')
+const isEditing = ref(false);
+const editForm = ref({
+  businessName: { en: '', ti: '', am: '' },
+  email: '',
+  phoneNumber: '',
+  website: '',
+  specializeArea: { en: '', ti: '', am: '' },
+  description: { en: '', ti: '', am: '' },
+  logo: '',
+});
+let formatDate = ref('');
 
-function openEditModal(donation) {
-  isEditing.value = true
-  editForm.value = { ...donation }
-  formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD')
+function openEditModal(partner) {
+  isEditing.value = true;
+  editForm.value = { ...partner };
+  formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD');
 }
 
-const updateDonation = async () => {
-  // alert(editForm.value.service)
+
+const updatePartner = async () => {
+  const formData = new FormData();
+  formData.append('businessName', JSON.stringify(editForm.value.businessName));
+  formData.append('email', editForm.value.email);
+  formData.append('phoneNumber', editForm.value.phoneNumber);
+  formData.append('website', editForm.value.website);
+  formData.append('specializeArea', JSON.stringify(editForm.value.specializeArea));
+  formData.append('description', JSON.stringify(editForm.value.description));
+  formData.append('logo', image.value);
+
   try {
     const response = await ApiService.patch(
-      '/users/donations/' + editForm.value._id,
-      editForm.value
-    )
-    // alert(response.success)
+      '/users/partnerships/' + editForm.value.id,
+      formData
+    );
     if (response.success) {
-      fetchPartners()
-
+      fetchPartners();
       setTimeout(() => {
-        closeEditModal()
-      }, 3000)
+        closeEditModal();
+      }, 3000);
     }
   } catch (error) {
-    console.error('Error updating donation:', error)
+    console.error('Error updating donation:', error);
   }
-}
+};
 
 async function deletePartner(partner) {
-  const accept = window.confirm('Undo is not possible')
+  const accept = window.confirm('Undo is not possible');
   if (accept) {
-    const response = await ApiService.delete(`/users/partnerships/${partner._id}`)
+    const response = await ApiService.delete(`/users/partnerships/${partner.id}`);
     if (response.success) {
-      fetchPartners()
+      fetchPartners();
     }
   }
 }
 
-const image = ref('')
+const image = ref('');
 const handleFileChange = (file) => {
-  image.value = file
-}
+  image.value = file;
+};
 
 function closeEditModal() {
-  isEditing.value = false
-  editForm.value = {
-    service: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    address: '',
-    amount: '',
-    logo: ''
-  }
+  isEditing.value = false;
 }
-// const router = useRouter()
 
-// async function viewApplicants(career) {
-//   router.push({ name: 'jobApplicants', params: { id: career._id } })
-// }
-
-const isAdd = ref(false)
+const isAdd = ref(false);
 const toggleAdd = () => {
-  isAdd.value = true
-}
+  isAdd.value = true;
+};
 
-const form = ref({})
+const form = ref({
+  businessName: { en: '', ti: '', am: '' },
+  email: '',
+  phoneNumber: '',
+  website: '',
+  specializeArea: { en: '', ti: '', am: '' },
+  description: { en: '', ti: '', am: '' },
+  logo: '',
+});
+
 const submitPartner = async () => {
-  const formData = new FormData()
-  formData.append('businessName', form.value.businessName)
-  formData.append('email', form.value.email)
-  formData.append('phoneNumber', form.value.phoneNumber)
-  formData.append('website', form.value.website)
-  formData.append('specializeArea', form.value.specializeArea)
-  formData.append('description', form.value.description)
-  formData.append('logo', image.value)
+  const formData = new FormData();
+  formData.append('businessName', JSON.stringify(form.value.businessName));
+  formData.append('email', form.value.email);
+  formData.append('phoneNumber', form.value.phoneNumber);
+  formData.append('website', form.value.website);
+  formData.append('specializeArea', JSON.stringify(form.value.specializeArea));
+  formData.append('description', JSON.stringify(form.value.description));
+  formData.append('logo', image.value);
 
-  const res = await ApiService.post('/users/partnerships', formData)
+  const res = await ApiService.post('/users/partnerships', formData);
   if (res.success) {
-    fetchPartners()
+    fetchPartners();
   }
-}
-onMounted(fetchPartners)
+};
+
+onMounted(fetchPartners);
 </script>
 
 <template>
@@ -142,38 +161,26 @@ onMounted(fetchPartners)
     <button class="bg-[#539000] text-white self-end px-2 py-1" @click="toggleAdd">
       Add Partner
     </button>
-    <DataTable :tableHeaders="tableHeaders" :tableValues="donations" :actions="actions">
-    </DataTable>
+    <DataTable :tableHeaders="tableHeaders" :tableValues="partnerships" :actions="actions"  :currentLanguage="currentLanguage"></DataTable>
   </section>
   <div
     class="w-full modal fixed inset-0 flex z-50 justify-center items-center bg-black/80 overflow-auto md:py-12"
     v-if="isEditing"
   >
-    <div
-      class="bg-white/100 flex flex-col gap-3 justify-center items-center shadow px-[1%] md:px-[6%] py-6 md:py-12 overflow-auto"
-    >
-      <button @click="closeEditModal" class="self-endd text-2xl bg-gray-500 text-white">
+    <div class="bg-white/100 flex flex-col gap-3 justify-center items-center shadow px-[1%] md:px-[6%] py-6 md:py-12 overflow-auto">
+      <button @click="closeEditModal" class="self-end text-2xl bg-gray-500 text-white">
         Cancel
       </button>
-
-      <form @submit.prevent="updateDonation" class="w-full flex flex-col gap-4 px-2">
+      <div class="flex justify-center gap-16 py-2">
+        <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }">English</BaseButton>
+        <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }">Amharic</BaseButton>
+        <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }">Tigrigna</BaseButton>
+      </div>
+      <form @submit.prevent="updatePartner" class="w-full flex flex-col gap-2 px-1">
         <BaseInput
-          v-model="editForm.businessName"
+          v-model="editForm.businessName[currentLanguage]"
           type="text"
           label="Business Name"
-          inputClass="px-4 py-3"
-        ></BaseInput>
-        <BaseInput
-          v-model="editForm.email"
-          type="text"
-          label="Email"
-          inputClass="px-4 py-3"
-          required
-        ></BaseInput>
-        <BaseInput
-          v-model="editForm.lastName"
-          type="text"
-          label="Last Name"
           inputClass="px-4 py-3"
         ></BaseInput>
         <BaseInput
@@ -184,7 +191,17 @@ onMounted(fetchPartners)
           inputClass="px-4 py-3"
           placeholder="Job Title"
         ></BaseInput>
-
+        <BaseInput
+          v-model="editForm.website"
+          inputClass="px-8 py-3"
+          placeholder="Enter your website's link"
+        ></BaseInput>
+        <BaseInput
+          v-model="editForm.specializeArea[currentLanguage]"
+          required
+          inputClass="px-8 py-3"
+          placeholder="Specialize area"
+        ></BaseInput>
         <BaseInput
           v-model="editForm.phoneNumber"
           type="text"
@@ -192,20 +209,20 @@ onMounted(fetchPartners)
           required
           inputClass="px-4 py-3"
         ></BaseInput>
-        <BaseInput
-          v-model="editForm.address"
-          type="text"
-          label="Address"
-          inputClass="px-4 py-3"
-        ></BaseInput>
-        <BaseInput
-          v-model="editForm.amount"
-          type="text"
-          label="Amount"
-          required
-          inputClass="px-4 py-3"
-        ></BaseInput>
-        <BaseButton type="submit">Save Changes</BaseButton>
+        <BaseTextarea
+          v-model="editForm.description[currentLanguage]"
+          rows="4"
+          label="Description"
+          textareaClasses="px-8"
+        ></BaseTextarea>
+        <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput>
+
+         <div class="flex gap-4">
+          <BaseButton type="submit">Save Changes</BaseButton>
+          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click=" closeEditModal">
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -217,12 +234,17 @@ onMounted(fetchPartners)
     <div class="w-1/2 bg-white">
       <h1 class="text-center text-xl font-semibold">Partnership Form</h1>
       <p class="justify-self-end text-green-500 bg-white" v-if="success">{{ success }}</p>
-      <form @submit.prevent="submitPartner" class="w-full flex flex-col gap-4">
+      <div class="flex justify-center gap-16 py-2">
+        <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }">English</BaseButton>
+        <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }">Amharic</BaseButton>
+        <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }">Tigrigna</BaseButton>
+      </div>
+      <form @submit.prevent="submitPartner" class="w-full flex flex-col gap-4 px-4">
         <BaseInput
-          v-model="form.businessName"
+          v-model="form.businessName[currentLanguage]"
           type="text"
           required
-          inputClass="px-8 py-3 "
+          inputClass="px-8 py-3"
           placeholder="Your business name"
         ></BaseInput>
         <BaseInput
@@ -233,7 +255,6 @@ onMounted(fetchPartners)
           placeholder="Enter Your Email"
           autocomplete="true"
         ></BaseInput>
-
         <BaseInput
           v-model="form.phoneNumber"
           type="text"
@@ -247,32 +268,30 @@ onMounted(fetchPartners)
           placeholder="Enter your website's link"
         ></BaseInput>
         <BaseInput
-          v-model="form.specializeArea"
+          v-model="form.specializeArea[currentLanguage]"
           required
           inputClass="px-8 py-3"
           placeholder="Specialize area"
         ></BaseInput>
-
         <BaseTextarea
-          v-model="form.description"
+          v-model="form.description[currentLanguage]"
           rows="4"
-          class=""
-          textareaClasses="px-8 "
+          textareaClasses="px-8"
           placeholder="Description"
         ></BaseTextarea>
-
-        <BaseFileInput @image-update="handleFileChange($event)" label="add logo"></BaseFileInput>
+        <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput>
         <p v-if="message" class="text-red-700">{{ message }}</p>
         <div class="flex gap-4">
           <BaseButton type="submit" class="self-start">Submit</BaseButton>
           <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="isAdd = false">
-            cancel
+            Cancel
           </button>
         </div>
       </form>
     </div>
   </div>
 </template>
+
 <style scoped>
 .modal {
   animation: modal 0.3s;
