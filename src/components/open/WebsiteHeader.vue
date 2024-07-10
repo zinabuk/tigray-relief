@@ -1,18 +1,20 @@
 <template>
   <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
-    <ul class="w-full bg-white flex justify-end">
-      <li class="flex">
-        <button
-          @click="changeLanguage('en')"
-          v-if="currentLanguage !== 'en'"
-          class="flex items-center justify-center"
-        >
-          <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English</button
-        ><button @click="changeLanguage('ti')" v-else class="flex items-center justify-center">
-          <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ትግርኛ
-        </button>
-      </li>
-    </ul>
+    <div class="w-full bg-white flex justify-end relative group">
+      <h1>Language</h1>
+      <ul class="absolute top-[100%] hidden group-hover:flex  z-50 bg-white right-0 p-4 shadow-xl ">
+        <li class="flex flex-col gap-2 group-hover:flex-col">
+          <button @click="changeLanguage('en')" class="flex items-center justify-center">
+            <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English</button
+          ><button @click="changeLanguage('ti')" class="flex items-center justify-center">
+            <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ትግርኛ
+          </button>
+          <button @click="changeLanguage('am')" class="flex items-center justify-center">
+            <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ኣማርኛ
+          </button>
+        </li>
+      </ul>
+    </div>
     <nav
       class="w-full px-[1%] flex justify-between items-center py- font-bold bg-white/100 shadow-2xl"
     >
