@@ -11,7 +11,8 @@ import { jwtDecode } from 'jwt-decode'
 export const useAuthStore = defineStore('auth', () => {
   // const router = useRouter()
 
-  const language = ref(localStorage.getItem('lang') || 'en')
+  const currentLanguage = ref(localStorage.getItem('lang') || 'en')
+
   const token = ref(localStorage.getItem('access_token') || '')
   const user = ref({})
   let errorMessage = ref('')
@@ -76,7 +77,7 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     user,
     token,
-    language,
+    currentLanguage,
     logIn,
     logOut,
     isAuthenticated,
