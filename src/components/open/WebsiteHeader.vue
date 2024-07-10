@@ -2,7 +2,7 @@
   <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
     <div class="w-full bg-white flex justify-end relative group">
       <h1>Language</h1>
-      <ul class="absolute top-[100%] hidden group-hover:flex  z-50 bg-white right-0 p-4 shadow-xl ">
+      <ul class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 shadow-xl">
         <li class="flex flex-col gap-2 group-hover:flex-col">
           <button @click="changeLanguage('en')" class="flex items-center justify-center">
             <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English</button
@@ -16,7 +16,7 @@
       </ul>
     </div>
     <nav
-      class="w-full px-[1%] flex justify-between items-center py- font-bold bg-white/100 shadow-2xl"
+      class="w-full px-[1%] flex justify-between items-center py- zfont-bold bg-white/100 shadow-2xl"
     >
       <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
         <img
@@ -25,7 +25,7 @@
           class="rounded-fullz h-24 object-contain"
         />
       </router-link>
-      <ul class="flex gap-8 font-bold zuppercase">
+      <ul class="flex gap-4 font-bold zuppercase">
         <li>
           <router-link
             :to="{ name: 'home' }"
@@ -63,17 +63,24 @@
               </span>
               <hr class="text-[#001F3F]" />
             </router-link>
-            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'beneficiaries' }"
+              :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('Our Beneficiaries') }}
               </span>
               <hr class="text-[#001F3F]" />
             </router-link>
-            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'policy' }"
+              :class="[{ 'text-[#53900F]': isActive('policy') }]"
+              class="hover:text-[#288FB2]z"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
-                {{ $t('Policy strategy and Framework') }}
+                {{ $t('Policy strategy') }}
               </span>
               <!-- <hr class="text-[#001F3F]" /> -->
             </router-link>
@@ -117,24 +124,6 @@
           >
             {{ $t('News and Media') }}</router-link
           >
-          <div
-            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
-            data-aos="fade-left"
-          >
-            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <router-link to="/" class="hover:text-[#288FB2]z">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('News and Events') }} </span>
-              <hr class="text-[#001F3F]" />
-            </router-link>
-            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('Gallery') }}
-              </span>
-              <hr class="text-[#001F3F]" />
-            </router-link>
-          </div>
         </li>
         <li class="relative group">
           <router-link
@@ -180,7 +169,7 @@
               </span>
               <hr class="text-[#53900F]" />
             </router-link>
-            <router-link to="/" href="#structure_section" class="hover:text-[#288FB2]z">
+            <router-link :to="{ name: 'faqs' }" class="hover:text-[#288FB2]z">
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('FAQs') }}
@@ -198,7 +187,17 @@
             {{ $t('Contact Us') }}</router-link
           >
         </li>
-
+        <li>
+          <router-link  :to="{ name: 'gallery' }"
+            class="relative parent-item"
+            :class="[{ 'text-[#53900F]': isActive('gallery') }]">
+            <!-- @click="scrollToSection(el.id)" -->
+            <span class="hover:text-[#53900F]">
+              {{ $t('Gallery') }}
+            </span>
+            <!-- <hr class="text-[#001F3F]" /> -->
+          </router-link>
+        </li>
         <li>
           <router-link
             :to="{ name: 'donate' }"

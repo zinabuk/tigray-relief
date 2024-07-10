@@ -1,19 +1,33 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import FAQsService from '@/services/FAQsService'
-import SpinningCard from '@/components/open/SpinningCard.vue'
+import apiService from '@/services/apiService'
+
 const faqs = ref([])
-const getAllFaqs = async () => {
-  const response = await FAQsService.getFaqs()
-  if (response.success) {
-    faqs.value = response.data
+
+const fetchFaqs = async () => {
+  try {
+    const response = await apiService.get('/admin/faqs')
+    if (response) {
+      faqs.value = response.data.map((item) => ({
+        ...item,
+        question: JSON.parse(item.question),
+        answer: JSON.parse(item.answer)
+      }))
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {}, 2000)
+    }
   }
 }
+
 const toggleAccordion = (index) => {
   faqIndex.value = faqIndex.value === index ? '' : index
 }
 const faqIndex = ref(0)
-onMounted(getAllFaqs)
+onMounted(fetchFaqs)
 </script>
 
 <template>

@@ -41,7 +41,7 @@ onMounted(fetchServices)
 </script>
 
 <template>
-  <section class="w-full px-12 bg-[#53900F] font-bodld text-white py-12">
+  <section class="w-full px-12 bg-[#53900F] font-bodld text-white py-12 text-[12px]">
     <div class="w-full grid grid-cols-1 md:grid-cols-4 py-8 gap-4">
       <!-- <div>
         <img
@@ -56,10 +56,10 @@ onMounted(fetchServices)
           education, water and sanitation, and livelihood initiatives.
         </p>
       </div> -->
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-1">
         <h1 class="text-xl">Contacts</h1>
         <hr />
-        <div class="text-lg">
+        <div class="text-[14px]">
           <h2>251-344-40-6300</h2>
           <h2>resthq@resttigray.org</h2>
           <p>Monday – Friday 9 am – 11:30 pm</p>
@@ -69,7 +69,7 @@ onMounted(fetchServices)
         <h1 class="text-xl">{{ $t('services') }}</h1>
         <hr />
         <ul class="flex flex-col">
-          <li class="flex flex-col text-lg">
+          <li class="flex flex-col text-[14px]">
             <router-link
               :to="{
                 name: 'service-detail',
@@ -90,7 +90,7 @@ onMounted(fetchServices)
         <h1 class="text-xl">Quick Links</h1>
         <hr />
         <ul class="flex flex-col">
-          <li class="flex flex-col text-lg">
+          <li class="flex flex-col text-[14px]">
             <router-link to="/">{{ $t('Home') }}</router-link
             ><router-link to="/about">{{ $t('About Us') }}</router-link>
             <router-link to="/our-governance">{{ $t('Our Governance') }}</router-link>
@@ -121,6 +121,7 @@ onMounted(fetchServices)
         </form>
         <div class="my-4">
           <h1 class="text-xl font bold text-white">Follow Us:</h1>
+          <hr>
           <a href="https://www.facebook.com/RESTigray1978" target="_blank">
             <font-awesome-icon
               :icon="['fab', 'facebook']"
@@ -135,6 +136,15 @@ onMounted(fetchServices)
         </div>
       </div>
     </div>
-    <p class="text-center p-4">© 2024 REST. All rights reserved.</p>
   </section>
+
+  <div class="w-full bg-[#53900F]/10 flex justify-between px-12">
+    <p class="text-center p-4">© 2024 REST. All rights reserved.</p>
+    <div class="flex gap-2 items-center justify-center">
+      <h1>Powered by</h1>
+      <a href="https://iq-businesses.com/" target="_blank" class="text-black/70"
+        >IQ Business Group PLC</a
+      >
+    </div>
+  </div>
 </template>

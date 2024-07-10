@@ -6,13 +6,22 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+const { currentLanguage } = storeToRefs(useAuthStore())
+
 const tenders = ref([])
 
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
     if (response) {
-      tenders.value = response.data
+      tenders.value = response.data.map((item) => ({
+        ...item,
+        title: JSON.parse(item.title),
+        organization: JSON.parse(item.organization),
+        description: JSON.parse(item.description)
+      }))
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -47,7 +56,7 @@ onMounted(() => {
   </section>
   <!-- Services -->
   <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4">
-    <h1 class="text-3xl font-bold">Tenders we currently have..</h1>
+    <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
       <div v-for="(tender, i) in tenders" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -57,16 +66,20 @@ onMounted(() => {
             alt=""
             class="max-h-[500px] rounded-xl w-full object-cover"
           />
-          <h1 v-else class="w-24 h-24 text-center font-bold text-6xl">{{ tender.title[0] }}</h1>
+          <h1 v-else class="w-24 h-24 text-center font-bold text-6xl">
+            {{ tender.title[currentLanguage] }}
+          </h1>
         </div>
         <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
-          <h1>{{ tender.title }}</h1>
-          <h6 class="text-gray-500">{{ tender.organization }}</h6>
+          <h1>{{ tender.title[currentLanguage] }}</h1>
+          <h6 class="text-gray-500">{{ tender.organization[currentLanguage] }}</h6>
           <h3 class="text-lg font-bold">
             {{ tender.deadline }}
           </h3>
-          <p class="line-clamp-5">{{ tender.description }}</p>
-          <router-link to="/about" class="text-green-600 font-bold">Read More</router-link>
+          <p class="line-clamp-5">{{ tender.description[currentLanguage] }}</p>
+          <router-link to="/about" class="text-[#53900F] font-bold">{{
+            $t('Read More')
+          }}</router-link>
         </div>
       </div>
     </div>

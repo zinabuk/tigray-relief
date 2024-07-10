@@ -66,7 +66,7 @@ onMounted(() => {
     <div class="flex flex-col shadow-xl p-4">
       <h1 class="text-4xl font-bold mb-4">Who we are.</h1>
       <p class="text-lg" data-aos="fade-right">
-        The Tigray Relief Association (TRA) is a humanitarian organization based in Tigray, a region
+       REST is a humanitarian organization based in Tigray, a region
         in northern Ethiopia. It was founded in 1979 during the Ethiopian Civil War to provide
         relief and support to people affected by the conflict.
         <br />
