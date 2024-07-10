@@ -67,7 +67,7 @@ const editService = (service) => {
 }
 
 const saveService = async () => {
-  console.log(form.value)
+  // console.log(form.value)
   const formData = new FormData()
   formData.append('serviceTitle', JSON.stringify(form.value.serviceTitle))
   formData.append('serviceDescription', JSON.stringify(form.value.serviceDescription))

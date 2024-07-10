@@ -145,9 +145,9 @@ onMounted(() => {
               to="/donate"
               >Donate Now</router-link
             >
-            <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold"
-              >Learn More</router-link
-            >
+            <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold">{{
+              $t('Learn More')
+            }}</router-link>
           </div>
         </div>
       </swiper-slide>
@@ -156,7 +156,7 @@ onMounted(() => {
 
   <!-- Services -->
   <section class="w-full bg-green-900/10 px-[6%] flex flex-col gap-4 py-12">
-    <h1 class="text-center text-4xl font-semibold">Services we provide</h1>
+    <h1 class="text-center text-4xl font-semibold">{{ $t('Services') }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
         v-for="(service, i) in services"
@@ -247,7 +247,7 @@ onMounted(() => {
         <p>
           {{
             $t(
-              'If the applications data and workload grow beyond the capabilities of the local servers'
+              'Your generous donations are critical to supporting our programs and services for the community. There are several convenient ways you can contribute:'
             )
           }}
         </p>
@@ -257,12 +257,12 @@ onMounted(() => {
       <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-left">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
         <img src="@/assets/contact.png" alt="" class="h-24 object-cover" />
-        <h1 class="text-2xl font-bold">{{ $t('Contact us') }}</h1>
+        <h1 class="text-2xl font-bold">{{ $t('Contact Us') }}</h1>
 
         <p>
           {{
             $t(
-              'If the applications data and workload grow beyond the capabilities of the local servers'
+              'We would love to hear from you! Please don not hesitate to reach out if you have any questions, comments, or feedback.'
             )
           }}
         </p>
@@ -285,7 +285,7 @@ onMounted(() => {
 
   <!-- Start of news section -->
   <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5">
-    <h1 class="text-3xl font-bold">News and stories from us</h1>
+    <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1>
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         v-for="(event, i) in blogs.slice(0, 4)"

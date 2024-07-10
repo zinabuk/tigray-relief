@@ -1,6 +1,6 @@
 <template>
   <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
-    <ul>
+    <ul class="w-full bg-white flex justify-end">
       <li class="flex">
         <button
           @click="changeLanguage('en')"
