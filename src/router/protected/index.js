@@ -24,6 +24,15 @@ const PROTECTED_ROUTES = [
         }
       },
       {
+        path: 'about-us',
+        component: () => import('@/views/protected/AboutView.vue'),
+        name: 'admin-about',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
+      {
         path: 'staff',
         component: () => import('@/views/protected/Staff/StaffIndex.vue'),
         name: 'staff-home',
