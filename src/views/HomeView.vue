@@ -298,7 +298,7 @@ onMounted(() => {
           <img
             :src="BASE_AVATAR + event.eventImage"
             alt=""
-            class="max-h-[500px] rounded-xl w-full object-cover"
+            class="max-h-[500px] rounded-xl w-full object-cover hover:scale-[1.2] transition-transform duration-500 delay-100"
           />
         </div>
         <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
