@@ -263,7 +263,7 @@ onMounted(() => {
     v-if="isApply"
   >
     <div class="bg-white flex flex-col md:p-12 gap-2 overflow-auto">
-      <button class="text-gray-900 self-end bg-white" @click="isApply = !isApply">Cancel</button>
+      <button class="text-gray-900 self-end bg-white border border-black px-2" @click="isApply = !isApply">Cancel</button>
       <h1 class="text-center font-semibold">Application Page</h1>
       <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
       <form @submit.prevent="submitApplication" class="flex flex-col gap-4">

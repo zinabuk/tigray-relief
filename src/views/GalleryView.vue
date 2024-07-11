@@ -9,21 +9,31 @@ import { ref, onMounted } from 'vue'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/swiper-bundle.css'
+// import 'swiper/swiper-bundle.css'
+import 'swiper/css/pagination'
+import 'swiper/css/navigation'
 
 const galleries = ref([])
-const fetchGallers = async () => {
+const fetchGalleries = async () => {
   try {
     const response = await ApiService.get('/admin/gallery')
     if (response) {
       galleries.value = response.data
     }
   } catch (error) {
-    alert(error)
+    // alert(error)
   }
 }
 
+let selectedImage = ref('')
+let showModal = ref(false)
+function showImageModal(image) {
+  // alert(image)
+  selectedImage.value = image
+  showModal.value = true
+}
 onMounted(() => {
-  fetchGallers()
+  fetchGalleries()
 })
 </script>
 
@@ -49,23 +59,40 @@ onMounted(() => {
       <Swiper
         :slides-per-view="1"
         :modules="[Autoplay, Pagination, Navigation]"
-        :autoplay="{ delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: false }"
+        :autoplay="{ delay: 6000, disableOnInteraction: false, pauseOnMouseEnter: false }"
+        loop
+        class=""
         :breakpoints="{
           '768': { slidesPerView: 2, spaceBetween: 20 },
           '1024': { slidesPerView: 3, spaceBetween: 30 }
         }"
-        loop
-        class="w-full flex gap-4"
       >
-        <swiper-slide v-for="(gallery, i) in galleries" :key="i" class="h-[400px] flex gap-6">
+        <swiper-slide v-for="(gallery, i) in galleries" :key="i" class="max-h-[500px] flex gap-6">
           <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto"></font-awesome-icon> -->
           <img
             :src="BASE_AVATAR + gallery.gallery"
             alt=""
-            class="roudnded-full object-cover object-center transition-all duration-1000 hover:scale-[110%]"
+            class="roudnded-full object-cover object-center transition-all duration-1000 hover:scale-[110%] hover:cursor-pointer"
+            @click="showImageModal(gallery)"
           />
         </swiper-slide>
       </Swiper>
     </div>
   </section>
+
+  <div
+    v-if="showModal"
+    class="fixed inset-0 z-50 flex items-center modal justify-center bg-black bg-opacity-75"
+  >
+    <div class="bg-white p-8 rounded-lg zw-full">
+      <div class="flex justify-end">
+        <button @click="showModal = false" class="bg-gray-200 px-4 py-2 rounded">X</button>
+      </div>
+      <img
+        :src="`${BASE_AVATAR}${selectedImage.gallery}`"
+        alt=""
+        class="max-h-[85vh] max-w-[95vw]"
+      />
+    </div>
+  </div>
 </template>

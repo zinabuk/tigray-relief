@@ -1,9 +1,8 @@
 <script setup>
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
-// useRouter
-// import dayjs from 'dayjs'
 
+import slugify from '@/utils/slugify'
 import ApiService from '@/services/apiService'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -17,12 +16,12 @@ defineProps({
   }
 })
 
-const route = useRoute()
-//const router = useRouter()
+const route = useRoute() 
 const service = ref({})
 
 async function getService() {
   try {
+    alert(route.params.title)
     const response = await ApiService.get('/admin/service/' + route.params.title)
     if (response.success) {
       service.value = response.data
@@ -33,16 +32,11 @@ async function getService() {
     if (error.response && error.response.status === 404) {
       return
     } else {
-      setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
+      setTimeout(() => { 
       }, 5000)
     }
   }
-}
-
-// function formattedDate(date) {
-//   return dayjs(date).locale('en').format('MMMM D, YYYY')
-// }
+} 
 
 const services = ref([])
 async function getServices() {
@@ -59,8 +53,7 @@ async function getServices() {
     if (error.response && error.response.status === 404 && error.response.data) {
       return
     } else {
-      setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
+      setTimeout(() => { 
       }, 5000)
     }
   }
@@ -70,9 +63,7 @@ watchEffect(() => {
     getService()
   }
 })
-onMounted(() => {
-  getServices(), getService()
-})
+onMounted(getServices())
 </script>
 <template>
   <section class="w-full">
@@ -143,7 +134,10 @@ onMounted(() => {
         </h3>
         <p class="line-clamp-4">{{ service.serviceDescription[currentLanguage] }}</p>
         <router-link
-          :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
+          :to="{
+            name: 'service-detail',
+            params: { title: slugify(service.serviceTitle[currentLanguage]) }
+          }"
           class="text-green-600 font-bold"
           >{{ $t('Read More') }}</router-link
         >

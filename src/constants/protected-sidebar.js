@@ -2,7 +2,7 @@ const SIDEBARITEMS = {
   ADMIN_TABS: [
     { label: 'Dashboard', name: 'admin-home', icon: 'user' },
     { label: 'Heros', name: 'admin-hero', icon: 'cogs' },
-
+    { label: 'About us', name: 'admin-about', icon: 'handshake' },
     { label: 'Services', name: 'admin-services', icon: 'cogs' },
     //   { label: 'Works', name: 'products', icon: 'box-open' },
     { label: 'Team', name: 'team', icon: 'handshake' },
@@ -13,6 +13,7 @@ const SIDEBARITEMS = {
     { label: 'Tenders', name: 'admin-tenders', icon: 'comment-dots' },
 
     { label: 'Donations', name: 'donations', icon: 'quote-left' },
+    { label: 'Vacancy', name: 'admin-jobs', icon: 'quote-left' },
     //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
     { label: 'volunteers', name: 'admin-volunteers', icon: 'comment-dots' },
 
@@ -22,6 +23,7 @@ const SIDEBARITEMS = {
     { label: 'FAQs', name: 'admin-faqs', icon: 'comment-dots' },
     { label: 'beneficiary', name: 'admin-beneficiary', icon: 'comment-dots' },
     { label: 'policy', name: 'admin-policy', icon: 'comment-dots' },
+
   ],
     // ],
      STAFF_TABS: [

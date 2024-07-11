@@ -1,19 +1,22 @@
 <template>
   <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
-    <div class="w-full bg-white flex justify-end relative group">
-      <h1>Language</h1>
-      <ul class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 shadow-xl">
-        <li class="flex flex-col gap-2 group-hover:flex-col">
-          <button @click="changeLanguage('en')" class="flex items-center justify-center">
-            <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English</button
-          ><button @click="changeLanguage('ti')" class="flex items-center justify-center">
-            <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ትግርኛ
-          </button>
-          <button @click="changeLanguage('am')" class="flex items-center justify-center">
-            <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ኣማርኛ
-          </button>
-        </li>
-      </ul>
+    <div class="w-full bg-[#53900F] flex justify-between text-white p-2">
+      <div>+251911111111</div>
+      <div class="relative group">
+        <h1><font-awesome-icon icon="globe"></font-awesome-icon>{{ currentLanguage }}</h1>
+        <ul class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 shadow-xl">
+          <li class="flex flex-col gap-2 group-hover:flex-col">
+            <button @click="changeLanguage('en')" class="flex items-center justify-center">
+              <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English</button
+            ><button @click="changeLanguage('ti')" class="flex items-center justify-center">
+              <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ትግርኛ
+            </button>
+            <button @click="changeLanguage('am')" class="flex items-center justify-center">
+              <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ኣማርኛ
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
     <nav
       class="w-full px-[1%] flex justify-between items-center py- zfont-bold bg-white/100 shadow-2xl"
@@ -102,7 +105,7 @@
             <router-link
               :to="{
                 name: 'service-detail',
-                params: { title: service.serviceTitle[currentLanguage] }
+                params: { title: slugify(service.serviceTitle[currentLanguage]) }
               }"
               class="hover:text-[#288FB2]z"
               v-for="(service, i) in services"
@@ -188,9 +191,11 @@
           >
         </li>
         <li>
-          <router-link  :to="{ name: 'gallery' }"
+          <router-link
+            :to="{ name: 'gallery' }"
             class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('gallery') }]">
+            :class="[{ 'text-[#53900F]': isActive('gallery') }]"
+          >
             <!-- @click="scrollToSection(el.id)" -->
             <span class="hover:text-[#53900F]">
               {{ $t('Gallery') }}
@@ -201,7 +206,7 @@
         <li>
           <router-link
             :to="{ name: 'donate' }"
-            class="bg-[#53900F] rounded-xl text-yellow-400 px-4 py-2 pulse"
+            class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse"
             >{{ $t('Donate') }}
             <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
           ></router-link>
@@ -337,10 +342,11 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
+import slugify from '@/utils/slugify'
+
 const { currentLanguage } = storeToRefs(useAuthStore())
 
 import { useI18n } from 'vue-i18n'
-
 let showDropdown = ref(true)
 const { locale } = useI18n()
 
