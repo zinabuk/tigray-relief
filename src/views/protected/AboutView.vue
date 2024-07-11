@@ -111,9 +111,9 @@ const saveService = async () => {
 
 const deleteService = async (id) => {
    const sure = window.confirm('Are you sure to delete this team?')
-  if (sure) {e
+  if (sure) {
   try {
-    const response = await ApiService.delete('/users/services/' + id)
+    const response = await ApiService.delete('/users/aboutus/' + id)
 
     if (response.success) {
       fetchServices()

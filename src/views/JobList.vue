@@ -263,7 +263,12 @@ onMounted(() => {
     v-if="isApply"
   >
     <div class="bg-white flex flex-col md:p-12 gap-2 overflow-auto">
-      <button class="text-gray-900 self-end bg-white" @click="isApply = !isApply">Cancel</button>
+      <button
+        class="text-gray-900 self-end bg-white border border-black px-2"
+        @click="isApply = !isApply"
+      >
+        Cancel
+      </button>
       <h1 class="text-center font-semibold">Application Page</h1>
       <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
       <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
@@ -297,8 +302,11 @@ onMounted(() => {
               type="file"
               accept="application/pdf"
               required
+              fileClass="my-2"
+              class="my-4"
             ></BaseFileInput>
-            <span>{{ letter.name }}</span>
+            <span>{{ form.applicationLetter.name }}</span>
+            <div class="my-12"></div>
             <BaseFileInput
               @image-update="captureResume($event)"
               label="Resume"
@@ -306,7 +314,7 @@ onMounted(() => {
               accept="application/pdf"
               required
             ></BaseFileInput>
-            <span>{{ resume.name }}</span>
+            <span>{{ form.cv.name }}plplp</span>
           </div>
         </div>
         <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>

@@ -56,7 +56,7 @@ onMounted(fetchServices)
           education, water and sanitation, and livelihood initiatives.
         </p>
       </div> -->
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-2">
         <h1 class="text-xl">Contacts</h1>
         <hr />
         <div class="text-[14px]">
@@ -93,8 +93,8 @@ onMounted(fetchServices)
           <li class="flex flex-col text-[14px]">
             <router-link to="/">{{ $t('Home') }}</router-link
             ><router-link to="/about">{{ $t('About Us') }}</router-link>
-            <router-link to="/our-governance">{{ $t('Our Governance') }}</router-link>
-            <router-link to="/donate">Team</router-link
+            <router-link to="/our-governance">{{ $t('News and Media') }}</router-link>
+            <router-link to="/donate">{{ $t('Volunteers') }}</router-link
             ><router-link to="/">{{ $t('Donate') }}</router-link
             ><router-link to="/">{{ $t('Contact Us') }}</router-link>
           </li>
@@ -102,7 +102,7 @@ onMounted(fetchServices)
       </div>
 
       <div class="flex flex-col gap-2">
-        <h1 class="text-lg">Subscribe for Newsletter</h1>
+        <h1 class="text-lg">{{ $t('Subscribe for Newsletter') }}</h1>
         <hr />
         <form @submit.prevent="subscribe" class="flex flex-col gap-2">
           <BaseInput
@@ -119,21 +119,20 @@ onMounted(fetchServices)
             {{ $t('SUBSCRIBE') }}
           </button>
         </form>
-        <div class="my-4">
-          <h1 class="text-xl font bold text-white">Follow Us:</h1>
-          <hr>
-          <a href="https://www.facebook.com/RESTigray1978" target="_blank">
-            <font-awesome-icon
-              :icon="['fab', 'facebook']"
-              class="text-white hover:text-white/80 p-2"
-            >
-            </font-awesome-icon
-          ></a>
-          <font-awesome-icon :icon="['fab', 'twitter']" class="text-white hover:text-white/80 p-2">
-          </font-awesome-icon>
-          <font-awesome-icon :icon="['fab', 'linkedin']" class="text-white hover:text-white/80 p-2">
-          </font-awesome-icon>
-        </div>
+      </div>
+    </div>
+    <div class="flex flex-col gap-2">
+      <h1 class="text-xl font bold text-white">Follow Us:</h1>
+      <hr />
+      <div>
+        <a href="https://www.facebook.com/RESTigray1978" target="_blank">
+          <font-awesome-icon :icon="['fab', 'facebook']" class="text-white hover:text-white/80 p-2">
+          </font-awesome-icon
+        ></a>
+        <font-awesome-icon :icon="['fab', 'twitter']" class="text-white hover:text-white/80 p-2">
+        </font-awesome-icon>
+        <font-awesome-icon :icon="['fab', 'linkedin']" class="text-white hover:text-white/80 p-2">
+        </font-awesome-icon>
       </div>
     </div>
   </section>

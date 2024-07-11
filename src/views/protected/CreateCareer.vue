@@ -117,6 +117,7 @@ const UpdateJob = async (id) => {
         title: response.message,
         icon: 'success',
       });
+      
       router.push({ name: 'in-vacancy' });
     }
   } catch (error) {

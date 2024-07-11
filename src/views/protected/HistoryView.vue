@@ -10,7 +10,6 @@ import BaseFileInput from '@/components/base/BaseFileInput.vue'
 
 import { ref, onMounted } from 'vue'
 
-// let language = ref(localStorage.getItem('lang') || '')
 const histories = ref([])
 const fetchHistories = async () => {
   try {
@@ -30,19 +29,19 @@ const fetchHistories = async () => {
   }
 }
 
-let showAddModal = ref(false)
+const showAddModal = ref(false)
 const currentLanguage = ref('en')
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang
 }
 const form = ref({
   id: null,
-  year:'',
+  year: '',
   description: { en: '', ti: '', am: '' },
   image: ''
 })
 
-let logo = ref('')
+const logo = ref('')
 const handleFileChange = (file) => {
   form.value.image = file
   logo.value = file.name
@@ -51,11 +50,11 @@ const handleFileChange = (file) => {
 const errorMessage = ref('')
 const successMessage = ref('')
 
-let edit = ref(false)
+const edit = ref(false)
 const editService = (history) => {
   form.value = {
     id: history.id,
-    year: { ...history.year },
+    year: history.year,
     description: { ...history.description },
     image: history.image
   }
@@ -96,27 +95,26 @@ const saveService = async () => {
 }
 
 const deleteService = async (id) => {
-   const sure = window.confirm('Are you sure to delete this team?')
+  const sure = window.confirm('Are you sure to delete this team?')
   if (sure) {
-  try {
-    const response = await ApiService.delete('/users/histories/' + id)
-
-    if (response.success) {
-      fetchHistories()
-    } else {
+    try {
+      const response = await ApiService.delete('/users/histories/' + id)
+      if (response.success) {
+        fetchHistories()
+      } else {
+        errorMessage.value = 'Failed to save Partner'
+      }
+    } catch (error) {
       errorMessage.value = 'Failed to save Partner'
     }
-  } catch (error) {
-    errorMessage.value = 'Failed to save Partner'
   }
-}
 }
 
 const closeModal = () => {
   showAddModal.value = false
   form.value = {
     id: null,
-    year:'',
+    year: '',
     description: { en: '', ti: '', am: '' },
     image: ''
   }
@@ -145,7 +143,7 @@ onMounted(() => {
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
-        v-for="(service, i) in Histories"
+        v-for="(service, i) in histories"
         :key="i"
         class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
       >
@@ -200,15 +198,15 @@ onMounted(() => {
                 English
               </button>
               <button
-              @click="toggleLanguage('ti')"
-              :class="{
-                'border-2 border-b-[#53900F]': currentLanguage === 'ti',
-                'bg-gray-200': currentLanguage !== 'ti'
-              }"
-              class="px-4 py-1"
-            >
-              ትግርኛ
-            </button>
+                @click="toggleLanguage('ti')"
+                :class="{
+                  'border-2 border-b-[#53900F]': currentLanguage === 'ti',
+                  'bg-gray-200': currentLanguage !== 'ti'
+                }"
+                class="px-4 py-1"
+              >
+                ትግርኛ
+              </button>
               <button
                 @click="toggleLanguage('am')"
                 :class="{
@@ -227,7 +225,7 @@ onMounted(() => {
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
-                  :placeholder="$t('Service Title')"
+                  placeholder="Year"
                 ></BaseInput>
 
                 <BaseTextarea

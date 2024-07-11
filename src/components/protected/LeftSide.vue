@@ -24,7 +24,7 @@ watchEffect(() => {
 
 <template>
   <aside
-    :class="`${barClass} sidebar zbg-white border-r-2  bg-yellow-50s h-auto top-[68px] sticky text-[16px] shadow-xl border rounded-xl p-2`"
+    :class="`${barClass} sidebar zbg-white border-r-2  bg-yellow-50s h-auto top-[68px] sticky text-[14px] shadow-xl border rounded-xl px-4 py-2 bg-white overflow-auto`"
   >
     <ul class=" ">
       <li v-for="(item, index) in navigationItems" :key="index" class="mb-2">

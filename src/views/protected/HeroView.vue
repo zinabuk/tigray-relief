@@ -17,14 +17,14 @@ import swal from 'sweetalert'
 
 const router = useRouter()
 const heroData = ref({
-  heroTitle: {en:'',ti:'',am:''},
-  heroDescription: {en:'',ti:'',am:''},
+  heroTitle: { en: '', ti: '', am: '' },
+  heroDescription: { en: '', ti: '', am: '' },
   heroImage: null
 })
-const currentLanguage=ref('en')
+const currentLanguage = ref('en')
 const toggleLanguage = (lang) => {
-  currentLanguage.value = lang;
-};
+  currentLanguage.value = lang
+}
 
 const heroes = ref([])
 const errorMessage = ref('')
@@ -72,10 +72,9 @@ const fetchHeroes = async () => {
     const response = await ApiService.get('users/home')
     // alert(response.data.length)
     heroes.value = response.data.map((item) => ({
-        ...item,
-        heroTitle: JSON.parse(item.heroTitle),
-        heroDescription: JSON.parse(item.heroDescription),
-
+      ...item,
+      heroTitle: JSON.parse(item.heroTitle),
+      heroDescription: JSON.parse(item.heroDescription)
     }))
   } catch (error) {
     errorMessage.value = 'Failed to fetch achievements'
@@ -108,18 +107,18 @@ const updateHero = async () => {
   }
 }
 const deleteItem = async (id) => {
-    const sure = window.confirm('Are you sure? This operation cannot be undone.')
-    if (sure) {
-  try {
-    const response = await ApiService.delete('users/home/' + id)
-    if (response.success) {
-      successMessage.value = response.message
-      fetchHeroes()
+  const sure = window.confirm('Are you sure? This operation cannot be undone.')
+  if (sure) {
+    try {
+      const response = await ApiService.delete('users/home/' + id)
+      if (response.success) {
+        successMessage.value = response.message
+        fetchHeroes()
+      }
+    } catch (error) {
+      errorMessage.value = 'Failed to delete hero'
     }
-  } catch (error) {
-    errorMessage.value = 'Failed to delete hero'
   }
-    }
 }
 
 const resetForm = () => {
@@ -197,10 +196,34 @@ onMounted(() => {
           </div>
           <div class="">
             <div class="flex justify-center gap-16 py-2">
-              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
-              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
-              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
-        </div>
+              <BaseButton
+                @click="toggleLanguage('en')"
+                :class="{
+                  'bg-green-900 text-white': currentLanguage === 'en',
+                  'bg-gray-200': currentLanguage !== 'en'
+                }"
+              >
+                English
+              </BaseButton>
+              <BaseButton
+                @click="toggleLanguage('am')"
+                :class="{
+                  'bg-green-900 text-white': currentLanguage === 'am',
+                  'bg-gray-200': currentLanguage !== 'am'
+                }"
+              >
+                Amharic
+              </BaseButton>
+              <BaseButton
+                @click="toggleLanguage('ti')"
+                :class="{
+                  'bg-green-900 text-white': currentLanguage === 'ti',
+                  'bg-gray-200': currentLanguage !== 'ti'
+                }"
+              >
+                Tigrigna
+              </BaseButton>
+            </div>
             <form @submit.prevent="saveHero" class="flex flex-col gap-4">
               <div class="">
                 <div class="w-full zmd:w-1/2 py-4 flex px-2">
@@ -261,10 +284,34 @@ onMounted(() => {
           </div>
           <div class="">
             <div class="flex justify-center gap-16 py-2">
-              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
-              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
-              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
-        </div>
+              <BaseButton
+                @click="toggleLanguage('en')"
+                :class="{
+                  'bg-green-900 text-white': currentLanguage === 'en',
+                  'bg-gray-200': currentLanguage !== 'en'
+                }"
+              >
+                English
+              </BaseButton>
+              <BaseButton
+                @click="toggleLanguage('am')"
+                :class="{
+                  'bg-green-900 text-white': currentLanguage === 'am',
+                  'bg-gray-200': currentLanguage !== 'am'
+                }"
+              >
+                Amharic
+              </BaseButton>
+              <BaseButton
+                @click="toggleLanguage('ti')"
+                :class="{
+                  'bg-green-900 text-white': currentLanguage === 'ti',
+                  'bg-gray-200': currentLanguage !== 'ti'
+                }"
+              >
+                Tigrigna
+              </BaseButton>
+            </div>
             <form @submit.prevent="updateHero" class="flex flex-col gap-4">
               <div class="">
                 <div class="w-full zmd:w-1/2 py-4 flex px-2">

@@ -74,9 +74,10 @@ const editTeam = (team) => {
   showEditModal.value = true
 }
 
-// const closeEditModal = () => {
-//   showEditModal.value = false
-// }
+const closeModal = () => {
+  showAddModal.value = false
+  edit.value = false
+}
 
 let image = ref('')
 const handleFileChange = (event) => {
