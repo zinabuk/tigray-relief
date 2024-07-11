@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
@@ -221,12 +222,14 @@ onMounted(() => {
                 </div>
 
                 <div class="w-full px-2">
-                  <BaseInput
+                  <BaseFileInput
+                  label="add Picture"
                     @change="captureImage"
                     type="file"
                     inputClass="p-2 border border-gray-300 rounded"
                     placeholder="Image"
-                  ></BaseInput>
+                    accept="image/*"
+                  ></BaseFileInput>
                 </div>
               </div>
               <div class="flex justify-end gap-2">

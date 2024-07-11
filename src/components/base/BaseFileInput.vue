@@ -2,7 +2,7 @@
   <div class="input-container relative flex flex-col">
     <input
       type="file"
-      accept="image/*"
+      :accept="accept"
       id="label"
       @change="onFileChange($event)"
       class="absolute w-[1px] h-[1px] p-0 border-none "
@@ -26,6 +26,10 @@
 // import { defineProps } from 'vue'
 defineProps({
   icon: {
+    type: String,
+    default: ''
+  },
+  accept:{
     type: String,
     default: ''
   },
