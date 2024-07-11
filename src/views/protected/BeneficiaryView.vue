@@ -238,6 +238,8 @@ onMounted(() => {
                 <BaseFileInput
                   @image-update="handleFileChange($event)"
                   label="Add Picture"
+                  type="file"
+                  accept="image/*"
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
