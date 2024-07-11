@@ -1,6 +1,7 @@
 <script setup>
 import ApiService from '@/services/apiService'
 import BaseButton from '@/components/base/BaseButton.vue'
+import BaseFileInput from "@/components/base/BaseFileInput.vue"
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { BASE_AVATAR } from '@/config'
@@ -197,7 +198,15 @@ onMounted(() => {
           </div>
           <div class="col-span-2">
             <label class="block" for="eventImage">Image</label>
-            <input class="border rounded px-2 py-1 w-full" type="file" @change="handleFileChange" />
+            <!-- <input class="border rounded px-2 py-1 w-full" type="file" @change="handleFileChange" /> -->
+            <BaseFileInput
+            @change="handleFileChange"
+            label="Add Picture"
+              type="file"
+              inputClass="p-2 border border-gray-300 rounded"
+              placeholder="Image"
+              accept="image/*"
+          ></BaseFileInput>
           </div>
           <div class="col-span-2 flex justify-end">
             <BaseButton type="submit" class="w-full px-4 py-2 rounded">Save</BaseButton>

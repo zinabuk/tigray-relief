@@ -236,9 +236,17 @@ onMounted(() => {
               </div>
               <div class="flex justify-end gap-2 flex-col">
                 <BaseFileInput
+                
+                  label="add Picture"
                   @image-update="handleFileChange($event)"
-                  label="Add Picture"
-                ></BaseFileInput>
+                    type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="image/*"
+                  >
+                  <BaseButton type="submit" class="w-full px-2 py-2 rounded"></BaseButton>
+                </BaseFileInput>
+
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
                   Save History

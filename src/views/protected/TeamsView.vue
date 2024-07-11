@@ -213,6 +213,10 @@ onMounted(() => {
               <BaseFileInput
                 @image-update="handleFileChange($event)"
                 label="Add Picture"
+                type="file"
+                inputClass="p-2 border border-gray-300 rounded"
+                placeholder="Image"
+                accept="image/*"
               ></BaseFileInput>
               <span>{{ image }}</span>
             </div>
@@ -269,7 +273,12 @@ onMounted(() => {
           <!-- Event Image -->
           <div class="flex justify-between">
             <div class="flex">
-              <BaseFileInput @image-update="imageEntry($event)" label="Add Picture"></BaseFileInput>
+              <BaseFileInput @image-update="imageEntry($event)" label="Add Picture"
+                type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="image/*"
+              ></BaseFileInput>
             </div>
             <!-- Submit Button -->
             <div class="flex justify-end">

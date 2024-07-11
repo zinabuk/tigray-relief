@@ -1,7 +1,7 @@
 <template>
   <div class="input-container relative flex flex-col">
     <input
-      type="file"
+      v-bind="$attrs"
       :accept="accept"
       id="label"
       @change="onFileChange($event)"

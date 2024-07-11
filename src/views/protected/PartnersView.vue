@@ -215,7 +215,7 @@ onMounted(fetchPartners);
           label="Description"
           textareaClasses="px-8"
         ></BaseTextarea>
-        <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput>
+        <BaseFileInput @image-update="handleFileChange($event)" type="file" accept="image/*" label="Add Logo"></BaseFileInput>
 
          <div class="flex gap-4">
           <BaseButton type="submit">Save Changes</BaseButton>

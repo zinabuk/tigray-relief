@@ -37,8 +37,17 @@
         <!-- Event Image -->
         <div class="flex justify-between">
           <div class="flex">
-            <input type="file" id="eventImage" @change="handleFileChange" class="hidden" ref="eventImageInput" />
-            <label for="eventImage" class="cursor-pointer bg-[#539000]/70 hover:bg-white text-white hover:text-[#539000] font-medium py-2 px-4 rounded">image</label>
+            <!-- <input type="file" id="eventImage" @change="handleFileChange" class="hidden" ref="eventImageInput" /> -->
+            <BaseFileInput
+            
+            @change="handleFileChange"
+            label="Add Picture"
+              type="file"
+              inputClass="p-2 border border-gray-300 rounded"
+              placeholder="Image"
+              accept="image/*"
+          ></BaseFileInput>
+            <!-- <label for="eventImage" class="cursor-pointer bg-[#539000]/70 hover:bg-white text-white hover:text-[#539000] font-medium py-2 px-4 rounded">image</label> -->
           </div>
           
           <!-- Submit Button -->
@@ -54,13 +63,15 @@
 
 <script>
 import BaseInput from '@/components/base/BaseInput.vue'
+import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import apiService from '@/services/apiService'
 
 export default {
   components: {
     BaseInput,
-    BaseTextarea
+    BaseTextarea,
+    BaseFileInput
   },
   data() {
     return {

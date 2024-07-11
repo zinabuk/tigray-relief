@@ -87,7 +87,7 @@ async function viewApplicants(career) {
 
 const UpdateJob = async (id) => {
   try {
-    const response = await ApiService.patch(`/admin/vacancies/${id}`, job.value)
+    const response = await ApiService.patch(`/admin/vacancies/${id}`, editForm.value)
     if (response.success) {
       successMessage.value = response.message
       swal({
