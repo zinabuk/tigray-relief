@@ -3,17 +3,23 @@
     <div class="w-full bg-[#53900F] flex justify-between text-white p-2">
       <div>+251911111111</div>
       <div class="relative group">
-        <h1><font-awesome-icon icon="globe"></font-awesome-icon>{{ currentLanguage }}</h1>
-        <ul class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 shadow-xl">
-          <li class="flex flex-col gap-2 group-hover:flex-col">
-            <button @click="changeLanguage('en')" class="flex items-center justify-center">
-              <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English</button
-            ><button @click="changeLanguage('ti')" class="flex items-center justify-center">
+        <h1><font-awesome-icon icon="globe"></font-awesome-icon>{{ language }}</h1>
+        <ul
+          class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 text-black shadow-2xl"
+        >
+          <li class="flex flex-col gap-2 group-hover:flex-col p-2">
+            <button @click="changeLanguage('en')" class="flex items-center justify-between">
+              <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English
+            </button>
+            <hr />
+            <button @click="changeLanguage('ti')" class="flex items-center justify-between">
               <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ትግርኛ
             </button>
-            <button @click="changeLanguage('am')" class="flex items-center justify-center">
-              <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ኣማርኛ
+            <hr />
+            <button @click="changeLanguage('am')" class="flex items-center justify-between">
+              <img src="@/assets/amhara.png" alt="" class="w-4 h-4" />ኣማርኛ
             </button>
+            <hr />
           </li>
         </ul>
       </div>
@@ -374,6 +380,8 @@ function toggleDropdown() {
   }, 300)
 }
 
+let language = ref('English')
+
 let showLang = ref(false)
 function changeLanguage(lang) {
   locale.value = lang
@@ -382,6 +390,13 @@ function changeLanguage(lang) {
   currentLanguage.value = lang
 
   showDropdown.value = !showDropdown.value
+  if (lang === 'en') {
+    language.value = 'English'
+  } else if (lang === 'ti') {
+    language.value = 'ትግርኛ'
+  } else {
+    language.value = 'አማርኛ'
+  }
   setTimeout(() => {
     showDropdown.value = true
   }, 300)

@@ -1,22 +1,22 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import DataTable from '@/components/base/DataTableT.vue';
-import ApiService from '@/services/apiService';
-import BaseInput from '@/components/base/BaseInput.vue';
-import BaseTextarea from '@/components/base/BaseTextarea.vue';
-import BaseButton from '@/components/base/BaseButton.vue';
-import BaseFileInput from '@/components/base/BaseFileInput.vue';
-import dayjs from 'dayjs';
-import swal from 'sweetalert';
-import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue'
+import DataTable from '@/components/base/DataTableT.vue'
+import ApiService from '@/services/apiService'
+import BaseInput from '@/components/base/BaseInput.vue'
+import BaseTextarea from '@/components/base/BaseTextarea.vue'
+import BaseButton from '@/components/base/BaseButton.vue'
+import BaseFileInput from '@/components/base/BaseFileInput.vue'
+import dayjs from 'dayjs'
+import swal from 'sweetalert'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
-const isAdd = ref(false);
+const router = useRouter()
+const isAdd = ref(false)
 const toggleAdd = () => {
-  isAdd.value = true;
-};
+  isAdd.value = true
+}
 
-const currentLanguage = ref('en');
+const currentLanguage = ref('en')
 const tableHeaders = [
   { label: 'Job Title', field: 'jobTitle' },
   { label: 'Location', field: 'location' },
@@ -25,31 +25,31 @@ const tableHeaders = [
   { label: 'Salary', field: 'salary' },
   { label: 'Deadline', field: 'deadline' },
   { label: 'Job Requirement', field: 'qualification' },
-  { label: 'Job Description', field: 'description' },
-];
+  { label: 'Job Description', field: 'description' }
+]
 
 const actions = [
   {
     label: 'edit',
     action: openEditModal,
     icon: 'edit',
-    style: 'hover:cursor-pointer text-blue-500 py-1 px-2',
+    style: 'hover:cursor-pointer text-blue-500 py-1 px-2'
   },
   {
     label: 'delete',
     action: deleteJob,
     icon: 'trash',
-    style: 'hover:cursor-pointer text-red-500 py-1 px-2',
+    style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   },
   {
     label: 'verify',
     action: viewApplicants,
     icon: 'eye',
-    style: 'hover:cursor-pointer text-green-500 py-1 px-2',
-  },
-];
+    style: 'hover:cursor-pointer text-green-500 py-1 px-2'
+  }
+]
 
-let job = ref({});
+let job = ref({})
 const editForm = ref({
   jobTitle: '',
   location: '',
@@ -58,49 +58,50 @@ const editForm = ref({
   salary: '',
   deadline: '',
   qualification: '',
-  description: '',
-});
-const isEditing = ref(false);
-let formatDate = ref('');
+  description: ''
+})
+const isEditing = ref(false)
+let formatDate = ref('')
 function openEditModal(jobs) {
-  isEditing.value = true;
-  editForm.value = { ...jobs };
-  formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD');
+  isEditing.value = true
+  editForm.value = { ...jobs }
+  formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD')
 }
 
 function closeEditModal() {
-  isEditing.value = false;
+  isEditing.value = false
 }
 
-const errorMessage = ref('');
-const successMessage = ref('');
+const errorMessage = ref('')
+const successMessage = ref('')
 
 const saveJob = async () => {
   try {
-    const response = await ApiService.post('/admin/vacancies', job.value);
+    const response = await ApiService.post('/admin/vacancies', job.value)
     if (response.success) {
-      successMessage.value = response.message;
+      // successMessage.value = response.message
+      // alert("OKK")
       swal({
         title: response.message,
-        icon: 'success',
-      });
-      router.push({ name: 'in-vacancy' });
+        icon: 'success'
+      })
+      router.push({ name: 'in-vacancy' })
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      errorMessage.value = error.response.data.message;
+      errorMessage.value = error.response.data.message
     } else {
-      router.push({ name: 'NetworkError' });
+      router.push({ name: 'NetworkError' })
     }
   }
-};
+}
 
-const jobs = ref([]);
+const jobs = ref([])
 
 async function fetchJobs() {
-  const response = await ApiService.get('/admin/vacancies');
+  const response = await ApiService.get('/admin/vacancies')
   if (response.success) {
-    jobs.value = response.data;
+    jobs.value = response.data
   }
 }
 
@@ -110,60 +111,57 @@ async function viewApplicants(career) {
 
 const UpdateJob = async (id) => {
   try {
-    const response = await ApiService.patch(`/admin/vacancies/${id}`, job.value);
+    const response = await ApiService.patch(`/admin/vacancies/${id}`, job.value)
     if (response.success) {
-      successMessage.value = response.message;
+      successMessage.value = response.message
       swal({
         title: response.message,
-        icon: 'success',
-      });
-      router.push({ name: 'in-vacancy' });
+        icon: 'success'
+      })
+      router.push({ name: 'in-vacancy' })
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      errorMessage.value = error.response.data.message;
+      errorMessage.value = error.response.data.message
     } else {
-      router.push({ name: 'NetworkError' });
+      router.push({ name: 'NetworkError' })
     }
   }
-};
+}
 
 async function deleteJob(job) {
-  const accept = window.confirm('Undo is not possible');
+  const accept = window.confirm('Undo is not possible')
   if (accept) {
-    const response = await ApiService.delete(`/admin/vacancies/${job.id}`);
+    const response = await ApiService.delete(`/admin/vacancies/${job.id}`)
     if (response.success) {
-      fetchJobs();
+      fetchJobs()
     }
   }
 }
 
 onMounted(() => {
-  fetchJobs();
-  viewApplicants();
-});
+  fetchJobs()
+  viewApplicants()
+})
 </script>
-
-
-
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <button class="bg-[#539000] text-white self-end px-2 py-1" @click="toggleAdd">
-      Add jobs
-    </button>
-    <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions" ></DataTable>
+    <button class="bg-[#539000] text-white self-end px-2 py-1" @click="toggleAdd">Add jobs</button>
+    <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions"></DataTable>
   </section>
-<div
+  <div
     class="w-full modal fixed inset-0 flex z-50 justify-center items-center bg-black/80 overflow-auto md:py-12"
     v-if="isEditing"
   >
-    <div class="bg-white/100 flex flex-col gap-3 justify-center items-center shadow px-[1%] md:px-[6%] py-6 md:py-12 overflow-auto">
+    <div
+      class="bg-white/100 flex flex-col gap-3 justify-center items-center shadow px-[1%] md:px-[6%] py-6 md:py-12 overflow-auto"
+    >
       <button @click="closeEditModal" class="self-end text-2xl bg-gray-500 text-white">
-        Cancel 
+        Cancel
       </button>
 
-    <form @submit.prevent="UpdateJob" class="w-full flex flex-col gap-4 px-4">
+      <form @submit.prevent="UpdateJob" class="w-full flex flex-col gap-4 px-4">
         <BaseInput
           v-model="editForm.jobTitle"
           type="text"
@@ -215,22 +213,22 @@ onMounted(() => {
           textareaClasses="px-8"
           placeholder="Description"
         ></BaseTextarea>
-        <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput>
-         <div class="flex gap-4">
+        <!-- <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput> -->
+        <div class="flex gap-4">
           <BaseButton type="submit">Save Changes</BaseButton>
-          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click=" closeEditModal">
+          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="closeEditModal">
             Cancel
           </button>
         </div>
-      </form> 
-   </div>
+      </form>
+    </div>
   </div>
 
   <div
     v-if="isAdd"
-    class="w-full z-30 bg-black/80 fixed inset-0 flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto "
+    class="w-full z-30 bg-black/80 fixed inset-0 flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto"
   >
-    <div class="w-1/2 bg-white  ">
+    <div class="w-1/2 bg-white">
       <h1 class="text-center text-xl font-semibold">Vacancy form</h1>
       <p class="justify-self-end text-green-500 bg-white" v-if="success">{{ success }}</p>
       <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 py-4 px-4">
@@ -245,7 +243,6 @@ onMounted(() => {
             ></BaseInput>
           </div>
           <div class="col-span-6">
-
             <BaseInput
               v-model="job.employmentType"
               type="text"
@@ -263,11 +260,7 @@ onMounted(() => {
           placeholder="location"
           autocomplete="true"
         ></BaseInput>
-        <BaseInput
-          v-model="job.experience"
-          inputClass="px-8"
-          placeholder="expraince"
-        ></BaseInput>
+        <BaseInput v-model="job.experience" inputClass="px-8" placeholder="expraince"></BaseInput>
         <BaseInput
           v-model="job.salary"
           required
@@ -275,7 +268,7 @@ onMounted(() => {
           placeholder="sallary"
         ></BaseInput>
         <BaseInput
-        type="date"
+          type="date"
           v-model="job.deadline"
           required
           inputClass="px-8 py-3"

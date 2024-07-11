@@ -43,7 +43,7 @@ const PROTECTED_ROUTES = [
       },
       {
         path: 'jobs',
-        component: () => import('@/views/protected/CreateCareer.vue'),
+        component: () => import('@/views/protected/JobsList.vue'),
         name: 'admin-jobs',
         meta: {
           requiresAuth: true,

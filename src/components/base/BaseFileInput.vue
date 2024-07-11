@@ -1,11 +1,7 @@
 <template>
   <div class="input-container relative flex flex-col">
     <input
-<<<<<<< HEAD
-      type="file"
-=======
       v-bind="$attrs"
->>>>>>> 7354c48901f3a5082390b4b4f5d7b4a0bbbf4435
       :accept="accept"
       id="label"
       @change="onFileChange($event)"
@@ -37,11 +33,7 @@ defineProps({
   label: {
     type: String,
     default: ''
-  },
-  accept: {
-    type: String,
-    default: ''
-  },
+  }, 
   fileClass: {
     type: String,
     default: ''
