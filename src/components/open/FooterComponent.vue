@@ -137,12 +137,12 @@ onMounted(fetchServices)
       </div>
     </div>
   </section>
-
-  <div class="w-full bg-[#53900F]/10 flex justify-between px-12">
+  <!-- bg-[#53900F]/10  -->
+  <div class="w-full bg-green-900 text-white flex justify-between px-12">
     <p class="text-center p-4">© 2024 REST. All rights reserved.</p>
     <div class="flex gap-2 items-center justify-center">
       <h1>Powered by</h1>
-      <a href="https://iq-businesses.com/" target="_blank" class="text-black/70"
+      <a href="https://iq-businesses.com/" target="_blank" class=""
         >IQ Business Group PLC</a
       >
     </div>

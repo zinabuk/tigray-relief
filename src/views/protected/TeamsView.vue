@@ -89,7 +89,26 @@ const imageEntry = (event) => {
 }
 
 let showAddModal = ref(false)
+const updateTeam = async()=>{
+  const formData = new FormData()
+      formData.append('fullName', JSON.stringify(  eTeam.value.fullName))
+      formData.append('profession', JSON.stringify(  eTeam.value.profession))
+      formData.append('biography', JSON.stringify(  eTeam.value.biography))
 
+  if (  eTeam.value.image) {
+    formData.append('image',   eTeam.value.image)
+  }
+
+  const res = await ApiService.patch('/admin/our-teams/'+  eTeam.value.id, formData)
+  if (res) {
+    fetchTeams()
+      eTeam.value = {}
+    swal({
+      icon: 'success',
+      title: 'Team created successfully'
+    })
+  }
+}
 const submitForm = async () => {
 
       const formData = new FormData()
@@ -174,22 +193,12 @@ onMounted(() => {
           class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
           enctype="multipart/form-data"
         >
-          <!-- <h1 class="flex justify-center font-bold font-serif">Add Team</h1> -->
-
-          <!-- Event Title -->
           <div class="flex justify-center">
             <BaseInput type="text" id="fullName" label="Full Name" v-model="eTeam.fullName[currentLanguage]" />
           </div>
-
-          <!-- Event Category -->
           <div class="flex justify-center">
             <BaseInput type="text" id="Profession" label="Profession" v-model="eTeam.profession[currentLanguage]" />
           </div>
-
-          <!-- Event Date -->
-
-          <!-- Event Description -->
-
           <div>
             <BaseTextarea
               v-model="eTeam.biography[currentLanguage]"
@@ -208,7 +217,7 @@ onMounted(() => {
             </div>
             <!-- Submit Button -->
             <div class="flex justify-end">
-              <BaseButton label="">Submit</BaseButton>
+              <BaseButton label="">Save Changes</BaseButton>
             </div>
           </div>
         </form>

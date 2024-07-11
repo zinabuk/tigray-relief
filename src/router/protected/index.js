@@ -33,9 +33,27 @@ const PROTECTED_ROUTES = [
         }
       },
       {
+        path: 'history',
+        component: () => import('@/views/protected/HistoryView.vue'),
+        name: 'admin-hitory',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
+      {
         path: 'jobs',
         component: () => import('@/views/protected/CreateCareer.vue'),
         name: 'admin-jobs',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
+      {
+        path: 'all-applicants',
+        component: () => import('@/views/protected/CareerApplicants.vue'),
+        name: 'jobApplicants',
         meta: {
           requiresAuth: true,
           role: ['admin']

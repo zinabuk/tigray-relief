@@ -11,15 +11,14 @@ import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import { ref, onMounted } from 'vue'
 
 // let language = ref(localStorage.getItem('lang') || '')
-const services = ref([])
-const fetchServices = async () => {
+const histories = ref([])
+const fetchHistories = async () => {
   try {
-    const response = await ApiService.get('/admin/services')
+    const response = await ApiService.get('/users/histories')
     if (response) {
-      services.value = response.data.map((item) => ({
+      histories.value = response.data.map((item) => ({
         ...item,
-        serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription)
+        description: JSON.parse(item.description),
       }))
     }
   } catch (error) {
@@ -38,14 +37,14 @@ const toggleLanguage = (lang) => {
 }
 const form = ref({
   id: null,
-  serviceTitle: { en: '', ti: '', am: '' },
-  serviceDescription: { en: '', ti: '', am: '' },
-  serviceImage: ''
+  year:'',
+  description: { en: '', ti: '', am: '' },
+  image: ''
 })
 
 let logo = ref('')
 const handleFileChange = (file) => {
-  form.value.serviceImage = file
+  form.value.image = file
   logo.value = file.name
 }
 
@@ -53,12 +52,12 @@ const errorMessage = ref('')
 const successMessage = ref('')
 
 let edit = ref(false)
-const editService = (service) => {
+const editService = (history) => {
   form.value = {
-    id: service.id,
-    serviceTitle: { ...service.serviceTitle },
-    serviceDescription: { ...service.serviceDescription },
-    serviceImage: service.serviceImage
+    id: history.id,
+    year: { ...history.year },
+    description: { ...history.description },
+    image: history.image
   }
   edit.value = true
   showAddModal.value = true
@@ -66,26 +65,26 @@ const editService = (service) => {
 
 const saveService = async () => {
   const formData = new FormData()
-  formData.append('serviceTitle', JSON.stringify(form.value.serviceTitle))
-  formData.append('serviceDescription', JSON.stringify(form.value.serviceDescription))
-  if (form.value.serviceImage) {
-    formData.append('serviceImage', form.value.serviceImage)
+  formData.append('year', form.value.year)
+  formData.append('description', JSON.stringify(form.value.description))
+  if (form.value.image) {
+    formData.append('image', form.value.image)
   }
   try {
     if (edit.value) {
-      const response = await ApiService.patch('/admin/services/' + form.value.id, formData)
+      const response = await ApiService.patch('/users/histories/' + form.value.id, formData)
       if (response.success) {
         successMessage.value = response.message
-        fetchServices()
+        fetchHistories()
         closeModal()
       } else {
         errorMessage.value = 'Failed to save Service'
       }
     } else {
-      const res = await ApiService.post('/admin/services', formData)
+      const res = await ApiService.post('/users/histories', formData)
       if (res.success) {
         successMessage.value = res.message
-        fetchServices()
+        fetchHistories()
         closeModal()
       } else {
         errorMessage.value = 'Failed to save Service'
@@ -100,10 +99,10 @@ const deleteService = async (id) => {
    const sure = window.confirm('Are you sure to delete this team?')
   if (sure) {
   try {
-    const response = await ApiService.delete('/admin/services/' + id)
+    const response = await ApiService.delete('/users/histories/' + id)
 
     if (response.success) {
-      fetchServices()
+      fetchHistories()
     } else {
       errorMessage.value = 'Failed to save Partner'
     }
@@ -117,22 +116,22 @@ const closeModal = () => {
   showAddModal.value = false
   form.value = {
     id: null,
-    serviceTitle: { en: '', ti: '', am: '' },
-    serviceDescription: { en: '', ti: '', am: '' },
-    serviceImage: ''
+    year:'',
+    description: { en: '', ti: '', am: '' },
+    image: ''
   }
   edit.value = false
   logo.value = ''
 }
 
 onMounted(() => {
-  fetchServices()
+  fetchHistories()
 })
 </script>
 
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
-    <!-- Services -->
+    <!-- Histories -->
     <button
       @click="showAddModal = true"
       class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
@@ -141,27 +140,27 @@ onMounted(() => {
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add Service
+      Add History
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
-        v-for="(service, i) in services"
+        v-for="(service, i) in Histories"
         :key="i"
         class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
       >
         <img
-          v-if="service.serviceImage"
-          :src="BASE_AVATAR + service.serviceImage"
+          v-if="service.image"
+          :src="BASE_AVATAR + service.image"
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
         <p v-else class="w-20 h-20 rounded-full text-6xl">
-          {{ service.serviceTitle[currentLanguage] }}
+          {{ service.year }}
         </p>
-        <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
+        <h1 class="text-2xl font-bold">{{ service.year }}</h1>
         <p class="line-clamp-5">
-          {{ service.serviceDescription[currentLanguage] }}
+          {{ service.description[currentLanguage] }}
         </p>
         <div class="flex gap-2 justify-end">
           <button @click="editService(service)">
@@ -182,7 +181,7 @@ onMounted(() => {
         <div class="text-center">
           <div class="flex justify-between">
             <h3 class="text-lg font-medium text-gray-900">
-              {{ edit ? 'Edit Service' : 'Add Service' }}
+              {{ edit ? 'Edit history' : 'Add history' }}
             </h3>
             <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">
               Cancel
@@ -224,7 +223,7 @@ onMounted(() => {
             <form @submit.prevent="saveService" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
-                  v-model="form.serviceTitle[currentLanguage]"
+                  v-model="form.year"
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
@@ -232,7 +231,7 @@ onMounted(() => {
                 ></BaseInput>
 
                 <BaseTextarea
-                  v-model="form.serviceDescription[currentLanguage]"
+                  v-model="form.description[currentLanguage]"
                   inputClass="p-2 border border-gray-300 rounded"
                   placeholder="Service Description"
                 ></BaseTextarea>
@@ -244,7 +243,7 @@ onMounted(() => {
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
-                  Save Service
+                  Save History
                 </BaseButton>
               </div>
             </form>

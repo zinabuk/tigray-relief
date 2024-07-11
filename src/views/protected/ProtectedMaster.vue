@@ -58,7 +58,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="w-full bg-[#53900F]/15">
+  <section class="w-full bg-[#53900F]/15 " >
     <header class="flex items-center justify-between sticky shadow zbg-white/100 z-10 top-0 px-2">
       <div class="w-[18%] flex items-center justify-between">
         <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" />
@@ -166,7 +166,7 @@ onUnmounted(() => {
         </div> -->
       </div>
     </header>
-    <div class="w-full flex flex-wrap ">
+    <div class="w-full flex flex-wrap   ">
       <LeftSide bar-class="w-[18%]"></LeftSide>
       <router-view></router-view>
     </div>
