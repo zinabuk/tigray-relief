@@ -306,6 +306,7 @@ onMounted(() => {
               class="my-4"
             ></BaseFileInput>
             <span>{{ form.applicationLetter.name }}</span>
+            <div class="my-12"></div>
             <BaseFileInput
               @image-update="captureResume($event)"
               label="Resume"
@@ -313,7 +314,7 @@ onMounted(() => {
               accept="application/pdf"
               required
             ></BaseFileInput>
-            <span>{{ form.cv.name }}</span>
+            <span>{{ form.cv.name }}plplp</span>
           </div>
         </div>
         <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
