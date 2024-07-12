@@ -190,7 +190,7 @@ onMounted(() => {
         <div class="text-center">
           <div class="flex justify-between">
             <h3 class="text-lg font-medium text-gray-900">Add Brand</h3>
-            <BaseButton @click="closeModal" type="button" class="px-4 py-2 rounded"
+            <BaseButton @click="closeModal" type="button" class="p-1 text-white bg-gray-500 roumded "
               >Cancel</BaseButton
             >
           </div>

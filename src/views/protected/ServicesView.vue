@@ -188,7 +188,7 @@ onMounted(() => {
               Cancel
             </button>
           </div>
-          <div class="bg-white flex flex-col gap-2 w-full">
+          <div class="bg-white flex flex-col gap-2 w-full pt-2">
             <div class="flex w-full justify-between">
               <button
                 @click="toggleLanguage('en')"

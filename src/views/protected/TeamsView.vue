@@ -84,9 +84,10 @@ const handleFileChange = (event) => {
   eTeam.value.image = event
   image.value = event.name
 }
-
+const imageName = ref('')
 const imageEntry = (event) => {
   team.value.image = event
+  imageName.value = file.name
 }
 
 let showAddModal = ref(false)
@@ -180,10 +181,13 @@ onMounted(() => {
       class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/80"
     >
       <div class="bg-white p-4 flex flex-col">
+      <div class="flex justify-between">
+        <h2 class="text-lg font-bold mb-4">Edit Team</h2>
         <button @click="showEditModal = false" class="bg-gray-500 text-white self-end p-2">
           cancel
         </button>
-        <h2 class="text-lg font-bold mb-4">Edit Team</h2>
+      </div>
+
         <div class="flex justify-center gap-16 py-2">
               <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
               <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
@@ -218,7 +222,7 @@ onMounted(() => {
                 placeholder="Image"
                 accept="image/*"
               ></BaseFileInput>
-              <span>{{ image }}</span>
+              <p>{{ imageName }}</p>
             </div>
             <!-- Submit Button -->
             <div class="flex justify-end">
@@ -234,10 +238,13 @@ onMounted(() => {
       v-if="showAddModal"
     >
       <div class="w-1/2 bg-white p-4 flex flex-col">
+      <div class="flex justify-between px-12">
+        <h1 class="flex justify-center font-bold font-serif">Add Team</h1>
         <button @click="showAddModal = false" class="bg-gray-500 text-white self-end p-2">
           cancel
         </button>
-        <div class="flex justify-center gap-16 py-2">
+      </div>
+        <div class="flex justify-center gap-36 py-2">
               <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
               <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
               <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
@@ -247,22 +254,12 @@ onMounted(() => {
           class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
           enctype="multipart/form-data"
         >
-          <h1 class="flex justify-center font-bold font-serif">Add Team</h1>
-
-          <!-- Event Title -->
           <div class="flex justify-center">
             <BaseInput type="text" id="fullName" label="Full Name" v-model="team.fullName[currentLanguage]" />
           </div>
-
-          <!-- Event Category -->
           <div class="flex justify-center">
             <BaseInput type="text" id="Profession" label="Profession" v-model="team.profession[currentLanguage]" />
           </div>
-
-          <!-- Event Date -->
-
-          <!-- Event Description -->
-
           <div>
             <BaseTextarea
               v-model="team.biography[currentLanguage]"
@@ -279,6 +276,7 @@ onMounted(() => {
                     placeholder="Image"
                     accept="image/*"
               ></BaseFileInput>
+              <p>{{ imageName }}</p>
             </div>
             <!-- Submit Button -->
             <div class="flex justify-end">
