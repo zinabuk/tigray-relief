@@ -58,8 +58,26 @@ const getAboutus = async () => {
   }
 }
 
+const histories = ref([])
+const fetchHistories = async () => {
+  try {
+    const response = await ApiService.get('/users/histories')
+    if (response) {
+      histories.value = response.data.map((item) => ({
+        ...item,
+        description: JSON.parse(item.description)
+      }))
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {}, 2000)
+    }
+  }
+}
 onMounted(() => {
-  fetchTeams(), getAboutus()
+  fetchTeams(), getAboutus(), fetchHistories()
 })
 </script>
 
@@ -167,16 +185,31 @@ onMounted(() => {
   </section>
 
   <!-- timeline -->
-  <div class="relative ">
-    <div class="timeline-container z-50">
-      <div v-for="i in 5" :key="i" class="timeline-item flex gap-4">
-        <div class="timeline-year" :class="[i % 2 === 2 ? 'order-1' : 'order-2']">
-          <span>1924</span>
+  <div class="relative w-full flex flex-col px-[6%] gap-4 py-12 bg-green-900/10">
+    <div class="grid grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
+      <div
+        class="flex gap-4 bg-white shadow-2xl p-4"
+        :class="[i % 2 === 0 ? 'order-2' : 'order-1']"
+      >
+        <div class="p-2 space-y-4">
+          
+          <div class="timeline-content">
+            <img src="@/assets/hero-o.jpg" alt="Timeline image" class="timeline-image" />
+            <div class="timeline-year">
+            <span class="text-[20px] font-bold">{{ history.year }}</span>
+          </div>
+            <p class="timeline-description">{{ history.description[currentLanguage] }}</p>
+          </div>
         </div>
-        <div class="timeline-content">
-          <img src="@/assets/hero-o.jpg" alt="Timeline image" class="timeline-image" />
-          <h3 class="timeline-title">Rest title</h3>
-          <p class="timeline-description">description</p>
+
+        <div class="h-4 w-4"></div>
+      </div>
+      <div :class="[i % 2 === 0 ? 'order-1 flex justify-end ' : 'order-2']">
+        <div
+          class="h-full border-2 border-gray-500 border-r-0 border-t-0 border-b-0 relative flex flex-col zjustify-between"
+        >
+          <div class="h-4 w-4 bg-blue-600 rounded-full absolute -left-2"></div>
+          <div class="h-4 w-4 bg-blue-600 rounded-full absolute -left-2 bottom-4"></div>
         </div>
       </div>
     </div>
@@ -207,56 +240,5 @@ onMounted(() => {
   min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
-}
-.timeline-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-}
-
-.timeline-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 2rem 0;
-  position: relative;
-  width: 100%;
-}
-
-.timeline-year {
-  background-color: #4a5568;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  margin-bottom: 1rem;
-  font-weight: bold;
-  font-size: 1.25rem;
-}
-
-.timeline-content {
-  background-color: #edf2f7;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.timeline-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.timeline-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.timeline-description {
-  font-size: 1rem;
-  color: #4a5568;
 }
 </style>
