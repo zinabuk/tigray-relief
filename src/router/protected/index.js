@@ -60,7 +60,7 @@ const PROTECTED_ROUTES = [
         }
       },
       {
-        path: 'all-applicants',
+        path: 'all-applicants/:id',
         component: () => import('@/views/protected/CareerApplicants.vue'),
         name: 'jobApplicants',
         meta: {

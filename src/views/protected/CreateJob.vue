@@ -69,7 +69,7 @@ const saveJob = async () => {
           placeholder="location"
           autocomplete="true"
         ></BaseInput>
-        <BaseInput v-model="job.experience" inputClass="px-8" placeholder="expraince"></BaseInput>
+        <BaseInput v-model="job.experience" inputClass="px-8" placeholder="experience"></BaseInput>
         <BaseInput
           v-model="job.salary"
           required

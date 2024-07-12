@@ -8,63 +8,7 @@ import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 
-const jobs = [
-  {
-    title: 'Financial Offiecer',
-    experience: '2-4 years',
-    deadline: '2024-05-31',
-    requirement:
-      'Proficient in HTML, CSS, and JavaScript. Experience with front-end frameworks like React or Vue is preferred.',
-    description:
-      'Responsible for developing user interfaces for web applications. Collaborate with designers and backend developers to implement and maintain responsive and interactive front-end components.',
-    salary: '$60,000 - $80,000 per year',
-    employmentType: 'Full-time'
-  },
-  {
-    title: 'Secretary',
-    experience: '3-5 years',
-    deadline: '2024-06-15',
-    requirement:
-      'Strong knowledge of server-side programming languages such as Node.js or Python. Experience with databases and RESTful APIs is required.',
-    description:
-      'Responsible for designing, developing, and maintaining the server-side logic of web applications. Implement efficient and scalable backend systems and integrate with external services.',
-    salary: '$70,000 - $90,000 per year',
-    employmentType: 'Full-time'
-  },
-  {
-    title: 'HR',
-    experience: '4-6 years',
-    deadline: '2024-07-10',
-    requirement:
-      'Proficient in both front-end and back-end technologies. Familiarity with frameworks like React, Node.js, and Express is essential.',
-    description:
-      'Responsible for handling both client-side and server-side development tasks. Collaborate with cross-functional teams to deliver end-to-end solutions and ensure seamless integration between front-end and back-end systems.',
-    salary: '$80,000 - $100,000 per year',
-    employmentType: 'Full-time'
-  },
-  {
-    title: 'IT support',
-    experience: '2-4 years',
-    deadline: '2024-06-30',
-    requirement:
-      'Strong understanding of user-centered design principles. Proficiency in design tools like Sketch or Figma. Experience with prototyping tools and front-end development skills are a plus.',
-    description:
-      'Responsible for creating intuitive and visually appealing user interfaces. Conduct user research, create wireframes and prototypes, and collaborate with developers to ensure a seamless user experience.',
-    salary: '$50,000 - $70,000 per year',
-    employmentType: 'Full-time'
-  },
-  {
-    title: 'Driver',
-    experience: '5-8 years',
-    deadline: '2024-08-15',
-    requirement:
-      'Strong background in statistics, mathematics, and machine learning. Proficiency in programming languages like Python or R. Experience with data manipulation, visualization, and modeling techniques is required.',
-    description:
-      'Responsible for analyzing complex datasets, developing predictive models, and extracting insights from data. Collaborate with cross-functional teams to drive data-driven decision-making and solve business problems.',
-    salary: '$90,000 - $120,000 per year',
-    employmentType: 'Full-time'
-  }
-]
+const jobs = ref([])
 
 const isApply = ref(false)
 const career = ref({})
@@ -81,30 +25,22 @@ const toggleApply = (job) => {
 
 const letter = ref('')
 const resume = ref('')
-const form = ref({ fullName: '', email: '', phoneNumber: '', applicationLetter: '', cv: '' })
+const form = ref({ fullName: '', email: '', phoneNumber: '', resume: '' })
 
-const captureLetter = (file) => {
-  letter.value = file
-  form.value.applicationLetter = file
-}
+// const captureLetter = (file) => {
+//   letter.value = file
+//   form.value.applicationLetter = file
+// }
 
 const captureResume = (file) => {
   resume.value = file
-  form.value.cv = file
+  form.value.resume = file
 }
 
-const allCareers = async () => {
-  try {
-    const response = await ApiService.get('/users/careers')
-    if (response.success) {
-      careers.value = response.data
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404 && error.response.data) {
-      return
-    } else {
-      // router.push({ name: 'NetworkError' })
-    }
+async function fetchJobs() {
+  const response = await ApiService.get('/admin/vacancies')
+  if (response.success) {
+    jobs.value = response.data
   }
 }
 const submitApplication = async () => {
@@ -113,9 +49,10 @@ const submitApplication = async () => {
     formData.append('fullName', form.value.fullName)
     formData.append('email', form.value.email)
     formData.append('phoneNumber', form.value.phoneNumber)
-    formData.append('applicationLetter', form.value.applicationLetter)
-    formData.append('cv', form.value.cv)
-    const response = await ApiService.applyJob('users/careeres/' + career.value.id, formData)
+    // formData.append('applicationLetter', form.value.applicationLetter)
+    formData.append('resume', form.value.resume)
+    const response = await ApiService.applyJob('/users/applications/' + career.value.id, formData)
+    console.log(formData)
     if (response.success) {
       form.value = {}
       resume.value = ''
@@ -148,7 +85,7 @@ const submitApplication = async () => {
 }
 
 onMounted(() => {
-  allCareers()
+  fetchJobs()
 })
 </script>
 
@@ -296,25 +233,23 @@ onMounted(() => {
           <div>
             <span class="text-sm text-red-600">*Only pdf files</span>
 
-            <BaseFileInput
+            <!-- <BaseFileInput
               @image-update="captureLetter($event)"
               label="Application Letter"
               type="file"
               accept="application/pdf"
-              required
               fileClass="my-2"
               class="my-4"
             ></BaseFileInput>
-            <span>{{ form.applicationLetter.name }}</span>
+            <span>{{ form.applicationLetter.name }}</span> -->
             <div class="my-12"></div>
             <BaseFileInput
               @image-update="captureResume($event)"
               label="Resume"
               type="file"
               accept="application/pdf"
-              required
             ></BaseFileInput>
-            <span>{{ form.cv.name }}plplp</span>
+            <span>{{ form.resume.name }}</span>
           </div>
         </div>
         <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>

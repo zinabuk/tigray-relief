@@ -4,7 +4,7 @@ import DataTable from '@/components/base/DataTableT.vue'
 import ApiService from '@/services/apiService'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
-import BaseButton from '@/components/base/BaseButton.vue' 
+import BaseButton from '@/components/base/BaseButton.vue'
 import dayjs from 'dayjs'
 import swal from 'sweetalert'
 import { useRouter } from 'vue-router'
@@ -70,8 +70,6 @@ function closeEditModal() {
   isEditing.value = false
 }
 
-
-
 const jobs = ref([])
 
 async function fetchJobs() {
@@ -87,9 +85,8 @@ async function viewApplicants(career) {
 
 const UpdateJob = async (id) => {
   try {
-    const response = await ApiService.patch(`/admin/vacancies/${id}`, job.value)
+    const response = await ApiService.patch(`/admin/vacancies/${id}`, editForm.value)
     if (response.success) {
-      successMessage.value = response.message
       swal({
         title: response.message,
         icon: 'success'
@@ -98,7 +95,7 @@ const UpdateJob = async (id) => {
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      errorMessage.value = error.response.data.message
+      console.log('')
     } else {
       router.push({ name: 'NetworkError' })
     }
@@ -123,7 +120,9 @@ onMounted(() => {
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <router-link class="bg-[#539000] text-white self-end px-2 py-1"  :to="{name: 'create-job'}">Add jobs</router-link>
+    <router-link class="bg-[#539000] text-white self-end px-2 py-1" :to="{ name: 'create-job' }"
+      >Add jobs</router-link
+    >
     <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions"></DataTable>
   </section>
   <div
@@ -199,8 +198,6 @@ onMounted(() => {
       </form>
     </div>
   </div>
-
-  
 </template>
 
 <style scoped>

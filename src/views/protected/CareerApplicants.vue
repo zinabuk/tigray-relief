@@ -31,6 +31,7 @@ const actions = [
 const searchApplicants = ref('')
 const jobs = ref([])
 const getJob = async () => {
+  
   try {
     const response = await ApiService.get('users/all-applicants/'+route.params.id)
     jobs.value = response.data

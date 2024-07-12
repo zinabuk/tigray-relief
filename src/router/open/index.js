@@ -174,6 +174,10 @@ const OPEN_ROUTES = [
     path: '/Login',
     name: 'login',
     component: () => import('@/views/LoginView.vue')
+  }, {
+    path: '/timeline',
+    name: 'timeline',
+    component: () => import('@/views/TimeLine.vue')
   }
 ]
 export default OPEN_ROUTES

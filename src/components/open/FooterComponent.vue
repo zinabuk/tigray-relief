@@ -137,7 +137,7 @@ onMounted(fetchServices)
     </div>
   </section>
   <!-- bg-[#53900F]/10  -->
-  <div class="w-full bg-green-900 text-white flex justify-between px-12">
+  <div class="w-full bg-[#53900F]/10 text-BLACK flex justify-between px-12">
     <p class="text-center p-4">© 2024 REST. All rights reserved.</p>
     <div class="flex gap-2 items-center justify-center">
       <h1>Powered by</h1>

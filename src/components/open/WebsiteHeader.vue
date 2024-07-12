@@ -3,7 +3,7 @@
     <div class="w-full bg-[#53900F] flex justify-between text-white p-2">
       <div>+251911111111</div>
       <div class="relative group">
-        <h1><font-awesome-icon icon="globe"></font-awesome-icon>{{ language }}</h1>
+        <h1><font-awesome-icon icon="globe" class="mx-1"></font-awesome-icon>{{ language }}</h1>
         <ul
           class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 text-black shadow-2xl"
         >
@@ -380,7 +380,7 @@ function toggleDropdown() {
   }, 300)
 }
 
-let language = ref('English')
+let language = ref('En')
 
 let showLang = ref(false)
 function changeLanguage(lang) {
@@ -391,11 +391,11 @@ function changeLanguage(lang) {
 
   showDropdown.value = !showDropdown.value
   if (lang === 'en') {
-    language.value = 'English'
+    language.value = 'En'
   } else if (lang === 'ti') {
-    language.value = 'ትግርኛ'
+    language.value = 'ትግ'
   } else {
-    language.value = 'አማርኛ'
+    language.value = 'አማ'
   }
   setTimeout(() => {
     showDropdown.value = true
