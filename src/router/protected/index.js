@@ -42,6 +42,15 @@ const PROTECTED_ROUTES = [
         }
       },
       {
+        path: 'organizational-starcture',
+        component: () => import('@/views/protected/OrganizationalView.vue'),
+        name: 'admin-oganizational',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
+      {
         path: 'jobs',
         component: () => import('@/views/protected/JobsList.vue'),
         name: 'admin-jobs',
@@ -68,6 +77,7 @@ const PROTECTED_ROUTES = [
           role: ['admin']
         }
       },
+      
       {
         path: 'staff',
         component: () => import('@/views/protected/Staff/StaffIndex.vue'),

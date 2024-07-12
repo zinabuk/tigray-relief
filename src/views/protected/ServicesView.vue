@@ -188,7 +188,7 @@ onMounted(() => {
               Cancel
             </button>
           </div>
-          <div class="bg-white flex flex-col gap-2 w-full">
+          <div class="bg-white flex flex-col gap-2 w-full pt-2">
             <div class="flex w-full justify-between">
               <button
                 @click="toggleLanguage('en')"
@@ -241,6 +241,10 @@ onMounted(() => {
                 <BaseFileInput
                   @image-update="handleFileChange($event)"
                   label="Add Picture"
+                    type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="image/*"
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">

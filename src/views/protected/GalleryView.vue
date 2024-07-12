@@ -108,11 +108,17 @@ onMounted(() => {
       </div>
       <div class="col-span-3 flex flex-col p-6 bg-white shadow">
         <form @submit.prevent="saveGallery" v-if="!editingGalleryId">
-          <BaseFileInput @image-update="captureImage" label="Add Gallery"></BaseFileInput>
+          <BaseFileInput @image-update="captureImage" label="Add Gallery"
+          type="file"
+          accept="image/*"
+          ></BaseFileInput>
           <BaseButton type="submit">Save</BaseButton>
         </form>
         <form @submit.prevent="saveEditedGallery" v-else>
-          <BaseFileInput @image-update="captureEditImage" label="Edit Gallery"></BaseFileInput>
+          <BaseFileInput @image-update="captureEditImage" label="Edit Gallery"
+          type="file"
+          accept="image/*"
+          ></BaseFileInput>
           <BaseButton type="submit">Update</BaseButton>
           <BaseButton type="button"  class="bg-yellow-500" @click="editingGalleryId = null; editImage = null">Cancel</BaseButton>
         </form>

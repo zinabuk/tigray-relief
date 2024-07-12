@@ -10,14 +10,16 @@ import BaseFileInput from '@/components/base/BaseFileInput.vue'
 
 import { ref, onMounted } from 'vue'
 
-const histories = ref([])
-const fetchHistories = async () => {
+// let language = ref(localStorage.getItem('lang') || '')
+const services = ref([])
+const fetchServices = async () => {
   try {
-    const response = await ApiService.get('/users/histories')
+    const response = await ApiService.get('/admin/services')
     if (response) {
-      histories.value = response.data.map((item) => ({
+      services.value = response.data.map((item) => ({
         ...item,
-        description: JSON.parse(item.description),
+        serviceTitle: JSON.parse(item.serviceTitle),
+        serviceDescription: JSON.parse(item.serviceDescription)
       }))
     }
   } catch (error) {
@@ -29,34 +31,34 @@ const fetchHistories = async () => {
   }
 }
 
-const showAddModal = ref(false)
+let showAddModal = ref(false)
 const currentLanguage = ref('en')
 const toggleLanguage = (lang) => {
   currentLanguage.value = lang
 }
 const form = ref({
   id: null,
-  year: '',
-  description: { en: '', ti: '', am: '' },
-  image: ''
+  serviceTitle: { en: '', ti: '', am: '' },
+  serviceDescription: { en: '', ti: '', am: '' },
+  serviceImage: ''
 })
 
-const logo = ref('')
+let logo = ref('')
 const handleFileChange = (file) => {
-  form.value.image = file
+  form.value.serviceImage = file
   logo.value = file.name
 }
 
 const errorMessage = ref('')
 const successMessage = ref('')
 
-const edit = ref(false)
-const editService = (history) => {
+let edit = ref(false)
+const editService = (service) => {
   form.value = {
-    id: history.id,
-    year: history.year,
-    description: { ...history.description },
-    image: history.image
+    id: service.id,
+    serviceTitle: { ...service.serviceTitle },
+    serviceDescription: { ...service.serviceDescription },
+    serviceImage: service.serviceImage
   }
   edit.value = true
   showAddModal.value = true
@@ -64,26 +66,26 @@ const editService = (history) => {
 
 const saveService = async () => {
   const formData = new FormData()
-  formData.append('year', form.value.year)
-  formData.append('description', JSON.stringify(form.value.description))
-  if (form.value.image) {
-    formData.append('image', form.value.image)
+  formData.append('serviceTitle', JSON.stringify(form.value.serviceTitle))
+  formData.append('serviceDescription', JSON.stringify(form.value.serviceDescription))
+  if (form.value.serviceImage) {
+    formData.append('serviceImage', form.value.serviceImage)
   }
   try {
     if (edit.value) {
-      const response = await ApiService.patch('/users/histories/' + form.value.id, formData)
+      const response = await ApiService.patch('/admin/services/' + form.value.id, formData)
       if (response.success) {
         successMessage.value = response.message
-        fetchHistories()
+        fetchServices()
         closeModal()
       } else {
         errorMessage.value = 'Failed to save Service'
       }
     } else {
-      const res = await ApiService.post('/users/histories', formData)
+      const res = await ApiService.post('/admin/services', formData)
       if (res.success) {
         successMessage.value = res.message
-        fetchHistories()
+        fetchServices()
         closeModal()
       } else {
         errorMessage.value = 'Failed to save Service'
@@ -95,41 +97,42 @@ const saveService = async () => {
 }
 
 const deleteService = async (id) => {
-  const sure = window.confirm('Are you sure to delete this team?')
+   const sure = window.confirm('Are you sure to delete this team?')
   if (sure) {
-    try {
-      const response = await ApiService.delete('/users/histories/' + id)
-      if (response.success) {
-        fetchHistories()
-      } else {
-        errorMessage.value = 'Failed to save Partner'
-      }
-    } catch (error) {
+  try {
+    const response = await ApiService.delete('/admin/services/' + id)
+
+    if (response.success) {
+      fetchServices()
+    } else {
       errorMessage.value = 'Failed to save Partner'
     }
+  } catch (error) {
+    errorMessage.value = 'Failed to save Partner'
   }
+}
 }
 
 const closeModal = () => {
   showAddModal.value = false
   form.value = {
     id: null,
-    year: '',
-    description: { en: '', ti: '', am: '' },
-    image: ''
+    serviceTitle: { en: '', ti: '', am: '' },
+    serviceDescription: { en: '', ti: '', am: '' },
+    serviceImage: ''
   }
   edit.value = false
   logo.value = ''
 }
 
 onMounted(() => {
-  fetchHistories()
+  fetchServices()
 })
 </script>
 
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
-    <!-- Histories -->
+    <!-- Services -->
     <button
       @click="showAddModal = true"
       class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
@@ -138,27 +141,27 @@ onMounted(() => {
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add History
+      Add Service
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
-        v-for="(service, i) in histories"
+        v-for="(service, i) in services"
         :key="i"
         class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
       >
         <img
-          v-if="service.image"
-          :src="BASE_AVATAR + service.image"
+          v-if="service.serviceImage"
+          :src="BASE_AVATAR + service.serviceImage"
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
         <p v-else class="w-20 h-20 rounded-full text-6xl">
-          {{ service.year }}
+          {{ service.serviceTitle[currentLanguage] }}
         </p>
-        <h1 class="text-2xl font-bold">{{ service.year }}</h1>
+        <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
         <p class="line-clamp-5">
-          {{ service.description[currentLanguage] }}
+          {{ service.serviceDescription[currentLanguage] }}
         </p>
         <div class="flex gap-2 justify-end">
           <button @click="editService(service)">
@@ -179,7 +182,7 @@ onMounted(() => {
         <div class="text-center">
           <div class="flex justify-between">
             <h3 class="text-lg font-medium text-gray-900">
-              {{ edit ? 'Edit history' : 'Add history' }}
+              {{ edit ? 'Edit Service' : 'Add Service' }}
             </h3>
             <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">
               Cancel
@@ -198,15 +201,15 @@ onMounted(() => {
                 English
               </button>
               <button
-                @click="toggleLanguage('ti')"
-                :class="{
-                  'border-2 border-b-[#53900F]': currentLanguage === 'ti',
-                  'bg-gray-200': currentLanguage !== 'ti'
-                }"
-                class="px-4 py-1"
-              >
-                ትግርኛ
-              </button>
+              @click="toggleLanguage('ti')"
+              :class="{
+                'border-2 border-b-[#53900F]': currentLanguage === 'ti',
+                'bg-gray-200': currentLanguage !== 'ti'
+              }"
+              class="px-4 py-1"
+            >
+              ትግርኛ
+            </button>
               <button
                 @click="toggleLanguage('am')"
                 :class="{
@@ -221,35 +224,31 @@ onMounted(() => {
             <form @submit.prevent="saveService" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
-                  v-model="form.year"
+                  v-model="form.serviceTitle[currentLanguage]"
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Year"
+                  :placeholder="$t('Service Title')"
                 ></BaseInput>
 
                 <BaseTextarea
-                  v-model="form.description[currentLanguage]"
+                  v-model="form.serviceDescription[currentLanguage]"
                   inputClass="p-2 border border-gray-300 rounded"
                   placeholder="Service Description"
                 ></BaseTextarea>
               </div>
               <div class="flex justify-end gap-2 flex-col">
                 <BaseFileInput
-                
-                  label="add Picture"
                   @image-update="handleFileChange($event)"
+                  label="Add Picture"
                     type="file"
                     inputClass="p-2 border border-gray-300 rounded"
                     placeholder="Image"
                     accept="image/*"
-                  >
-                  <BaseButton type="submit" class="w-full px-2 py-2 rounded"></BaseButton>
-                </BaseFileInput>
-
+                ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
-                  Save History
+                  Save Service
                 </BaseButton>
               </div>
             </form>

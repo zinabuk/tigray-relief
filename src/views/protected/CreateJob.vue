@@ -99,7 +99,7 @@ const saveJob = async () => {
         <p v-if="message" class="text-red-700">{{ message }}</p>
         <div class="flex gap-4">
           <BaseButton type="submit" class="self-start">Submit</BaseButton>
-          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="isAdd = false">
+          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="closeModal = false">
             Cancel
           </button>
         </div>

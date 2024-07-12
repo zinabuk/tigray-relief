@@ -15,6 +15,7 @@ const toggleLanguage = (lang) => {
 };
 
 const tableHeaders = [
+{ label: 'Logo', field: 'logo' },
   { label: 'Title', field: 'businessName' },
   { label: 'Email Address', field: 'email' },
   { label: 'Phone', field: 'phoneNumber' },
@@ -85,7 +86,9 @@ const updatePartner = async () => {
   formData.append('website', editForm.value.website);
   formData.append('specializeArea', JSON.stringify(editForm.value.specializeArea));
   formData.append('description', JSON.stringify(editForm.value.description));
-  formData.append('logo', image.value);
+  if (image.value) {
+    formData.append('logo', image.value);
+  }
 
   try {
     const response = await ApiService.patch(
@@ -145,7 +148,10 @@ const submitPartner = async () => {
   formData.append('website', form.value.website);
   formData.append('specializeArea', JSON.stringify(form.value.specializeArea));
   formData.append('description', JSON.stringify(form.value.description));
-  formData.append('logo', image.value);
+  if (image.value) {
+    formData.append('logo', image.value);
+  }
+
 
   const res = await ApiService.post('/users/partnerships', formData);
   if (res.success) {
@@ -167,11 +173,14 @@ onMounted(fetchPartners);
     class="w-full modal fixed inset-0 flex z-50 justify-center items-center bg-black/80 overflow-auto md:py-12"
     v-if="isEditing"
   >
-    <div class="bg-white/100 flex flex-col gap-3 justify-center items-center shadow px-[1%] md:px-[6%] py-6 md:py-12 overflow-auto">
-      <button @click="closeEditModal" class="self-end text-2xl bg-gray-500 text-white">
-        Cancel
-      </button>
-      <div class="flex justify-center gap-16 py-2">
+      <div class="w-1/2 bg-white rounded px-8"> 
+      <div class="flex justify-between px-8 py-4">
+          <p>Edit Partner</p>     
+          <button @click="closeEditModal" class="self-end text-xl bg-gray-500 text-white rounded-sm">
+            Cancel
+          </button>
+        </div>
+      <div class="flex justify-center gap-36 py-2">
         <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }">English</BaseButton>
         <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }">Amharic</BaseButton>
         <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }">Tigrigna</BaseButton>
@@ -199,7 +208,7 @@ onMounted(fetchPartners);
         <BaseInput
           v-model="editForm.specializeArea[currentLanguage]"
           required
-          inputClass="px-8 py-3"
+          inputClass="px-8 "
           placeholder="Specialize area"
         ></BaseInput>
         <BaseInput
@@ -207,34 +216,37 @@ onMounted(fetchPartners);
           type="text"
           label="Phone Number"
           required
-          inputClass="px-4 py-3"
+          inputClass="px-4 "
         ></BaseInput>
         <BaseTextarea
           v-model="editForm.description[currentLanguage]"
           rows="4"
           label="Description"
           textareaClasses="px-8"
-        ></BaseTextarea>
-        <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput>
-
-         <div class="flex gap-4">
+        ></BaseTextarea>  
+        <div class="flex justify-between">
+        <BaseFileInput @image-update="handleFileChange($event)" type="file" accept="image/*" label="Add Logo"></BaseFileInput>
           <BaseButton type="submit">Save Changes</BaseButton>
-          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click=" closeEditModal">
-            Cancel
-          </button>
+
         </div>
       </form>
-    </div>
+
   </div>
+</div>
 
   <div
     v-if="isAdd"
-    class="w-full z-30 bg-black/80 fixed inset-0 flex flex-col items-center justify-center p-6 gap-2 shadow rounded-lg modal"
+    class="w-full z-30 bg-black/80 fixed inset-0 flex flex-col items-center justify-center p-6 gap-2 shadow rounded-lg modal "
   >
-    <div class="w-1/2 bg-white">
-      <h1 class="text-center text-xl font-semibold">Partnership Form</h1>
+    <div class="w-1/2 bg-white rounded">
+    <div class="flex justify-between px-8 py-4">
+      <h1 class="text-center text-2xl font-semibold">Partnership Form</h1>
+          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="isAdd = false">
+            Cancel
+          </button>
+    </div>
       <p class="justify-self-end text-green-500 bg-white" v-if="success">{{ success }}</p>
-      <div class="flex justify-center gap-16 py-2">
+      <div class="flex justify-center gap-40 py-2">
         <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }">English</BaseButton>
         <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }">Amharic</BaseButton>
         <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }">Tigrigna</BaseButton>
@@ -244,13 +256,13 @@ onMounted(fetchPartners);
           v-model="form.businessName[currentLanguage]"
           type="text"
           required
-          inputClass="px-8 py-3"
+          inputClass="px-8 py-1"
           placeholder="Your business name"
         ></BaseInput>
         <BaseInput
           v-model="form.email"
           type="email"
-          inputClass="px-8 py-3"
+          inputClass="px-8 py-1"
           required
           placeholder="Enter Your Email"
           autocomplete="true"
@@ -258,19 +270,19 @@ onMounted(fetchPartners);
         <BaseInput
           v-model="form.phoneNumber"
           type="text"
-          inputClass="px-8 py-3"
+          inputClass="px-8 py-1"
           required
           placeholder="Enter Your Phone number"
         ></BaseInput>
         <BaseInput
           v-model="form.website"
-          inputClass="px-8 py-3"
+          inputClass="px-8 py-1"
           placeholder="Enter your website's link"
         ></BaseInput>
         <BaseInput
           v-model="form.specializeArea[currentLanguage]"
           required
-          inputClass="px-8 py-3"
+          inputClass="px-8 py-1"
           placeholder="Specialize area"
         ></BaseInput>
         <BaseTextarea
@@ -279,17 +291,17 @@ onMounted(fetchPartners);
           textareaClasses="px-8"
           placeholder="Description"
         ></BaseTextarea>
+        <div class="flex justify-between">
         <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput>
         <p v-if="message" class="text-red-700">{{ message }}</p>
-        <div class="flex gap-4">
+      
           <BaseButton type="submit" class="self-start">Submit</BaseButton>
-          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="isAdd = false">
-            Cancel
-          </button>
+
         </div>
       </form>
+      </div>
     </div>
-  </div>
+
 </template>
 
 <style scoped>
