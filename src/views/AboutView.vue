@@ -191,14 +191,13 @@ onMounted(() => {
         class="flex gap-4 bg-white shadow-2xl p-4"
         :class="[i % 2 === 0 ? 'order-2' : 'order-1']"
       >
-        <div class="p-2 space-y-4">
-          
+        <div class="p-2 space-y-6">
           <div class="timeline-content">
-            <img src="@/assets/hero-o.jpg" alt="Timeline image" class="timeline-image" />
+            <img src="@/assets/hero-o.jpg" alt="Timeline image" class="timeline-image rounded-lg" />
             <div class="timeline-year">
-            <span class="text-[20px] font-bold">{{ history.year }}</span>
-          </div>
-            <p class="timeline-description">{{ history.description[currentLanguage] }}</p>
+              <span class="text-[20px] font-bold">{{ history.year }}</span>
+            </div>
+            <p class="P-2">{{ history.description[currentLanguage] }}</p>
           </div>
         </div>
 
