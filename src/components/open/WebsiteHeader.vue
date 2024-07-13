@@ -8,16 +8,16 @@
           class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 text-black shadow-2xl"
         >
           <li class="flex flex-col gap-2 group-hover:flex-col p-2">
-            <button @click="changeLanguage('en')" class="flex items-center justify-between">
-              <img src="@/assets/usa.png" alt="" class="w-4 h-4" />English
+            <button @click="changeLanguage('en')" class="flex items-center justify-center  hover:text-[#53900F]">
+             English
             </button>
             <hr />
-            <button @click="changeLanguage('ti')" class="flex items-center justify-between">
-              <img src="@/assets/tigray.png" alt="" class="w-4 h-4" />ትግርኛ
+            <button @click="changeLanguage('ti')" class="flex items-center justify-center  hover:text-[#53900F]">
+              ትግርኛ
             </button>
             <hr />
-            <button @click="changeLanguage('am')" class="flex items-center justify-between">
-              <img src="@/assets/amhara.png" alt="" class="w-4 h-4" />ኣማርኛ
+            <button @click="changeLanguage('am')" class="flex items-center justify-center  hover:text-[#53900F]">
+              ኣማርኛ
             </button>
             <hr />
           </li>
@@ -212,7 +212,7 @@
         <li>
           <router-link
             :to="{ name: 'donate' }"
-            class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse"
+            class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse rounded-md"
             >{{ $t('Donate') }}
             <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
           ></router-link>

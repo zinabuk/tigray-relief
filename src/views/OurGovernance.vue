@@ -16,15 +16,15 @@ export default {
     return {
       treeData: {
         name: 'CEO',
-        role: '',
+        role: 'chief executive officer',
         profilePicture: "",
         children: [
           {
             name: 'Manager 1',
-            role: '',
+            role: 'chief executive officer',
             children: [
-              { name: 'Team Lead 1', role: '' },
-              { name: 'Team Lead 2', role: '' }
+              { name: 'Team Lead 1', role: 'chief executive officer' },
+              { name: 'Team Lead 2', role: 'chief executive officer' }
             ]
           },
           {

@@ -121,7 +121,7 @@ onMounted(() => {
     <Swiper
       :slides-per-view="1"
       :modules="[Autoplay, Pagination, Navigation]"
-      :autoplay="{ delay: 1000, disableOnInteraction: false, pauseOnMouseEnter: false }"
+      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: false }"
       loop
       class="w-full h-screen md:h-[calc(100vh_-_80px)]"
     >

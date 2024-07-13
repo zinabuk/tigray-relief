@@ -64,18 +64,7 @@ const submitContact = async () => {
     </div> -->
 
     <!-- map -->
-    <section class="w-full">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3642.8835664230915!2d39.46931181830917!3d13.48513923952096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m3!3m2!1d13.4838516!2d39.472198399999996!4m5!1s0x166afd3bdb7f3623%3A0x1c7f010ff4c99e3e!2z4YuL4YqTIOGJpOGJtSDhjYXhiJXhjYjhibUg4Yib4YiV4Ymg4Yir4YuKIOGIqOGLteGKpOGJtSDhibXhjI3hiKvhi60gKOGIm-GIqOGJtSkgfCBSZWxpZWYgU29jaWV0eSBvZiBUaWdyYXkgKFJFU1QpIEhlYWQgT2ZmaWNlLCBGRlBGK1AyVywgTWVrZWxl!3m2!1d13.486872!2d39.4725871!5e0!3m2!1sen!2set!4v1709274199476!5m2!1sen!2set"
-        width="600"
-        height="450"
-        style="border: 0"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        class="w-full"
-      ></iframe>
-    </section>
+
     <div
       class="px-24 grid grid-cols-1 md:grid-cols-3 gap-4 itemss-center justify-center py-12 bg-[#53900F]/10 overflow-hidden"
     >
@@ -180,6 +169,18 @@ const submitContact = async () => {
       </div>
     </section>
   </section>
+  <section class="w-full">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3642.8835664230915!2d39.46931181830917!3d13.48513923952096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m3!3m2!1d13.4838516!2d39.472198399999996!4m5!1s0x166afd3bdb7f3623%3A0x1c7f010ff4c99e3e!2z4YuL4YqTIOGJpOGJtSDhjYXhiJXhjYjhibUg4Yib4YiV4Ymg4Yir4YuKIOGIqOGLteGKpOGJtSDhibXhjI3hiKvhi60gKOGIm-GIqOGJtSkgfCBSZWxpZWYgU29jaWV0eSBvZiBUaWdyYXkgKFJFU1QpIEhlYWQgT2ZmaWNlLCBGRlBGK1AyVywgTWVrZWxl!3m2!1d13.486872!2d39.4725871!5e0!3m2!1sen!2set!4v1709274199476!5m2!1sen!2set"
+        width="600"
+        height="450"
+        style="border: 0"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="w-full"
+      ></iframe>
+    </section>
 </template>
 
 <style scoped>

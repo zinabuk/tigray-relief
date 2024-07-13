@@ -77,6 +77,15 @@ const PROTECTED_ROUTES = [
           role: ['admin']
         }
       },
+      {
+        path: 'tender-applicants/:id',
+        component: () => import('@/views/protected/TenderApplicants.vue'),
+        name: 'tenderApplicants',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
       
       {
         path: 'staff',

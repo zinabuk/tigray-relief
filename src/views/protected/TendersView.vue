@@ -35,6 +35,12 @@ const actions = [
     action: deleteContact,
     icon: 'trash',
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
+  },
+  {
+    label: 'verify',
+    action: viewApplicants,
+    icon: 'eye',
+    style: 'hover:cursor-pointer text-green-500 py-1 px-2'
   }
 ]
 const fetchTenders = async () => {
@@ -99,6 +105,9 @@ async function deleteContact(tender) {
     }
   }
 
+}
+async function viewApplicants(career) {
+  router.push({ name: 'tenderApplicants', params: { id: career.id } })
 }
 const updateTender=async()=>{
   const formData = new FormData()
