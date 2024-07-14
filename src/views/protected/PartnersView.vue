@@ -38,12 +38,12 @@ const actions = [
     icon: 'trash',
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   },
-  {
-    label: 'verify',
-    action: deletePartner,
-    icon: 'eye',
-    style: 'hover:cursor-pointer text-green-500 py-1 px-2'
-  }
+  // {
+  //   label: 'verify',
+  //   action: deletePartner,
+  //   icon: 'eye',
+  //   style: 'hover:cursor-pointer text-green-500 py-1 px-2'
+  // }
 ];
 
 async function fetchPartners() {
