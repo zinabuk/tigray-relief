@@ -95,7 +95,7 @@ onMounted(getServices())
       </div>
     </div>
   </section>
-  <section class="w-full px-[6%] py-12 bg-[#53900F]/10">
+  <section class="w-full px-[2%] py-12 bg-[#53900F]/10">
     <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-4 bg-white">
       <div class="relative w-full flex flex-col gap-4 group md:col-span-12">
         <div class="w-full max-h-[600px] overflow-hiddden">
@@ -118,7 +118,7 @@ onMounted(getServices())
       </div>
     </div>
   </section>
-  <div class="w-full px-[6%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <div class="w-full px-[2%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
     <div v-for="(service, i) in services" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <img

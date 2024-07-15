@@ -90,12 +90,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full md:p-[4%] bg-[#53900F]/10">
+  <div class="w-full md:p-[2%] bg-[#53900F]/10">
     <div
       class="w-full lg:w-[%] lg:mx-auto py-2 flex flex-col gap-5 bg-red-40r0 justify-center items-start"
     >
       <div
-        class="w-full flex flex-col mx-auto lg:w-3/4 shadow-inner"
+        class="w-full flex flex-col mx-auto lg:w-4/5 shadow-inner"
         v-for="(career, index) in jobs"
         :key="index"
       >

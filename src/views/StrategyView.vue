@@ -117,7 +117,7 @@ onMounted(() => {
     </div>
   </section>
   <!-- Services -->
-  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4">
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
     <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
       <div v-for="(tender, i) in tenders" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">

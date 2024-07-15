@@ -53,7 +53,7 @@ onMounted(() => {
     </div>
   </section>
   <!-- Services -->
-  <section class="w-full bg-gray-50 px-[6%] py-12">
+  <section class="w-full bg-gray-50 px-[2%] py-12">
     <!-- <h1 class="text-center text-3xl">Services we provide</h1> -->
     <div class="gap-4 place-content-center">
       <Swiper
