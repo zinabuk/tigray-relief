@@ -1,7 +1,7 @@
 <script setup>
 import ApiService from '@/services/apiService'
 
-import { BASE_AVATAR } from '@/config'
+import { BASE_UPLOAD } from '@/config'
 
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
@@ -14,11 +14,11 @@ import { ref, onMounted } from 'vue'
 const documents = ref([])
 const fetchDocuments = async () => {
   try {
-    const response = await ApiService.get('/admin/services')
+    const response = await ApiService.get('/admin/documents')
     if (response) {
       documents.value = response.data.map((item) => ({
         ...item,
-        Title: JSON.parse(item.Title),
+        title: JSON.parse(item.title),
         description : JSON.parse(item.description )
       }))
     }
@@ -38,7 +38,7 @@ const toggleLanguage = (lang) => {
 }
 const form = ref({
   id: null,
-  Title: { en: '', ti: '', am: '' },
+  title: { en: '', ti: '', am: '' },
   description : { en: '', ti: '', am: '' },
   document: ''
 })
@@ -56,7 +56,7 @@ let edit = ref(false)
 const editDocument = (document) => {
   form.value = {
     id: document.id,
-    Title: { ...document.Title },
+    title: { ...document.title },
     description : { ...document.description  },
     document: document.document
   }
@@ -65,15 +65,16 @@ const editDocument = (document) => {
 }
 
 const saveDocument = async () => {
+  console.log(form.value)
   const formData = new FormData()
-  formData.append('Title', JSON.stringify(form.value.Title))
-  formData.append('description ', JSON.stringify(form.value.description ))
+  formData.append('title', JSON.stringify(form.value.title))
+  formData.append('description', JSON.stringify(form.value.description ))
   if (form.value.document) {
     formData.append('document', form.value.document)
   }
   try {
     if (edit.value) {
-      const response = await ApiService.patch('/admin/services/' + form.value.id, formData)
+      const response = await ApiService.patch('/admin/documents/' + form.value.id, formData)
       if (response.success) {
         successMessage.value = response.message
         fetchDocuments()
@@ -117,7 +118,7 @@ const closeModal = () => {
   showAddModal.value = false
   form.value = {
     id: null,
-    Title: { en: '', ti: '', am: '' },
+    title: { en: '', ti: '', am: '' },
     description : { en: '', ti: '', am: '' },
     document: ''
   }
@@ -144,25 +145,17 @@ onMounted(() => {
       Add Document
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
       <div
         v-for="(document, i) in documents"
         :key="i"
         class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
       >
-        <img
-          v-if="document.document"
-          :src="BASE_AVATAR + document.document"
-          alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
-        />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">
-          {{ document.Title[currentLanguage] }}
-        </p>
-        <h1 class="text-2xl font-bold">{{ document.Title[currentLanguage] }}</h1>
+      <h1 class="text-2xl font-bold">{{ document.title[currentLanguage] }}</h1>
         <p class="line-clamp-5">
           {{ document.description [currentLanguage] }}
         </p>
+      <a  :href="BASE_UPLOAD + document.document">{{ document.document }}</a>
         <div class="flex gap-2 justify-end">
           <button @click="editDocument(document)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
@@ -224,17 +217,17 @@ onMounted(() => {
             <form @submit.prevent="saveDocument" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
-                  v-model="form.Title[currentLanguage]"
+                  v-model="form.title[currentLanguage]"
                   type="text"
                   required
                   inputClass="p-2 border border-gray-300 rounded"
-                  :placeholder="$t('Document Title')"
+                  :placeholder="$t('Document title')"
                 ></BaseInput>
 
                 <BaseTextarea
                   v-model="form.description [currentLanguage]"
                   inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Document Description"
+                  placeholder="Document description"
                 ></BaseTextarea>
               </div>
               <div class="flex justify-end gap-2 flex-col">
