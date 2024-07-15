@@ -1,5 +1,27 @@
 {
   "nodes": [
-  
+    {
+      "id": "10f03123-de58-4948-89b5-782fe46911b3",
+      "name": "fjjjk",
+      "department": "jkjk",
+      "image": "image/tek.jpg",
+      "children": []
+    },
+    {
+      "id": "8d2d9a38-6a34-4771-94a6-ee493c617dbc",
+      "parentId": "10f03123-de58-4948-89b5-782fe46911b3",
+      "name": "sdnmbdnb",
+      "department": "nmmn",
+      "image": "image/tek.jpg",
+      "children": []
+    },
+    {
+      "id": "8d8b692e-d736-4d6e-9a19-f59518242991",
+      "parentId": "8d2d9a38-6a34-4771-94a6-ee493c617dbc",
+      "name": "m,,mm",
+      "department": ",m,m,m",
+      "image": null,
+      "children": []
+    }
   ]
 }

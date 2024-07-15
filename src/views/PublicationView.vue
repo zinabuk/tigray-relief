@@ -144,8 +144,8 @@ onMounted(() => {
           }}</router-link>
         </div>
 
-        <div class="w-full flex justify-between bg-white ">
-          <ul class="flex space-x-4  justify-center items-center">
+        <div class="w-full flex justify-between bg-white p-4">
+          <ul class="flex space-x-4 p-4 justify-center items-center">
             <li>
               <button
                 class="bg-[#53900F] rounded text-white px-2 py-1"
@@ -158,20 +158,19 @@ onMounted(() => {
         </div>
 
       <div
-        class="fixed items-center justify-center rounded-lg inset-0 z-50 bg-[#53900F]/40 flex flex-col gap-4 overflow-auto modal"
+        class="fixed items-center justify-center inset-0 z-50 bg-[#53900F]/40 flex flex-col gap-4 overflow-auto modal"
         v-if="isApply"
       >
-        <div class="bg-white flex flex-col md:px-12 md:py-2 gap-2 overflow-auto">
+        <div class="bg-white flex flex-col md:p-12 gap-2 overflow-auto">
           <div class="flex justify-between">
-            <h1 class="text-center font-semibold text-2xl">Application Page</h1>
+            <h1 class="text-center font-semibold">Application Page</h1>
           <button
-            class="text-gray-900 self-end bg-gray-300  rounded-full border border-black px-2"
+            class="text-gray-900 self-end bg-white border border-black px-2"
             @click="isApply = !isApply"
           >
             Cancel
           </button>
           </div>
-          <hr/>
           <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
           <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
             <div class="flex gap-6">

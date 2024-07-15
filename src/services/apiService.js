@@ -50,7 +50,12 @@ class ApiService {
     })
     return response.data
   }
-
+  async applyTender(endpoint, data) {
+    const response = await api.post(endpoint, data, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+    return response.data
+  }
   setHeader(token) {
     if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`

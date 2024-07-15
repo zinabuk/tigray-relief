@@ -14,8 +14,7 @@ const tableHeaders = [
   { label: 'Name', field: 'fullName' },
   { label: 'Email', field: 'email' },
   { label: 'Phone Number', field: 'phoneNumber' },
-  { label: 'Application Letter', field: 'applicationLetter' },
-  { label: 'Cv', field: 'cv' }
+  { label: 'Resume', field: 'resume' }
 ]
 
 const actions = [

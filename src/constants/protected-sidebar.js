@@ -11,20 +11,21 @@ const SIDEBARITEMS = {
     { label: 'Blogs', name: 'admin-blogs', icon: 'newspaper' },
 
     { label: 'Partners', name: 'partner', icon: 'handshake' },
-    
-    { label: 'Tenders', name: 'admin-tenders', icon: 'comment-dots' },
-
+    { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
+    { label: 'Messages', name: 'messages', icon: 'comment-dots' },
     { label: 'Donations', name: 'donations', icon: 'quote-left' },
     { label: 'Vacancy', name: 'admin-jobs', icon: 'quote-left' },
-    //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
-    { label: 'volunteers', name: 'admin-volunteers', icon: 'comment-dots' },
+    { label: 'Volunteers', name: 'admin-volunteers', icon: 'quote-left' },
 
-    { label: 'Messages', name: 'messages', icon: 'comment-dots' },
-    { label: 'Gallery', name: 'admin-gallery', icon: 'comment-dots' },
+    { label: 'Gallery', name: 'admin-gallery', icon: 'quote-left' },
     { label: 'Users', name: 'users', icon: 'user' },
-    { label: 'FAQs', name: 'admin-faqs', icon: 'comment-dots' },
-    { label: 'beneficiary', name: 'admin-beneficiary', icon: 'comment-dots' },
-    { label: 'policy', name: 'admin-policy', icon: 'comment-dots' },
+    { label: 'FAQs', name: 'admin-faqs', icon: 'quote-left' },
+    { label: 'Beneficiary', name: 'admin-beneficiary', icon: 'quote-left' },
+    { label: 'Policy', name: 'admin-policy', icon: 'quote-left' },
+    
+    { label: 'Documents', name: 'admin-documents', icon: 'quote-left' },
+    { label: 'Publications', name: 'admin-publications', icon: 'quote-left' },
+    { label: 'Strategies', name: 'admin-strategy', icon: 'quote-left' },
 
   ],
     // ],
@@ -37,9 +38,9 @@ const SIDEBARITEMS = {
       { label: 'Donations', name: 'donations', icon: 'quote-left' },
       //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
       { label: 'Blogs', name: 'admin-blogs', icon: 'newspaper' },
-      { label: 'Messages', name: 'messages', icon: 'comment-dots' },
-      { label: 'Tenders', name: 'admin-tenders', icon: 'comment-dots' },
-      { label: 'Gallery', name: 'admin-gallery', icon: 'comment-dots' },
+      { label: 'Messages', name: 'messages', icon: 'quote-left' },
+      { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
+      { label: 'Gallery', name: 'admin-gallery', icon: 'quote-left' },
      
      
   

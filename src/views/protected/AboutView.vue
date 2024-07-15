@@ -172,15 +172,15 @@ onMounted(() => {
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
 
-        <h1 class="text-2xl font-bold">{{ service.establishment[currentLanguage] }}</h1>
+        <h1 class="text-xl ">{{ service.establishment[currentLanguage] }}</h1>
         <p class="line-clamp-5">
           {{ service.mission[currentLanguage] }}
         </p>
-        <p class="text-xl font-bold">{{ service.vision[currentLanguage] }}</p>
+        <p class="text-xl ">{{ service.vision[currentLanguage] }}</p>
         <p class="line-clamp-5">
           {{ service.coreValues[currentLanguage] }}
         </p>
-        <p class="text-xl font-bold">{{ service.expertise[currentLanguage] }}</p>
+        <p class="text-xl ">{{ service.expertise[currentLanguage] }}</p>
         <div class="flex gap-2 justify-end">
           <button @click="editService(service)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>

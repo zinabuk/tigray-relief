@@ -14,38 +14,37 @@ const tableHeaders = [
   { label: 'Name', field: 'fullName' },
   { label: 'Email', field: 'email' },
   { label: 'Phone Number', field: 'phoneNumber' },
-  { label: 'Document', field: 'applicationLetter' },
-  { label: 'License', field: 'cv' }
+  { label: 'Document', field: 'document' },
 ]
 
 const actions = [
   
   {
     label: 'delete',
-    action: deleteJob,
+    action: deleteTender,
     icon: 'trash',
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   }
 ]
 const searchApplicants = ref('')
-const jobs = ref([])
-const getJob = async () => {
+const tenders = ref([])
+const getTender = async () => {
   
   try {
-    const response = await ApiService.get('users/all-applicants/'+route.params.id)
-    jobs.value = response.data
+    const response = await ApiService.get('users/all-tender-applicants/'+route.params.id)
+    tenders.value = response.data
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      router.push({ name: '404resource', params: { resource: 'Job' } })
+      router.push({ name: '404resource', params: { resource: 'Tender' } })
     } else {
       router.push({ name: 'NetworkError' })
     }
   }
 }
 
-const filteredJobs = computed(() => {
+const filteredTenders = computed(() => {
   if (searchApplicants.value) {
-    return jobs.value.filter((msg) => {
+    return tenders.value.filter((msg) => {
       return Object.values(msg).some((value) => {
         if (value !== null && value !== undefined) {
           return value.toString().toLowerCase().includes(searchApplicants.value.toLowerCase())
@@ -54,35 +53,35 @@ const filteredJobs = computed(() => {
       })
     })
   } else {
-    return jobs.value
+    return tenders.value
   }
 })
 
-async function deleteJob  (applicant) {
+async function deleteTender  (applicant) {
   try {
     const sure = window.confirm('Are you sure?')
     if (sure) {
       const response = await ApiService.delete(applicant.id)
       if (response.success) {
         alert('Applicant deleted successfully')
-        getJob()  // Refresh the list of applicants after deletion
+        getTender()  // Refresh the list of applicants after deletion
       }
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      router.push({ name: '404resource', params: { resource: 'Job' } })
+      router.push({ name: '404resource', params: { resource: 'Tender' } })
     } else {
       router.push({ name: 'NetworkError' })
     }
   }
 }
-onMounted(getJob)
+onMounted(getTender)
 </script>
 
 <template>
  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
     <div class="flex justify-between w-full">
-      <h2 class="text-xl font-bold">Job Applicants</h2>
+      <h2 class="text-xl font-bold">Tender Applicants</h2>
       <div class="self-end">
         <base-input
           inputClass="border outline-none border-[#288fb2]"
@@ -95,15 +94,10 @@ onMounted(getJob)
     </div>
     
      <div class="w-full">
-      <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions" createExport=true exportTitle="vacancies" >
-       <template #applicationLetter="{ item }" >
-          <a  class="hover:text-primary action-cell" :href="BASE_UPLOAD + `${item.applicationLetter}`" target="_blank" title="download letter">
-             {{ item.applicationLetter }}
-          </a>
-      </template>
-      <template #cv="{ item }" >
-         <a class="hover:text-primary action-cell" :href="BASE_UPLOAD + `${item.cv}`" target="_blank" title="download cv">
-            {{ item.cv }}
+      <DataTable :tableHeaders="tableHeaders" :tableValues="tenders" :actions="actions" createExport=true exportTitle="vacancies" >
+       <template #document ="{ item }" >
+          <a  class="hover:text-primary action-cell" :href="BASE_UPLOAD + `${item.document }`" target="_blank" title="download letter">
+             {{ item.document  }}
           </a>
       </template>
       </DataTable>
@@ -122,13 +116,13 @@ onMounted(getJob)
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(applicant, i) in filteredJobs" :key="i">
+          <tr v-for="(applicant, i) in filteredTenders" :key="i">
             <td class="py-2 px-4 border-b border-gray-200">{{ applicant.fullName }}</td>
             <td class="py-2 px-4 border-b border-gray-200">{{ applicant.email }}</td>
             <td class="py-2 px-4 border-b border-gray-200">{{ applicant.phoneNumber }}</td>
             <td class="py-2 px-4 border-b border-gray-200">
-              <a :href="BASE_UPLOAD + `${applicant.applicationLetter}`" target="_blank" title="download letter">
-                {{ applicant.applicationLetter }}
+              <a :href="BASE_UPLOAD + `${applicant.document }`" target="_blank" title="download letter">
+                {{ applicant.document  }}
               </a>
             </td>
             <td class="py-2 px-4 border-b border-gray-200">
@@ -137,7 +131,7 @@ onMounted(getJob)
               </a>
             </td>
             <td class="py-2 px-4 border-b border-gray-200">
-              <button @click="deleteJob(applicant.id)">
+              <button @click="deleteTender(applicant.id)">
                 <font-awesome-icon icon="trash" class="text-red-700"></font-awesome-icon>
               </button>
             </td>

@@ -131,9 +131,62 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('blogs') }]"
           >
-            {{ $t('News and Media') }}</router-link
+            {{ $t('News') }}</router-link
           >
         </li>
+
+        <!-- resources -->
+        <li class="relative group">
+          <router-link
+            :to="{ name: 'documents' }"
+            class="relative parent-item h-full w-full"
+            :class="[{ 'text-[#53900F]': isActive('documents') }]"
+          >
+            {{ $t('Resources') }}</router-link
+          >
+          <div
+            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
+            data-aos="fade-left"
+          >
+            <router-link
+              :to="{ name: 'documents' }"
+              :class="[{ 'text-[#53900F]': isActive('documents') }]"
+            >
+              <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+
+            <router-link
+              :to="{ name: 'publications' }"
+              :class="[{ 'text-[#53900F]': isActive('publications') }]"
+            >
+              <span class="hover:text-[#53900F]"> {{ $t('Publications') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
+
+            <router-link
+              :to="{ name: 'strategy' }"
+              :class="[{ 'text-[#53900F]': isActive('Strategy') }]"
+              class="hover:text-[#288FB2]z"
+            >
+              <span class="hover:text-[#53900F]">
+                {{ $t('Strategy') }}
+              </span>
+            </router-link>
+
+            <router-link
+            :to="{ name: 'gallery' }"
+            class="relative parent-item"
+            :class="[{ 'text-[#53900F]': isActive('gallery') }]"
+          >
+            <span class="hover:text-[#53900F]">
+              {{ $t('Gallery') }}
+            </span>
+          </router-link>
+          </div>
+        </li>
+        
+
         <li class="relative group">
           <router-link
             :to="{ name: 'tenders' }"
@@ -195,19 +248,6 @@
           >
             {{ $t('Contact Us') }}</router-link
           >
-        </li>
-        <li>
-          <router-link
-            :to="{ name: 'gallery' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('gallery') }]"
-          >
-            <!-- @click="scrollToSection(el.id)" -->
-            <span class="hover:text-[#53900F]">
-              {{ $t('Gallery') }}
-            </span>
-            <!-- <hr class="text-[#001F3F]" /> -->
-          </router-link>
         </li>
         <li>
           <router-link

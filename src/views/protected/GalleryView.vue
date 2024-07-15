@@ -67,7 +67,7 @@ const saveEditedGallery = async () => {
     formData.append('gallery', editImage.value)
   }
   try {
-    const response = await ApiService.put(`/admin/gallery/${editingGalleryId.value}`, formData)
+    const response = await ApiService.patch(`/admin/gallery/${editingGalleryId.value}`, formData)
     if (response.success) {
       alert('Updated')
       fetchGalleries()

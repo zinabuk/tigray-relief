@@ -132,6 +132,34 @@ const PROTECTED_ROUTES = [
           role: ['admin', 'staff']
         }
       },
+      //resources 
+      {
+        path: 'documents',
+        component: () => import('@/views/protected/DocumentsView.vue'),
+        name: 'admin-documents',
+        meta: {
+          requiresAuth: true,
+          role: ['admin', 'staff']
+        }
+      },
+      {
+        path: 'publications',
+        component: () => import('@/views/protected/PublicationView.vue'),
+        name: 'admin-publications',
+        meta: {
+          requiresAuth: true,
+          role: ['admin', 'staff']
+        }
+      },
+      {
+        path: 'strategies',
+        component: () => import('@/views/protected/StrategyView.vue'),
+        name: 'admin-strategy',
+        meta: {
+          requiresAuth: true,
+          role: ['admin', 'staff']
+        }
+      }, 
       {
         path: 'policy',
         component: () => import('@/views/protected/PolicyView.vue'),

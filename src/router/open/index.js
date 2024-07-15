@@ -85,10 +85,36 @@ const OPEN_ROUTES = [
           requiresAuth: false
         }
       },
+      // resources 
+      {
+        path: 'documents',
+        name: 'documents',
+        component: () => import('@/views/DocumentsView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: 'publications',
+        name: 'publications',
+        component: () => import('@/views/PublicationView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
       {
         path: 'our-governance',
         name: 'governance',
         component: () => import('@/views/OurGovernance.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+
+      {
+        path: 'strategy',
+        name: 'strategy',
+        component: () => import('@/views/StrategyView.vue'),
         meta: {
           requiresAuth: false
         }
