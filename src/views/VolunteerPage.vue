@@ -55,7 +55,7 @@ let showModal = ref(false)
 
     <!-- donation form -->
 
-    <section class="w-full px-[6%] py-12 bg-gray-50">
+    <section class="w-full px-[2%] py-12 bg-gray-50">
       <div class="shadow bg-white rounded-lg p-6">
         <!-- <div>
           <h4 class="text-lg font-bold mb-2">

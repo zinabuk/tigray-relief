@@ -82,7 +82,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-full overflow-hidden">
+  <section class="w-full">
     <div class="w-full relative">
       <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
@@ -101,7 +101,7 @@ onMounted(() => {
     </div>
   </section>
   <section
-    class="w-full py-12 px-[6%] grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden"
+    class="w-full py-12 px-[2%] grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden"
     id="establishment"
   >
     <div class="flex flex-col shadow-xl p-4" v-for="(aboutus, i) in about" :key="i">
@@ -124,7 +124,7 @@ onMounted(() => {
     />
   </section>
 
-  <section class="flex flex-col px-[6%] gap-4 py-12 bg-green-900/10 items-center">
+  <section class="flex flex-col px-[2%] gap-4 py-12 bg-green-900/10 items-center overflow-hidden">
     <div class="w-full mx-auto">
       <h1 class="text-center text-4xl font-semibold lowercase">
         CAUSES AND POSITIVE CHANGE ALL OVER THE REGION
@@ -185,7 +185,7 @@ onMounted(() => {
   </section>
 
   <!-- timeline -->
-  <div class="relative w-full flex flex-col px-[6%] gap-4 py-12 bg-green-900/10">
+  <div class="relative w-full flex flex-col px-[2%] gap-4 py-12 bg-green-900/10">
     <div class="grid grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
       <div
         class="flex gap-4 bg-white shadow-2xl p-4"
@@ -214,7 +214,7 @@ onMounted(() => {
     </div>
   </div>
   <!-- Our teams section -->
-  <section class="flex flex-col px-[1%] md:px-[6%] gap-4 py-6 md:py-12 bg-white">
+  <section class="flex flex-col px-[1%] md:px-[2%] gap-4 py-6 md:py-12 bg-white">
     <h1 class="text-4xl font-bold text-center">Our Team</h1>
     <div class="flex flex-wrap gap-4 py-8 justify-center items-center">
       <div

@@ -41,7 +41,7 @@ onMounted(fetchServices)
 </script>
 
 <template>
-  <section class="w-full px-12 bg-[#53900F] font-bodld text-white py-12 text-[12px]">
+  <section class="w-full px-[2%] bg-[#53900F] font-bodld text-white py-12 text-[12px]">
     <div class="w-full grid grid-cols-1 md:grid-cols-4 py-8 gap-4">
       <!-- <div>
         <img
@@ -137,7 +137,7 @@ onMounted(fetchServices)
     </div>
   </section>
   <!-- bg-[#53900F]/10  -->
-  <div class="w-full bg-[#53900F]/10 text-BLACK flex justify-between px-12 ">
+  <div class="w-full bg-[#53900F]/10 text-BLACK flex justify-between px-[2%] ">
     <p class="text-center p-2">© 2024 REST. All rights reserved.</p>
     <div class="flex gap-2 items-center justify-center">
       <h1>Powered by</h1>

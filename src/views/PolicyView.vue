@@ -55,7 +55,7 @@ onMounted(() => {
     </div>
   </section>
   <!-- Services -->
-  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
     <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
     <div class="w-full flex flex-col gap- bg-white">
       <div

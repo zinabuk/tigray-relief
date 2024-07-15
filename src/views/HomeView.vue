@@ -157,7 +157,7 @@ onMounted(() => {
   </main>
 
   <!-- Services -->
-  <section class="w-full bg-green-900/10 px-[6%] flex flex-col gap-4 py-12">
+  <section class="w-full bg-green-900/10 px-[2%] flex flex-col gap-4 py-12">
     <h1 class="text-center text-4xl font-semibold">{{ $t('Services') }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
@@ -191,7 +191,7 @@ onMounted(() => {
   </section>
 
   <!-- history -->
-  <section class="w-full px-[6%] relative grid grid-cols-1 gap-4 py-12">
+  <section class="w-full px-[2%] relative grid grid-cols-1 gap-4 py-12">
     <div class="flex flex-col gap-2 py-8 top-0 z-30">
       <h1 class="text-4xl font-semibold text-center">{{ $t('Our Impact') }}</h1>
       <!-- <p>
@@ -223,7 +223,7 @@ onMounted(() => {
   </section>
 
   <!-- Donation section -->
-  <section class="w-full px-[6%] py-12 bg-green-900/10 overflow-hidden">
+  <section class="w-full px-[2%] py-12 bg-green-900/10 overflow-hidden">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-right">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
@@ -286,7 +286,7 @@ onMounted(() => {
   </section> -->
 
   <!-- Start of news section -->
-  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5">
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5">
     <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1>
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
@@ -294,7 +294,7 @@ onMounted(() => {
         :key="i"
         class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-2 shadow"
       >
-        <div>
+        <div class="overflow-hidden">
           <img
             :src="BASE_AVATAR + event.eventImage"
             alt=""
@@ -321,7 +321,7 @@ onMounted(() => {
   </section>
 
   <!-- partners -->
-  <section class="w-full px-[6%] py-12 flex flex-col items-center gap-4">
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
     <h1 class="text-3xl font-bold">Our Partners</h1>
     <swiper
       :slides-per-view="1"

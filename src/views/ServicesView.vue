@@ -51,7 +51,7 @@ onMounted(() => {
     </div>
   </section>
   <!-- Services -->
-  <section class="w-full bg-green-900/10 px-[6%] py-12">
+  <section class="w-full bg-green-900/10 px-[2%] py-12">
     <!-- <h1 class="text-center text-3xl">Services we provide</h1> -->
     <div class="grid grid-cols-1 w-full zmd:grid-cols-3 gap-4 place-content-center">
       <div

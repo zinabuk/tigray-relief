@@ -66,7 +66,7 @@ const submitContact = async () => {
     <!-- map -->
 
     <div
-      class="px-24 grid grid-cols-1 md:grid-cols-3 gap-4 itemss-center justify-center py-12 bg-[#53900F]/10 overflow-hidden"
+      class="px-[2%] grid grid-cols-1 md:grid-cols-3 gap-4 itemss-center justify-center py-12 bg-[#53900F]/10 overflow-hidden"
     >
       <div
         class="bg-white flex flex-col shadow-2xl items-center py-6 gap-4 group transition-allz duration-700z hover:-translate-y-2"
@@ -111,7 +111,7 @@ const submitContact = async () => {
       </div>
     </div>
 
-    <section class="w-full flex flex-col justify-center items-center py-12 px-[6%]" id="contact-us">
+    <section class="w-full flex flex-col justify-center items-center py-12 px-[2%]" id="contact-us">
       <div class="flex flex-col justify-center items-center gap-4">
         <h1 class="text-2xl font-semibold">Get In Touch With Us</h1>
       </div>
