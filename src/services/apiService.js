@@ -7,6 +7,7 @@ class ApiService {
     this.setHeader(localStorage.getItem('access_token'))
   }
   async get(endpoint) {
+    // alert(endpoint)
     const response = await api.get(endpoint)
     return response.data
   }

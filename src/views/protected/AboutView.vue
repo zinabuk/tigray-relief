@@ -22,7 +22,7 @@ const fetchServices = async () => {
         mission: JSON.parse(item.mission),
         vision: JSON.parse(item.vision),
         coreValues: JSON.parse(item.coreValues),
-        expertise:JSON.parse(item.expertise),
+        expertise: JSON.parse(item.expertise)
       }))
     }
   } catch (error) {
@@ -45,7 +45,7 @@ const form = ref({
   vision: { en: '', ti: '', am: '' },
   coreValues: { en: '', ti: '', am: '' },
   expertise: { en: '', ti: '', am: '' },
-  images: null,
+  images: null
 })
 
 let logo = ref('')
@@ -73,7 +73,6 @@ const editService = (aboutus) => {
 }
 
 const saveService = async () => {
-  console.log(form.value.establishment)
   const formData = new FormData()
   formData.append('establishment', JSON.stringify(form.value.establishment))
   formData.append('mission', JSON.stringify(form.value.mission))
@@ -110,31 +109,31 @@ const saveService = async () => {
 }
 
 const deleteService = async (id) => {
-   const sure = window.confirm('Are you sure to delete this team?')
+  const sure = window.confirm('Are you sure to delete this team?')
   if (sure) {
-  try {
-    const response = await ApiService.delete('/users/aboutus/' + id)
+    try {
+      const response = await ApiService.delete('/users/aboutus/' + id)
 
-    if (response.success) {
-      fetchServices()
-    } else {
+      if (response.success) {
+        fetchServices()
+      } else {
+        errorMessage.value = 'Failed to save Partner'
+      }
+    } catch (error) {
       errorMessage.value = 'Failed to save Partner'
     }
-  } catch (error) {
-    errorMessage.value = 'Failed to save Partner'
   }
-}
 }
 
 const closeModal = () => {
   showAddModal.value = false
   form.value = {
-  establishment: { en: '', ti: '', am: '' },
-  mission: { en: '', ti: '', am: '' },
-  vision: { en: '', ti: '', am: '' },
-  coreValues: { en: '', ti: '', am: '' },
-  expertise: { en: '', ti: '', am: '' },
-  images: null,
+    establishment: { en: '', ti: '', am: '' },
+    mission: { en: '', ti: '', am: '' },
+    vision: { en: '', ti: '', am: '' },
+    coreValues: { en: '', ti: '', am: '' },
+    expertise: { en: '', ti: '', am: '' },
+    images: null
   }
   edit.value = false
   logo.value = ''
@@ -156,7 +155,7 @@ onMounted(() => {
         icon="add"
         class="bg-white text-[#539000] p-2 rounded-full"
       ></font-awesome-icon>
-      Add aboutUs
+      Add
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
@@ -172,15 +171,15 @@ onMounted(() => {
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
 
-        <h1 class="text-xl ">{{ service.establishment[currentLanguage] }}</h1>
+        <!-- <h1 class="text-xl ">{{ service.establishment[currentLanguage] }}</h1> -->
         <p class="line-clamp-5">
           {{ service.mission[currentLanguage] }}
         </p>
-        <p class="text-xl ">{{ service.vision[currentLanguage] }}</p>
+        <p class="text-xl">{{ service.vision[currentLanguage] }}</p>
         <p class="line-clamp-5">
           {{ service.coreValues[currentLanguage] }}
         </p>
-        <p class="text-xl ">{{ service.expertise[currentLanguage] }}</p>
+        <p class="text-xl">{{ service.expertise[currentLanguage] }}</p>
         <div class="flex gap-2 justify-end">
           <button @click="editService(service)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
@@ -219,15 +218,15 @@ onMounted(() => {
                 English
               </button>
               <button
-              @click="toggleLanguage('ti')"
-              :class="{
-                'border-2 border-b-[#53900F]': currentLanguage === 'ti',
-                'bg-gray-200': currentLanguage !== 'ti'
-              }"
-              class="px-4 py-1"
-            >
-              ትግርኛ
-            </button>
+                @click="toggleLanguage('ti')"
+                :class="{
+                  'border-2 border-b-[#53900F]': currentLanguage === 'ti',
+                  'bg-gray-200': currentLanguage !== 'ti'
+                }"
+                class="px-4 py-1"
+              >
+                ትግርኛ
+              </button>
               <button
                 @click="toggleLanguage('am')"
                 :class="{
@@ -239,7 +238,7 @@ onMounted(() => {
                 አማርኛ
               </button>
             </div>
-            <form @submit.prevent="saveService" class="flex flex-col gap-4 overflow-auto" >
+            <form @submit.prevent="saveService" class="flex flex-col gap-4 overflow-auto">
               <div class="flex flex-col gap-2">
                 <BaseInput
                   v-model="form.establishment[currentLanguage]"
@@ -276,11 +275,10 @@ onMounted(() => {
                 <BaseFileInput
                   @image-update="handleFileChange($event)"
                   label="Add Picture"
-  
-                    type="file"
-                    inputClass="p-2 border border-gray-300 rounded"
-                    placeholder="Image"
-                    accept="image/*"
+                  type="file"
+                  inputClass="p-2 border border-gray-300 rounded"
+                  placeholder="Image"
+                  accept="image/*"
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">

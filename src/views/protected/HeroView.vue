@@ -1,6 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+const { minimize } = storeToRefs(useAuthStore())
+
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
@@ -143,7 +147,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-whitez">
+  <section
+    :class="[
+      !minimize ? 'w-[82%]' : 'w-[98%]',
+      'px-[6%] py-12 flex flex-col items-center gap-4 bg-whitez'
+    ]"
+  >
     <div class="flex justify-between w-full">
       <h2 class="text-xl font-bold">Brands</h2>
       <BaseButton @click="showModal = true" class="">
@@ -190,7 +199,7 @@ onMounted(() => {
         <div class="text-center">
           <div class="flex justify-between">
             <h3 class="text-lg font-medium text-gray-900">Add Brand</h3>
-            <BaseButton @click="closeModal" type="button" class="p-1 text-white bg-gray-500 roumded "
+            <BaseButton @click="closeModal" type="button" class="p-1 text-white bg-gray-500 roumded"
               >Cancel</BaseButton
             >
           </div>
@@ -246,7 +255,7 @@ onMounted(() => {
 
                 <div class="w-full px-2">
                   <BaseFileInput
-                  label="add Picture"
+                    label="add Picture"
                     @change="captureImage"
                     type="file"
                     inputClass="p-2 border border-gray-300 rounded"

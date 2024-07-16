@@ -27,7 +27,7 @@ async function getService() {
       service.value = response.data
       service.value.serviceTitle = JSON.parse(service.value.serviceTitle)
       service.value.serviceDescription = JSON.parse(service.value.serviceDescription)
-      console.log(service.value);
+      console.log(service.value)
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -39,30 +39,30 @@ async function getService() {
 }
 
 const services = ref([])
-async function getServices() {
-  try {
-    const response = await ApiService.get('/admin/services')
-    if (response.success) {
-      services.value = response.data.map((item) => ({
-        ...item,
-        serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription)
-      }))
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404 && error.response.data) {
-      return
-    } else {
-      setTimeout(() => {}, 5000)
-    }
-  }
-}
+// async function getServices() {
+//   try {
+//     const response = await ApiService.get('/admin/services')
+//     if (response.success) {
+//       services.value = response.data.map((item) => ({
+//         ...item,
+//         serviceTitle: JSON.parse(item.serviceTitle),
+//         serviceDescription: JSON.parse(item.serviceDescription)
+//       }))
+//     }
+//   } catch (error) {
+//     if (error.response && error.response.status === 404 && error.response.data) {
+//       return
+//     } else {
+//       setTimeout(() => {}, 5000)
+//     }
+//   }
+// }
 watchEffect(() => {
   if (route.params.title) {
     getService()
   }
 })
-onMounted(getServices)
+onMounted(getService)
 </script>
 <template>
   <section class="w-full">
@@ -88,7 +88,7 @@ onMounted(getServices)
           <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
 
           <router-link to="/services" class="text-[#539000] px-4 py-2">{{
-            service.serviceTitle
+            service.serviceTitle[currentLanguage]
           }}</router-link>
         </div>
       </div>
@@ -109,13 +109,15 @@ onMounted(getServices)
 
         <div class="flex flex-col gap-2 py-6 bg-white translation-all duration-1000 px-4 relative">
           <div class="flex flex-col gap-4 py-2">
-            <p class="text-gray-700"><span> </span> {{ service.serviceDescription }}</p>
+            <p class="text-gray-700">
+              <span> </span> {{ service.serviceDescription[currentLanguage] }}
+            </p>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <div class="w-full px-[2%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <!-- <div class="w-full px-[2%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
     <div v-for="(service, i) in services" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <img
@@ -127,18 +129,18 @@ onMounted(getServices)
       <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
         <h6 class="text-gray-500"></h6>
         <h3 class="text-lg font-bold">
-          {{ service.serviceTitle }}
+          {{ service.serviceTitle[currentLanguage] }}
         </h3>
-        <p class="line-clamp-4">{{ service.serviceDescription }}</p>
+        <p class="line-clamp-4">{{ service.serviceDescription[currentLanguage] }}</p>
         <router-link
           :to="{
             name: 'service-detail',
-            params: { title: slugify(service.serviceTitle) }
+            params: { title: slugify(service.serviceTitle[currentLanguage]) }
           }"
           class="text-green-600 font-bold"
           >{{ $t('Read More') }}</router-link
         >
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
