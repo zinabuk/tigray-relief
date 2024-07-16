@@ -1,4 +1,3 @@
-
 <script>
 import { ref, onMounted } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,6 +23,7 @@ export default {
     });
     const currentNode = ref(null);
     const showModal = ref(false);
+    const isEditMode = ref(false);
 
     const fetchNodes = async () => {
       try {
@@ -64,9 +64,16 @@ export default {
 
     onMounted(fetchNodes);
 
-    const openModal = (node) => {
+    const openModal = (node, isEdit = false) => {
       currentNode.value = node;
       showModal.value = true;
+      isEditMode.value = isEdit;
+      if (isEdit && node) {
+        form.value.name = node.name;
+        form.value.department = node.department;
+      } else {
+        resetForm();
+      }
     };
 
     const closeModal = () => {
@@ -121,23 +128,81 @@ export default {
       }
     };
 
+    const updateNode = async () => {
+      const formData = new FormData();
+      formData.append('name', form.value.name);
+      formData.append('department', form.value.department);
+      if (form.value.image) {
+        formData.append('image', form.value.image);
+      }
+
+      try {
+        const response = await ApiService.patch(`users/organizational-structure/${currentNode.value.id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        // Find and update the node in nodes.value
+        const updateNodeInTree = (nodeList, updatedNode) => {
+          for (let node of nodeList) {
+            if (node.id === updatedNode.id) {
+              Object.assign(node, updatedNode);
+              return;
+            }
+            if (node.children && node.children.length) {
+              updateNodeInTree(node.children, updatedNode);
+            }
+          }
+        };
+        updateNodeInTree(nodes.value, response.data);
+        closeModal();
+      } catch (error) {
+        console.error('Failed to update node:', error);
+      }
+    };
+
+    const deleteNode = async (node) => {
+      try {
+        await ApiService.delete(`users/organizational-structure/${node.id}`);
+        removeNode(nodes.value, node);
+      } catch (error) {
+        console.error('Failed to delete node:', error);
+      }
+    };
+
+    const removeNode = (nodeList, nodeToRemove) => {
+      const index = nodeList.findIndex(node => node.id === nodeToRemove.id);
+      if (index !== -1) {
+        nodeList.splice(index, 1);
+      } else {
+        nodeList.forEach(node => {
+          if (node.children) {
+            removeNode(node.children, nodeToRemove);
+          }
+        });
+      }
+    };
+
     return {
       nodes,
       form,
       currentNode,
       showModal,
+      isEditMode,
       openModal,
       closeModal,
       handleFileChange,
       addRootNode,
       addChildNode,
+      updateNode,
+      deleteNode,
     };
   },
 };
 </script>
 
 <template>
-  <div class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4">
+  <div class="px-12">
     <div class="px-12 pt-4">
       <h2 class="text-2xl text-bold text-green-900">Organizational Structure</h2>
       <br>
@@ -153,6 +218,8 @@ export default {
           :key="index"
           :node="node"
           @open-modal="openModal"
+          @edit-node="openModal"
+          @delete-node="deleteNode"
         />
       </template>
       <p v-else>No nodes added yet.</p>
@@ -161,8 +228,8 @@ export default {
     <!-- Modal -->
     <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
       <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h3 class="text-lg font-medium mb-4">{{ currentNode ? 'Add Child Node' : 'Add Root Node' }}</h3>
-        <form @submit.prevent="currentNode ? addChildNode() : addRootNode()">
+        <h3 class="text-lg font-medium mb-4">{{ currentNode ? (isEditMode ? 'Edit Node' : 'Add Child Node') : 'Add Root Node' }}</h3>
+        <form @submit.prevent="isEditMode ? updateNode() : (currentNode ? addChildNode() : addRootNode())">
           <div>
             <label for="nodeName">Name:</label>
             <BaseInput v-model="form.name" type="text" id="nodeName" required />
@@ -173,10 +240,10 @@ export default {
           </div>
           <div>
             <label for="nodeImage">Image:</label>
-            <BaseFileInput @change="handleFileChange" id="nodeImage" label="Add Picture" required  type="file" accept="application/pdf" />
+            <BaseFileInput @change="handleFileChange" id="nodeImage" label="Add Picture"  type="file" accept="images/*" :required="!isEditMode" />
           </div>
           <div class="flex justify-between mt-4">
-            <BaseButton type="submit">{{ currentNode ? 'Add Child Node' : 'Add Root Node' }}</BaseButton>
+            <BaseButton type="submit">{{ isEditMode ? 'Update Node' : (currentNode ? 'Add Child Node' : 'Add Root Node') }}</BaseButton>
             <BaseButton @click="closeModal">Cancel</BaseButton>
           </div>
         </form>
