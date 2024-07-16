@@ -16,27 +16,27 @@ defineProps({
   }
 })
 
-const route = useRoute() 
+const route = useRoute()
 const service = ref({})
 
 async function getService() {
   try {
-    alert(route.params.title)
+    // alert(route.params.title)
     const response = await ApiService.get('/admin/service/' + route.params.title)
     if (response.success) {
       service.value = response.data
       service.value.serviceTitle = JSON.parse(service.value.serviceTitle)
       service.value.serviceDescription = JSON.parse(service.value.serviceDescription)
+      console.log(service.value);
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      return
+      alert(error)
     } else {
-      setTimeout(() => { 
-      }, 5000)
+      setTimeout(() => {}, 5000)
     }
   }
-} 
+}
 
 const services = ref([])
 async function getServices() {
@@ -53,8 +53,7 @@ async function getServices() {
     if (error.response && error.response.status === 404 && error.response.data) {
       return
     } else {
-      setTimeout(() => { 
-      }, 5000)
+      setTimeout(() => {}, 5000)
     }
   }
 }
@@ -63,7 +62,7 @@ watchEffect(() => {
     getService()
   }
 })
-onMounted(getServices())
+onMounted(getServices)
 </script>
 <template>
   <section class="w-full">
@@ -89,7 +88,7 @@ onMounted(getServices())
           <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
 
           <router-link to="/services" class="text-[#539000] px-4 py-2">{{
-            service.serviceTitle[currentLanguage]
+            service.serviceTitle
           }}</router-link>
         </div>
       </div>
@@ -110,9 +109,7 @@ onMounted(getServices())
 
         <div class="flex flex-col gap-2 py-6 bg-white translation-all duration-1000 px-4 relative">
           <div class="flex flex-col gap-4 py-2">
-            <p class="text-gray-700">
-              <span> </span> {{ service.serviceDescription[currentLanguage] }}
-            </p>
+            <p class="text-gray-700"><span> </span> {{ service.serviceDescription }}</p>
           </div>
         </div>
       </div>
@@ -130,13 +127,13 @@ onMounted(getServices())
       <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
         <h6 class="text-gray-500"></h6>
         <h3 class="text-lg font-bold">
-          {{ service.serviceTitle[currentLanguage] }}
+          {{ service.serviceTitle }}
         </h3>
-        <p class="line-clamp-4">{{ service.serviceDescription[currentLanguage] }}</p>
+        <p class="line-clamp-4">{{ service.serviceDescription }}</p>
         <router-link
           :to="{
             name: 'service-detail',
-            params: { title: slugify(service.serviceTitle[currentLanguage]) }
+            params: { title: slugify(service.serviceTitle) }
           }"
           class="text-green-600 font-bold"
           >{{ $t('Read More') }}</router-link

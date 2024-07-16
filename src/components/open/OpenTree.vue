@@ -17,7 +17,8 @@ export default {
     return {
       root: null,
       treeLayout: null,
-      i: 0
+      i: 0,
+      
     }
   },
   mounted() {
@@ -98,8 +99,8 @@ export default {
 
       nodeUpdate
         .select('rect')
-        .attr('width', 100)
-        .attr('height', 30)
+        .attr('width', 200)
+        .attr('height', 50)
         .attr('x', -50)
         .attr('y', -15)
         .attr('fill', '#fff')

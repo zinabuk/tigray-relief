@@ -85,7 +85,7 @@ onMounted(() => {
             'flex flex-col gap-4 p-8 shadow-xl'
           ]"
         >
-          <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
+          <h1 class="text-2xl font-bold"> {{ service.serviceTitle[currentLanguage] }}</h1>
           <div class="relative">
             <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-[#53900F]"></span>
             <hr class="h-[2px] absolute inset-0 bg-gray-200" />

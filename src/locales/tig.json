@@ -151,8 +151,8 @@
   "Your generous donations are critical to supporting our programs and services for the community. There are several convenient ways you can contribute:": "እቲ ብልግሲ እትገብርዎ ወፈያታት ነቲ ንማሕበረሰብ እንህበና መደባትን ኣገልግሎታትን ንምድጋፍ ኣዝዩ ኣገዳሲ እዩ ። ወፈያ ኽትገብረሉ እትኽእል እተፈላለየ ምሹእ መገድታት ኣሎ ፦",
   "News and stories from us": "ዜናታትን ዛንታታትን ካባና",
   "Donate": "ወፈያ",
-  "Join Now": "",
-  "Send Now": "",
+  "Join Now": "ሐዚ ይፀምበሩ",
+  "Send Now": "ሐዚ ይልኣኩ",
   "Get Involved": "ይሳተፉ",
   "News and Media": "ዜናታትን መራኸቢ ብዙሓንን",
   "Volunteers": "ነፃ ግልጋሎት",
@@ -160,5 +160,15 @@
   "News and Events": "ዜናታትን ፍጻመታትን",
   "Gallery": "ምስሊታት",
   "SUBSCRIBE": "ሰብስክራይብ",
-  "Subscribe for Newsletter": "ንወቕታዊ ሓበሬታ ሰብስክራይብ ይግበሩ"
+  "Subscribe for Newsletter": "ንወቕታዊ ሓበሬታ ሰብስክራይብ ይግበሩ",
+  "Follow Us:": "ይከተሉና：",
+  "Quick Links": "ቅልጡፍ ዳህሰሳ",
+  "Resources": "ፋይላት",
+  "Publications": "ሕታመታት",
+  "Strategy": "ስትራተጂ",
+  "Documents": "ዶኩመንቲታት",
+  "Our Beneficiaries": "ተገልገልቲ ማረት",
+  "Policy strategy": "ፖሊሲን ስትራተጂን"
+
+
 }

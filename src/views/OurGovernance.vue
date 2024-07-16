@@ -17,7 +17,7 @@ export default {
       treeData: {
         name: 'CEO',
         role: 'chief executive officer',
-        profilePicture: "",
+        profilePicture: "http://192.168.137.185:5173/src/assets/d.jpg",
         children: [
           {
             name: 'Manager 1',
