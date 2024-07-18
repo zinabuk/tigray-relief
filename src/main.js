@@ -64,7 +64,8 @@ import {
   faTwitter,
   faYoutube,
   faTelegram,
-  faLinkedin
+  faLinkedin,
+  faWhatsapp
 } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
@@ -116,7 +117,8 @@ library.add(
   faBrain,
   faPlus,
   faHeart,
-  faTimes
+  faTimes,
+  faWhatsapp
 )
 
 AOS.init({ duration: 2000 })
@@ -126,7 +128,6 @@ import App from './App.vue'
 import router from './router'
 
 import '../node_modules/timeline-vuejs/dist/timeline-vuejs.css'
-
 
 const app = createApp(App)
 

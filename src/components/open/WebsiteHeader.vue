@@ -25,17 +25,42 @@
       </div>
       <div class="flex gap-8 items-center justify-center">
         <div class="flex items-center justify-center">
-          <a href="https://www.facebook.com/RESTigray1978" target="_blank">
+          <a
+            :href="social.link"
+            target="_blank"
+            v-for="(social, index) in medias"
+            :key="index"
+            class="flex items-center justify-center"
+          >
             <font-awesome-icon
               :icon="['fab', 'facebook']"
               class="text-white hover:text-white/80 p-2"
+              v-if="social.platform.toLowerCase() === 'facebook'"
             >
-            </font-awesome-icon
-          ></a>
-          <font-awesome-icon :icon="['fab', 'twitter']" class="text-white hover:text-white/80 p-2">
-          </font-awesome-icon>
-          <font-awesome-icon :icon="['fab', 'linkedin']" class="text-white hover:text-white/80 p-2">
-          </font-awesome-icon>
+            </font-awesome-icon>
+
+            <font-awesome-icon
+              v-else-if="social.platform.toLowerCase() === 'twitter'"
+              :icon="['fab', 'twitter']"
+              class="text-white p-2 rounded"
+            />
+            <font-awesome-icon
+              v-else-if="social.platform.toLowerCase() === 'youtube'"
+              :icon="['fab', 'youtube']"
+              class="text-white p-2 rounded"
+            />
+            <font-awesome-icon
+              v-else-if="social.platform.toLowerCase() === 'telegram'"
+              :icon="['fab', 'telegram']"
+              class="text-white p-2 rounded"
+            />
+            <font-awesome-icon
+              v-else-if="social.platform.toLowerCase() === 'linkedin'"
+              :icon="['fab', 'linkedin']"
+              class="text-white p-2 rounded"
+            />
+            <font-awesome-icon v-else :icon="['fab', 'whatsapp']" class="text-white p-2 rounded" />
+          </a>
         </div>
 
         <div class="relative group flex items-center justify-center">
@@ -330,8 +355,10 @@
     </nav>
   </header>
 
-  <header class="w-full flex md:hidden px-[1%] md:px-[7%] sticky top-0 bottom-0 zbg-white/100 z-50">
-    <nav class="w-full h-full flex justify-between py-4">
+  <header
+    class="w-full bg-white flex md:hidden px-[1%] md:px-[2%] sticky top-0 bottom-0 zbg-white/100 z-50"
+  >
+    <nav class="w-full h-full flex justify-between py-4 bg-white">
       <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
         <img
           src="@/assets/rest-logo.png"
@@ -702,7 +729,21 @@ const fetchInfography = async () => {
 
     if (response.success) {
       // alert('OK')
-      infoG.value = response.data
+      infoG.value = response.data.splice(0, 1)
+    }
+  } catch (error) {
+    alert(error)
+  }
+}
+
+let medias = ref([])
+const fetchMedia = async () => {
+  try {
+    const response = await apiService.get('/admin/social-medias')
+
+    if (response.success) {
+      // alert('OK')
+      medias.value = response.data
     }
   } catch (error) {
     alert(error)
@@ -741,7 +782,8 @@ onMounted(
     window.addEventListener('scroll', handleScroll)
   },
   fetchServices(),
-  fetchInfography()
+  fetchInfography(),
+  fetchMedia()
 )
 </script>
 

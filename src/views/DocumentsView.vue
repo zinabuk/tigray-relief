@@ -27,10 +27,11 @@ const { currentLanguage } = storeToRefs(useAuthStore())
 
 const documents = ref([])
 
-const fetchTenders = async () => {
+const fetchDocuments = async () => {
   try {
     const response = await ApiService.get('/admin/documents')
     if (response.success) {
+      alert("OK")
       documents.value = response.data.map((item) => ({
         ...item,
         title: JSON.parse(item.title),
@@ -49,7 +50,7 @@ const fetchTenders = async () => {
 }
 
 onMounted(() => {
-  fetchTenders()
+  fetchDocuments()
 })
 </script>
 

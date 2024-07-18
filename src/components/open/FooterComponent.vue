@@ -23,6 +23,20 @@ const fetchServices = async () => {
     // alert(error)
   }
 }
+
+let medias = ref([])
+const fetchMedia = async () => {
+  try {
+    const response = await apiService.get('/admin/social-medias')
+
+    if (response.success) {
+      // alert('OK')
+      medias.value = response.data
+    }
+  } catch (error) {
+    alert(error)
+  }
+}
 const Subscriber = ref({ email: '' })
 // const message = ref('')
 const subscribe = async () => {
@@ -45,14 +59,14 @@ const fetchInfography = async () => {
     if (response.success) {
       // alert('OK')
       infoG.value = response.data
-      console.log(infoG.value);
+      console.log(infoG.value)
     }
   } catch (error) {
     alert(error)
   }
 }
 
-onMounted(fetchServices(), fetchInfography())
+onMounted(fetchServices(), fetchInfography(), fetchMedia())
 </script>
 
 <template>
@@ -145,15 +159,47 @@ onMounted(fetchServices(), fetchInfography())
     <div class="flex flex-col gap-2">
       <h1 class="text-xl font bold text-white">{{ $t('Follow Us:') }}</h1>
       <hr />
-      <div>
-        <a href="https://www.facebook.com/RESTigray1978" target="_blank">
-          <font-awesome-icon :icon="['fab', 'facebook']" class="text-white hover:text-white/80 p-2">
-          </font-awesome-icon
-        ></a>
-        <font-awesome-icon :icon="['fab', 'twitter']" class="text-white hover:text-white/80 p-2">
-        </font-awesome-icon>
-        <font-awesome-icon :icon="['fab', 'linkedin']" class="text-white hover:text-white/80 p-2">
-        </font-awesome-icon>
+      <div class="flex items-center zjustify-center">
+        <a
+          :href="social.link"
+          target="_blank"
+          v-for="(social, index) in medias"
+          :key="index"
+          class="flex items-center justify-center"
+        >
+          <font-awesome-icon
+            :icon="['fab', 'facebook']"
+            class="text-white hover:text-white/80 p-2"
+            v-if="social.platform.toLowerCase() === 'facebook'"
+          >
+          </font-awesome-icon>
+
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'twitter'"
+            :icon="['fab', 'twitter']"
+            class="text-white hover:text-white/80 p-2 rounded"
+          />
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'youtube'"
+            :icon="['fab', 'youtube']"
+            class="text-white hover:text-white/80 p-2 rounded"
+          />
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'telegram'"
+            :icon="['fab', 'telegram']"
+            class="text-white hover:text-white/80 p-2 rounded"
+          />
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'linkedin'"
+            :icon="['fab', 'linkedin']"
+            class="text-white hover:text-white/80 p-2 rounded"
+          />
+          <font-awesome-icon
+            v-else
+            :icon="['fab', 'whatsapp']"
+            class="text-white hover:text-white/80 p-2 rounded"
+          />
+        </a>
       </div>
     </div>
   </section>

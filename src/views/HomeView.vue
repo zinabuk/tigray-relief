@@ -182,10 +182,10 @@ onMounted(() => {
             {{ service.serviceTitle[currentLanguage] }}
           </h1>
         </div>
-        <div class="relative">
+        <!-- <div class="relative">
           <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
-        </div>
+        </div> -->
         <!-- <p class="line-clamp-5">
           {{ service.serviceDescription[currentLanguage] }}
         </p> -->
@@ -207,7 +207,7 @@ onMounted(() => {
           class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
           data-aos="fade-right"
         >
-          <h1 class="text-green-900 text-xl">1978</h1>
+          <h1 class="text-green-900 text-4xl">1978</h1>
           <p class="text-xl">{{ $t('A decades of expertise') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">

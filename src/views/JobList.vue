@@ -93,6 +93,7 @@ onMounted(() => {
   <div class="w-full md:p-[2%] bg-[#53900F]/10">
     <div
       class="w-full lg:w-[%] lg:mx-auto py-2 flex flex-col gap-5 bg-red-40r0 justify-center items-start"
+      v-if="jobs.length > 0"
     >
       <div
         class="w-full flex flex-col mx-auto lg:w-4/5 shadow-inner"
@@ -180,8 +181,6 @@ onMounted(() => {
           </div>
         </div>
 
-
-        
         <div class="w-full flex justify-between bg-white p-4">
           <ul class="flex space-x-4 p-4 justify-center items-center">
             <li>
@@ -194,10 +193,10 @@ onMounted(() => {
             </li>
           </ul>
         </div>
-
-
       </div>
     </div>
+
+    <div v-else>No job lists</div>
   </div>
 
   <div
@@ -207,12 +206,12 @@ onMounted(() => {
     <div class="bg-white flex flex-col md:p-12 gap-2 overflow-auto">
       <div class="flex justify-between">
         <h1 class="text-center font-semibold">Application Page</h1>
-      <button
-        class="text-gray-900 self-end bg-white border border-black px-2"
-        @click="isApply = !isApply"
-      >
-        Cancel
-      </button>
+        <button
+          class="text-gray-900 self-end bg-white border border-black px-2"
+          @click="isApply = !isApply"
+        >
+          Cancel
+        </button>
       </div>
       <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
       <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
@@ -238,8 +237,6 @@ onMounted(() => {
             ></BaseInput>
           </div>
           <div>
-          
-
             <!-- <BaseFileInput
               @image-update="captureLetter($event)"
               label="Application Letter"
@@ -249,23 +246,22 @@ onMounted(() => {
               class="my-4"
             ></BaseFileInput>
             <span>{{ form.applicationLetter.name }}</span> -->
-           
           </div>
         </div>
         <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
-      <div class="flex justify-between">
-        <div class="flex">
-          <BaseFileInput
-            @image-update="captureResume($event)"
-            label="Resume"
-            type="file"
-            accept="application/pdf"
-          ></BaseFileInput>
-        </div>
-        <span class="text-sm text-red-600">*Only pdf files</span>
+        <div class="flex justify-between">
+          <div class="flex">
+            <BaseFileInput
+              @image-update="captureResume($event)"
+              label="Resume"
+              type="file"
+              accept="application/pdf"
+            ></BaseFileInput>
+          </div>
+          <span class="text-sm text-red-600">*Only pdf files</span>
           <span>{{ form.resume.name }}</span>
-            <BaseButton type="submit">Apply</BaseButton>
-      </div>
+          <BaseButton type="submit">Apply</BaseButton>
+        </div>
       </form>
     </div>
   </div>
