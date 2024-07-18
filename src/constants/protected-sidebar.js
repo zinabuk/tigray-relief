@@ -15,13 +15,14 @@ const SIDEBARITEMS = {
     { label: 'Messages', name: 'messages', icon: 'comment-dots' },
     { label: 'Donations', name: 'donations', icon: 'quote-left' },
     { label: 'Vacancy', name: 'admin-jobs', icon: 'quote-left' },
-    { label: 'Volunteers', name: 'admin-volunteers', icon: 'quote-left' },
+    { label: 'Volunteers', name: 'admin-volunteers', icon: 'user' },
     
     { label: 'Gallery', name: 'admin-gallery', icon: 'quote-left' },
     { label: 'FAQs', name: 'admin-faqs', icon: 'quote-left' },
     { label: 'Beneficiary', name: 'admin-beneficiary', icon: 'quote-left' },
     { label: 'Policy', name: 'admin-policy', icon: 'quote-left' },
     { label: 'contact address', name: 'admin-contacts', icon: 'quote-left' },
+    { label: 'Social Media', name: 'admin-socialMedias', icon: 'quote-left' },
     
     { label: 'Documents', name: 'admin-documents', icon: 'quote-left' },
     { label: 'Publications', name: 'admin-publications', icon: 'quote-left' },

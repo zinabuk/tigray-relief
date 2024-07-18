@@ -5,7 +5,7 @@
     <img v-if="node.image" :src="BASE_AVATAR + node.image" alt="Node Image" class="w-24 h-24 rounded-full">
     <div class="flex gap-2">
       <BaseButton @click="$emit('open-modal', node)">Add Child</BaseButton>
-      <BaseButton @click="$emit('edit-node', node.id)">Edit</BaseButton>
+      <!-- <BaseButton @click="$emit('edit-node', node.id)">Edit</BaseButton> -->
       <BaseButton @click="$emit('delete-node', node)">Delete</BaseButton>
     </div>
     <div class="ml-4">
