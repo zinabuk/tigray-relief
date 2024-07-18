@@ -232,7 +232,13 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
         class="py-6 px-4 text-center w-full md:w-1/4 bg-green-900/10 rounded shadow-xl hover:bg-green-900 hover:text-white"
       >
         <div class="w-32 h-32 rounded-full overflow-hidden mx-auto ring-2 ring-yellow-300">
-          <img :src="BASE_AVATAR + team.image" alt="" class="w-full h-full object-cover" />
+          <img
+          v-if="team.image"
+          :src="BASE_AVATAR + team.image"
+          alt="yes"
+          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
+        />
+        {{team.image }}
         </div>
         <h1 class="text-xl font-semibold">{{ team.fullName[currentLanguage] }}</h1>
         <p class="text-blue-700">{{ team.profession[currentLanguage] }}</p>

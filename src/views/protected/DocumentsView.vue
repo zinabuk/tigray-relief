@@ -1,5 +1,6 @@
 <template>
-  <section class="w-full px-6 py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  
     <!-- Documents -->
     <button
       @click="showAddModal = true"
@@ -20,6 +21,12 @@
       >
         <h1 class="text-2xl font-bold">{{ document.title[currentLanguage] }}</h1>
         <p class="line-clamp-5">{{ document.description[currentLanguage] }}</p>
+        <img
+          v-if="document.image"
+          :src="BASE_AVATAR + document.image"
+          alt=""
+          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
+        />
         <a :href="BASE_UPLOAD + document.document" target="_blank" class="text-blue-500 underline">
           {{ document.document }}
         </a>
@@ -98,7 +105,8 @@
                 ></BaseTextarea>
               </div>
               <div class="flex justify-end gap-2 flex-col">
-                <BaseFileInput
+                <div class="flex justify-between">
+                  <BaseFileInput
                   @change="handleFileChange"
                   label="Attach Document"
                   type="file"
@@ -106,7 +114,17 @@
                   placeholder="Image"
                   accept="application/pdf"
                 ></BaseFileInput>
+                <BaseFileInput
+                  @change="handleImageChange"
+                  label="Add picture"
+                  type="file"
+                  inputClass="p-2 border border-gray-300 rounded"
+                  placeholder="Image"
+                  accept="image/*"
+                ></BaseFileInput>
+                </div>
                 <span>{{ logo }}</span>
+                <span>{{ image1 }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
                   Save Document
                 </BaseButton>
@@ -121,12 +139,14 @@
 
 <script setup>
 import ApiService from '@/services/apiService'
+import {BASE_AVATAR}  from '@/config'
 import { BASE_UPLOAD } from '@/config'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import { ref, onMounted } from 'vue'
+
 
 const documents = ref([])
 const fetchDocuments = async () => {
@@ -157,7 +177,8 @@ const form = ref({
   id: null,
   title: { en: '', ti: '', am: '' },
   description: { en: '', ti: '', am: '' },
-  document: ''
+  document: '',
+  image:''
 })
 
 const logo = ref('')
@@ -167,6 +188,13 @@ const handleFileChange = (event) => {
   logo.value = file.name
 }
 
+
+const image1=ref('')
+const handleImageChange = (event) => {
+  const file = event.target.files[0]
+  form.value.image = file
+  image1.value = file.name
+}
 const errorMessage = ref('')
 const successMessage = ref('')
 
@@ -176,7 +204,8 @@ const editDocument = (document) => {
     id: document.id,
     title: { ...document.title },
     description: { ...document.description },
-    document: document.document
+    document: document.document,
+    image: document.image
   }
   edit.value = true
   showAddModal.value = true
@@ -186,9 +215,13 @@ const saveDocument = async () => {
   const formData = new FormData()
   formData.append('title', JSON.stringify(form.value.title))
   formData.append('description', JSON.stringify(form.value.description))
+  formData.append('image', form.value.image)
   if (form.value.document instanceof File) {
     formData.append('document', form.value.document)
   }
+  // if (form.value.image instanceof File) {
+  // formData.append('image', form.value.image)
+  // }
   try {
     if (edit.value) {
       const response = await ApiService.patch('/admin/documents/' + form.value.id, formData)
@@ -236,7 +269,8 @@ const closeModal = () => {
     id: null,
     title: { en: '', ti: '', am: '' },
     description: { en: '', ti: '', am: '' },
-    document: ''
+    document: '',
+    image:''
   }
   edit.value = false
   logo.value = ''

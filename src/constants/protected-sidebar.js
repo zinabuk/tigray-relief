@@ -7,7 +7,7 @@ const SIDEBARITEMS = {
     { label: 'Our stracture', name: 'admin-oganizational', icon: 'handshake' },
     { label: 'Services', name: 'admin-services', icon: 'cogs' },
     //   { label: 'Works', name: 'products', icon: 'box-open' },
-    { label: 'Team', name: 'team', icon: 'handshake' },
+    { label: 'public Figure', name: 'team', icon: 'handshake' },
     { label: 'Blogs', name: 'admin-blogs', icon: 'newspaper' },
 
     { label: 'Partners', name: 'partner', icon: 'handshake' },
@@ -16,12 +16,12 @@ const SIDEBARITEMS = {
     { label: 'Donations', name: 'donations', icon: 'quote-left' },
     { label: 'Vacancy', name: 'admin-jobs', icon: 'quote-left' },
     { label: 'Volunteers', name: 'admin-volunteers', icon: 'quote-left' },
-
+    
     { label: 'Gallery', name: 'admin-gallery', icon: 'quote-left' },
-    { label: 'Users', name: 'users', icon: 'user' },
     { label: 'FAQs', name: 'admin-faqs', icon: 'quote-left' },
     { label: 'Beneficiary', name: 'admin-beneficiary', icon: 'quote-left' },
     { label: 'Policy', name: 'admin-policy', icon: 'quote-left' },
+    { label: 'contact address', name: 'admin-contacts', icon: 'quote-left' },
     
     { label: 'Documents', name: 'admin-documents', icon: 'quote-left' },
     { label: 'Publications', name: 'admin-publications', icon: 'quote-left' },

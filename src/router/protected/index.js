@@ -106,9 +106,27 @@ const PROTECTED_ROUTES = [
         }
       },
       {
+        path: 'account',
+        name: 'account',
+        meta: {
+          requiresAuth: true,
+          role: 'admin'
+        },
+        component: () => import('@/views/protected/AccountManagement.vue')
+      },
+      {
         path: 'blogs',
         component: () => import('@/views/protected/BlogsView.vue'),
         name: 'admin-blogs',
+        meta: {
+          requiresAuth: true,
+          role: ['admin', 'staff']
+        }
+      },
+      {
+        path: 'contact-address',
+        component: () => import('@/views/protected/ContactAddress.vue'),
+        name: 'admin-contacts',
         meta: {
           requiresAuth: true,
           role: ['admin', 'staff']
