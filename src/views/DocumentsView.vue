@@ -1,9 +1,7 @@
 <script setup>
 import ApiService from '@/services/apiService'
 import { BASE_AVATAR } from '@/config'
-import BaseFileInput from '@/components/base/BaseFileInput.vue'
-import BaseButton from '@/components/base/BaseButton.vue'
-import BaseInput from '@/components/base/BaseInput.vue'
+import { BASE_UPLOAD } from '@/config'
 
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -21,52 +19,6 @@ const form = ref({ fullName: '', email: '', phoneNumber: '', document: '' })
 const captureDocument = (file) => {
   document.value = file
   form.value.document = file
-}
-const submitApplication = async () => {
-  try {
-    const formData = new FormData()
-    formData.append('fullName', form.value.fullName)
-    formData.append('email', form.value.email)
-    formData.append('phoneNumber', form.value.phoneNumber)
-    // formData.append('applicationLetter', form.value.applicationLetter)
-    formData.append('document', form.value.document)
-    const response = await ApiService.applyTender(
-      '/users/application-tenders/' + tender.value.id,
-      formData
-    )
-    console.log(formData)
-    if (response.success) {
-      form.value = {}
-      document.value = ''
-      swal({
-        icon: 'success',
-        title: 'You have successfully applied.',
-        text: 'Application'
-      })
-      setTimeout(() => {}, 5000)
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404 && error.response.data) {
-      swal({
-        icon: 'error',
-        title: error.response.data.message,
-        text: 'Tender Application'
-      })
-    } else if (error.response && error.response.status === 400 && error.response.data) {
-      swal({
-        icon: 'error',
-        title: error.response.data.error,
-        text: 'Tender Application'
-      })
-    } else {
-      // router.push({ name: 'NetworkError' })
-    }
-  }
-}
-
-const toggleApply = (tenderToApply) => {
-  isApply.value = true
-  tender.value = tenderToApply
 }
 
 import { storeToRefs } from 'pinia'
@@ -128,15 +80,22 @@ onMounted(() => {
         <div class="relative group">
           <img
             v-if="document.image"
-            :src="BASE_AVATAR + tender.image"
+            :src="BASE_AVATAR + document.image"
             alt=""
             class="max-h-[500px] rounded-xl w-full object-cover"
           />
           <div
             class="gap-4 items-center justify-center hidden group-hover:flex absolute inset-0 bg-[#53900F]/40"
           >
-            <button class="bg-white text-[#53900F] px-4 py-2 rounded-xl">Download</button>
+            <button class="bg-white text-[#53900F] px-4 py-2 rounded-xl">
+              <a :href="BASE_UPLOAD + document.document" target="_blank">Download</a>
+            </button>
           </div>
+        </div>
+
+        <div>
+          <h1>{{ document.title[currentLanguage] }}</h1>
+          <p>{{ document.description[currentLanguage] }}</p>
         </div>
       </div>
     </div>
