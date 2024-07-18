@@ -3,16 +3,14 @@
     <!-- Add Contact Button -->
     <button @click="showAddModal = true" class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]">
       <font-awesome-icon icon="plus" class="bg-white text-[#539000] p-2 rounded-full"></font-awesome-icon>
-      Add Contact
+      Add social media
     </button>
 
     <!-- Contact Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 place-content-center">
       <div v-for="(contact, i) in contacts" :key="i" class="p-4 flex flex-col gap-2 bg-white justify-between shadow-xl">
-        <p class="text-xl font-semibold">{{ contact.mail }}</p>
-        <p>{{ contact.contactNumber }}</p>
-        <p>{{ contact.address }}</p>
-        <p>{{ contact.openHours }}</p>
+        <p class="text-xl font-semibold">{{ contact.platform }}</p>
+        <a :href="contact.link" target="_blank" class="text-blue-500 underline">{{ contact.link }}</a>
         <div class="flex gap-2 justify-end">
           <button @click="editContact(contact)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
@@ -33,12 +31,9 @@
             <button @click="closeModal" type="button" class="p-1 text-white bg-gray-500 rounded">Cancel</button>
           </div>
           <form @submit.prevent="saveContact" class="flex flex-col gap-4 mt-4">
-            <BaseInput v-model="form.mail" type="text" required :placeholder="'Contact Mail'" />
-            <BaseInput v-model="form.contactNumber" type="text" :placeholder="'Contact Number'" />
-            <BaseInput v-model="form.address" type="text" required :placeholder="'Contact Address'" />
-            <BaseInput v-model="form.openHours" type="text" required :placeholder="'Opening Hours'" />
-            <BaseFileInput @change="handleFileChange" :placeholder="'form.addresse'" />
-            <BaseButton type="submit" class="w-full px-2 py-2 rounded">Save Contact</BaseButton>
+            <BaseInput v-model="form.platform" type="text" required :placeholder="'Contact platform'" />
+            <BaseInput v-model="form.link" type="text" :placeholder="'Contact Number'" />
+           <BaseButton type="submit" class="w-full px-2 py-2 rounded">Save Contact</BaseButton>
           </form>
         </div>
       </div>
@@ -51,15 +46,12 @@ import { ref, onMounted } from 'vue';
 import ApiService from '@/services/apiService';
 import BaseInput from '@/components/base/BaseInput.vue';
 import BaseButton from '@/components/base/BaseButton.vue';
-import BaseFileInput from '@/components/base/BaseFileInput.vue';
 
 const contacts = ref([]);
 const form = ref({
   id: null,
-  mail: '',
-  contactNumber: '',
-  address: '',
-  openHours: ''
+  platform: '',
+  link: '',
 });
 const showAddModal = ref(false);
 const edit = ref(false);
@@ -68,7 +60,7 @@ const successMessage = ref('');
 
 const fetchContacts = async () => {
   try {
-    const response = await ApiService.get('/admin/contact-address');
+    const response = await ApiService.get('/admin/social-medias');
     if (response) {
       contacts.value = response.data
     }
@@ -79,17 +71,16 @@ const fetchContacts = async () => {
 
 const saveContact = async () => {
   const formData = {
-    mail: form.value.mail,
-    contactNumber: form.value.contactNumber,
-    address: form.value.address,
-    openHours: form.value.openHours
+    platform: form.value.platform,
+    link: form.value.link
+    
   }
   try {
     let response;
     if (edit.value) {
-      response = await ApiService.patch(`/admin/contact-address/${form.value.id}`, formData);
+      response = await ApiService.patch(`/admin/social-medias/${form.value.id}`, formData);
     } else {
-      response = await ApiService.post('/admin/contact-address', formData);
+      response = await ApiService.post('/admin/social-medias', formData);
     }
     
     if (response.success) {
@@ -109,7 +100,7 @@ const deleteContact = async (id) => {
   const sure = window.confirm('Are you sure you want to delete this contact?');
   if (sure) {
     try {
-      const response = await ApiService.delete(`/admin/contact-address/${id}`);
+      const response = await ApiService.delete(`/admin/social-medias/${id}`);
       if (response.success) {
         fetchContacts();
       } else {
@@ -124,26 +115,20 @@ const deleteContact = async (id) => {
 
 const editContact = (contact) => {
   form.value.id = contact.id;
-  form.value.mail = contact.mail;
-  form.value.contactNumber = contact.contactNumber;
-  form.value.address = contact.address;
-  form.value.openHours = contact.openHours;
+  form.value.platform = contact.platform;
+  form.value.link = contact.link;
+
   edit.value = true;
   showAddModal.value = true;
 };
 
-const handleFileChange = (file) => {
-  form.value.address = file;
-};
 
 const closeModal = () => {
   showAddModal.value = false;
   form.value = {
     id: null,
-    mail: '',
-    contactNumber: '',
-    address: '',
-    openHours: ''
+    platform: '',
+    link: ''
   };
   edit.value = false;
   errorMessage.value = '';

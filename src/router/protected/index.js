@@ -133,6 +133,15 @@ const PROTECTED_ROUTES = [
         }
       },
       {
+        path: 'social-medias',
+        component: () => import('@/views/protected/SocialMedia.vue'),
+        name: 'admin-socialMedias',
+        meta: {
+          requiresAuth: true,
+          role: ['admin', 'staff']
+        }
+      },
+      {
         path: 'faqs',
         component: () => import('@/views/protected/FaqsView.vue'),
         name: 'admin-faqs',
