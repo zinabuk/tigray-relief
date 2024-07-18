@@ -1,36 +1,75 @@
 <template>
   <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
-    <div class="w-full bg-[#53900F] flex justify-between text-white p-2">
-      <div>+251911111111</div>
-      <div class="relative group">
-        <h1><font-awesome-icon icon="globe" class="mx-1"></font-awesome-icon>{{ language }}</h1>
-        <ul
-          class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 text-black shadow-2xl"
-        >
-          <li class="flex flex-col gap-2 group-hover:flex-col p-2">
-            <button
-              @click="changeLanguage('en')"
-              class="flex items-center justify-center hover:text-[#53900F]"
+    <div class="w-full bg-[#53900F] flex justify-between text-white px-[2%] py-1">
+      <div
+        v-for="(contact, index) in infoG"
+        :key="index"
+        class="flex gap-2 items-center justify-center"
+      >
+        <div>
+          <h1 class="flex gap-1 items-center justify-center">
+            <font-awesome-icon icon="phone"></font-awesome-icon>{{ contact.contactNumber }}
+          </h1>
+        </div>
+
+        <div>
+          <h1 class="flex gap-1 items-center justify-center">
+            <font-awesome-icon icon="envelope"></font-awesome-icon>{{ contact.mail }}
+          </h1>
+        </div>
+        <div>
+          <h1 class="flex gap-1 items-center justify-center">
+            <font-awesome-icon icon="map-marker-alt"></font-awesome-icon>{{ contact.address }}
+          </h1>
+        </div>
+      </div>
+      <div class="flex gap-8 items-center justify-center">
+        <div class="flex items-center justify-center">
+          <a href="https://www.facebook.com/RESTigray1978" target="_blank">
+            <font-awesome-icon
+              :icon="['fab', 'facebook']"
+              class="text-white hover:text-white/80 p-2"
             >
-              English
-            </button>
-            <hr />
-            <button
-              @click="changeLanguage('ti')"
-              class="flex items-center justify-center hover:text-[#53900F]"
-            >
-              ትግርኛ
-            </button>
-            <hr />
-            <button
-              @click="changeLanguage('am')"
-              class="flex items-center justify-center hover:text-[#53900F]"
-            >
-              ኣማርኛ
-            </button>
-            <hr />
-          </li>
-        </ul>
+            </font-awesome-icon
+          ></a>
+          <font-awesome-icon :icon="['fab', 'twitter']" class="text-white hover:text-white/80 p-2">
+          </font-awesome-icon>
+          <font-awesome-icon :icon="['fab', 'linkedin']" class="text-white hover:text-white/80 p-2">
+          </font-awesome-icon>
+        </div>
+
+        <div class="relative group flex items-center justify-center">
+          <h1 class="flex items-center justify-center gap-1">
+            <font-awesome-icon icon="globe"></font-awesome-icon>{{ language }}
+          </h1>
+          <ul
+            class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 text-black shadow-2xl"
+          >
+            <li class="flex flex-col gap-2 group-hover:flex-col p-2">
+              <button
+                @click="changeLanguage('en')"
+                class="flex items-center justify-center hover:text-[#53900F]"
+              >
+                English
+              </button>
+              <hr />
+              <button
+                @click="changeLanguage('ti')"
+                class="flex items-center justify-center hover:text-[#53900F]"
+              >
+                ትግርኛ
+              </button>
+              <hr />
+              <button
+                @click="changeLanguage('am')"
+                class="flex items-center justify-center hover:text-[#53900F]"
+              >
+                ኣማርኛ
+              </button>
+              <hr />
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
     <nav
@@ -191,7 +230,7 @@
 
         <li class="relative group">
           <router-link
-            :to="{ name: 'tenders' }"
+            :to="{ name: 'jobs' }"
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('tenders') }]"
           >
@@ -291,7 +330,7 @@
     </nav>
   </header>
 
-  <header class="w-full flex md:hidden px-[1%] md:px-[7%] sticky top-0 bottom-0 bg-white/100 z-50">
+  <header class="w-full flex md:hidden px-[1%] md:px-[7%] sticky top-0 bottom-0 zbg-white/100 z-50">
     <nav class="w-full h-full flex justify-between py-4">
       <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
         <img
@@ -302,84 +341,302 @@
           class="w-[40px] h-auto"
         />
       </router-link>
-      <button @click="isSmall = !isSmall">
+      <button @click="isSmall = true">
         <font-awesome-icon icon="bars"></font-awesome-icon>
       </button>
     </nav>
 
     <div
-      v-if="isSmall"
-      class="w-full h-screen flex justify-between fixed inset-0 py-6 z-20 bg-white/70"
+      v-if="isSmall && showDropDown"
+      class="w-full h-screen flex justify-between fixed inset-0 py-6 z-20 bg-yellow-400"
     >
       <button
         @click="isSmall = !isSmall"
-        class="self-start mx-4 text-blue-40z0 font-semibold text-red-700 text-2xl"
+        class="self-start mx-4 text-blue-40z0 font-semibold text-gray-700 text-2xl"
       >
-        x
+        <font-awesome-icon icon="times" class="text-4xl"></font-awesome-icon>
       </button>
-      <!-- <div
-        :class="[
-          'w-full justify-self-end px-[1%] md:px-[7%] flex flex-col gap-2 text-black bg-white/100 items-end h-full'
-        ]"
-      >
-        <ul>
-          <li v-for="(item, i) in items" :key="i" :class="['font-semibold flex flex-col  gap-2']">
-            <template v-if="hasChildItems(item)">
-              <router-link
-                :to="{ name: item.name }"
-                class="relative parent-item"
-                :class="{ 'iq-active-menu': isParentActive(item) }"
-                @click="isSmall = !isSmall"
-              >
-                <span class="hover:text-[#37a000]"> {{ $t(item.label) }}</span>
 
-                <div
-                  class="transition-all dzelay-75 ozpacity-0 left-0 bg-white pys-4 flex flex-col"
-                  v-if="item.sub_items"
-                >
-                  <router-link
-                    v-for="(el, j) in item.sub_items"
-                    :key="j"
-                    :to="{ name: el.name }"
-                    class="px-4 py-1 hover:text-[#37a000]"
-                    :class="{ 'iq-active-menu': $route.name === el.name }"
-                    @click="toggleDropdown"
-                    >{{ $t(el.label) }}</router-link
-                  >
-                </div></router-link
-              >
-            </template>
-            <template v-else>
+      <nav
+        class="w-full px-[1%] flex flex-col justify-between items-center pb-12 zfont-bold bg-yellow-400 text-white h-screen overflow-auto"
+        data-aos="fade-left"
+      >
+        <ul class="flex flex-col gap-2 font-bold zuppercase">
+          <li>
+            <router-link
+              :to="{ name: 'home' }"
+              @click="showDropDown = !showDropDown"
+              class="relative parent-item"
+              :class="[{ 'text-[#53900F]': isActive('home') }]"
+            >
+              {{ $t('Home') }}</router-link
+            >
+          </li>
+          <hr />
+          <li class="relative group">
+            <router-link
+              :to="{ name: 'about' }"
+              @click="showDropDown = !showDropDown"
+              class="relative parent-item h-full w-full"
+              :class="[{ 'text-yellow-400': isActive('about') }]"
+            >
+              {{ $t('About Us') }}</router-link
+            >
+
+            <hr />
+
+            <div class="px-4 flex flex-col" zdata-aos="fade-left">
               <router-link
-                :to="{ name: item.name }"
-                class="relative hover:text-[#37a000]"
-                :class="{ 'iq-active-menu': $route.name === item.name }"
-                @click="isSmall = !isSmall"
+                :to="{ name: 'governance' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('governance') }]"
               >
-                {{ $t(item.label) }}
+                <span class="hover:text-[#53900F]"> {{ $t('Organizational Structure') }} </span>
               </router-link>
-            </template>
+
+              <router-link
+                :to="{ name: 'beneficiaries' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
+              >
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Our Beneficiaries') }}
+                </span>
+              </router-link>
+              <router-link
+                :to="{ name: 'policy' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('policy') }]"
+                class="hover:text-[#288FB2]z"
+              >
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Policy strategy') }}
+                </span>
+              </router-link>
+            </div>
+          </li>
+          <hr />
+
+          <li class="relative group">
+            <router-link
+              :to="{ name: 'services' }"
+              class="relative parent-item"
+              @click="showDropDown = !showDropDown"
+              :class="[{ '': isActive('services') }]"
+            >
+              {{ $t('Services') }}</router-link
+            >
+            <hr />
+
+            <div class="px-4 flex flex-col" zdata-aos="fade-left">
+              <router-link
+                :to="{
+                  name: 'service-detail',
+                  params: { title: slugify(service.serviceTitle[currentLanguage]) }
+                }"
+                class="hover:text-[#288FB2]z"
+                v-for="(service, i) in services"
+                :key="i"
+                @click="showDropDown = !showDropDown"
+              >
+                <span class="hover:text-[#53900F]">
+                  {{ $t(`${service.serviceTitle[currentLanguage]}`) }}
+                </span>
+              </router-link>
+            </div>
+          </li>
+          <hr />
+          <li class="relative group">
+            <router-link
+              :to="{ name: 'blogs' }"
+              class="relative parent-item"
+              @click="showDropDown = !showDropDown"
+              :class="[{ 'text-[#53900F]': isActive('blogs') }]"
+            >
+              {{ $t('News') }}</router-link
+            >
+          </li>
+          <hr />
+          <!-- resources -->
+          <li class="relative group">
+            <router-link
+              :to="{ name: 'documents' }"
+              @click="showDropDown = !showDropDown"
+              class="relative parent-item h-full w-full"
+              :class="[{ 'text-[#53900F]': isActive('documents') }]"
+            >
+              {{ $t('Resources') }}</router-link
+            >
+            <hr />
+
+            <div class="px-4 flex flex-col" zdata-aos="fade-left">
+              <router-link
+                :to="{ name: 'documents' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('documents') }]"
+              >
+                <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
+              </router-link>
+
+              <router-link
+                :to="{ name: 'publications' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('publications') }]"
+              >
+                <span class="hover:text-[#53900F]"> {{ $t('Publications') }} </span>
+              </router-link>
+
+              <router-link
+                :to="{ name: 'strategy' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('Strategy') }]"
+                class="hover:text-[#288FB2]z"
+              >
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Strategy') }}
+                </span>
+              </router-link>
+
+              <router-link
+                :to="{ name: 'gallery' }"
+                class="relative parent-item"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('gallery') }]"
+              >
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Gallery') }}
+                </span>
+              </router-link>
+            </div>
+          </li>
+          <hr />
+          <li class="relative group">
+            <router-link
+              :to="{ name: 'jobs' }"
+              class="relative parent-item"
+              @click="showDropDown = !showDropDown"
+              :class="[{ 'text-[#53900F]': isActive('tenders') }]"
+            >
+              {{ $t('Get Involved') }}</router-link
+            >
+
+            <hr />
+
+            <div class="px-4 flex flex-col" zdata-aos="fade-left">
+              <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
+              <router-link
+                :to="{ name: 'jobs' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('jobs') }]"
+                class="hover:text-[#288FB2]z"
+              >
+                <!-- @click="scrollToSection(el.id)" -->
+                <span class="hover:text-[#53900F]"> {{ $t('Careers') }} </span>
+                <!-- <hr class="text-[#53900F]" /> -->
+              </router-link>
+              <router-link
+                :to="{ name: 'volunteer' }"
+                @click="showDropDown = !showDropDown"
+                :class="[{ 'text-[#53900F]': isActive('volunteer') }]"
+                class="hover:text-[#288FB2]z"
+              >
+                <!-- @click="scrollToSection(el.id)" -->
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Volunteers') }}
+                </span>
+              </router-link>
+              <router-link
+                :to="{ name: 'tenders' }"
+                href="#structure_section"
+                @click="showDropDown = !showDropDown"
+                class="hover:text-[#288FB2]z"
+              >
+                <!-- @click="scrollToSection(el.id)" -->
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Tenders') }}
+                </span>
+              </router-link>
+              <router-link
+                :to="{ name: 'faqs' }"
+                @click="showDropDown = !showDropDown"
+                class="hover:text-[#288FB2]z"
+              >
+                <!-- @click="scrollToSection(el.id)" -->
+                <span class="hover:text-[#53900F]">
+                  {{ $t('FAQs') }}
+                </span>
+                <!-- <hr class="text-[#001F3F]" /> -->
+              </router-link>
+            </div>
+          </li>
+          <hr />
+          <li>
+            <router-link
+              :to="{ name: 'contact' }"
+              class="relative parent-item"
+              @click="showDropDown = !showDropDown"
+              :class="[{ 'text-[#53900F]': isActive('contact') }]"
+            >
+              {{ $t('Contact Us') }}</router-link
+            >
+          </li>
+          <hr />
+          <li>
+            <router-link
+              :to="{ name: 'donate' }"
+              @click="showDropDown = !showDropDown"
+              class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse rounded-md"
+              >{{ $t('Donate') }}
+              <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
+            ></router-link>
+          </li>
+        </ul>
+
+        <!-- <div class="relative group">
+        
+        <font-awesome-icon icon="globe" class="text-xl relative group"
+          ><font-awesome-icon icon="chervon-down absolute right-0"></font-awesome-icon
+        ></font-awesome-icon>
+        <div
+          class="absolute hidden shadow space-y-2 group-hover:block right-0 p-6 bg-white"
+          id="languageDropdown"
+          v-if="showDropdown"
+          :class="{ 'text-black': changeBackground }"
+        >
+          <button
+            @click="changeLang('en')"
+            class="hover:text-green-500"
+            :class="{ 'text-green-500': locale === 'en' }"
+          >
+            English
+          </button>
+          <button
+            @click="changeLang('tig')"
+            class="hover:text-green-500"
+            :class="{ 'text-green-500': locale === 'tig' }"
+          >
+            ትግርኛ
+          </button>
+        </div>
+      </div> -->
+      </nav>
+      <div class="relative group">
+        <h1><font-awesome-icon icon="globe" class="mx-1"></font-awesome-icon>{{ language }}</h1>
+        <ul
+          class="absolute ztop-[100%] hidden group-hover:flex z-50 bg-yellow-400 right-0 p-4 shadow-2xl text-white"
+        >
+          <li class="flex flex-col gap-2 group-hover:flex-col p-2">
+            <button @click="changeLanguage('en')" class="flex cursor-pointer hover:text-[#53900F]">
+              English
+            </button>
+            <hr />
+            <button @click="changeLanguage('ti')" class="flex hover:text-[#53900F]">ትግርኛ</button>
+            <hr />
+            <button @click="changeLanguage('am')" class="flex hover:text-[#53900F]">ኣማርኛ</button>
+            <hr />
           </li>
         </ul>
       </div>
-      <div
-        class="shadow space-y-2 right-0 p-6 bg-white"
-        id="languageDropdown"
-        :class="{ 'text-black': changeBackground }"
-      >
-        <button
-          @click="changeLang('en')"
-          :class="[{ 'text-green-500': locale === 'en' }, 'hover:text-green-500']"
-        >
-          English
-        </button>
-        <button
-          @click="changeLang('tig')"
-          :class="[{ 'text-green-500': locale === 'tig' }, 'hover:text-green-500']"
-        >
-          ትግርኛ
-        </button>
-      </div> -->
     </div>
   </header>
 </template>
@@ -392,6 +649,7 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 import slugify from '@/utils/slugify'
 
+import apiService from '@/services/apiService'
 const { currentLanguage } = storeToRefs(useAuthStore())
 
 import { useI18n } from 'vue-i18n'
@@ -405,21 +663,12 @@ defineProps({
   }
 })
 let isSmall = ref(false)
-let showModal = ref(true)
+// let showModal = ref(true)
 
 const route = useRoute()
-function hasChildItems(item) {
-  return item.sub_items && item.sub_items.length > 0
-}
+
 function isActive(item) {
   return route.name === item
-}
-
-function toggleDropdown() {
-  showModal.value = !showModal.value
-  setTimeout(() => {
-    showModal.value = true
-  }, 300)
 }
 
 let language = ref('En')
@@ -444,22 +693,21 @@ function changeLanguage(lang) {
   }, 300)
 }
 
-// const settings = ref([])
-// const router = useRouter()
-// async function getSettings() {
-//   try {
-//     const response = await SettingsService.getSettings()
-//     settings.value = response.data
-//   } catch (error) {
-//     if (error.response && error.response.status === 404 && error.response.data) {
-//       return
-//     } else {
-//       setTimeout(() => {
-//         router.push({ name: 'NetworkError' })
-//       }, 3000)
-//     }
-//   }
-// }
+let showDropDown = ref(true)
+
+let infoG = ref([])
+const fetchInfography = async () => {
+  try {
+    const response = await apiService.get('/admin/contact-address')
+
+    if (response.success) {
+      // alert('OK')
+      infoG.value = response.data
+    }
+  } catch (error) {
+    alert(error)
+  }
+}
 
 const changeBackground = ref(false)
 
@@ -487,10 +735,14 @@ const fetchServices = async () => {
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
-onMounted(() => {
-  // getSettings()
-  window.addEventListener('scroll', handleScroll)
-}, fetchServices())
+onMounted(
+  () => {
+    // getSettings()
+    window.addEventListener('scroll', handleScroll)
+  },
+  fetchServices(),
+  fetchInfography()
+)
 </script>
 
 <style scoped>

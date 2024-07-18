@@ -6,7 +6,7 @@ import apiService from '@/services/apiService'
 import BaseInput from '../base/BaseInput.vue'
 // import BaseButton from '../base/BaseButton.vue'
 
-const currentLanguage = ref(localStorage.getItem('lang') || 'en')
+const currentLanguage = ref(localStorage.getItem('lang'))
 
 const services = ref([])
 const fetchServices = async () => {
@@ -37,7 +37,22 @@ const subscribe = async () => {
   }
 }
 
-onMounted(fetchServices)
+let infoG = ref([])
+const fetchInfography = async () => {
+  try {
+    const response = await apiService.get('/admin/contact-address')
+
+    if (response.success) {
+      // alert('OK')
+      infoG.value = response.data
+      console.log(infoG.value);
+    }
+  } catch (error) {
+    alert(error)
+  }
+}
+
+onMounted(fetchServices(), fetchInfography())
 </script>
 
 <template>
@@ -59,10 +74,16 @@ onMounted(fetchServices)
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">{{ $t('Contacts') }}</h1>
         <hr />
-        <div class="text-[14px]">
-          <h2>251-344-40-6300</h2>
-          <h2>resthq@resttigray.org</h2>
-          <p>Monday – Friday 9 am – 11:30 pm</p>
+        <div class="text-[14px]" v-for="(contact, index) in infoG" :key="index">
+          <h2>{{ contact.openHours }}</h2>
+          <div class="flex gap-1">
+            <h1>Call:</h1>
+            <p>{{ contact.contactNumber }}</p>
+          </div>
+          <div class="flex gap-1">
+            <h1>Email:</h1>
+            <p>{{ contact.mail }}</p>
+          </div>
         </div>
       </div>
       <div class="flex flex-col gap-2">
@@ -137,7 +158,7 @@ onMounted(fetchServices)
     </div>
   </section>
   <!-- bg-[#53900F]/10  -->
-  <div class="w-full bg-[#53900F]/10 text-BLACK flex justify-between px-[2%]">
+  <div class="w-full bg-[#53900F]/10 text-black flex flex-col md:flex-row justify-between px-[2%]">
     <p class="text-center p-2">© 2024 REST. All rights reserved.</p>
     <div class="flex gap-2 items-center justify-center">
       <h1>Powered by</h1>

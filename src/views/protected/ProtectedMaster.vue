@@ -62,7 +62,7 @@ onUnmounted(() => {
 <template>
   <section class="w-full bg-[#53900F]/15">
     <header
-      class="flex items-center justify-between sticky shadow zbg-white/100 z-50 top-0 px-2 bg-[#53900F]"
+      class="flex items-center justify-between sticky shadow zbg-white/100 z-20 top-0 px-2 bg-[#53900F]"
     >
       <div :class="[!minimize ? 'w-[18%]' : 'w-[2%] gap-2', 'flex items-center justify-between ']">
         <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" v-if="!minimize" />

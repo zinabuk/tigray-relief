@@ -55,7 +55,8 @@ import {
   faBalanceScale,
   faBrain,
   faPlus,
-  faHeart
+  faHeart,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -114,7 +115,8 @@ library.add(
   faBalanceScale,
   faBrain,
   faPlus,
-  faHeart
+  faHeart,
+  faTimes
 )
 
 AOS.init({ duration: 2000 })

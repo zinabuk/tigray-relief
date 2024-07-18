@@ -133,12 +133,13 @@ onMounted(() => {
           :src="BASE_AVATAR + hero.heroImage"
         />
         <div
-          class="absolute bottom-16 w-full md:w-2/5 h-d py-6 flex flex-col text-[#53900F] justify-center px-4 bg-yellow-400/90 zmd:bg-white/0 rounded-tr-[100px]z left-4 font-bold"
+          class="absolute top-1/2 -translate-y-1/2 w-full md:w-2/5 h-d py-6 flex flex-col text-[#53900F] justify-center px-4 bg-yellow-400/90 zmd:bg-white/0 rounded-tr-[100px]z md:left-4 font-bold zshadow-2xl hover:scale-[1.1] transition-transform duration-700 delay-150"
+          style="box-shadow: 20px 20px 20px 20px rgb(0 0 0/0.9)"
         >
           <div class="wave-container w-full" zdata-aos="fade-left">
-            <p class="zwave-text font-bold text-4xl">{{ hero.heroTitle[currentLanguage] }}</p>
+            <p class="zwave-text font-bold text-2xl">{{ hero.heroTitle[currentLanguage] }}</p>
           </div>
-          <h6 class="font-extralight">
+          <h6 class="font-extralight line-clamp-2">
             {{ hero.heroDescription[currentLanguage] }}
           </h6>
           <div class="flex gap-4 p-4">
@@ -147,9 +148,11 @@ onMounted(() => {
               to="/donate"
               >Donate Now</router-link
             >
-            <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold">{{
-              $t('Learn More')
-            }}</router-link>
+            <router-link
+              to="/about"
+              class="border rounded-xl px-4 py-2 border-black/60 font-bold"
+              >{{ $t('Learn More') }}</router-link
+            >
           </div>
         </div>
       </swiper-slide>
@@ -329,14 +332,14 @@ onMounted(() => {
     <h1 class="text-3xl font-bold">{{ $t('Our Partners') }}</h1>
     <swiper
       :slides-per-view="1"
-      :modules="modules"
-      :autoplay="{ delay: 1000 }"
+      :modules="[Autoplay, Pagination, Navigation]"
+      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: false }"
+      loop
       class="w-full flex flex-wrap items-center justify-center"
       :breakpoints="{
         '768': { slidesPerView: 2, spaceBetween: 20 },
         '1024': { slidesPerView: 4, spaceBetween: 30 }
       }"
-      loop
     >
       <swiper-slide
         v-for="(partner, i) in partners"
