@@ -8,15 +8,24 @@
           class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 text-black shadow-2xl"
         >
           <li class="flex flex-col gap-2 group-hover:flex-col p-2">
-            <button @click="changeLanguage('en')" class="flex items-center justify-center  hover:text-[#53900F]">
-             English
+            <button
+              @click="changeLanguage('en')"
+              class="flex items-center justify-center hover:text-[#53900F]"
+            >
+              English
             </button>
             <hr />
-            <button @click="changeLanguage('ti')" class="flex items-center justify-center  hover:text-[#53900F]">
+            <button
+              @click="changeLanguage('ti')"
+              class="flex items-center justify-center hover:text-[#53900F]"
+            >
               ትግርኛ
             </button>
             <hr />
-            <button @click="changeLanguage('am')" class="flex items-center justify-center  hover:text-[#53900F]">
+            <button
+              @click="changeLanguage('am')"
+              class="flex items-center justify-center hover:text-[#53900F]"
+            >
               ኣማርኛ
             </button>
             <hr />
@@ -53,7 +62,7 @@
             {{ $t('About Us') }}</router-link
           >
           <div
-            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
+            class="absolute hidden group-hover:flex bg-white p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
             data-aos="fade-left"
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
@@ -65,13 +74,7 @@
               <span class="hover:text-[#53900F]"> {{ $t('Organizational Structure') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
-            <router-link to="/" href="#bod_section" class="hover:text-[#288FB2]z">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('Our Mission, Vision and Strategy') }}
-              </span>
-              <hr class="text-[#001F3F]" />
-            </router-link>
+
             <router-link
               :to="{ name: 'beneficiaries' }"
               :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
@@ -104,7 +107,7 @@
             {{ $t('Services') }}</router-link
           >
           <div
-            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
+            class="absolute hidden group-hover:flex bg-white p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
             data-aos="fade-left"
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
@@ -145,7 +148,7 @@
             {{ $t('Resources') }}</router-link
           >
           <div
-            class="absolute hidden group-hover:flex bg-[#F5F5F5] p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
+            class="absolute hidden group-hover:flex bg-white p-6 flex-col right-0 gap-4 min-w-96 child top-[100%] border rounded-xl"
             data-aos="fade-left"
           >
             <router-link
@@ -175,17 +178,16 @@
             </router-link>
 
             <router-link
-            :to="{ name: 'gallery' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('gallery') }]"
-          >
-            <span class="hover:text-[#53900F]">
-              {{ $t('Gallery') }}
-            </span>
-          </router-link>
+              :to="{ name: 'gallery' }"
+              class="relative parent-item"
+              :class="[{ 'text-[#53900F]': isActive('gallery') }]"
+            >
+              <span class="hover:text-[#53900F]">
+                {{ $t('Gallery') }}
+              </span>
+            </router-link>
           </div>
         </li>
-        
 
         <li class="relative group">
           <router-link

@@ -69,12 +69,13 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'service/:title',
+        path: '/service/:title',
         name: 'service-detail',
         props: true,
         component: () => import('@/views/ServiceDetail.vue'),
         meta: {
-          requiresAuth: false
+          requiresAuth: false,
+          title: "Service Detail"
         }
       },
       {

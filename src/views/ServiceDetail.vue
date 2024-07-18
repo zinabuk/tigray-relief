@@ -16,54 +16,53 @@ defineProps({
   }
 })
 
-const route = useRoute() 
+const route = useRoute()
 const service = ref({})
 
 async function getService() {
   try {
-    alert(route.params.title)
+    // alert(route.params.title)
     const response = await ApiService.get('/admin/service/' + route.params.title)
     if (response.success) {
       service.value = response.data
       service.value.serviceTitle = JSON.parse(service.value.serviceTitle)
       service.value.serviceDescription = JSON.parse(service.value.serviceDescription)
+      console.log(service.value)
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      return
+      alert(error)
     } else {
-      setTimeout(() => { 
-      }, 5000)
-    }
-  }
-} 
-
-const services = ref([])
-async function getServices() {
-  try {
-    const response = await ApiService.get('/admin/services')
-    if (response.success) {
-      services.value = response.data.map((item) => ({
-        ...item,
-        serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription)
-      }))
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404 && error.response.data) {
-      return
-    } else {
-      setTimeout(() => { 
-      }, 5000)
+      setTimeout(() => {}, 5000)
     }
   }
 }
+
+const services = ref([])
+// async function getServices() {
+//   try {
+//     const response = await ApiService.get('/admin/services')
+//     if (response.success) {
+//       services.value = response.data.map((item) => ({
+//         ...item,
+//         serviceTitle: JSON.parse(item.serviceTitle),
+//         serviceDescription: JSON.parse(item.serviceDescription)
+//       }))
+//     }
+//   } catch (error) {
+//     if (error.response && error.response.status === 404 && error.response.data) {
+//       return
+//     } else {
+//       setTimeout(() => {}, 5000)
+//     }
+//   }
+// }
 watchEffect(() => {
   if (route.params.title) {
     getService()
   }
 })
-onMounted(getServices())
+onMounted(getService)
 </script>
 <template>
   <section class="w-full">
@@ -118,7 +117,7 @@ onMounted(getServices())
       </div>
     </div>
   </section>
-  <div class="w-full px-[2%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
+  <!-- <div class="w-full px-[2%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
     <div v-for="(service, i) in services" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <img
@@ -143,5 +142,5 @@ onMounted(getServices())
         >
       </div>
     </div>
-  </div>
+  </div> -->
 </template>

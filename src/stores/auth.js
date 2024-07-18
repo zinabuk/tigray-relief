@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
   // const router = useRouter()
 
   const currentLanguage = ref(localStorage.getItem('lang') || 'en')
-
+  const minimize = ref(false)
   const token = ref(localStorage.getItem('access_token') || '')
   const user = ref({})
   let errorMessage = ref('')
@@ -83,6 +83,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     userHasPermission,
     errorMessage,
-    expiryDate
+    expiryDate,
+    minimize
   }
 })

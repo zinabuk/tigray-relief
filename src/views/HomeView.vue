@@ -238,7 +238,7 @@ onMounted(() => {
         </p>
 
         <router-link to="/volunteer" class="text-green-600 underline font-bold">
-          Join Now</router-link
+          {{ $t('Join Now') }}</router-link
         >
       </div>
       <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-up">
@@ -254,7 +254,9 @@ onMounted(() => {
           }}
         </p>
 
-        <router-link to="/donate" class="text-green-600 underline font-bold"> Send Now</router-link>
+        <router-link to="/donate" class="text-green-600 underline font-bold">{{
+          $t('Send Now')
+        }}</router-link>
       </div>
       <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-left">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
@@ -270,8 +272,8 @@ onMounted(() => {
         </p>
 
         <router-link to="/contact" class="text-green-600 underline font-bold">
-          Learn More</router-link
-        >
+          {{ $t('Learn More') }}
+        </router-link>
       </div>
     </div>
   </section>
@@ -317,12 +319,14 @@ onMounted(() => {
       </div>
     </div>
 
-    <router-link to="/blogs" class="text-green-900 underline text-xl">View All</router-link>
+    <router-link to="/blogs" class="text-green-900 underline text-xl">{{
+      $t('View All')
+    }}</router-link>
   </section>
 
   <!-- partners -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
-    <h1 class="text-3xl font-bold">Our Partners</h1>
+    <h1 class="text-3xl font-bold">{{ $t('Our Partners') }}</h1>
     <swiper
       :slides-per-view="1"
       :modules="modules"

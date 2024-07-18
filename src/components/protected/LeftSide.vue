@@ -1,7 +1,9 @@
 <script setup>
 import SIDEBARITEMS from '@/constants/protected-sidebar'
 import { watchEffect, ref } from 'vue'
-
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/auth'
+const { minimize } = storeToRefs(useAuthStore())
 const role = ref(localStorage.getItem('role'))
 defineProps({
   barClass: {
@@ -23,9 +25,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <aside
-    :class="`${barClass} sidebar zbg-white border-r-2  bg-yellow-50s h-auto top-[68px] sticky text-[14px] shadow-xl border rounded-xl px-4 py-2 bg-white overflow-auto`"
-  >
+  <div :class="`${barClass}`" v-bind="$attrs">
     <ul class=" ">
       <li v-for="(item, index) in navigationItems" :key="index" class="mb-2">
         <router-link
@@ -36,15 +36,15 @@ watchEffect(() => {
           }"
           exact
           active-class=""
-          class="block py-1 px-2 zrounded-lg hover:bg-[#53900F]/30 hover:text-white transition-colors duration-200 "
+          class="block py-1 px-2 zrounded-lg hover:bg-[#53900F]/30 hover:text-white transition-colors duration-200"
           exact-path="true"
         >
           <font-awesome-icon v-if="item.icon" :icon="item.icon" />
-          {{ item.label }}
+          <span v-if="!minimize "> {{ item.label }}</span>
         </router-link>
       </li>
     </ul>
-  </aside>
+  </div>
 </template>
 
 <style scoped>

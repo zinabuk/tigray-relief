@@ -28,7 +28,7 @@ const fetchTeams = async () => {
   } catch (error) {
     // alert(error)
     if (error.response && error.response.data && error.response.status === 404) {
-      return
+      alert(error)
     } else {
       setTimeout(() => {
         // router.push({ name: 'NetworkError' })
@@ -40,21 +40,23 @@ const fetchTeams = async () => {
 const about = ref([])
 const getAboutus = async () => {
   try {
-    const response = await ApiService.get('/users/aboutus')
+    const response = await ApiService.get('users/aboutus')
     if (response.success) {
-      // alert("OK")
-
       about.value = response.data.map((item) => ({
         ...item,
-        // establishment: JSON.parse(item.establishment),
+        establishment: JSON.parse(item.establishment),
         mission: JSON.parse(item.mission),
         vision: JSON.parse(item.vision),
         coreValues: JSON.parse(item.coreValues),
-        establishment: JSON.parse(item.establishment)
+        expertise: JSON.parse(item.expertise)
       }))
     }
   } catch (error) {
-    alert(error)
+    if (error.response && error.response.data && error.response.status === 404) {
+      alert('error')
+    } else {
+      setTimeout(() => {}, 2000)
+    }
   }
 }
 
@@ -70,15 +72,13 @@ const fetchHistories = async () => {
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
-      return
+      alert(error)
     } else {
       setTimeout(() => {}, 2000)
     }
   }
 }
-onMounted(() => {
-  fetchTeams(), getAboutus(), fetchHistories()
-})
+onMounted(fetchTeams(), getAboutus(), fetchHistories())
 </script>
 
 <template>
@@ -113,7 +113,7 @@ onMounted(() => {
         :to="{ name: 'contact' }"
         class="bg-[#539000] self-center px-4 py-2 text-white font-bold"
         data-aos="fade-right"
-        >Get in touch</router-link
+        >{{ $t('Get in touch') }}</router-link
       >
     </div>
     <img
@@ -126,8 +126,8 @@ onMounted(() => {
 
   <section class="flex flex-col px-[2%] gap-4 py-12 bg-green-900/10 items-center overflow-hidden">
     <div class="w-full mx-auto">
-      <h1 class="text-center text-4xl font-semibold lowercase">
-        CAUSES AND POSITIVE CHANGE ALL OVER THE REGION
+      <h1 class="text-center text-4xl font-semibold zcapitalize">
+        Positive change all over the region
       </h1>
     </div>
     <div
@@ -167,7 +167,7 @@ onMounted(() => {
         </p>
       </div>
       <div
-        class="p-6 flex flex-col gap-4 shadow-xl bg-white items-center justify-center"
+        class="p-6 flex flex-col gap-4 shadow-xl bg-white items-center justify-between"
         data-aos="fade-left"
       >
         <!-- <font-awesome-icon icon="balance-scale" class="text-6xl text-[#539000]"></font-awesome-icon> -->
@@ -189,7 +189,7 @@ onMounted(() => {
     <div class="grid grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
       <div
         class="flex gap-4 bg-white shadow-2xl p-4"
-        :class="[i % 2 === 0 ? 'order-2' : 'order-1']"
+        :class="[i % 2 === 0 ? 'order-1' : 'order-2']"
       >
         <div class="p-2 space-y-6">
           <div class="timeline-content">
@@ -197,26 +197,34 @@ onMounted(() => {
             <div class="timeline-year">
               <span class="text-[20px] font-bold">{{ history.year }}</span>
             </div>
-            <p class="P-2">{{ history.description[currentLanguage] }}</p>
           </div>
         </div>
-
-        <div class="h-4 w-4"></div>
       </div>
-      <div :class="[i % 2 === 0 ? 'order-1 flex justify-end ' : 'order-2']">
+      <!-- <div :class="[i % 2 === 0 ? 'order-2 flex justify-end ' : 'order-1']">
+       
+      </div> -->
+
+      <div :class="[i % 2 === 0 ? 'order-2' : 'order-1', 'flex gap-6']">
         <div
           class="h-full border-2 border-gray-500 border-r-0 border-t-0 border-b-0 relative flex flex-col zjustify-between"
         >
           <div class="h-4 w-4 bg-blue-600 rounded-full absolute -left-2"></div>
           <div class="h-4 w-4 bg-blue-600 rounded-full absolute -left-2 bottom-4"></div>
         </div>
+
+        <div class="p-8 bg-white shadow-2xl">
+          <p>{{ history.description[currentLanguage] }}</p>
+        </div>
       </div>
     </div>
   </div>
   <!-- Our teams section -->
   <section class="flex flex-col px-[1%] md:px-[2%] gap-4 py-6 md:py-12 bg-white">
-    <h1 class="text-4xl font-bold text-center">Our Public Figures </h1>
-    <div class="flex flex-wrap gap-4 py-8 justify-center items-center">
+    <h1 class="text-4xl font-bold text-center">Our Team</h1>
+    <div
+      class="flex flex-wrap gap-4 py-8 justify-center items-center"
+      v-if="teams.length && teams.length > 0"
+    >
       <div
         v-for="(team, index) in teams"
         :key="index"
@@ -236,6 +244,9 @@ onMounted(() => {
         <p class="text-blue-700">{{ team.profession[currentLanguage] }}</p>
         <p>{{ team.biography[currentLanguage] }}</p>
       </div>
+    </div>
+    <div v-else>
+      <h1>No team to display</h1>
     </div>
   </section>
 </template>

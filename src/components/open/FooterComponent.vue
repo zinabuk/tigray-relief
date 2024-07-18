@@ -57,7 +57,7 @@ onMounted(fetchServices)
         </p>
       </div> -->
       <div class="flex flex-col gap-2">
-        <h1 class="text-xl">Contacts</h1>
+        <h1 class="text-xl">{{ $t('Contacts') }}</h1>
         <hr />
         <div class="text-[14px]">
           <h2>251-344-40-6300</h2>
@@ -66,7 +66,7 @@ onMounted(fetchServices)
         </div>
       </div>
       <div class="flex flex-col gap-2">
-        <h1 class="text-xl">{{ $t('services') }}</h1>
+        <h1 class="text-xl">{{ $t('Services') }}</h1>
         <hr />
         <ul class="flex flex-col">
           <li class="flex flex-col text-[14px]">
@@ -87,7 +87,7 @@ onMounted(fetchServices)
         </ul>
       </div>
       <div class="flex flex-col gap-2">
-        <h1 class="text-xl">Quick Links</h1>
+        <h1 class="text-xl">{{ $t('Quick Links') }}</h1>
         <hr />
         <ul class="flex flex-col">
           <li class="flex flex-col text-[14px]">
@@ -122,7 +122,7 @@ onMounted(fetchServices)
       </div>
     </div>
     <div class="flex flex-col gap-2">
-      <h1 class="text-xl font bold text-white">Follow Us:</h1>
+      <h1 class="text-xl font bold text-white">{{ $t('Follow Us:') }}</h1>
       <hr />
       <div>
         <a href="https://www.facebook.com/RESTigray1978" target="_blank">
@@ -137,11 +137,11 @@ onMounted(fetchServices)
     </div>
   </section>
   <!-- bg-[#53900F]/10  -->
-  <div class="w-full bg-[#53900F]/10 text-BLACK flex justify-between px-[2%] ">
+  <div class="w-full bg-[#53900F]/10 text-BLACK flex justify-between px-[2%]">
     <p class="text-center p-2">© 2024 REST. All rights reserved.</p>
     <div class="flex gap-2 items-center justify-center">
       <h1>Powered by</h1>
-      <a href="https://iq-businesses.com/" target="_blank" class=""
+      <a href="https://iq-businesses.com/" target="_blank" class="text-gray-600"
         >IQ Business Group PLC</a
       >
     </div>

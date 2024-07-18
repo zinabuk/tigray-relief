@@ -4,6 +4,8 @@ import { BASE_AVATAR } from '@/config'
 // const news = async () => {
 //   const response = await ApiService.get()
 // }
+import slugify from '@/utils/slugify'
+
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -51,8 +53,15 @@ onMounted(() => {
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
     <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1>
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 bg-white shadow-xl">
-      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4 shadow-xl p-4">
-        <div z:class="[i % 2 === 0 ? 'order-2' : 'order-1', overflow-hidden]" class="overflow-hidden">
+      <div
+        v-for="(event, i) in blogs"
+        :key="i"
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 shadow-xl p-4"
+      >
+        <div
+          z:class="[i % 2 === 0 ? 'order-2' : 'order-1', overflow-hidden]"
+          class="overflow-hidden"
+        >
           <img
             :src="BASE_AVATAR + event.eventImage"
             alt=""
@@ -70,7 +79,10 @@ onMounted(() => {
             {{ event.eventTitle[currentLanguage] }}
           </h3>
           <router-link
-            :to="{ name: 'blog-detail', params: { title: event.eventTitle[currentLanguage] } }"
+            :to="{
+              name: 'blog-detail',
+              params: { title: slugify(event.eventTitle[currentLanguage]) }
+            }"
             class="text-green-600 font-bold"
             >{{ $t('Read More') }}</router-link
           >
