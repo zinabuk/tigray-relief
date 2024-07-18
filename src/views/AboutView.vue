@@ -186,10 +186,10 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
 
   <!-- timeline -->
   <div class="relative w-full flex flex-col px-[2%] gap-4 py-12 bg-green-900/10">
-    <div class="grid grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
+    <div class="grid md:grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
       <div
         class="flex gap-4 bg-white shadow-2xl p-4"
-        :class="[i % 2 === 0 ? 'order-1' : 'order-2']"
+        :class="[i % 2 === 0 ? 'md:order-1' : 'md:order-2']"
       >
         <div class="p-2 space-y-6">
           <div class="timeline-content">
@@ -204,7 +204,7 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
        
       </div> -->
 
-      <div :class="[i % 2 === 0 ? 'order-2' : 'order-1', 'flex gap-6']">
+      <div :class="[i % 2 === 0 ? 'md:order-2' : 'md:order-1', 'flex gap-6']">
         <div
           class="h-full border-2 border-gray-500 border-r-0 border-t-0 border-b-0 relative flex flex-col zjustify-between"
         >
@@ -220,7 +220,7 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
   </div>
   <!-- Our teams section -->
   <section class="flex flex-col px-[1%] md:px-[2%] gap-4 py-6 md:py-12 bg-white">
-    <h1 class="text-4xl font-bold text-center">Our Team</h1>
+    <h1 class="text-4xl font-bold text-center">Our Public Figures</h1>
     <div
       class="flex flex-wrap gap-4 py-8 justify-center items-center"
       v-if="teams.length && teams.length > 0"

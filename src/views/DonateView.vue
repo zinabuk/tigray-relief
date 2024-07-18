@@ -69,21 +69,19 @@ let cAmount = ref('')
     <section class="w-full px-[2%] py-12 bg-gray-50">
       <div class="shadow bg-white rounded-lg p-12">
         <div>
-          <h4 class="text-lg font-bold mb-2">
-            Donate to bring a relief to our communities
-          </h4>
+          <h4 class="text-lg font-bold mb-2">Donate to bring a relief to our communities</h4>
           <div class="grid grid-cols-2 gap-12">
             <button
               class="text-white bg-blue-500 p-2 inline-block self-start rounded"
               @click="showModal = true"
             >
-              Use telebirr
+              Use other service
             </button>
             <button
-              @click="showForm = true"
+              @click="showForm = !showForm"
               class="text-white bg-[#53900F] p-2 inline-block self-start rounded"
             >
-              Use REST form
+              {{ showForm ? 'Hide REST form' : 'Use REST form' }}
             </button>
           </div>
         </div>

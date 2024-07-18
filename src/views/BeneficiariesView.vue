@@ -61,9 +61,9 @@ onMounted(() => {
       <div
         v-for="(benefer, i) in beneficiaries"
         :key="i"
-        class="w-full flex zmd:grid-cols-2 gap-8 p-4 shadow"
+        class="w-full grid md:grid-cols-2 gap-8 p-4 shadow"
       >
-        <div :class="[i % 2 === 0 ? 'order-1' : 'order-2', 'overflow-hidden basis-1/2']">
+        <div :class="[i % 2 === 0 ? 'md:order-1' : 'md:order-2', 'overflow-hidden basis-1/2']">
           <img
             v-if="benefer.image"
             :src="BASE_AVATAR + benefer.image"
@@ -75,7 +75,7 @@ onMounted(() => {
           </h1>
         </div>
         <div
-          :class="[i % 2 === 0 ? 'order-2' : 'order-1']"
+          :class="[i % 2 === 0 ? 'md:order-2' : 'md:order-1']"
           class="flex flex-col flex-wrap gap-4 items-start justify-censter basis-1/2"
         >
           <h1 class="text-2xl">
