@@ -65,30 +65,42 @@ export default {
         .attr('transform', `translate(${source.y0},${source.x0})`)
         .on('click', this.click)
 
+      //nodeEnter
+        //.append('rect')
+        //.attr('width', 100)
+        //.attr('height', 30)
+        //.attr('x', -50)
+        //.attr('y', -15)
+        //.attr('fill', '#fff')
+        //.attr('stroke', 'steelblue')
+        //.attr('stroke-width', 1.5)
       nodeEnter
-        .append('rect')
-        .attr('width', 100)
-        .attr('height', 30)
-        .attr('x', -50)
-        .attr('y', -15)
-        .attr('fill', '#fff')
+        .append('circle')
+	.attr('r', '40')
         .attr('stroke', 'steelblue')
-        .attr('stroke-width', 1.5)
+        .attr('fill', 'white')
+
+      nodeEnter
+        .append('svg:image')
+        .attr('x', -40) // Adjust position as needed
+        .attr('y', -40) // Adjust position as needed
+        .attr('width', 80) // Adjust size as needed
+        .attr('height', 80)
+        .attr("xlink:href", d => d.data.image)
+	.attr("clip-path", "circle()")
 
       nodeEnter
         .append('text')
-        .attr('dy', 3)
-        .attr('x', 0)
+        .attr('y', 15)
+        .attr('x', -80)
         .style('text-anchor', 'middle')
         .text((d) => d.data.name)
-
       nodeEnter
         .append('text')
-        .attr('dy', -10)
-        .attr('x', 0)
+        .attr('dy', 0)
+        .attr('x', -100)
         .style('text-anchor', 'middle')
-        .text((d) => d.data.role)
-
+        .text((d) => d.data.department)
       const nodeUpdate = nodeEnter.merge(node)
 
       nodeUpdate
@@ -97,14 +109,9 @@ export default {
         .attr('transform', (d) => `translate(${d.y},${d.x})`)
 
       nodeUpdate
-        .select('rect')
-        .attr('width', 100)
-        .attr('height', 30)
-        .attr('x', -50)
-        .attr('y', -15)
-        .attr('fill', '#fff')
-        .attr('stroke', 'steelblue')
-        .attr('stroke-width', 1.5)
+        .append("svg")
+        .attr("width", 500)
+        .attr("height", 500)
 
       const nodeExit = node
         .exit()

@@ -159,28 +159,45 @@ onMounted(() => {
       Add aboutUs
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-4 place-content-center">
       <div
         v-for="(service, i) in services"
         :key="i"
-        class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
+        class="p-4 flex flex-col gap-2 zbg-white justify-between shadow-xl bg-[#53900F]/10"
       >
         <img
           v-if="service.images"
-          :src="BASE_AVATAR + service.images"
+          src="http://localhost:7000/api/v1/images/receipt%20.jpeg-1720696742691-738076013.jpeg"
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
-
+        <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
+        <h1 class="text-2xl font-bold">Our Establishment</h1>
         <h1 class="text-xl ">{{ service.establishment[currentLanguage] }}</h1>
+      </div>
+
+       <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
+        <h1 class="text-2xl font-bold">Our Mission</h1>
         <p class="line-clamp-5">
           {{ service.mission[currentLanguage] }}
         </p>
+        </div>
+         <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
+        <h1 class="text-2xl font-bold">Our Vision</h1>
         <p class="text-xl ">{{ service.vision[currentLanguage] }}</p>
+        </div>
+
+         <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
+        <h1 class="text-2xl font-bold">Our Core Values</h1>
         <p class="line-clamp-5">
           {{ service.coreValues[currentLanguage] }}
         </p>
+        </div>
+
+         <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
+        <h1 class="text-2xl font-bold">Our Strategy</h1>
         <p class="text-xl ">{{ service.expertise[currentLanguage] }}</p>
+          </div>
         <div class="flex gap-2 justify-end">
           <button @click="editService(service)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>

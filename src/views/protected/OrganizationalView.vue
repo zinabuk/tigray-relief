@@ -63,7 +63,18 @@ export default {
     };
 
     onMounted(fetchNodes);
+let edit = ref(false)
+const openEditnModal = (node) => {
+  form.value = {
+    id: node.id,
+    name: node.name,
+    department: node.department,
+    image: node.image,
+  }
 
+  showModal.value = true;
+    edit.value = true
+}
     const openModal = (node, isEdit = false) => {
       currentNode.value = node;
       showModal.value = true;
@@ -75,6 +86,8 @@ export default {
         resetForm();
       }
     };
+
+
 
     const closeModal = () => {
       showModal.value = false;
@@ -189,6 +202,7 @@ export default {
       currentNode,
       showModal,
       isEditMode,
+      openEditnModal,
       openModal,
       closeModal,
       handleFileChange,
@@ -202,7 +216,9 @@ export default {
 </script>
 
 <template>
-  <div class="px-12">
+  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+
+  <div class="grid grid-cols-1 md:grid-cols-1 gap-4 place-content-center">
     <div class="px-12 pt-4">
       <h2 class="text-2xl text-bold text-green-900">Organizational Structure</h2>
       <br>
@@ -218,7 +234,7 @@ export default {
           :key="index"
           :node="node"
           @open-modal="openModal"
-          @edit-node="openModal"
+          @edit-node="openEditnModal"
           @delete-node="deleteNode"
         />
       </template>
@@ -229,7 +245,7 @@ export default {
     <div v-if="showModal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h3 class="text-lg font-medium mb-4">{{ currentNode ? (isEditMode ? 'Edit Node' : 'Add Child Node') : 'Add Root Node' }}</h3>
-        <form @submit.prevent="isEditMode ? updateNode() : (currentNode ? addChildNode() : addRootNode())">
+        <form @submit.prevent="edit ? updateNode() : (currentNode ? addChildNode() : addRootNode())">
           <div>
             <label for="nodeName">Name:</label>
             <BaseInput v-model="form.name" type="text" id="nodeName" required />
@@ -250,4 +266,5 @@ export default {
       </div>
     </div>
   </div>
+  </section>
 </template>
