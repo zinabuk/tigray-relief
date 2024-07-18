@@ -2,6 +2,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import LeftSide from '@/components/protected/LeftSide.vue'
 import { BASE_AVATAR } from '@/config'
@@ -13,7 +14,7 @@ const router = useRouter()
 const name = ref(localStorage.getItem('name'))
 
 
-
+const { minimize } = storeToRefs(useAuthStore())
 let showModal = ref(false)
 const hideDropdown = () => {
   showModal.value = false
@@ -62,12 +63,25 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 </script>
+
 <template>
-  <section class="w-full bg-[#53900F]/15 " >
-    <header class="flex items-center justify-between sticky shadow zbg-white/100 z-10 top-0 px-2">
-      <div class="w-[18%] flex items-center justify-between">
-        <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16 w-full" />
-        <div><font-awesome-icon icon="bars" class="text-yellow-300"></font-awesome-icon></div>
+  <section class="w-full bg-[#53900F]/15">
+    <header
+      class="flex items-center justify-between sticky shadow zbg-white/100 z-50 top-0 px-2 bg-[#53900F]"
+    >
+      <div :class="[!minimize ? 'w-[18%]' : 'w-[2%] gap-2', 'flex items-center justify-between ']">
+        <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" v-if="!minimize" />
+        <img
+          src="@/assets/rest-logo.png"
+          alt=""
+          srcset=""
+          class="h-16 w-16 object-contain"
+          v-else
+        />
+
+        <button @click="minimize = !minimize">
+          <font-awesome-icon icon="bars" class="text-yellow-300"></font-awesome-icon>
+        </button>
       </div>
       <div class="flex justify-center items-center gap-8">
         <div class="">
@@ -164,12 +178,16 @@ onUnmounted(() => {
             </button>
           </div>
         </header>
-    <div class="w-full flex flex-wrap   ">
-      <LeftSide bar-class="w-[18%]"></LeftSide>
+
+        <div class="w-full flex flex-wrap relative">
+      <LeftSide
+        bar-class="shadow-lgx px-2 h-screen sticky left-0 top-[84px] xz-10 bottom-0 overflow-auto bg-white
+        "
+        :class="[!minimize? 'w-[18%]' : 'w-2%', 'py-4']"
+      ></LeftSide>
       <router-view></router-view>
-      </div>
+    </div>
       </section>
 </template>
-
 
 

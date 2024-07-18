@@ -21,6 +21,7 @@ const SIDEBARITEMS = {
     { label: 'FAQs', name: 'admin-faqs', icon: 'quote-left' },
     { label: 'Beneficiary', name: 'admin-beneficiary', icon: 'quote-left' },
     { label: 'Policy', name: 'admin-policy', icon: 'quote-left' },
+    { label: 'contact address', name: 'admin-contacts', icon: 'quote-left' },
     
     { label: 'Documents', name: 'admin-documents', icon: 'quote-left' },
     { label: 'Publications', name: 'admin-publications', icon: 'quote-left' },
