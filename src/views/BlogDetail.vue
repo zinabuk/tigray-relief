@@ -1,6 +1,6 @@
 <script setup>
 // import SpinningCard from '@/components/open/SpinningCard.vue'
-// import slugify from '@/utils/slugify'
+import slugify from '@/utils/slugify'
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 // import dayjs from 'dayjs'
@@ -20,13 +20,14 @@ defineProps({
 
 const route = useRoute()
 const router = useRouter()
-const event = ref({})
+const blogDetail = ref([])
 
 async function getBlog() {
   try {
     const response = await ApiService.get('/admin/event/' + route.params.title)
     if (response.success) {
-      event.value = response.data.map((item) => ({
+      // alert("OK")
+      blogDetail.value = response.data.splice(0, 1).map((item) => ({
         ...item,
         category: JSON.parse(item.category),
         eventTitle: JSON.parse(item.eventTitle)
@@ -53,6 +54,7 @@ async function getNews() {
     const response = await ApiService.get('/admin/events')
     if (response.success) {
       news.value = response.data
+      console.log(response.data)
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
@@ -76,12 +78,16 @@ onMounted(() => {
 
 <template>
   <section class="w-full bg-[#288fb2]/10">
-    <div class="flex justify-center py-12 px-[7%]">
-      <div class="relative w-full md:w-[60%] flex flex-col items-center justify-center group">
+    <div class="flex justify-center py-12 px-[7%]" v-if="blogDetail && blogDetail.length > 0">
+      <div
+        class="relative w-full md:w-[60%] flex flex-col items-center justify-center group"
+        v-for="(blog, i) in blogDetail"
+        :key="i"
+      >
         <div class="w-full max-h-[600px] overflow-hiddden">
           <img
-            v-if="event.image"
-            :src="BASE_AVATAR + `${event.image}`"
+            v-if="blog.eventImage"
+            :src="BASE_AVATAR + `${blog.eventImage}`"
             alt="My company"
             class="w-full h-full object-cover object-center"
             loading="lazy"
@@ -90,20 +96,15 @@ onMounted(() => {
 
         <div class="flex flex-col gap-1 py-2 bg-white translation-all duration-1000 px-4 relative">
           <div class="flex flex-col gap-1 py-2">
-            <!-- <p>{{ event }}</p> -->
-            <!-- <p>{{ language }}</p> -->
-            <h2 class="meyla-subtitle whitespace-normal break-all text-[#288FB2]">
-              {{ language === 'en' ? events[0]?.title.en : events[0]?.title.ti }}
-            </h2>
+            <h2 class="meyla-subtitle whitespace-normal break-all text-[#288FB2]"></h2>
             <div class="flex gap-2 text-gray-400">
               <h1 class="">
-                {{ formattedDate(event.eventDate) }}
+                {{ blog.eventDate }}
               </h1>
-              <p>{{ $t('By') }} {{ event.publisher }}</p>
-              <!-- <h3>By <span>meyla admin</span></h3> -->
+              <p>{{ $t('By') }} {{ blog.eventOrganizer }}</p>
             </div>
             <p class="text-gray-700 selection:bg-[#288FB2] selection:text-white">
-              <span> </span> {{ language === 'en' ? events[0]?.body.en : events[0]?.body.ti }}
+              <span> </span> {{ blog.eventDescription[currentLanguage] }}
             </p>
           </div>
         </div>
@@ -124,53 +125,12 @@ onMounted(() => {
             data-aos="fade-upx"
             class="relative group bg-white/100x border rounded bg-white"
           >
-            <router-link
-              :to="{
-                name: 'new-detail',
-                params: {
-                  title:
-                    language === 'en' ? slugify(events[0].title.en) : slugify(events[0].title.ti)
-                }
-              }"
-              class="block"
-            >
-              <div class="w-full h-[160px] p-1">
-                <img
-                  :src="BASE_AVATAR + `${event.image}`"
-                  alt="My company"
-                  class="w-full h-full object-cover block"
-                  loading="lazy"
-                />
-              </div>
-            </router-link>
-            <div
-              class="flex flex-col gap-2 py-6 group-hover:shadow-lg group-hover:bg-white translation-all duration-1000 px-4 relative"
-            >
-              <div class="flex flex-col gap-2 py-2">
-                <router-link
-                  class="text-lgx whitespace-normal break-all hover:text-[#288FB2] text-meyla-color1 line-clamp-2"
-                  :to="{
-                    name: 'new-detail',
-                    params: {
-                      title:
-                        language === 'en'
-                          ? slugify(events[0].title.en)
-                          : slugify(events[0].title.ti)
-                    }
-                  }"
-                  >{{ language === 'en' ? events[0]?.title.en : events[0]?.title.ti }}inhale
-                  confidence exhale doubtinhale confidence exhale doubtinhale confidence exhale
-                  doubt</router-link
-                >
-
-                <h4 class="text-[#001F3F]X text-[#87CEFA]">
-                  {{ language === 'en' ? events[0]?.category.en : events[0]?.category.ti }}
-                </h4>
-              </div>
-            </div>
+            <p>{{ event.eventTitle }}</p>
           </div>
         </div>
-        <router-link :to="{ name: 'news' }" class="text text-lgx hover:text-[#288FB2] font-semibold"
+        <router-link
+          :to="{ name: 'blogs' }"
+          class="text text-lgx hover:text-[#288FB2] font-semibold"
           >VIEW ALL NEWS</router-link
         >
       </div>
