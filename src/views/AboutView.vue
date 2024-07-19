@@ -194,7 +194,11 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
       >
         <div class="p-2 space-y-6">
           <div class="timeline-content">
-            <img src="@/assets/hero-o.jpg" alt="Timeline image" class="timeline-image rounded-lg" />
+            <img
+              :src="BASE_AVATAR + history.image"
+              alt="Timeline image"
+              class="timeline-image rounded-lg"
+            />
             <div class="timeline-year">
               <span class="text-[20px] font-bold">{{ history.year }}</span>
             </div>
