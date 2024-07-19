@@ -1,8 +1,9 @@
 <template>
-  <div ref="tree" class=""></div>
+  <div ref="tree" class="o"></div>
 </template>
 
 <script>
+import { BASE_AVATAR } from '@/config'
 import * as d3 from 'd3'
 
 export default {
@@ -27,9 +28,9 @@ export default {
   methods: {
     initializeTree() {
       const data = this.data
-      const width = 800
+      const width = 1000
       const height = 600
-      const margin = { top: 20, right: 120, bottom: 20, left: 120 }
+      const margin = { top: 20, right: 120, bottom: 20, left: 180 }
 
       const svg = d3
         .select(this.$refs.tree)
@@ -54,7 +55,7 @@ export default {
       const nodes = treeData.descendants()
       const links = treeData.descendants().slice(1)
 
-      nodes.forEach((d) => (d.y = d.depth * 180))
+      nodes.forEach((d) => (d.y = d.depth * 220))
 
       const node = this.svg.selectAll('g.node').data(nodes, (d) => d.id || (d.id = ++this.i))
 
@@ -76,17 +77,24 @@ export default {
         //.attr('stroke-width', 1.5)
       nodeEnter
         .append('circle')
-	.attr('r', '40')
+	.attr('r', '60')
         .attr('stroke', 'steelblue')
         .attr('fill', 'white')
 
       nodeEnter
         .append('svg:image')
-        .attr('x', -40) // Adjust position as needed
-        .attr('y', -40) // Adjust position as needed
-        .attr('width', 80) // Adjust size as needed
-        .attr('height', 80)
-        .attr("xlink:href", d => d.data.image)
+        .attr('x', -60) // Adjust position as needed
+        .attr('y', -60) // Adjust position as needed
+        .attr('width', 120) // Adjust size as needed
+        .attr('height', 120)
+        .attr("xlink:href", d => {
+          if(d.data.image == BASE_AVATAR+"null"){
+            return "/image/org.jpg";
+          }
+          else{
+            return d.data.image;
+          }
+        })
 	.attr("clip-path", "circle()")
 
       nodeEnter

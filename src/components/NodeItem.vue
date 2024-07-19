@@ -3,6 +3,7 @@
     <p>Name: {{ node.name }}</p>
     <p>Department: {{ node.department }}</p>
     <img v-if="node.image" :src="BASE_AVATAR + node.image" alt="Node Image" class="w-24 h-24 rounded-full">
+    <img v-else src="/image/org.jpg" alt="" class="w-24 h-24 rounded-full">
     <div class="flex gap-2">
       <BaseButton @click="$emit('open-modal', node)">Add Child</BaseButton>
       <!-- <BaseButton @click="$emit('edit-node', node.id)">Edit</BaseButton> -->

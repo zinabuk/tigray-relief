@@ -143,7 +143,7 @@ onMounted(() => {
     <!-- Services -->
     <BaseButton @click="showAddModal = true" class="self-end">
       <font-awesome-icon icon="add" class="text-yellow-500"></font-awesome-icon>
-      Add Team</BaseButton
+      Add Public Figure</BaseButton
     >
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
