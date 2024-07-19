@@ -1,13 +1,8 @@
 <script setup>
 import ApiService from '@/services/apiService'
-import { BASE_AVATAR } from '@/config'
 import { BASE_UPLOAD } from '@/config'
 
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-
-// /admin/publications
-// /admin/publications
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -29,9 +24,7 @@ const fetchTenders = async () => {
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
-      setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
-      }, 2000)
+      setTimeout(() => {}, 2000)
     }
   }
 }
