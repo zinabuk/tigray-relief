@@ -29,6 +29,7 @@ const fetchNews = async () => {
   }
 }
 
+
 onMounted(() => {
   fetchNews()
 })

@@ -1,13 +1,8 @@
 <script setup>
 import ApiService from '@/services/apiService'
-import { BASE_AVATAR } from '@/config'
 import { BASE_UPLOAD } from '@/config'
 
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-
-// /admin/publications
-// /admin/publications
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -18,7 +13,7 @@ const publications = ref([])
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/publications')
-    if (response.success) { 
+    if (response.success) {
       publications.value = response.data.map((item) => ({
         ...item,
         title: JSON.parse(item.title),
@@ -29,9 +24,7 @@ const fetchTenders = async () => {
     if (error.response && error.response.data && error.response.status === 404) {
       return
     } else {
-      setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
-      }, 2000)
+      setTimeout(() => {}, 2000)
     }
   }
 }
@@ -72,7 +65,9 @@ onMounted(() => {
             alt=""
             class="h-[300px] w-full rounded-xl zw-full object-contain"
           />
-          <div class="gap-4 items-end p-4 justify-start flex absolute inset-0 bg-[#53900F]/20">
+          <div
+            class="gap-4 items-end p-4 justify-start flex absolute inset-0 group-hover:bg-[#53900F]/60"
+          >
             <button class="bg-white text-[#53900F] px-4 py-2 rounded-xl">
               <a
                 :href="BASE_UPLOAD + document.document"

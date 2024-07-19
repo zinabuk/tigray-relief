@@ -27,7 +27,7 @@ async function getBlog() {
     const response = await ApiService.get('/admin/event/' + route.params.title)
     if (response.success) {
       // alert("OK")
-      blogDetail.value = response.data.splice(0, 1).map((item) => ({
+      blogDetail.value = response.data.map((item) => ({
         ...item,
         category: JSON.parse(item.category),
         eventTitle: JSON.parse(item.eventTitle)
@@ -53,8 +53,12 @@ async function getNews() {
   try {
     const response = await ApiService.get('/admin/events')
     if (response.success) {
-      news.value = response.data
-      console.log(response.data)
+      news.value = response.data.splice(0, 4).map((item) => ({
+        ...item,
+        category: JSON.parse(item.category),
+        eventTitle: JSON.parse(item.eventTitle),
+        eventDescription: JSON.parse(item.eventDescription)
+      }))
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
@@ -65,6 +69,28 @@ async function getNews() {
       }, 5000)
     }
   }
+}
+
+function shareOnFacebook() {
+  const url = 'https://example.com'
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+  window.open(facebookUrl, '_blank')
+}
+
+function shareOnLinkedIn() {
+  const url = 'https://example.com'
+  const title = 'Check out this awesome article!'
+  const description = 'This is a description of the article.'
+  const linkedInUrl = `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}`
+  window.open(linkedInUrl, '_blank')
+}
+
+function shareOnTwitter() {
+  const url = 'https://example.com'
+  const title = 'Check out this awesome article!'
+  const hashtags = 'REST'
+  const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}&hashtags=${encodeURIComponent(hashtags)}`
+  window.open(twitterUrl, '_blank')
 }
 watchEffect(() => {
   if (route.params.title) {
@@ -78,13 +104,13 @@ onMounted(() => {
 
 <template>
   <section class="w-full bg-[#288fb2]/10">
-    <div class="flex justify-center py-12 px-[7%]" v-if="blogDetail && blogDetail.length > 0">
+    <div class="flex justify-center py-12 px-[2%]" v-if="blogDetail && blogDetail.length > 0">
       <div
-        class="relative w-full md:w-[60%] flex flex-col items-center justify-center group"
+        class="relative w-full md:w-[80%] flex flex-col items-center justify-center group"
         v-for="(blog, i) in blogDetail"
         :key="i"
       >
-        <div class="w-full max-h-[600px] overflow-hiddden">
+        <div class="w-full h-[600px] overflow-hiddden">
           <img
             v-if="blog.eventImage"
             :src="BASE_AVATAR + `${blog.eventImage}`"
@@ -104,8 +130,24 @@ onMounted(() => {
               <p>{{ $t('By') }} {{ blog.eventOrganizer }}</p>
             </div>
             <p class="text-gray-700 selection:bg-[#288FB2] selection:text-white">
-              <span> </span> {{ blog.eventDescription[currentLanguage] }}
+              <span> </span> {{ blog.eventDescription }}
             </p>
+
+            <div class="py-6">
+              <h1 class="ztext-white font-bold">{{ $t('SHARE ON SOCIAL MEDIA') }}</h1>
+              <div class="flex">
+                <a class="ztext-white" href="#" @click="shareOnFacebook()">
+                  <font-awesome-icon :icon="['fab', 'facebook']" class="text-whitex p-2 rounded">
+                  </font-awesome-icon> </a
+                ><a class="ztext-white" href="#" @click="shareOnTwitter()">
+                  <font-awesome-icon :icon="['fab', 'twitter']" class="text-whitex p-2 rounded">
+                  </font-awesome-icon> </a
+                ><a class="ztext-white" href="#" @click="shareOnLinkedIn()">
+                  <font-awesome-icon :icon="['fab', 'linkedin']" class="text-whitex p-2 rounded">
+                  </font-awesome-icon>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -118,19 +160,25 @@ onMounted(() => {
           <h1 class="text text-xl md:text-4xl font-semibold">Latest News</h1>
           <hr class="w-3/4 bg-[#288FB2] h-[2px]" />
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div
             v-for="(event, index) in news"
             :key="index"
             data-aos="fade-upx"
-            class="relative group bg-white/100x border rounded bg-white"
+            class="relative group bg-white/100x border rounded bg-white shadow-xl"
           >
-            <p>{{ event.eventTitle }}</p>
+            <div>
+              <img :src="BASE_AVATAR + event.eventImage" alt="" />
+            </div>
+            <div class="flex flex-col gap-2 p-2">
+              <h1 class="font-semibold text-lg">{{ event.eventTitle[currentLanguage] }}</h1>
+              <p class="line-clamp-5">{{ event.eventDescription[currentLanguage] }}</p>
+            </div>
           </div>
         </div>
         <router-link
           :to="{ name: 'blogs' }"
-          class="text text-lgx hover:text-[#288FB2] font-semibold"
+          class="text text-lgx hover:text-[#53900F] font-semibold"
           >VIEW ALL NEWS</router-link
         >
       </div>

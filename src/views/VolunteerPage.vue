@@ -4,28 +4,28 @@ import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 
-import ApiService from '@/services/apiService' 
- 
+import ApiService from '@/services/apiService'
+
 let form = ref({
   interestedIn: '',
   firstName: '',
   lastName: '',
   email: '',
   phoneNumber: '',
-  description: '', 
+  description: ''
 })
 
 const submitVolunteer = async () => {
   try {
     const response = await ApiService.post('/users/volunteer', form.value)
-    alert(response.success)
+    // alert(response.success)
     if (response.success) {
-    //   alert('Donation submitted successfully')
+      //   alert('Donation submitted successfully')
       form.value = {}
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
-      return
+      console.log('err')
     } else {
       setTimeout(() => {
         // router.push({ name: 'NetworkError' })
@@ -34,7 +34,7 @@ const submitVolunteer = async () => {
   }
 }
 
-let showModal = ref(false) 
+let showModal = ref(false)
 </script>
 
 <template>
@@ -69,16 +69,16 @@ let showModal = ref(false)
           <h5 class="text-lg font-bold mb-2">Donation Amount</h5>
         </div> -->
 
-        <form class="flex flex-col" @submit.prevent="submitDonation">
+        <form class="flex flex-col" @submit.prevent="submitVolunteer">
           <div class="mb-4">
             <label class="text-gray-600"
-              >To which branch  would you like to provide a volunteer service?</label
+              >To which branch would you like to provide a volunteer service?</label
             >
             <BaseInput
               type="text"
               inputClass="border border-yellow-300"
               label="Enter your area of interest "
-              v-model="form.service"
+              v-model="form.interestedIn"
               placeholder="Interested in"
               required
             ></BaseInput>

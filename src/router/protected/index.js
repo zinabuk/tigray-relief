@@ -86,14 +86,14 @@ const PROTECTED_ROUTES = [
           role: ['admin']
         }
       },
-      
+
       {
         path: 'staff',
         component: () => import('@/views/protected/Staff/StaffIndex.vue'),
         name: 'staff-home',
         meta: {
           requiresAuth: true,
-          role: ['staff']
+          role: ['admin']
         }
       },
       {
@@ -120,7 +120,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-blogs',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -129,7 +129,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-contacts',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -138,7 +138,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-socialMedias',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -147,7 +147,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-faqs',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -156,17 +156,17 @@ const PROTECTED_ROUTES = [
         name: 'admin-beneficiary',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
-      //resources 
+      //resources
       {
         path: 'documents',
         component: () => import('@/views/protected/DocumentsView.vue'),
         name: 'admin-documents',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -175,7 +175,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-publications',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -184,16 +184,16 @@ const PROTECTED_ROUTES = [
         name: 'admin-strategy',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
-      }, 
+      },
       {
         path: 'policy',
         component: () => import('@/views/protected/PolicyView.vue'),
         name: 'admin-policy',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -202,7 +202,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-add-blogs',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -211,7 +211,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-services',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -220,7 +220,7 @@ const PROTECTED_ROUTES = [
         name: 'team',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -229,7 +229,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-add-team',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -238,7 +238,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-volunteers',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -247,7 +247,7 @@ const PROTECTED_ROUTES = [
         name: 'partner',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {
@@ -256,7 +256,7 @@ const PROTECTED_ROUTES = [
         name: 'donations',
         meta: {
           requiresAuth: true,
-          role: ['admin', 'staff']
+          role: ['admin']
         }
       },
       {

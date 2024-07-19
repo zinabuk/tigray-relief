@@ -53,7 +53,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'service',
+        path: 'services',
         name: 'services',
         component: () => import('@/views/ServicesView.vue'),
         meta: {
@@ -69,13 +69,13 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: '/service/:title',
+        path: '/services/:title',
         name: 'service-detail',
         props: true,
         component: () => import('@/views/ServiceDetail.vue'),
         meta: {
           requiresAuth: false,
-          title: "Service Detail"
+          title: 'Service Detail'
         }
       },
       {
@@ -86,7 +86,7 @@ const OPEN_ROUTES = [
           requiresAuth: false
         }
       },
-      // resources 
+      // resources
       {
         path: 'documents',
         name: 'documents',
@@ -193,6 +193,14 @@ const OPEN_ROUTES = [
         meta: {
           requiresAuth: false
         }
+      },
+      {
+        path: 'auth/reset-password',
+        name: 'reset-password',
+        component: () => import('@/views/ResetPassword.vue'),
+        meta: {
+          requiresAuth: false
+        }
       }
     ]
   },
@@ -201,7 +209,8 @@ const OPEN_ROUTES = [
     path: '/Login',
     name: 'login',
     component: () => import('@/views/LoginView.vue')
-  }, {
+  },
+  {
     path: '/timeline',
     name: 'timeline',
     component: () => import('@/views/TimeLine.vue')

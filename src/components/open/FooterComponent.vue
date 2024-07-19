@@ -159,6 +159,7 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
     <div class="flex flex-col gap-2">
       <h1 class="text-xl font bold text-white">{{ $t('Follow Us:') }}</h1>
       <hr />
+      <!-- <h2>@zedkbro</h2> -->
       <div class="flex items-center zjustify-center">
         <a
           :href="social.link"
@@ -205,6 +206,7 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
   </section>
   <!-- bg-[#53900F]/10  -->
   <div class="w-full bg-[#53900F]/10 text-black flex flex-col md:flex-row justify-between px-[2%]">
+   
     <p class="text-center p-2">© 2024 REST. All rights reserved.</p>
     <div class="flex gap-2 items-center justify-center">
       <h1>Powered by</h1>
