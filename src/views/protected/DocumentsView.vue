@@ -114,14 +114,14 @@
                   placeholder="Image"
                   accept="application/pdf"
                 ></BaseFileInput>
-                <BaseFileInput
-                  @change="handleImageChange"
-                  label="Add picture"
-                  type="file"
-                  inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Image"
-                  accept="image/*"
-                ></BaseFileInput>
+                <BaseInput
+                    @change="handleImageChange"
+                    label="Add picture"
+                    type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="image/*"
+                  ></BaseInput>
                 </div>
                 <span>{{ logo }}</span>
                 <span>{{ image1 }}</span>

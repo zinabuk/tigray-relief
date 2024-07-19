@@ -15,7 +15,7 @@ const strategy = ref([])
 
 const fetchStrategies = async () => {
   try {
-    const response = await ApiService.get('/admin/strategy')
+    const response = await ApiService.get('/admin/strategies')
     if (response.success) {
       alert("OK")
       strategy.value = response.data.map((item) => ({
