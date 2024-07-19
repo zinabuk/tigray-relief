@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watchEffect } from 'vue'
-// import { storeToRefs } from 'pinia'
+import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 import BaseButton from '@/components/base/BaseButton.vue'
@@ -8,6 +8,7 @@ import BaseInput from '@/components/base/BaseInput.vue'
 
 import { useAuthStore } from '@/stores/auth'
 const role = ref(localStorage.getItem('role') || '')
+const { errorMessage } = storeToRefs(useAuthStore())
 
 const router = useRouter()
 
@@ -28,11 +29,19 @@ const formData = ref({
 const loginLoader = ref(false)
 
 async function handleLogin() {
-  const res = await logIn(formData.value)
-  if (res) {
-    router.push({ name: 'dashboard' })
-    formData.value = {}
+  try {
+    const res = await logIn(formData.value)
+    if (res) {
+      router.push({ name: 'dashboard' })
+      formData.value = {}
+    }
+  } catch (error) {
+    // alert(error)
   }
+
+  setTimeout(() => {
+    formData.value = {}
+  }, 1000)
 }
 </script>
 
@@ -81,7 +90,7 @@ async function handleLogin() {
           <span>Login</span>
         </BaseButton>
       </form>
-      <!-- <h1 class="text-xl font-semibold text-red-400">{{ message }}</h1> -->
+      <h1 class="text-lg font-semibold text-red-400" v-if="errorMessage">{{ errorMessage }}</h1>
     </div>
   </section>
 </template>

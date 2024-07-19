@@ -36,6 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
       }
     } catch (error) {
       // alert('error.response.data.message')
+      
 
       if (error.response && error.response.data && error.response.status === 404) {
         errorMessage.value = error.response.data.message

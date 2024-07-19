@@ -31,7 +31,6 @@ const fetchDocuments = async () => {
   try {
     const response = await ApiService.get('/admin/documents')
     if (response.success) {
-      alert("OK")
       documents.value = response.data.map((item) => ({
         ...item,
         title: JSON.parse(item.title),
@@ -55,7 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-full">
+  <section class="w-full ">
     <div class="w-full relative">
       <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
@@ -70,33 +69,29 @@ onMounted(() => {
     </div>
   </section>
   <!-- Services -->
-  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/15">
     <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div
-        v-for="(document, i) in documents"
-        :key="i"
-        class="grid grid-cols-1 md:grid-cols-2 gap-4"
-      >
+    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div v-for="(document, i) in documents" :key="i" class="grid gap-4 shadow-2xl zp-4 rounded-xl bg-white p-2">
         <div class="relative group">
           <img
             v-if="document.image"
-            :src="BASE_AVATAR + document.image"
+            :src="BASE_UPLOAD + document.image"
             alt=""
-            class="max-h-[500px] rounded-xl w-full object-cover"
+            class="h-[300px] w-full rounded-xl zw-full object-contain"
           />
           <div
-            class="gap-4 items-center justify-center hidden group-hover:flex absolute inset-0 bg-[#53900F]/40"
+            class="gap-4 items-end p-4 justify-start flex absolute inset-0 bg-[#53900F]/20"
           >
             <button class="bg-white text-[#53900F] px-4 py-2 rounded-xl">
-              <a :href="BASE_UPLOAD + document.document" target="_blank">Download</a>
+              <a :href="BASE_UPLOAD + document.document" target="_blank" class="flex gap-4 items-center justify-center"><font-awesome-icon icon="download"></font-awesome-icon>Download</a>
             </button>
           </div>
         </div>
 
-        <div>
-          <h1>{{ document.title[currentLanguage] }}</h1>
-          <p>{{ document.description[currentLanguage] }}</p>
+        <div class="p-4">
+          <h1 class="line-clamp-2 font-semibold">{{ document.title[currentLanguage] }}</h1>
+          <p class="line-clamp-4">{{ document.description[currentLanguage] }}</p>
         </div>
       </div>
     </div>

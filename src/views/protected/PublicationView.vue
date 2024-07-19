@@ -1,6 +1,5 @@
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
-  
     <!-- Documents -->
     <button
       @click="showAddModal = true"
@@ -27,7 +26,11 @@
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
-        <a :href="BASE_UPLOAD + publication.document" target="_blank" class="text-blue-500 underline">
+        <a
+          :href="BASE_UPLOAD + publication.document"
+          target="_blank"
+          class="text-blue-500 underline"
+        >
           {{ publication.document }}
         </a>
         <div class="flex gap-2 justify-end">
@@ -107,26 +110,26 @@
               <div class="flex justify-end gap-2 flex-col">
                 <div class="flex justify-between">
                   <BaseFileInput
-                  @change="handleFileChange"
-                  label="Attach Publication"
-                  type="file"
-                  inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Image"
-                  accept="application/pdf"
-                ></BaseFileInput> 
-                <BaseFileInput
-                  @change="handleImageChange"
-                  label="Add picture"
-                  type="file"
-                  inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Image"
-                  accept="image/*"
-                ></BaseFileInput>
-                
+                    @change="handleFileChange"
+                    label="Attach Publication"
+                    type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="application/pdf"
+                  ></BaseFileInput>
+                  <BaseInput
+                    @change="handleImageChange"
+                    label="Add picture"
+                    type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="image/*"
+                  >
+                  </BaseInput>
                 </div>
                 <div class="flex justify-between">
                   <span>{{ logo }}</span>
-                <span>{{ image1 }}</span>
+                  <span>{{ image1 }}</span>
                 </div>
 
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
@@ -143,14 +146,13 @@
 
 <script setup>
 import ApiService from '@/services/apiService'
-import {BASE_AVATAR}  from '@/config'
+import { BASE_AVATAR } from '@/config'
 import { BASE_UPLOAD } from '@/config'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import { ref, onMounted } from 'vue'
-
 
 const publications = ref([])
 const fetchPublications = async () => {
@@ -182,7 +184,7 @@ const form = ref({
   title: { en: '', ti: '', am: '' },
   description: { en: '', ti: '', am: '' },
   document: '',
-  image:''
+  image: ''
 })
 
 const logo = ref('')
@@ -192,8 +194,7 @@ const handleFileChange = (event) => {
   logo.value = file.name
 }
 
-
-const image1=ref('')
+const image1 = ref('')
 const handleImageChange = (event) => {
   const file = event.target.files[0]
   form.value.image = file
@@ -237,6 +238,7 @@ const savePublication = async () => {
         errorMessage.value = 'Failed to save Publication'
       }
     } else {
+      alert("z")
       const res = await ApiService.post('/admin/publications', formData)
       if (res.data.success) {
         successMessage.value = res.data.message
@@ -274,7 +276,7 @@ const closeModal = () => {
     title: { en: '', ti: '', am: '' },
     description: { en: '', ti: '', am: '' },
     document: '',
-    image:''
+    image: ''
   }
   edit.value = false
   logo.value = ''

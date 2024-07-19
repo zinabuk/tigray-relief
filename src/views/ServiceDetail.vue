@@ -27,7 +27,7 @@ async function getService() {
       service.value = response.data
       service.value.serviceTitle = JSON.parse(service.value.serviceTitle)
       service.value.serviceDescription = JSON.parse(service.value.serviceDescription)
-      console.log(service.value)
+    //  console.log(service.value)
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
