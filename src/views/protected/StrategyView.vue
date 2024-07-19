@@ -245,18 +245,15 @@ const saveStrategy = async () => {
 }
 
 const deleteStrategy = async (id) => {
-  const sure = window.confirm('Are you sure to delete this Strategy?')
-  if (sure) {
-    try {
-      const response = await ApiService.delete('/admin/strategies/' + id)
-      if (response.data.success) {
-        fetchStrategies()
-      } else {
-        errorMessage.value = 'Failed to delete Strategy'
-      }
-    } catch (error) {
+  try {
+    const response = await ApiService.delete('/admin/strategies/' + id)
+    if (response.data.success) {
+      fetchStrategies()
+    } else {
       errorMessage.value = 'Failed to delete Strategy'
     }
+  } catch (error) {
+    errorMessage.value = 'Failed to delete Strategy'
   }
 }
 
