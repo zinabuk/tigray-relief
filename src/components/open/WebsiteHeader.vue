@@ -212,7 +212,7 @@
             {{ $t('Resources') }}</router-link
           >
           <div
-            class="absolute hidden group-hover:flex bg-white p-6 flex-col right-0 gap-4 min-w-56 overflow-auto child top-[100%] border rounded-xl"
+            class="absolute hidden group-hover:flex bg-white p-6 flex-col left-0 gap-4 min-w-56 overflow-auto child top-[100%] border rounded-xl"
             data-aos="fade-left"
           >
             <router-link
@@ -239,7 +239,7 @@
               <span class="hover:text-[#53900F]">
                 {{ $t('Strategy') }}
               </span>
-              <hr>
+              <hr />
             </router-link>
 
             <router-link
@@ -250,7 +250,7 @@
               <span class="hover:text-[#53900F]">
                 {{ $t('Gallery') }}
               </span>
-              <hr>
+              <hr />
             </router-link>
           </div>
         </li>
@@ -304,7 +304,7 @@
               <span class="hover:text-[#53900F]">
                 {{ $t('FAQs') }}
               </span>
-              <hr>
+              <hr />
               <!-- <hr class="text-[#001F3F]" /> -->
             </router-link>
           </div>

@@ -18,7 +18,7 @@ const publications = ref([])
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/publications')
-    if (response.success) { s
+    if (response.success) { 
       publications.value = response.data.map((item) => ({
         ...item,
         title: JSON.parse(item.title),
