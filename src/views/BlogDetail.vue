@@ -133,16 +133,16 @@ onMounted(() => {
               <span> </span> {{ blog.eventDescription }}
             </p>
 
-            <div>
-              <h1 class="text-white font-bold">{{ $t('SHARE ON SOCIAL MEDIA') }}</h1>
+            <div class="py-6">
+              <h1 class="ztext-white font-bold">{{ $t('SHARE ON SOCIAL MEDIA') }}</h1>
               <div class="flex">
-                <a class="text-white" href="#" @click="shareOnFacebook()">
+                <a class="ztext-white" href="#" @click="shareOnFacebook()">
                   <font-awesome-icon :icon="['fab', 'facebook']" class="text-whitex p-2 rounded">
                   </font-awesome-icon> </a
-                ><a class="text-white" href="#" @click="shareOnTwitter()">
+                ><a class="ztext-white" href="#" @click="shareOnTwitter()">
                   <font-awesome-icon :icon="['fab', 'twitter']" class="text-whitex p-2 rounded">
                   </font-awesome-icon> </a
-                ><a class="text-white" href="#" @click="shareOnLinkedIn()">
+                ><a class="ztext-white" href="#" @click="shareOnLinkedIn()">
                   <font-awesome-icon :icon="['fab', 'linkedin']" class="text-whitex p-2 rounded">
                   </font-awesome-icon>
                 </a>
