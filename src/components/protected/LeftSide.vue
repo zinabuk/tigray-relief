@@ -27,7 +27,7 @@ watchEffect(() => {
 <template>
   <div :class="`${barClass}`" v-bind="$attrs">
     <ul class=" ">
-      <li v-for="(item, index) in navigationItems" :key="index" class="mb-2">
+      <li v-for="(item, index) in navigationItems" :key="index" class="mb-2 pl-2">
         <router-link
           :to="{ name: item.name }"
           :class="{
