@@ -256,7 +256,7 @@ const openEditnModal = (node) => {
           </div>
           <div>
             <label for="nodeImage">Image:</label>
-            <BaseFileInput @change="handleFileChange" id="nodeImage" label="Add Picture"  type="file" accept="images/*" :required="!isEditMode" />
+            <BaseFileInput @change="handleFileChange" id="nodeImage" label="Add Picture"  type="file" accept="images/*"  />
           </div>
           <div class="flex justify-between mt-4">
             <BaseButton type="submit">{{ isEditMode ? 'Update Node' : (currentNode ? 'Add Child Node' : 'Add Root Node') }}</BaseButton>

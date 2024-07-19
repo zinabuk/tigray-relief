@@ -38,7 +38,11 @@ export default {
       console.log('Original flatData:', flatData); // Debugging line
       const idMap = {};
       flatData.forEach(node => {
-        idMap[node.id] = { ...node, children: [], image: `${BASE_AVATAR}${node.image}` };
+        idMap[node.id] = { 
+          ...node, 
+          children: [], 
+          image: node.image ? `${BASE_AVATAR}${node.image}` :'https://st3.depositphotos.com/9998432/13335/v/1600/depositphotos_133352010-stock-illustration-default-placeholder-man-and-woman.jpg' 
+        };
       });
       let root = null;
       flatData.forEach(node => {
