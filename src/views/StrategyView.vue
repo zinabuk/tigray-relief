@@ -15,9 +15,8 @@ const strategy = ref([])
 
 const fetchStrategies = async () => {
   try {
-    const response = await ApiService.get('/admin/strategy')
-    if (response.success) {
-      alert("OK")
+    const response = await ApiService.get('/admin/strategies')
+    if (response.success) { 
       strategy.value = response.data.map((item) => ({
         ...item,
         title: JSON.parse(item.title),
@@ -71,7 +70,7 @@ onMounted(() => {
             alt=""
             class="h-[300px] w-full rounded-xl zw-full object-contain"
           />
-          <div class="gap-4 items-end p-4 justify-start flex absolute inset-0 bg-[#53900F]/20">
+          <div class="gap-4 items-end p-4 justify-start flex absolute inset-0 group-hover:bg-[#53900F]/60">
             <button class="bg-white text-[#53900F] px-4 py-2 rounded-xl">
               <a
                 :href="BASE_UPLOAD + document.document"

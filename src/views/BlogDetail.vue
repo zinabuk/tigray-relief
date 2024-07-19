@@ -53,8 +53,12 @@ async function getNews() {
   try {
     const response = await ApiService.get('/admin/events')
     if (response.success) {
-      news.value = response.data
-      console.log(response.data)
+      news.value = response.data.map((item) => ({
+        ...item,
+        category: JSON.parse(item.category),
+        eventTitle: JSON.parse(item.eventTitle),
+        eventDescription: JSON.parse(item.eventDescription)
+      }))
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
@@ -123,14 +127,20 @@ onMounted(() => {
             v-for="(event, index) in news"
             :key="index"
             data-aos="fade-upx"
-            class="relative group bg-white/100x border rounded bg-white"
+            class="relative group bg-white/100x border rounded bg-white shadow-xl"
           >
-            <p>{{ event.eventTitle }}</p>
+            <div>
+              <img :src="BASE_AVATAR + event.eventImage" alt="" />
+            </div>
+            <div class="flex flex-col gap-2 p-2">
+              <h1 class="font-semibold text-lg">{{ event.eventTitle[currentLanguage] }}</h1>
+              <p>{{ event.eventDescription[currentLanguage] }}</p>
+            </div>
           </div>
         </div>
         <router-link
           :to="{ name: 'blogs' }"
-          class="text text-lgx hover:text-[#288FB2] font-semibold"
+          class="text text-lgx hover:text-[#53900F] font-semibold"
           >VIEW ALL NEWS</router-link
         >
       </div>

@@ -78,10 +78,10 @@ onMounted(() => {
             v-if="document.image"
             :src="BASE_UPLOAD + document.image"
             alt=""
-            class="h-[300px] w-full rounded-xl zw-full object-contain"
+            class="h-[300px] w-full rounded-xl zw-full object-cover"
           />
           <div
-            class="gap-4 items-end p-4 justify-start flex absolute inset-0 bg-[#53900F]/20"
+            class="gap-4 items-end p-4 justify-start flex absolute inset-0 group-hover:bg-[#53900F]/60"
           >
             <button class="bg-white text-[#53900F] px-4 py-2 rounded-xl">
               <a :href="BASE_UPLOAD + document.document" target="_blank" class="flex gap-4 items-center justify-center"><font-awesome-icon icon="download"></font-awesome-icon>Download</a>
