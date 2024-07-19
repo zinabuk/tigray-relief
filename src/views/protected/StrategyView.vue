@@ -1,6 +1,5 @@
 <template>
   <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
-  
     <!-- Strategies -->
     <button
       @click="showAddModal = true"
@@ -107,21 +106,21 @@
               <div class="flex justify-end gap-2 flex-col">
                 <div class="flex justify-between">
                   <BaseFileInput
-                  @change="handleFileChange"
-                  label="Attach Strategy"
-                  type="file"
-                  inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Image"
-                  accept="application/pdf"
-                ></BaseFileInput>
-                <BaseFileInput
-                  @change="handleImageChange"
-                  label="Add picture"
-                  type="file"
-                  inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Image"
-                  accept="image/*"
-                ></BaseFileInput>
+                    @change="handleFileChange"
+                    label="Attach Strategy"
+                    type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="application/pdf"
+                  ></BaseFileInput>
+                  <BaseInput
+                    @change="handleImageChange"
+                    label="Add picture"
+                    type="file"
+                    inputClass="p-2 border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="image/*"
+                  ></BaseInput>
                 </div>
                 <span>{{ logo }}</span>
                 <span>{{ image1 }}</span>
@@ -139,14 +138,13 @@
 
 <script setup>
 import ApiService from '@/services/apiService'
-import {BASE_AVATAR}  from '@/config'
+import { BASE_AVATAR } from '@/config'
 import { BASE_UPLOAD } from '@/config'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import { ref, onMounted } from 'vue'
-
 
 const strategies = ref([])
 const fetchStrategies = async () => {
@@ -178,7 +176,7 @@ const form = ref({
   title: { en: '', ti: '', am: '' },
   description: { en: '', ti: '', am: '' },
   document: '',
-  image:''
+  image: ''
 })
 
 const logo = ref('')
@@ -188,8 +186,7 @@ const handleFileChange = (event) => {
   logo.value = file.name
 }
 
-
-const image1=ref('')
+const image1 = ref('')
 const handleImageChange = (event) => {
   const file = event.target.files[0]
   form.value.image = file
@@ -270,7 +267,7 @@ const closeModal = () => {
     title: { en: '', ti: '', am: '' },
     description: { en: '', ti: '', am: '' },
     document: '',
-    image:''
+    image: ''
   }
   edit.value = false
   logo.value = ''

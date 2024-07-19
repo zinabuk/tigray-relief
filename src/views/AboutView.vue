@@ -20,6 +20,7 @@ const fetchTeams = async () => {
 
     if (response.success) {
       teams.value = response.data.map((item) => ({
+        ...item,
         fullName: JSON.parse(item.fullName),
         biography: JSON.parse(item.biography),
         profession: JSON.parse(item.profession)
@@ -233,12 +234,11 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
       >
         <div class="w-32 h-32 rounded-full overflow-hidden mx-auto ring-2 ring-yellow-300">
           <img
-          v-if="team.image"
-          :src="BASE_AVATAR + team.image"
-          alt="yes"
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
-        />
-        {{team.image }}
+            v-if="team.image"
+            :src="BASE_AVATAR + team.image"
+            alt="yes"
+            class="h-full w-full ring-2 ring-yellow-300 rounded-full"
+          />
         </div>
         <h1 class="text-xl font-semibold">{{ team.fullName[currentLanguage] }}</h1>
         <p class="text-blue-700">{{ team.profession[currentLanguage] }}</p>

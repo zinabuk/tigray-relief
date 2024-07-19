@@ -56,7 +56,8 @@ import {
   faBrain,
   faPlus,
   faHeart,
-  faTimes
+  faTimes,
+  faDownload
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -118,7 +119,8 @@ library.add(
   faPlus,
   faHeart,
   faTimes,
-  faWhatsapp
+  faWhatsapp,
+  faDownload
 )
 
 AOS.init({ duration: 2000 })
