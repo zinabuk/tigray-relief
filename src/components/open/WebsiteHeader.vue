@@ -656,13 +656,29 @@
           class="absolute ztop-[100%] hidden group-hover:flex z-50 bg-yellow-400 right-0 p-4 shadow-2xl text-white"
         >
           <li class="flex flex-col gap-2 group-hover:flex-col p-2">
-            <button @click="changeLanguage('en')" class="flex cursor-pointer hover:text-[#53900F]">
+            <button
+              @click="changeLanguage('en')"
+              class="flex cursor-pointer hover:text-[#53900F]"
+              :class="[language === 'En' ? 'text-[#53900F]' : '']"
+            >
               English
             </button>
             <hr />
-            <button @click="changeLanguage('ti')" class="flex hover:text-[#53900F]">ትግርኛ</button>
+            <button
+              @click="changeLanguage('ti')"
+              class="flex hover:text-[#53900F]"
+              :class="[language === 'ti' ? 'text-[#53900F]' : '']"
+            >
+              ትግርኛ
+            </button>
             <hr />
-            <button @click="changeLanguage('am')" class="flex hover:text-[#53900F]">ኣማርኛ</button>
+            <button
+              @click="changeLanguage('am')"
+              class="flex hover:text-[#53900F]"
+              :class="[language === 'አማ' ? 'text-[#53900F]' : '']"
+            >
+              አማርኛ
+            </button>
             <hr />
           </li>
         </ul>
