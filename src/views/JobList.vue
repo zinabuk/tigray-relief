@@ -84,6 +84,28 @@ const submitApplication = async () => {
   }
 }
 
+function shareOnFacebook() {
+  const url = 'https://example.com'
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+  window.open(facebookUrl, '_blank')
+}
+
+function shareOnLinkedIn() {
+  const url = 'https://example.com'
+  const title = 'Check out this awesome article!'
+  const description = 'This is a description of the article.'
+  const linkedInUrl = `https://www.linkedin.com/shareArticle?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}`
+  window.open(linkedInUrl, '_blank')
+}
+
+function shareOnTwitter() {
+  const url = 'https://example.com'
+  const title = 'Check out this awesome article!'
+  const hashtags = 'vue,javascript'
+  const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}&hashtags=${encodeURIComponent(hashtags)}`
+  window.open(twitterUrl, '_blank')
+}
+
 onMounted(() => {
   fetchJobs()
 })
@@ -180,7 +202,21 @@ onMounted(() => {
             </ul>
           </div>
         </div>
-
+        <div>
+          <h1 class="text-white font-bold">{{ $t('SHARE ON SOCIAL MEDIA') }}</h1>
+          <div class="flex">
+            <a class="text-white" href="#" @click="shareOnFacebook()">
+              <font-awesome-icon :icon="['fab', 'facebook']" class="text-whitex p-2 rounded">
+              </font-awesome-icon> </a
+            ><a class="text-white" href="#" @click="shareOnTwitter()">
+              <font-awesome-icon :icon="['fab', 'twitter']" class="text-whitex p-2 rounded">
+              </font-awesome-icon> </a
+            ><a class="text-white" href="#" @click="shareOnLinkedIn()">
+              <font-awesome-icon :icon="['fab', 'linkedin']" class="text-whitex p-2 rounded">
+              </font-awesome-icon>
+            </a>
+          </div>
+        </div>
         <div class="w-full flex justify-between bg-white p-4">
           <ul class="flex space-x-4 p-4 justify-center items-center">
             <li>
@@ -196,7 +232,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div v-else>No job lists</div>
+    <div v-else>No jobs available this time</div>
   </div>
 
   <div

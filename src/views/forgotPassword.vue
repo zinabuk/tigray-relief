@@ -5,6 +5,7 @@ import BaseInput from '@/components/base/BaseInput.vue'
 
 import apiService from '@/services/apiService'
 
+import swal from 'sweetalert'
 const form = ref({
   email: ''
 })
@@ -15,7 +16,11 @@ async function handleForgot() {
   try {
     const res = await apiService.post('/admin/forgot-password', form.value)
     if (res.success) {
-      alert('We have sent a link to your email')
+      swal({
+        icon: 'success',
+        title: 'A password reset link is sent to your email address',
+        text: 'It will be expired after 10 minutes.'
+      })
       form.value = {}
     }
   } catch (err) {
