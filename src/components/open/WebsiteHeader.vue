@@ -499,11 +499,11 @@
             >
             <hr />
 
-            <div class="px-4 flex flex-col" zdata-aos="fade-left">
+            <div class=" px-4 flex flex-col" zdata-aos="fade-left">
               <router-link
                 :to="{ name: 'documents' }"
                 @click="showDropDown = !showDropDown"
-                :class="[{ 'text-[#53900F]': isActive('documents') }]"
+                :class="[{ 'text-[#53900F]': isActive('documents') }]" class="w-full"
               >
                 <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
               </router-link>

@@ -178,7 +178,7 @@ onMounted(() => {
             <div class="flex justify-center">
               <router-link
             :to="{
-              name: 'blog-detail2',
+              name: 'blog-detail',
               params: { title: slugify(event.eventTitle[currentLanguage]) }
             }"
             class="text-green-600 font-bold"
