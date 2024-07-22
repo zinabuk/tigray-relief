@@ -64,9 +64,9 @@ onMounted(fetchInfography)
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">Contact us</h1>
+        <h1 class="text-4xl font-bold">{{ $t('Contact Us') }}</h1>
         <a href="#contact-us" class="bg-[#539000] px-4 py-2 rounded-xl text-white font-bold"
-          >Scroll to the form</a
+          >{{ $t('Scroll to the form')}}</a
         >
       </div>
     </div>

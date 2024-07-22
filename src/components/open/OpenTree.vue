@@ -1,8 +1,8 @@
 <template>
-  <div ref="tree" class="o"></div>
+  <div ref="tree" class="overflow"></div>
 </template>
 
-<script>
+<script lang="">
 import { BASE_AVATAR } from '@/config'
 import * as d3 from 'd3'
 
@@ -67,19 +67,15 @@ export default {
         .on('click', this.click)
 
       //nodeEnter
-        //.append('rect')
-        //.attr('width', 100)
-        //.attr('height', 30)
-        //.attr('x', -50)
-        //.attr('y', -15)
-        //.attr('fill', '#fff')
-        //.attr('stroke', 'steelblue')
-        //.attr('stroke-width', 1.5)
-      nodeEnter
-        .append('circle')
-	.attr('r', '60')
-        .attr('stroke', 'steelblue')
-        .attr('fill', 'white')
+      //.append('rect')
+      //.attr('width', 100)
+      //.attr('height', 30)
+      //.attr('x', -50)
+      //.attr('y', -15)
+      //.attr('fill', '#fff')
+      //.attr('stroke', 'steelblue')
+      //.attr('stroke-width', 1.5)
+      nodeEnter.append('circle').attr('r', '60').attr('stroke', 'steelblue').attr('fill', 'white')
 
       nodeEnter
         .append('svg:image')
@@ -87,15 +83,14 @@ export default {
         .attr('y', -60) // Adjust position as needed
         .attr('width', 120) // Adjust size as needed
         .attr('height', 120)
-        .attr("xlink:href", d => {
-          if(d.data.image == BASE_AVATAR+"null"){
-            return "/image/org.jpg";
-          }
-          else{
-            return d.data.image;
+        .attr('xlink:href', (d) => {
+          if (d.data.image == BASE_AVATAR + 'null') {
+            return '/image/org.jpg'
+          } else {
+            return d.data.image
           }
         })
-	.attr("clip-path", "circle()")
+        .attr('clip-path', 'circle()')
 
       nodeEnter
         .append('text')
@@ -116,10 +111,7 @@ export default {
         .duration(duration)
         .attr('transform', (d) => `translate(${d.y},${d.x})`)
 
-      nodeUpdate
-        .append("svg")
-        .attr("width", 500)
-        .attr("height", 500)
+      nodeUpdate.append('svg').attr('width', 500).attr('height', 500)
 
       const nodeExit = node
         .exit()

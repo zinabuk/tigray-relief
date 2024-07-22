@@ -72,16 +72,26 @@ let cAmount = ref('')
           <h4 class="text-lg font-bold mb-2">Donate to bring a relief to our communities</h4>
           <div class="grid grid-cols-2 gap-12">
             <button
-              class="text-white bg-blue-500 p-2 inline-block self-start rounded"
-              @click="showModal = true"
-            >
-              Use other service
-            </button>
-            <button
               @click="showForm = !showForm"
-              class="text-white bg-[#53900F] p-2 inline-block self-start rounded"
+              class="p-2 inline-block self-start rounded"
+              :class="[
+                showForm === true
+                  ? 'bg-[#53900F] border-0 text-white'
+                  : 'border-2 bg-white text-[#53900F] '
+              ]"
             >
               {{ showForm ? 'Hide REST form' : 'Use REST form' }}
+            </button>
+            <button
+              class="p-2 inline-block self-start rounded"
+              :class="[
+                showForm === true
+                  ? 'border-2 bg-white text-[#53900F]'
+                  : ' bg-[#53900F] border-0 text-white'
+              ]"
+              @click="(showModal = true), (showForm = false)"
+            >
+              Use other service
             </button>
           </div>
         </div>
@@ -188,7 +198,7 @@ let cAmount = ref('')
         </div>
 
         <div class="flex justify-between">
-          <BaseButton type="submit">Submit</BaseButton>
+          <BaseButton type="submit" disabled>Submit</BaseButton>
           <button class="bg-gray-700 text-white p-2" @click="showModal = false">Cancel</button>
         </div>
       </form>

@@ -418,7 +418,7 @@
             <div class="px-4 flex flex-col" zdata-aos="fade-left">
               <router-link
                 :to="{ name: 'governance' }"
-                @click="showDropDown = !showDropDown"
+                @click="showDropDown = false"
                 :class="[{ 'text-[#53900F]': isActive('governance') }]"
               >
                 <span class="hover:text-[#53900F]"> {{ $t('Organizational Structure') }} </span>
@@ -738,8 +738,6 @@ function changeLanguage(lang) {
     showDropdown.value = true
   }, 300)
 }
-
-let showDropDown = ref(true)
 
 let infoG = ref([])
 const fetchInfography = async () => {
