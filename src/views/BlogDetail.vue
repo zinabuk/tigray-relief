@@ -127,8 +127,8 @@ onMounted(() => {
             <div class="flex gap-2 text-gray-400">
               <!-- <h1 class="">
                 {{ blog.eventDate }}
-              </h1>
-              <p>{{ $t('By') }} {{ blog.eventOrganizer }}</p>
+              </h1> -->
+              <!-- <p>{{ $t('By') }} {{ blog.eventOrganizer }}</p> -->
             </div>
             <p class="text-gray-700 selection:bg-[#288FB2] selection:text-white">
               <span> </span> {{ blog.eventDescription[currentLanguage] }}
