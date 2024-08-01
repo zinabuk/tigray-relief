@@ -1,10 +1,11 @@
 <template>
-  <div ref="tree" class="overflow"></div>
+  <div ref="tree" class="o w-full overflow-x-auto"></div>
 </template>
 
 <script lang="">
 import { BASE_AVATAR } from '@/config'
 import * as d3 from 'd3'
+
 
 export default {
   name: 'OrgTree',
@@ -18,7 +19,9 @@ export default {
     return {
       root: null,
       treeLayout: null,
-      i: 0
+      i: 0,
+      con: []
+
     }
   },
   mounted() {
@@ -28,7 +31,7 @@ export default {
   methods: {
     initializeTree() {
       const data = this.data
-      const width = 1000
+      const width = 900
       const height = 600
       const margin = { top: 20, right: 120, bottom: 20, left: 180 }
 
@@ -94,16 +97,34 @@ export default {
 
       nodeEnter
         .append('text')
-        .attr('y', 15)
-        .attr('x', -80)
+        .attr('y', 40)
+        .attr('x', -110)
         .style('text-anchor', 'middle')
         .text((d) => d.data.name)
       nodeEnter
         .append('text')
         .attr('dy', 0)
-        .attr('x', -100)
+        .attr('x', -110)
         .style('text-anchor', 'middle')
-        .text((d) => d.data.department)
+        .text((d) => {
+          return this.test(d.data.department, "first")
+        })
+        nodeEnter
+        .append('text')
+        .attr('dy', 10)
+        .attr('x', -110)
+        .style('text-anchor', 'middle')
+        .text((d) => {
+          return this.test(d.data.department, "second")
+        })
+        nodeEnter
+        .append('text')
+        .attr('dy', 20)
+        .attr('x', -110)
+        .style('text-anchor', 'middle')
+        .text((d) => {
+          return this.test(d.data.department, "final")
+        })
       const nodeUpdate = nodeEnter.merge(node)
 
       nodeUpdate
@@ -170,7 +191,47 @@ export default {
         d._children = null
       }
       this.update(d)
-    }
+    },
+    test(data,text){
+      // console.log(data)
+      if (data != null){
+            let datas = []
+            let f = ""
+
+            let k = ""
+            let m = ""
+            // console.log(d.data.department)
+            datas = data.split(" ")
+            if (datas[0] && datas[1]){
+              f = datas[0] + ' ' + datas[1]
+              console.log(f)
+            }
+            
+            
+            if (text == "first"){
+              return f
+            }
+            else if (text == "second"){
+
+              for (let l = 2; l < datas.length; l++){
+                console.log(true);
+                if (l < 5){
+                  k += datas[l] + " "
+                }
+                
+              }
+              return k
+            }
+            else{
+              for (let d = 5; d < datas.length; d++){
+                console.log(true);
+                m += datas[d] + " "
+              }
+              return m
+            }
+          }
+    },
+
   }
 }
 </script>
