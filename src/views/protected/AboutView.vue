@@ -170,7 +170,6 @@ onMounted(() => {
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
-<<<<<<< HEAD
 
         <!-- <h1 class="text-xl ">{{ service.establishment[currentLanguage] }}</h1> -->
         <p class="line-clamp-5">
@@ -181,35 +180,6 @@ onMounted(() => {
           {{ service.coreValues[currentLanguage] }}
         </p>
         <p class="text-xl">{{ service.expertise[currentLanguage] }}</p>
-=======
-        <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
-        <h1 class="text-2xl font-bold">Our Establishment</h1>
-        <h1 class="text-xl ">{{ service.establishment[currentLanguage] }}</h1>
-      </div>
-
-       <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
-        <h1 class="text-2xl font-bold">Our Mission</h1>
-        <p class="line-clamp-5">
-          {{ service.mission[currentLanguage] }}
-        </p>
-        </div>
-         <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
-        <h1 class="text-2xl font-bold">Our Vision</h1>
-        <p class="text-xl ">{{ service.vision[currentLanguage] }}</p>
-        </div>
-
-         <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
-        <h1 class="text-2xl font-bold">Our Core Values</h1>
-        <p class="line-clamp-5">
-          {{ service.coreValues[currentLanguage] }}
-        </p>
-        </div>
-
-         <div class=" hover:bg-[#53900F] hover:text-white rounded-md px-2">
-        <h1 class="text-2xl font-bold">Our Strategy</h1>
-        <p class="text-xl ">{{ service.expertise[currentLanguage] }}</p>
-          </div>
->>>>>>> 93a0eba8f25005a79f5931d94da953a241942a90
         <div class="flex gap-2 justify-end">
           <button @click="editService(service)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>

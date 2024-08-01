@@ -138,6 +138,15 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'blogs/:title',
+        name: 'blog-detail2',
+        props: true,
+        component: () => import('@/views/BlogDetail2.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'tenders',
         name: 'tenders',
         component: () => import('@/views/TenderView.vue'),
