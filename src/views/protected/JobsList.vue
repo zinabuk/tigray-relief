@@ -91,7 +91,7 @@ const UpdateJob = async (id) => {
         title: response.message,
         icon: 'success'
       })
-      router.push({ name: 'in-vacancy' })
+      router.push({ name: 'admin-jobs' })
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -177,10 +177,10 @@ onMounted(() => {
           placeholder="Specialize area"
         ></BaseInput>
         <BaseTextarea
-          v-model="job.qualification"
+          v-model="editForm.qualification"
           rows="4"
           textareaClasses="px-8"
-          placeholder="Description"
+          placeholder="Qualification"
         ></BaseTextarea>
         <BaseTextarea
           v-model="editForm.description"
@@ -199,6 +199,7 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .modal {

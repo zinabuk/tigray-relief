@@ -5,9 +5,7 @@ import apiService from '@/services/apiService'
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
-
-const { language } = storeToRefs(useAuthStore())
-
+const { currentLanguage } = storeToRefs(useAuthStore())
 const faqs = ref([])
 
 const fetchFaqs = async () => {
@@ -44,7 +42,7 @@ onMounted(fetchFaqs)
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">Frequently asked questions</h1>
+        <h1 class="text-4xl font-bold">{{$t('Frequently asked questions')}}</h1>
         <div class="flex gap-4">
           <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">{{
             $t('Home')
@@ -72,13 +70,13 @@ onMounted(fetchFaqs)
               ]"
               >{{ index < 10 ? '0' + index : index }}</span
             > -->
-            <p class="text-[20px]">{{ language === 'en' ? faq.question.en : faq.question.ti }}</p>
+            <p class="text-[20px]">{{faq.question[currentLanguage] }}</p>
             <span v-if="faqIndex != index">+</span>
             <span v-else class="text-[#288FB2] w-6 h-6 rounded-full border bg-white">-</span>
           </div>
           <!-- <transition name="accordion"> -->
           <p v-show="faqIndex === index" class="py-6 text-smz panel text-black/95">
-            {{ language === 'en' ? faq.answer.en : faq.answer.ti }}
+            {{ faq.answer[currentLanguage] }}
           </p>
           <!-- </transition> -->
         </button>

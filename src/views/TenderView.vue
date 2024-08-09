@@ -119,14 +119,15 @@ onMounted(() => {
   <!-- Services -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
     <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div v-for="(tender, i) in tenders" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="w-full px-12 ">
+      <div v-for="(tender, i) in tenders" :key="i" class=" gap-4">
         <div>
+        <p class="text-center text-bold text-2xl">  {{ tender.title[currentLanguage] }}</p>
           <img
             v-if="tender.image"
             :src="BASE_AVATAR + tender.image"
             alt=""
-            class="max-h-[500px] rounded-xl w-full object-cover"
+            class="h-full rounded-xl w-full "
           />
           <h1 v-else class="w-24 h-24 text-center font-bold text-6xl">
             {{ tender.title[currentLanguage] }}

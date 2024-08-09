@@ -23,7 +23,7 @@
         <p class="line-clamp-5">{{ document.description[currentLanguage] }}</p>
         <img
           v-if="document.image"
-          :src="BASE_AVATAR + document.image"
+          :src="BASE_UPLOAD + document.image"
           alt=""
           class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
         />
@@ -229,6 +229,7 @@ const saveDocument = async () => {
         successMessage.value = response.data.message
         fetchDocuments()
         closeModal()
+        router.push({ name: 'admin-documents' })
       } else {
         errorMessage.value = 'Failed to save Document'
       }

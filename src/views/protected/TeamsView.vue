@@ -152,7 +152,7 @@ onMounted(() => {
           v-if="team.image"
           :src="BASE_AVATAR + team.image"
           alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full"
+          class="w-36 h-36 ring-2 ring-yellow-300 rounded-sm"
         />
         <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
         <h1 class="text-2xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
@@ -162,7 +162,7 @@ onMounted(() => {
         </div>
         <p class="line-clamp-5">
           {{ team.profession[currentcurrentLanguageLanguage] }}
-          {{ team.biography[currentLanguage] }}
+          {{ team.profession[currentLanguage] }}
         </p>
 
         <!-- <router-link class="text-[#539000]" to="/">Read More</router-link> -->

@@ -2,7 +2,7 @@
 import { createI18n } from 'vue-i18n'
 import enMessages from '@/locales/en.json'
 import tigMessages from '@/locales/tig.json'
-import amMessages from '@/locales/tig.json'
+import amMessages from '@/locales/am.json'
 
 const i18n = createI18n({
   legacy: false, // when  using Vue 3 with Composition API

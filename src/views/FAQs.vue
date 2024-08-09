@@ -1,9 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import apiService from '@/services/apiService'
+import { storeToRefs } from 'pinia'
+import { useAuthStore } from '@/stores/authStore' // Correct the import path if necessary
 
+const { currentLanguage } = storeToRefs(useAuthStore())
+// const currentLanguage =ref('en')
 const faqs = ref([])
-
+alert(currentLanguage);
 const fetchFaqs = async () => {
   try {
     const response = await apiService.get('/admin/faqs')
@@ -28,11 +32,14 @@ const toggleAccordion = (index) => {
 }
 const faqIndex = ref(0)
 onMounted(fetchFaqs)
+
+// Watch for language changes
+watch(currentLanguage, fetchFaqs)
 </script>
 
 <template>
   <div class="grid w-full grid-cols-1 md:grid-cols-3 justify-between py- bg-[#1d4354]/5">
-    <div class="relative overflow-hiddden">
+    <div class="relative overflow-hidden">
       <img
         src="https://startp-next.envytheme.com/_next/static/media/shape1.754ca456.png"
         alt=""
@@ -69,11 +76,11 @@ onMounted(fetchFaqs)
             <ul class="flex flex-col gap-1 w-full">
               <li v-for="(faq, index) in faqs" :key="index">
                 <button class="text-lg font-semibold border p-2" @click="toggleAccordion(index)">
-                  {{ faq.question }} <span v-if="faqIndex != index">+</span> <span v-else>-</span>
+                  {{ faq.question[currentLanguage] || faq.question['en'] }} <span v-if="faqIndex != index">+</span> <span v-else>-</span>
                 </button>
 
                 <transition name="accordion">
-                  <p v-if="faqIndex === index" class="mt-2">{{ faq.answer }}</p>
+                  <p v-if="faqIndex === index" class="mt-2">{{ faq.answer[currentLanguage] || faq.answer['en'] }}</p>
                 </transition>
               </li>
             </ul>
@@ -83,52 +90,3 @@ onMounted(fetchFaqs)
     </div>
   </div>
 </template>
-<style scoped>
-.img-1 {
-  animation: img-spin 2s linear infinite;
-}
-
-@keyframes img-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.img-2 {
-  animation: svg-spin 5s linear infinite;
-}
-@keyframes svg-spin {
-  0% {
-    transform: rotate(0deg);
-    top: 20%;
-  }
-  25% {
-    transform: rotate(90deg);
-    top: 40%;
-    right: 30%;
-  }
-  50% {
-    transform: rotate(270deg);
-    top: 60%;
-    right: 10%;
-  }
-  100% {
-    transform: rotate(360deg);
-    top: 0%;
-    right: 0;
-  }
-}
-
-.accordion-enter-active,
-.accordion-leave-active {
-  transition: max-height 0.3s ease;
-}
-
-.accordion-enter,
-.accordion-leave-to {
-  max-height: 0;
-  overflow: hidden;
-}
-</style>

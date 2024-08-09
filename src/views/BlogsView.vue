@@ -10,7 +10,6 @@ import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 const { currentLanguage } = storeToRefs(useAuthStore())
-
 const blogs = ref([])
 
 const fetchNews = async () => {
@@ -42,9 +41,9 @@ onMounted(() => {
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">News | Events</h1>
+        <h1 class="text-4xl font-bold">{{$t('News')}}</h1>
         <div class="flex gap-4">
-          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">Home</a>
+          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">{{$t('Home')}}</a>
           <a href="/services" class="text-[#539000] px-4 py-2">news / events</a>
         </div>
       </div>

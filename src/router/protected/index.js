@@ -7,6 +7,10 @@ const PROTECTED_ROUTES = [
     children: [
       {
         path: '',
+        redirect: { name: 'admin-home' }, // Ensure default child route
+      },
+      {
+        path: '',
         component: () => import('@/views/protected/HeroView.vue'),
         name: 'admin-home',
         meta: {

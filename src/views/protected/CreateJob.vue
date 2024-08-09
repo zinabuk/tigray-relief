@@ -22,7 +22,7 @@ const saveJob = async () => {
         title: response.message,
         icon: 'success'
       })
-      router.push({ name: 'in-vacancy' })
+      router.push({ name: 'admin-jobs' })
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {

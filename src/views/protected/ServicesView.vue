@@ -154,7 +154,7 @@ onMounted(() => {
           v-if="service.serviceImage"
           :src="BASE_AVATAR + service.serviceImage"
           alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
+          class="w-36 h-36 ring-2 ring-yellow-300 rounded-sm mx-auto"
         />
         <p v-else class="w-20 h-20 rounded-full text-6xl">
           {{ service.serviceTitle[currentLanguage] }}
