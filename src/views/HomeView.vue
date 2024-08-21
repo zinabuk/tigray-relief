@@ -282,13 +282,7 @@ onMounted(() => {
   </section>
   <!-- End of donation section -->
 
-  <!-- Start of  ...-->
-  <!-- <section class="px-[10%] bg-blue-900 text-white py-8 flex justify-center items-center">
-    <div class="p-8"><h1 class="text-4xl">20+ Years of work</h1></div>
-    <div class="text-4xl">8+ Services</div>
-    <div class="p-8"><h1 class="text-4xl">20,000+ people served</h1></div>
-    <div class="p-8"><h1 class="text-4xl">200+ Projects completed and on pipeline</h1></div>
-  </section> -->
+  
 
   <!-- Start of news section -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5">

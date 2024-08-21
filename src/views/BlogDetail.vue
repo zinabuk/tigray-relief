@@ -19,7 +19,7 @@ defineProps({
 })
 
 const route = useRoute()
-const router = useRouter()
+// const router = useRouter()
 const blogDetail = ref([])
 
 async function getBlog() {
@@ -125,10 +125,10 @@ onMounted(() => {
           <div class="flex flex-col gap-1 py-2">
             <h2 class="meyla-subtitle whitespace-normal break-all text-[#288FB2]"></h2>
             <div class="flex gap-2 text-gray-400">
-              <h1 class="">
+              <!-- <h1 class="">
                 {{ blog.eventDate }}
-              </h1>
-              <p>{{ $t('By') }} {{ blog.eventOrganizer[currentLanguage] }}</p>
+              </h1> -->
+              <!-- <p>{{ $t('By') }} {{ blog.eventOrganizer }}</p> -->
             </div>
             <p class="text-gray-700 selection:bg-[#288FB2] selection:text-white">
               <span> </span> {{ blog.eventDescription[currentLanguage] }}

@@ -1,15 +1,10 @@
 <script setup>
 import ApiService from '@/services/apiService'
-import { BASE_AVATAR } from '@/config'
-// const news = async () => {
-//   const response = await ApiService.get()
-// }
-
+import { BASE_AVATAR } from '@/config' 
 import { ref, onMounted } from 'vue'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import 'swiper/swiper-bundle.css'
-// import 'swiper/swiper-bundle.css'
+import 'swiper/swiper-bundle.css' 
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
@@ -32,9 +27,7 @@ function showImageModal(image) {
   selectedImage.value = image
   showModal.value = true
 }
-onMounted(() => {
-  fetchGalleries()
-})
+onMounted(fetchGalleries)
 </script>
 
 <template>
@@ -44,10 +37,12 @@ onMounted(() => {
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">Our Gallery</h1>
+        <h1 class="text-4xl font-bold">{{ $t('Our Gallery') }}</h1>
         <div class="flex gap-4">
-          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">Home</a>
-          <a href="/services" class="text-[#539000] px-4 py-2">Gallery</a>
+          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">{{
+            $t('Home')
+          }}</a>
+          <a href="/services" class="text-[#539000] px-4 py-2">{{ $t('Gallery') }}</a>
         </div>
       </div>
     </div>
@@ -86,7 +81,9 @@ onMounted(() => {
   >
     <div class="bg-white p-8 rounded-lg zw-full">
       <div class="flex justify-end">
-        <button @click="showModal = false" class="bg-gray-200 px-4 py-2 rounded">X</button>
+        <button @click="showModal = false" class="bg-gray-200 px-4 py-2 rounded">
+          <font-awesome-icon icon="times"></font-awesome-icon>
+        </button>
       </div>
       <img
         :src="`${BASE_AVATAR}${selectedImage.gallery}`"
