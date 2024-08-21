@@ -8,7 +8,7 @@ const SIDEBARITEMS = {
     { label: 'Services', name: 'admin-services', icon: 'cogs' },
     //   { label: 'Works', name: 'products', icon: 'box-open' },
     { label: 'public Figure', name: 'team', icon: 'handshake' },
-    { label: 'Blogs', name: 'admin-blogs', icon: 'newspaper' },
+    { label: 'News', name: 'admin-blogs', icon: 'newspaper' },
 
     { label: 'Partners', name: 'partner', icon: 'handshake' },
     { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
@@ -38,7 +38,7 @@ const SIDEBARITEMS = {
   
       { label: 'Donations', name: 'donations', icon: 'quote-left' },
       //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
-      { label: 'Blogs', name: 'admin-blogs', icon: 'newspaper' },
+      { label: 'News', name: 'admin-blogs', icon: 'newspaper' },
       { label: 'Messages', name: 'messages', icon: 'quote-left' },
       { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
       { label: 'Gallery', name: 'admin-gallery', icon: 'quote-left' },
