@@ -133,7 +133,7 @@ onMounted(() => {
           :src="BASE_AVATAR + hero.heroImage"
         />
         <div
-          class="absolute top-1/2 -translate-y-1/2 w-full md:w-2/5 h-d py-6 flex flex-col text-[#53900F] justify-center px-4 bg-yellow-400/90 zmd:bg-white/0 rounded-tr-[100px]z md:left-4 font-bold zshadow-2xl hover:scale-[1.1] transition-transform duration-700 delay-150"
+          class="absolute top-1/2 -translate-y-1/2 w-full md:w-2/5 h-d py-6 flex flex-col text-[#facc15] justify-center px-4 bg-[#53900F] zmd:bg-white/0 rounded-tr-[100px]z md:left-4 font-bold zshadow-2xl hover:scale-[1.1] transition-transform duration-700 delay-150"
           style="box-shadow: 20px 20px 20px 20px rgb(0 0 0/0.9)"
         >
           <div class="wave-container w-full" zdata-aos="fade-left">
