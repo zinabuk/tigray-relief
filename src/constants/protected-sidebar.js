@@ -4,7 +4,7 @@ const SIDEBARITEMS = {
     { label: 'Heros', name: 'admin-hero', icon: 'cogs' },
     { label: 'About us', name: 'admin-about', icon: 'handshake' },
     { label: 'Our history', name: 'admin-hitory', icon: 'handshake' },
-    { label: 'Our stracture', name: 'admin-oganizational', icon: 'handshake' },
+    { label: 'Org Structure', name: 'admin-oganizational', icon: 'handshake' },
     { label: 'Services', name: 'admin-services', icon: 'cogs' },
     //   { label: 'Works', name: 'products', icon: 'box-open' },
     { label: 'public Figure', name: 'team', icon: 'handshake' },

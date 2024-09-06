@@ -5,6 +5,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 
 import ApiService from '@/services/apiService'
+import swal from 'sweetalert'
 
 let form = ref({
   interestedIn: '',
@@ -16,11 +17,20 @@ let form = ref({
 })
 
 const submitVolunteer = async () => {
+  swal({
+      icon: "success",
+      title: "You have submitted successfuly",
+      text: "We will contact you soon."
+     })
   try {
     const response = await ApiService.post('/users/volunteer', form.value)
     // alert(response.success)
     if (response.success) {
-      //   alert('Donation submitted successfully')
+     swal({
+      icon: "success",
+      title: "You have submitted successfuly",
+      text: "We will contact you soon."
+     })
       form.value = {}
     }
   } catch (error) {

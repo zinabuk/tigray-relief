@@ -83,7 +83,7 @@ onMounted(() => {
               name: 'blog-detail',
               params: { title: slugify(event.eventTitle[currentLanguage]) }
             }"
-            class="text-green-600 font-bold"
+            class="text-[#53900F] font-bold"
             >{{ $t('Read More') }}</router-link
           >
         </div>

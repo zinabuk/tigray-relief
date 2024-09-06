@@ -57,15 +57,16 @@ onMounted(() => {
       <div
         v-for="(service, i) in services"
         :key="i"
-        class="p-4 flex flex-col md:flex-row gap-8 bg-white shadow-xl overflow-hidden w-full"
+        class="zp-4 flex flex-col md:flex-row gap-8 bg-white shadow overflow-hidden w-full"
         data-aos="fade-up"
       >
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto"></font-awesome-icon> -->
         <div
           :class="[
             i % 2 === 0 ? 'md:order-1' : 'md:order-2',
-            'basis-1/2 zshadow-orange-800 shadow-xl overflow-hidden max-h-[500px]'
+            'basis-1/2 zshadow-orange-800 shadow overflow-hidden max-h-[500px]'
           ]"
+          class="shadow rounded-xl"
         >
           <img
             v-if="service.serviceImage"
@@ -85,7 +86,7 @@ onMounted(() => {
             'flex flex-col gap-4 p-8 shadow-xl'
           ]"
         >
-          <h1 class="text-2xl font-bold"> {{ service.serviceTitle[currentLanguage] }}</h1>
+          <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
           <div class="relative">
             <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-[#53900F]"></span>
             <hr class="h-[2px] absolute inset-0 bg-gray-200" />
@@ -95,13 +96,14 @@ onMounted(() => {
           </p>
 
           <router-link
-            class="text-[#53900F]"
+            class="text-[#53900F] flex flex-col"
             :to="{
               name: 'service-detail',
               params: { title: service.serviceTitle[currentLanguage] }
             }"
-            >{{ $t('Read More') }}</router-link
-          >
+            ><span>{{ $t('Read More') }}</span>
+            <hr class=""
+          /></router-link>
         </div>
       </div>
     </div>

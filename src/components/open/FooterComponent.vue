@@ -87,7 +87,7 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
       </div> -->
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">{{ $t('Contacts') }}</h1>
-        <hr />
+        <!-- <hr /> -->
         <div class="text-[14px]" v-for="(contact, index) in infoG" :key="index">
           <h2>{{ contact.openHours }}</h2>
           <div class="flex gap-1">
@@ -102,7 +102,8 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
       </div>
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">{{ $t('Services') }}</h1>
-        <hr />
+        <!-- <hr /> -->
+
         <ul class="flex flex-col">
           <li class="flex flex-col text-[14px]">
             <router-link
@@ -123,7 +124,7 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
       </div>
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">{{ $t('Quick Links') }}</h1>
-        <hr />
+        <!-- <hr /> -->
         <ul class="flex flex-col">
           <li class="flex flex-col text-[14px]">
             <router-link to="/">{{ $t('Home') }}</router-link
@@ -138,7 +139,7 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
 
       <div class="flex flex-col gap-2">
         <h1 class="text-lg">{{ $t('Subscribe for Newsletter') }}</h1>
-        <hr />
+        <!-- <hr /> -->
         <form @submit.prevent="subscribe" class="flex flex-col gap-2">
           <BaseInput
             placeholder="Enter your email address"
@@ -148,7 +149,7 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
             inputClass="text-black"
           ></BaseInput>
           <button
-            class="border-2 border-white self-start px-2 py-1 hover:text-white/70"
+            class="border rounded border-white self-start px-2 py-1 text-yellow-400 hover:text-yellow-500"
             type="submit"
           >
             {{ $t('SUBSCRIBE') }}

@@ -47,7 +47,7 @@ function editContact(career) {
 function deleteContact(message) {
   swal({
     title: 'Are you sure?',
-    text: 'Once deleted, you will not be able to recover this FAQ',
+    text: 'Once deleted, you will not be able to recover this content',
     icon: 'warning',
     buttons: true,
     dangerMode: true
@@ -79,9 +79,9 @@ onMounted(fetchComments)
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <router-link :to="{ name: 'home' }" class="bg-[#539000] text-white self-end px-2 py-1"
+    <!-- <router-link :to="{ name: 'home' }" class="bg-[#539000] text-white self-end px-2 py-1"
       >Add Contact Message</router-link
-    >
+    > -->
     <DataTable :tableHeaders="tableHeaders" :tableValues="donations" :actions="actions">
     </DataTable>
   </section>

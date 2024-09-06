@@ -108,9 +108,9 @@ let cAmount = ref('')
               <BaseInput
                 type="text"
                 inputClass="border border-yellow-300"
-                label="Enter a service / branch "
+                label="Enter a program "
                 v-model="form.service"
-                placeholder="service / branch"
+                placeholder="Program"
                 required
               ></BaseInput>
             </div>

@@ -67,7 +67,7 @@ onUnmounted(() => {
 <template>
   <section class="w-full bg-[#53900F]/15">
     <header
-      class="flex items-center justify-between sticky shadow zbg-white/100 z-20 top-0 px-2 bg-[#53900F]"
+      class="flex items-center justify-between sticky shadow zbg-white/100 z-20 top-0 px-2 zbg-[#53900F] bg-white"
     >
       <div :class="[!minimize ? 'w-[18%]' : 'w-[2%] gap-2', 'flex items-center justify-between ']">
         <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" v-if="!minimize" />
@@ -85,11 +85,11 @@ onUnmounted(() => {
       </div>
       <div class="flex justify-center items-center gap-8">
         <div class="">
-          <input
+          <!-- <input
             type="search"
             placeholder="Search"
             class="px-4 border-2 border-t-0 outline-none border-r-0 border-l-0 py-2"
-          />
+          /> -->
         </div>
 
         <div class="relative text-center">
@@ -121,7 +121,7 @@ onUnmounted(() => {
                 v-if="showModal"
                 class="absolute bg-white/100 shadow-lg top-[100%] flex flex-col right-0 px-12 py-4 z-20 gap-4"
                 ref="toggleDropdown"
-                data-aos="fade-up"
+                zdata-aos="fade-up"
               >
 
                 <div class="w-20 h-20 relative p-1">
@@ -179,9 +179,9 @@ onUnmounted(() => {
           </div>
         </header>
 
-        <div class="w-full flex flex-wrap relative">
+        <div class="w-full flex  relative">
       <LeftSide
-        bar-class="shadow-lgx px-2 h-screen sticky left-0 top-[84px] xz-10 bottom-0 overflow-auto bg-white
+        bar-class="shadow-lgx px-2 h-screen sticky left-0 top-[84px] z-10 bottom-0 overflow-auto bg-white
         "
         :class="[!minimize? 'w-[18%]' : 'w-2%', 'py-4']"
       ></LeftSide>
