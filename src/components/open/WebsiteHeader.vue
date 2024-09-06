@@ -144,7 +144,7 @@
             >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
-                {{ $t('Our Beneficiaries') }}
+                {{ $t('Our Programs') }}
               </span>
               <hr class="text-[#001F3F]" />
             </router-link>

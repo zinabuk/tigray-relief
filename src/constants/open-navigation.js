@@ -40,7 +40,7 @@ const NAV_ITEMS = [
     // ]
   },
   {
-    label: 'Services',
+    label: 'What We Do',
     name: 'services'
   },
   // {

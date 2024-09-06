@@ -127,24 +127,24 @@ onMounted(() => {
           :src="BASE_AVATAR + hero.heroImage"
         />
         <div
-          class="absolute top-1/2 -translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/70 md:left-4 hover:scale-[1.1] transition-transform duration-700 delay-150"
+          class="absolute h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/90 md:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
           zstyle="box-shadow: 5px 5px 5px 5px rgb(83 144 15/0.9)"
         >
           <div class="wave-container w-full" zdata-aos="fade-left">
-            <p class="zwave-text font-bold text-2xl">{{ hero.heroTitle[currentLanguage] }}</p>
+            <p class="zwave-text font-bold text-6xl">{{ hero.heroTitle[currentLanguage] }}</p>
           </div>
-          <h6 class="font- line-clamp-3">
+          <h6 class="font- line-clamp-3 text-3xl">
             {{ hero.heroDescription[currentLanguage] }}
           </h6>
           <div class="flex gap-4">
             <router-link
-              class="bg-white border hover:bg-[#53900F] hover:text-yellow-400 rounded-xl shadow-xl text-yellow-400 px-4 py-2 self-start font-bold"
+              class="bg-[#53900F] border border-yellow-400 hover:bg-[#53900F] text-yellow-400 shadow ztext-yellow-400 px-4 py-2 self-start font-bold"
               to="/donate"
               >Donate Now</router-link
             >
             <router-link
               to="/about"
-              class="bg-white border hover:bg-[#53900F] hover:text-yellow-400 rounded-xl shadow-xl text-yellow-400 px-4 py-2 self-start font-bold"
+              class="bg-white border border-yellow-400 hover:bg-[#53900F] hover:text-yellow-400 rounded text-yellow-400 px-4 py-2 self-start font-bold"
               >{{ $t('Learn More') }}</router-link
             >
           </div>
@@ -196,7 +196,7 @@ onMounted(() => {
         Tigrai community in overcoming the broad range of conditions ...
       </p> -->
 
-      <div class="grid grid-cols-3 gap-4 w-full overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full overflow-hidden">
         <div
           class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
           data-aos="fade-right"
