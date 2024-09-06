@@ -133,6 +133,7 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
             <router-link to="/donate">{{ $t('Volunteers') }}</router-link
             ><router-link to="/">{{ $t('Donate') }}</router-link
             ><router-link to="/">{{ $t('Contact Us') }}</router-link>
+            <router-link to="/"></router-link>
           </li>
         </ul>
       </div>
