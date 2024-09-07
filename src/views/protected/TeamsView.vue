@@ -16,9 +16,9 @@ import swal from 'sweetalert'
 import { ref, onMounted } from 'vue'
 const currentLanguage = ref('en')
 
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
+// const toggleLanguage = (lang) => {
+//   currentLanguage.value = lang
+// }
 const teams = ref([])
 const fetchTeams = async () => {
   try {
@@ -45,8 +45,6 @@ const fetchTeams = async () => {
 }
 
 const deleteTeam = async (id) => {
-  // const sure = window.confirm('Are you sure to delete this team?')
-  // if (sure) {
   const res = await ApiService.delete('/admin/our-teams/' + id)
   if (res.success) {
     fetchTeams()
@@ -74,10 +72,10 @@ const editTeam = (team) => {
   showEditModal.value = true
 }
 
-const closeModal = () => {
-  showAddModal.value = false
-  edit.value = false
-}
+// const closeModal = () => {
+//   showAddModal.value = false
+//   edit.value = false
+// }
 
 let image = ref('')
 const handleFileChange = (event) => {
@@ -87,7 +85,7 @@ const handleFileChange = (event) => {
 const imageName = ref('')
 const imageEntry = (event) => {
   team.value.image = event
-  imageName.value = file.name
+  imageName.value = event.name
 }
 
 let showAddModal = ref(false)
@@ -125,6 +123,7 @@ const submitForm = async () => {
   if (res) {
     fetchTeams()
     team.value = {}
+    showAddModal.value = false
     swal({
       icon: 'success',
       title: 'Personnel created successfully'
@@ -132,6 +131,13 @@ const submitForm = async () => {
   }
 }
 
+const showModal = () => {
+  // console.log('Hello')
+
+  if (!showAddModal.value) {
+    showAddModal.value = true
+  }
+}
 onMounted(() => {
   fetchTeams()
 })
@@ -141,7 +147,7 @@ onMounted(() => {
   <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
     <!-- Services -->
     <button
-      @click="showAddModal = true"
+      @click="showModal()"
       class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
     >
       <font-awesome-icon
@@ -151,13 +157,13 @@ onMounted(() => {
       Add Personnel
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-2 bg-white">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 place-content-center">
+      <div v-for="(team, i) in teams" :key="i" class="flex flex-col gap-2 p-1 shadow bg-white">
         <img
           v-if="team.image"
           :src="BASE_AVATAR + team.image"
           alt=""
-          class="zw-36 h-36 zring-2 zring-yellow-300 rounded-sm"
+          class="zring-yellow-300 rounded-sm"
         />
         <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
         <h1 class="text-2xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
@@ -166,7 +172,6 @@ onMounted(() => {
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
         <p class="line-clamp-5">
-          {{ team.profession[currentcurrentLanguageLanguage] }}
           {{ team.profession[currentLanguage] }}
         </p>
 
@@ -249,7 +254,7 @@ onMounted(() => {
     >
       <div class="w-1/2 bg-white p-4 flex flex-col">
         <div class="flex justify-between px-12">
-          <h1 class="flex justify-center font-bold font-serif">Add Team</h1>
+          <h1 class="flex justify-center font-bold font-serif">Add Personnel</h1>
           <button @click="showAddModal = false" class="bg-gray-500 text-white self-end p-2">
             cancel
           </button>
@@ -263,6 +268,7 @@ onMounted(() => {
           <div class="flex justify-center">
             <BaseInput
               type="text"
+              required
               id="fullName"
               label="Full Name"
               v-model="team.fullName[currentLanguage]"
@@ -271,6 +277,7 @@ onMounted(() => {
           <div class="flex justify-center">
             <BaseInput
               type="text"
+              required
               id="Profession"
               label="Profession"
               v-model="team.profession[currentLanguage]"
@@ -298,7 +305,7 @@ onMounted(() => {
             </div>
             <!-- Submit Button -->
             <div class="flex justify-end">
-              <BaseButton label="">Submit</BaseButton>
+              <BaseButton label="" type="submit">Submit</BaseButton>
             </div>
           </div>
         </form>

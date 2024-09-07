@@ -133,7 +133,8 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
             <router-link to="/donate">{{ $t('Volunteers') }}</router-link
             ><router-link to="/">{{ $t('Donate') }}</router-link
             ><router-link to="/">{{ $t('Contact Us') }}</router-link>
-            <router-link to="/"></router-link>
+            <router-link to="/">Privacy Ploicy</router-link>
+            <router-link to="/">Terms and Conditions</router-link>
           </li>
         </ul>
       </div>
@@ -208,7 +209,6 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
   </section>
   <!-- bg-[#53900F]/10  -->
   <div class="w-full bg-[#53900F]/10 text-black flex flex-col md:flex-row justify-between px-[2%]">
-   
     <p class="text-center p-2">© 2024 REST. All rights reserved.</p>
     <div class="flex gap-2 items-center justify-center">
       <h1>Powered by</h1>
