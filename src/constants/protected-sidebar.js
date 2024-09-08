@@ -9,7 +9,6 @@ const SIDEBARITEMS = {
     //   { label: 'Works', name: 'products', icon: 'box-open' },
     { label: 'public Figure', name: 'team', icon: 'handshake' },
     { label: 'News', name: 'admin-blogs', icon: 'newspaper' },
-
     { label: 'Partners', name: 'partner', icon: 'handshake' },
     { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
     { label: 'Messages', name: 'messages', icon: 'comment-dots' },
