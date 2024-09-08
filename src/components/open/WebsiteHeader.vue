@@ -1,6 +1,44 @@
 <template>
   <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
     <div class="w-full bg-[#53900F] flex justify-between text-white px-[2%] py-1">
+      <div class="flex items-center justify-center">
+        <a
+          :href="social.link"
+          target="_blank"
+          v-for="(social, index) in medias"
+          :key="index"
+          class="flex items-center justify-center"
+        >
+          <font-awesome-icon
+            :icon="['fab', 'facebook']"
+            class="text-white hover:text-white/80 p-2"
+            v-if="social.platform.toLowerCase() === 'facebook'"
+          >
+          </font-awesome-icon>
+
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'twitter'"
+            :icon="['fab', 'twitter']"
+            class="text-white p-2 rounded"
+          />
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'youtube'"
+            :icon="['fab', 'youtube']"
+            class="text-white p-2 rounded"
+          />
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'telegram'"
+            :icon="['fab', 'telegram']"
+            class="text-white p-2 rounded"
+          />
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'linkedin'"
+            :icon="['fab', 'linkedin']"
+            class="text-white p-2 rounded"
+          />
+          <font-awesome-icon v-else :icon="['fab', 'whatsapp']" class="text-white p-2 rounded" />
+        </a>
+      </div>
       <div
         v-for="(contact, index) in infoG"
         :key="index"
@@ -23,47 +61,8 @@
           </h1>
         </div>
       </div>
-      <div class="flex gap-8 items-center justify-center">
-        <div class="flex items-center justify-center">
-          <a
-            :href="social.link"
-            target="_blank"
-            v-for="(social, index) in medias"
-            :key="index"
-            class="flex items-center justify-center"
-          >
-            <font-awesome-icon
-              :icon="['fab', 'facebook']"
-              class="text-white hover:text-white/80 p-2"
-              v-if="social.platform.toLowerCase() === 'facebook'"
-            >
-            </font-awesome-icon>
-
-            <font-awesome-icon
-              v-else-if="social.platform.toLowerCase() === 'twitter'"
-              :icon="['fab', 'twitter']"
-              class="text-white p-2 rounded"
-            />
-            <font-awesome-icon
-              v-else-if="social.platform.toLowerCase() === 'youtube'"
-              :icon="['fab', 'youtube']"
-              class="text-white p-2 rounded"
-            />
-            <font-awesome-icon
-              v-else-if="social.platform.toLowerCase() === 'telegram'"
-              :icon="['fab', 'telegram']"
-              class="text-white p-2 rounded"
-            />
-            <font-awesome-icon
-              v-else-if="social.platform.toLowerCase() === 'linkedin'"
-              :icon="['fab', 'linkedin']"
-              class="text-white p-2 rounded"
-            />
-            <font-awesome-icon v-else :icon="['fab', 'whatsapp']" class="text-white p-2 rounded" />
-          </a>
-        </div>
-
-        <div class="relative group flex items-center justify-center">
+      <!-- <div class="flex gap-8 items-center justify-center"> -->
+      <!-- <div class="relative group flex items-center justify-center">
           <h1 class="flex items-center justify-center gap-1">
             <font-awesome-icon icon="globe"></font-awesome-icon>{{ language }}
           </h1>
@@ -94,8 +93,8 @@
               <hr />
             </li>
           </ul>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
     </div>
     <nav
       class="w-full px-[1%] flex justify-between items-center py- zfont-bold bg-white/100 shadow-2xl"
@@ -145,7 +144,7 @@
             >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
-                {{ $t('Our Beneficiaries') }}
+                {{ $t('Our Programs') }}
               </span>
               <hr class="text-[#001F3F]" />
             </router-link>
@@ -499,11 +498,12 @@
             >
             <hr />
 
-            <div class=" px-4 flex flex-col" zdata-aos="fade-left">
+            <div class="px-4 flex flex-col" zdata-aos="fade-left">
               <router-link
                 :to="{ name: 'documents' }"
                 @click="showDropDown = !showDropDown"
-                :class="[{ 'text-[#53900F]': isActive('documents') }]" class="w-full"
+                :class="[{ 'text-[#53900F]': isActive('documents') }]"
+                class="w-full"
               >
                 <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
               </router-link>

@@ -54,7 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-full ">
+  <section class="w-full">
     <div class="w-full relative">
       <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
@@ -72,7 +72,11 @@ onMounted(() => {
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/15">
     <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
     <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div v-for="(document, i) in documents" :key="i" class="grid gap-4 shadow-2xl zp-4 rounded-xl bg-white p-2">
+      <div
+        v-for="(document, i) in documents"
+        :key="i"
+        class="grid gap-4 shadow zp-4 rounded-xl bg-white p-2"
+      >
         <div class="relative group">
           <img
             v-if="document.image"
@@ -81,10 +85,17 @@ onMounted(() => {
             class="h-[300px] w-full rounded-xl zw-full object-cover"
           />
           <div
-            class="gap-4 items-end p-4 justify-start flex absolute inset-0 group-hover:bg-[#53900F]/60"
+            class="gap-4 items-end p-4 justify-start flex absolute inset-0 zgroup-hover:bg-[#53900F]/60"
           >
-            <button class="bg-white text-[#53900F] px-4 py-2 rounded-xl">
-              <a :href="BASE_UPLOAD + document.document" target="_blank" class="flex gap-4 items-center justify-center"><font-awesome-icon icon="download"></font-awesome-icon>Download</a>
+            <button
+              class="bg-white text-[#53900F] px-4 py-2 rounded-xl hover:text-white hover:bg-[#53900F]"
+            >
+              <a
+                :href="BASE_UPLOAD + document.document"
+                target="_blank"
+                class="flex gap-4 items-center justify-center"
+                ><font-awesome-icon icon="download"></font-awesome-icon>Download</a
+              >
             </button>
           </div>
         </div>

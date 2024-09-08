@@ -27,7 +27,7 @@ watchEffect(() => {
 <template>
   <div :class="`${barClass}`" v-bind="$attrs">
     <ul class=" ">
-      <li v-for="(item, index) in navigationItems" :key="index" class="mb-2 pl-2">
+      <li v-for="(item, index) in navigationItems" :key="index" class="pl-2">
         <router-link
           :to="{ name: item.name }"
           :class="{
@@ -36,7 +36,7 @@ watchEffect(() => {
           }"
           exact
           active-class=""
-          class="block py-1 px-2 zrounded-lg hover:bg-[#53900F]/30 hover:text-white transition-colors duration-200"
+          class="py-1 px-2 hover:bg-[#53900F]/30 hover:text-white transition-colors flex gap-4 duration-200"
           exact-path="true"
         >
           <font-awesome-icon v-if="item.icon" :icon="item.icon" />

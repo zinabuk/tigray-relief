@@ -7,12 +7,6 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/swiper-bundle.css'
 
-// import 'swiper/css/pagination'
-// import 'swiper/css/navigation'
-// import 'swiper/css/effect-fade'
-
-// const news = async () => {
-//   const response = await ApiService.get()
 // }
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -133,24 +127,24 @@ onMounted(() => {
           :src="BASE_AVATAR + hero.heroImage"
         />
         <div
-          class="absolute top-1/2 -translate-y-1/2 w-full md:w-2/5 h-d py-6 flex flex-col text-[#53900F] justify-center px-4 bg-yellow-400/90 zmd:bg-white/0 rounded-tr-[100px]z md:left-4 font-bold zshadow-2xl hover:scale-[1.1] transition-transform duration-700 delay-150"
-          style="box-shadow: 20px 20px 20px 20px rgb(0 0 0/0.9)"
+          class="absolute h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/90 md:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
+          zstyle="box-shadow: 5px 5px 5px 5px rgb(83 144 15/0.9)"
         >
           <div class="wave-container w-full" zdata-aos="fade-left">
-            <p class="zwave-text font-bold text-2xl">{{ hero.heroTitle[currentLanguage] }}</p>
+            <p class="zwave-text font-bold text-6xl">{{ hero.heroTitle[currentLanguage] }}</p>
           </div>
-          <h6 class="font-extralight line-clamp-2">
+          <h6 class="font- line-clamp-3 text-3xl">
             {{ hero.heroDescription[currentLanguage] }}
           </h6>
-          <div class="flex gap-4 p-4">
+          <div class="flex gap-4">
             <router-link
-              class="bg-[#53900F] rounded-xl text-yellow-400 px-4 py-2 self-start font-bold"
+              class="bg-[#53900F] border border-yellow-400 hover:bg-[#53900F] text-yellow-400 shadow ztext-yellow-400 px-4 py-2 self-start font-bold"
               to="/donate"
               >Donate Now</router-link
             >
             <router-link
               to="/about"
-              class="border rounded-xl px-4 py-2 border-black/60 font-bold"
+              class="bg-white border border-yellow-400 hover:bg-[#53900F] hover:text-yellow-400 rounded text-yellow-400 px-4 py-2 self-start font-bold"
               >{{ $t('Learn More') }}</router-link
             >
           </div>
@@ -176,7 +170,7 @@ onMounted(() => {
         />
 
         <div
-          class="absolute inset-0 flex flex-col justify-end bg-black/60 p-4 hover:bg-green-900/90"
+          class="absolute inset-0 flex flex-col justify-end bg-black/30 p-4 hover:bg-green-900/90"
         >
           <h1 class="text-2xl font-bold text-white line-clamp-2">
             {{ service.serviceTitle[currentLanguage] }}
@@ -194,29 +188,29 @@ onMounted(() => {
   </section>
 
   <!-- history -->
-  <section class="w-full px-[2%] relative grid grid-cols-1 gap-4 py-12">
+  <section class="w-full px-[2%] relative grid grid-cols-1 gap-4 py-12 bg-[#53900F]">
     <div class="flex flex-col gap-2 py-8 top-0 z-30">
-      <h1 class="text-4xl font-semibold text-center">{{ $t('Our Impact') }}</h1>
+      <h1 class="text-4xl font-light text-center">{{ $t('Our Impact') }}</h1>
       <!-- <p>
         Rest is a highly acclaimed non-profit organization dedicated to supporting the international
         Tigrai community in overcoming the broad range of conditions ...
       </p> -->
 
-      <div class="grid grid-cols-3 gap-4 w-full overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full overflow-hidden">
         <div
           class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
           data-aos="fade-right"
         >
-          <h1 class="text-green-900 text-4xl">1978</h1>
-          <p class="text-xl">{{ $t('A decades of expertise') }}</p>
+          <p class="text-xl font-light">{{ $t('A decades of expertise') }}</p>
+          <h1 class="text-yellow-400 text-6xl">1978</h1>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">
-          <h1 class="text-green-900 text-4xl">1,000 +</h1>
-          <p class="text-xl text-ce">{{ $t('Completed Projects') }}</p>
+          <p class="text-xl text-ce font-light">{{ $t('Completed Projects') }}</p>
+          <h1 class="text-yellow-400 text-6xl">1,000 +</h1>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-left">
-          <h1 class="text-green-900 text-4xl">3,000,000 +</h1>
-          <p class="text-xl">{{ $t('Impacted Beneficiaries') }}</p>
+          <p class="text-xl font-light">{{ $t('Impacted Beneficiaries') }}</p>
+          <h1 class="text-yellow-400 text-6xl">3,000,000 +</h1>
         </div>
       </div>
       <!-- <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold self-start"
@@ -240,7 +234,7 @@ onMounted(() => {
           }}
         </p>
 
-        <router-link to="/volunteer" class="text-green-600 underline font-bold">
+        <router-link to="/volunteer" class="text-[#53900F] underline font-bold">
           {{ $t('Join Now') }}</router-link
         >
       </div>
@@ -257,7 +251,7 @@ onMounted(() => {
           }}
         </p>
 
-        <router-link to="/donate" class="text-green-600 underline font-bold">{{
+        <router-link to="/donate" class="text-[#53900F] underline font-bold">{{
           $t('Send Now')
         }}</router-link>
       </div>
@@ -274,15 +268,13 @@ onMounted(() => {
           }}
         </p>
 
-        <router-link to="/contact" class="text-green-600 underline font-bold">
+        <router-link to="/contact" class="text-[#53900F] underline font-bold">
           {{ $t('Learn More') }}
         </router-link>
       </div>
     </div>
   </section>
   <!-- End of donation section -->
-
-  
 
   <!-- Start of news section -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5">
@@ -316,18 +308,18 @@ onMounted(() => {
       </div>
     </div>
 
-    <router-link to="/blogs" class="text-green-900 underline text-xl">{{
-      $t('View All')
+    <router-link to="/blogs" class="text-[#53900F] underline text-xl">{{
+      $t('View All News and Events')
     }}</router-link>
   </section>
 
   <!-- partners -->
-  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
+  <section class="w-full px-[2%] py-12 flex flex-col items-center justify-center gap-4">
     <h1 class="text-3xl font-bold">{{ $t('Our Partners') }}</h1>
     <swiper
       :slides-per-view="1"
       :modules="[Autoplay, Pagination, Navigation]"
-      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: false }"
+      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }"
       loop
       class="w-full flex flex-wrap items-center justify-center"
       :breakpoints="{
@@ -338,7 +330,7 @@ onMounted(() => {
       <swiper-slide
         v-for="(partner, i) in partners"
         :key="i"
-        class="relative w-full works mx-auto shadow-xl gap-6 bg-green-900/10 p-4"
+        class="relative w-full works flex items-center justify-center zshadow-xl hover:bg-yellow-400 gap-6 p-4"
       >
         <div class="w-32 h-32 mx-auto overflow-hidden">
           <img

@@ -204,7 +204,7 @@ onMounted(() => {
             >
           </div>
           <div class="">
-            <div class="flex justify-center gap-16 py-2">
+            <!-- <div class="flex justify-center gap-16 py-2">
               <BaseButton
                 @click="toggleLanguage('en')"
                 :class="{
@@ -232,7 +232,7 @@ onMounted(() => {
               >
                 Tigrigna
               </BaseButton>
-            </div>
+            </div> -->
             <form @submit.prevent="saveHero" class="flex flex-col gap-4">
               <div class="">
                 <div class="w-full zmd:w-1/2 py-4 flex px-2">

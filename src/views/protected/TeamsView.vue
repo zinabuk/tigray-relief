@@ -14,11 +14,11 @@ import swal from 'sweetalert'
 // import { useRouter } from 'vue-router'
 // const router = useRouter()
 import { ref, onMounted } from 'vue'
-const currentLanguage = ref('en'); 
+const currentLanguage = ref('en')
 
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang;
-};        
+// const toggleLanguage = (lang) => {
+//   currentLanguage.value = lang
+// }
 const teams = ref([])
 const fetchTeams = async () => {
   try {
@@ -29,7 +29,7 @@ const fetchTeams = async () => {
         ...item,
         fullName: JSON.parse(item.fullName),
         profession: JSON.parse(item.profession),
-        biography: JSON.parse(item.biography),
+        biography: JSON.parse(item.biography)
       }))
     }
   } catch (error) {
@@ -45,27 +45,25 @@ const fetchTeams = async () => {
 }
 
 const deleteTeam = async (id) => {
-  // const sure = window.confirm('Are you sure to delete this team?')
-  // if (sure) {
-    const res = await ApiService.delete('/admin/our-teams/' + id)
-    if (res.success) {
-      fetchTeams()
-    }
+  const res = await ApiService.delete('/admin/our-teams/' + id)
+  if (res.success) {
+    fetchTeams()
+  }
   // }
 }
 
 let team = ref({
-    fullName: { en: '', ti: '', am: '' },
-    profession: { en: '', ti: '', am: '' },
-    biography: { en: '', ti: '', am: '' },
-    image: ''
+  fullName: { en: '', ti: '', am: '' },
+  profession: { en: '', ti: '', am: '' },
+  biography: { en: '', ti: '', am: '' },
+  image: ''
 })
 let showEditModal = ref(false)
 
 let eTeam = ref({ fullName: '', profession: '', biography: '', image: '' })
 const editTeam = (team) => {
-  eTeam.value =
-  { id:team.id,
+  eTeam.value = {
+    id: team.id,
     fullName: { ...team.fullName },
     profession: { ...team.profession },
     biography: { ...team.biography },
@@ -74,10 +72,10 @@ const editTeam = (team) => {
   showEditModal.value = true
 }
 
-const closeModal = () => {
-  showAddModal.value = false
-  edit.value = false
-}
+// const closeModal = () => {
+//   showAddModal.value = false
+//   edit.value = false
+// }
 
 let image = ref('')
 const handleFileChange = (event) => {
@@ -87,36 +85,35 @@ const handleFileChange = (event) => {
 const imageName = ref('')
 const imageEntry = (event) => {
   team.value.image = event
-  imageName.value = file.name
+  imageName.value = event.name
 }
 
 let showAddModal = ref(false)
-const updateTeam = async()=>{
+const updateTeam = async () => {
   const formData = new FormData()
-      formData.append('fullName', JSON.stringify(  eTeam.value.fullName))
-      formData.append('profession', JSON.stringify(  eTeam.value.profession))
-      formData.append('biography', JSON.stringify(  eTeam.value.biography))
+  formData.append('fullName', JSON.stringify(eTeam.value.fullName))
+  formData.append('profession', JSON.stringify(eTeam.value.profession))
+  formData.append('biography', JSON.stringify(eTeam.value.biography))
 
-  if (  eTeam.value.image) {
-    formData.append('image',   eTeam.value.image)
+  if (eTeam.value.image) {
+    formData.append('image', eTeam.value.image)
   }
 
-  const res = await ApiService.patch('/admin/our-teams/'+  eTeam.value.id, formData)
+  const res = await ApiService.patch('/admin/our-teams/' + eTeam.value.id, formData)
   if (res) {
     fetchTeams()
-      eTeam.value = {}
+    eTeam.value = {}
     swal({
       icon: 'success',
-      title: 'Team created successfully'
+      title: 'Key personel created successfully'
     })
   }
 }
 const submitForm = async () => {
-
-      const formData = new FormData()
-      formData.append('fullName', JSON.stringify(team.value.fullName))
-      formData.append('profession', JSON.stringify(team.value.profession))
-      formData.append('biography', JSON.stringify(team.value.biography))
+  const formData = new FormData()
+  formData.append('fullName', JSON.stringify(team.value.fullName))
+  formData.append('profession', JSON.stringify(team.value.profession))
+  formData.append('biography', JSON.stringify(team.value.biography))
 
   if (team.value.image) {
     formData.append('image', team.value.image)
@@ -126,13 +123,21 @@ const submitForm = async () => {
   if (res) {
     fetchTeams()
     team.value = {}
+    showAddModal.value = false
     swal({
       icon: 'success',
-      title: 'Team created successfully'
+      title: 'Personnel created successfully'
     })
   }
 }
 
+const showModal = () => {
+  // console.log('Hello')
+
+  if (!showAddModal.value) {
+    showAddModal.value = true
+  }
+}
 onMounted(() => {
   fetchTeams()
 })
@@ -141,18 +146,24 @@ onMounted(() => {
 <template>
   <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
     <!-- Services -->
-    <BaseButton @click="showAddModal = true" class="self-end">
-      <font-awesome-icon icon="add" class="text-yellow-500"></font-awesome-icon>
-      Add Public Figure</BaseButton
+    <button
+      @click="showModal()"
+      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
     >
+      <font-awesome-icon
+        icon="add"
+        class="zbg-white text-[#539000] p-2 rounded-full"
+      ></font-awesome-icon>
+      Add Personnel
+    </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-2 bg-white">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 place-content-center">
+      <div v-for="(team, i) in teams" :key="i" class="flex flex-col gap-2 p-1 shadow bg-white">
         <img
           v-if="team.image"
           :src="BASE_AVATAR + team.image"
           alt=""
-          class="w-36 h-36 ring-2 ring-yellow-300 rounded-sm"
+          class="zring-yellow-300 rounded-sm"
         />
         <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
         <h1 class="text-2xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
@@ -161,7 +172,6 @@ onMounted(() => {
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
         <p class="line-clamp-5">
-          {{ team.profession[currentcurrentLanguageLanguage] }}
           {{ team.profession[currentLanguage] }}
         </p>
 
@@ -181,28 +191,33 @@ onMounted(() => {
       class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/80"
     >
       <div class="bg-white p-4 flex flex-col">
-      <div class="flex justify-between">
-        <h2 class="text-lg font-bold mb-4">Edit Team</h2>
-        <button @click="showEditModal = false" class="bg-gray-500 text-white self-end p-2">
-          cancel
-        </button>
-      </div>
-
-        <div class="flex justify-center gap-16 py-2">
-              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
-              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
-              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+        <div class="flex justify-between">
+          <h2 class="text-lg font-bold mb-4">Edit Team</h2>
+          <button @click="showEditModal = false" class="bg-gray-500 text-white self-end p-2">
+            cancel
+          </button>
         </div>
+
         <form
           @submit.prevent="updateTeam"
           class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
           enctype="multipart/form-data"
         >
           <div class="flex justify-center">
-            <BaseInput type="text" id="fullName" label="Full Name" v-model="eTeam.fullName[currentLanguage]" />
+            <BaseInput
+              type="text"
+              id="fullName"
+              label="Full Name"
+              v-model="eTeam.fullName[currentLanguage]"
+            />
           </div>
           <div class="flex justify-center">
-            <BaseInput type="text" id="Profession" label="Profession" v-model="eTeam.profession[currentLanguage]" />
+            <BaseInput
+              type="text"
+              id="Profession"
+              label="Profession"
+              v-model="eTeam.profession[currentLanguage]"
+            />
           </div>
           <div>
             <BaseTextarea
@@ -238,27 +253,35 @@ onMounted(() => {
       v-if="showAddModal"
     >
       <div class="w-1/2 bg-white p-4 flex flex-col">
-      <div class="flex justify-between px-12">
-        <h1 class="flex justify-center font-bold font-serif">Add Team</h1>
-        <button @click="showAddModal = false" class="bg-gray-500 text-white self-end p-2">
-          cancel
-        </button>
-      </div>
-        <div class="flex justify-center gap-36 py-2">
-              <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
-              <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
-              <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
+        <div class="flex justify-between px-12">
+          <h1 class="flex justify-center font-bold font-serif">Add Personnel</h1>
+          <button @click="showAddModal = false" class="bg-gray-500 text-white self-end p-2">
+            cancel
+          </button>
         </div>
+
         <form
           @submit.prevent="submitForm"
           class="w-full rounded-lg p-6 shadow flex flex-col gap-2"
           enctype="multipart/form-data"
         >
           <div class="flex justify-center">
-            <BaseInput type="text" id="fullName" label="Full Name" v-model="team.fullName[currentLanguage]" />
+            <BaseInput
+              type="text"
+              required
+              id="fullName"
+              label="Full Name"
+              v-model="team.fullName[currentLanguage]"
+            />
           </div>
           <div class="flex justify-center">
-            <BaseInput type="text" id="Profession" label="Profession" v-model="team.profession[currentLanguage]" />
+            <BaseInput
+              type="text"
+              required
+              id="Profession"
+              label="Profession"
+              v-model="team.profession[currentLanguage]"
+            />
           </div>
           <div>
             <BaseTextarea
@@ -270,17 +293,19 @@ onMounted(() => {
           <!-- Event Image -->
           <div class="flex justify-between">
             <div class="flex">
-              <BaseFileInput @image-update="imageEntry($event)" label="Add Picture"
+              <BaseFileInput
+                @image-update="imageEntry($event)"
+                label="Add Picture"
                 type="file"
-                    inputClass="p-2 border border-gray-300 rounded"
-                    placeholder="Image"
-                    accept="image/*"
+                inputClass="p-2 border border-gray-300 rounded"
+                placeholder="Image"
+                accept="image/*"
               ></BaseFileInput>
               <p>{{ imageName }}</p>
             </div>
             <!-- Submit Button -->
             <div class="flex justify-end">
-              <BaseButton label="">Submit</BaseButton>
+              <BaseButton label="" type="submit">Submit</BaseButton>
             </div>
           </div>
         </form>

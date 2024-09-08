@@ -45,7 +45,7 @@ const editFaq = (faq) => {
   form.value = {
     id: faq.id,
     question: { ...faq.question },
-    answer: { ...faq.answer },
+    answer: { ...faq.answer }
   }
   edit.value = true
   showAddModal.value = true
@@ -61,15 +61,13 @@ const saveFaq = async () => {
       console.log('Editing FAQ with ID:', form.value.id)
       const response = await ApiService.patch('/admin/faqs/' + form.value.id, formData)
 
-        fetchFaqs()
-        closeModal()  // Close modal after successful edit
-
+      fetchFaqs()
+      closeModal() // Close modal after successful edit
     } else {
       const res = await ApiService.post('/admin/faqs', formData)
 
-        fetchFaqs()
-        closeModal()  // Close modal after successful save
-
+      fetchFaqs()
+      closeModal() // Close modal after successful save
     }
   } catch (error) {
     errorMessage.value = 'Failed to save FAQ'
@@ -157,7 +155,7 @@ onMounted(() => {
             </button>
           </div>
           <div class="bg-white flex flex-col gap-2 w-full">
-            <div class="flex w-full justify-between">
+            <!-- <div class="flex w-full justify-between">
               <button
                 @click="toggleLanguage('en')"
                 :class="{
@@ -188,7 +186,7 @@ onMounted(() => {
               >
                 አማርኛ
               </button>
-            </div>
+            </div> -->
             <form @submit.prevent="saveFaq" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
@@ -205,9 +203,7 @@ onMounted(() => {
                 ></BaseTextarea>
               </div>
               <div class="flex justify-end gap-2 flex-col">
-                <BaseButton type="submit" class="w-full px-2 py-2 rounded">
-                  Save FAQ
-                </BaseButton>
+                <BaseButton type="submit" class="w-full px-2 py-2 rounded"> Save FAQ </BaseButton>
               </div>
             </form>
           </div>

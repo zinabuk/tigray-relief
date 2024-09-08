@@ -55,7 +55,7 @@
             </button>
           </div>
           <div class="bg-white flex flex-col gap-2 w-full pt-2">
-            <div class="flex w-full justify-between">
+            <!-- <div class="flex w-full justify-between">
               <button
                 @click="toggleLanguage('en')"
                 :class="{
@@ -86,7 +86,7 @@
               >
                 አማርኛ
               </button>
-            </div>
+            </div> -->
             <form @submit.prevent="saveStrategy" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
@@ -115,7 +115,6 @@
                   ></BaseFileInput>
                   <BaseInput
                     @change="handleImageChange"
-                    label="Add picture"
                     type="file"
                     inputClass="p-2 border border-gray-300 rounded"
                     placeholder="Image"

@@ -186,7 +186,7 @@ onMounted(() => {
             </button>
           </div>
           <div class="bg-white flex flex-col gap-2 w-full">
-            <div class="flex w-full justify-between">
+            <!-- <div class="flex w-full justify-between">
               <button
                 @click="toggleLanguage('en')"
                 :class="{
@@ -217,7 +217,7 @@ onMounted(() => {
               >
                 አማርኛ
               </button>
-            </div>
+            </div> -->
             <form @submit.prevent="saveService" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
                 <BaseInput
