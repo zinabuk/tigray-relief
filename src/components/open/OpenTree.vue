@@ -1,11 +1,10 @@
 <template>
-  <div ref="tree" class="o w-full overflow-x-auto"></div>
+  <div ref="tree" class="o  w-full overflow-x-auto h-auto"></div>
 </template>
 
-<script lang="">
+<script lang="js">
 import { BASE_AVATAR } from '@/config'
 import * as d3 from 'd3'
-
 
 export default {
   name: 'OrgTree',
@@ -21,7 +20,6 @@ export default {
       treeLayout: null,
       i: 0,
       con: []
-
     }
   },
   mounted() {
@@ -31,9 +29,9 @@ export default {
   methods: {
     initializeTree() {
       const data = this.data
-      const width = 900
-      const height = 600
-      const margin = { top: 20, right: 120, bottom: 20, left: 180 }
+      const width = 900 // Width of the SVG container
+      const height = 1200 // Height of the SVG container
+      const margin = { top: 60, right: 120, bottom: 20, left: 120 }
 
       const svg = d3
         .select(this.$refs.tree)
@@ -41,24 +39,24 @@ export default {
         .attr('width', width + margin.right + margin.left)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
-        .attr('transform', `translate(${margin.left},${margin.top})`)
+        .attr('transform', `translate(${margin.left},${margin.top})`) // Align from the top-left corner
 
       this.root = d3.hierarchy(data, (d) => d.children)
-      this.root.x0 = height / 2
+      this.root.x0 = 0
       this.root.y0 = 0
-
-      this.treeLayout = d3.tree().size([height, width])
+      this.treeLayout = d3.tree().size([width, height])
 
       this.svg = svg
     },
     update(source) {
       const duration = 750
-
       const treeData = this.treeLayout(this.root)
       const nodes = treeData.descendants()
       const links = treeData.descendants().slice(1)
-
-      nodes.forEach((d) => (d.y = d.depth * 220))
+      nodes.forEach((d) => {
+        d.x = d.x * 1.2 // Horizontal positioning
+        d.y = d.depth * 200 // Vertical positioning based on depth (120px between each level)
+      })
 
       const node = this.svg.selectAll('g.node').data(nodes, (d) => d.id || (d.id = ++this.i))
 
@@ -66,26 +64,17 @@ export default {
         .enter()
         .append('g')
         .attr('class', 'node')
-        .attr('transform', `translate(${source.y0},${source.x0})`)
+        .attr('transform', `translate(${source.x0},${source.y0})`)
         .on('click', this.click)
+      nodeEnter.append('circle').attr('r', '80').attr('stroke', 'steelblue').attr('fill', 'white')
 
-      //nodeEnter
-      //.append('rect')
-      //.attr('width', 100)
-      //.attr('height', 30)
-      //.attr('x', -50)
-      //.attr('y', -15)
-      //.attr('fill', '#fff')
-      //.attr('stroke', 'steelblue')
-      //.attr('stroke-width', 1.5)
-      nodeEnter.append('circle').attr('r', '60').attr('stroke', 'steelblue').attr('fill', 'white')
-
+      // Add image to each node
       nodeEnter
         .append('svg:image')
-        .attr('x', -60) // Adjust position as needed
-        .attr('y', -60) // Adjust position as needed
-        .attr('width', 120) // Adjust size as needed
-        .attr('height', 120)
+        .attr('x', -80) // Adjust position as needed
+        .attr('y', -80) // Adjust position as needed
+        .attr('width', 160) // Adjust size as needed
+        .attr('height', 160)
         .attr('xlink:href', (d) => {
           if (d.data.image == BASE_AVATAR + 'null') {
             return '/image/org.jpg'
@@ -95,54 +84,52 @@ export default {
         })
         .attr('clip-path', 'circle()')
 
+      // Add text (name and department)
       nodeEnter
-        .append('text')
-        .attr('y', 40)
-        .attr('x', -110)
-        .style('text-anchor', 'middle')
-        .text((d) => d.data.name)
-      nodeEnter
-        .append('text')
-        .attr('dy', 0)
-        .attr('x', -110)
-        .style('text-anchor', 'middle')
-        .text((d) => {
-          return this.test(d.data.department, "first")
-        })
-        nodeEnter
-        .append('text')
-        .attr('dy', 10)
-        .attr('x', -110)
-        .style('text-anchor', 'middle')
-        .text((d) => {
-          return this.test(d.data.department, "second")
-        })
-        nodeEnter
-        .append('text')
-        .attr('dy', 20)
-        .attr('x', -110)
-        .style('text-anchor', 'middle')
-        .text((d) => {
-          return this.test(d.data.department, "final")
-        })
+      .append('text')
+      .attr('y', 80) // Position below the image (adjust as needed)
+      .attr('x', 0) // Center horizontally
+      .style('text-anchor', 'middle')
+      .text((d) => d.data.name)
+
+    nodeEnter
+      .append('text')
+      .attr('dy', 100) // Position below the name (adjust as needed)
+      .attr('x', 0) // Center horizontally
+      .style('text-anchor', 'middle')
+      .text((d) => this.test(d.data.department, 'first'))
+
+    nodeEnter
+      .append('text')
+      .attr('dy', 110) // Position below the second line (adjust as needed)
+      .attr('x', 0) // Center horizontally
+      .style('text-anchor', 'middle')
+      .text((d) => this.test(d.data.department, 'second'))
+
+    nodeEnter
+      .append('text')
+      .attr('dy', 120) // Position below the third line (adjust as needed)
+      .attr('x', 0) // Center horizontally
+      .style('text-anchor', 'middle')
+      .text((d) => this.test(d.data.department, 'final'))
+
+      // Update node position for animation
       const nodeUpdate = nodeEnter.merge(node)
 
       nodeUpdate
         .transition()
         .duration(duration)
-        .attr('transform', (d) => `translate(${d.y},${d.x})`)
+        .attr('transform', (d) => `translate(${d.x},${d.y})`) // x is now horizontal and y is vertical
 
-      nodeUpdate.append('svg').attr('width', 500).attr('height', 500)
-
+      // Remove exiting nodes
       const nodeExit = node
         .exit()
         .transition()
         .duration(duration)
-        .attr('transform', `translate(${source.y},${source.x})`)
+        .attr('transform', `translate(${source.x},${source.y})`)
         .remove()
 
-      nodeExit.select('rect').attr('width', 100).attr('height', 30).attr('x', -50).attr('y', -15)
-
+      // Add/update links between nodes
       const link = this.svg.selectAll('path.link').data(links, (d) => d.id)
 
       const linkEnter = link
@@ -171,16 +158,17 @@ export default {
         })
         .remove()
 
+      // Store old positions for transition
       nodes.forEach((d) => {
         d.x0 = d.x
         d.y0 = d.y
       })
     },
     diagonal(s, d) {
-      return `M ${s.y} ${s.x}
-                C ${(s.y + d.y) / 2} ${s.x},
-                  ${(s.y + d.y) / 2} ${d.x},
-                  ${d.y} ${d.x}`
+      return `M ${s.x} ${s.y}
+              C ${(s.x + d.x) / 2} ${s.y},
+                ${(s.x + d.x) / 2} ${d.y},
+                ${d.x} ${d.y}`
     },
     click(event, d) {
       if (d.children) {
@@ -192,46 +180,35 @@ export default {
       }
       this.update(d)
     },
-    test(data,text){
-      // console.log(data)
-      if (data != null){
-            let datas = []
-            let f = ""
+    test(data, text) {
+      if (data != null) {
+        let datas = []
+        let f = ""
+        let k = ""
+        let m = ""
 
-            let k = ""
-            let m = ""
-            // console.log(d.data.department)
-            datas = data.split(" ")
-            if (datas[0] && datas[1]){
-              f = datas[0] + ' ' + datas[1]
-              console.log(f)
-            }
-            
-            
-            if (text == "first"){
-              return f
-            }
-            else if (text == "second"){
+        datas = data.split(" ")
+        if (datas[0] && datas[1]) {
+          f = datas[0] + ' ' + datas[1]
+        }
 
-              for (let l = 2; l < datas.length; l++){
-                console.log(true);
-                if (l < 5){
-                  k += datas[l] + " "
-                }
-                
-              }
-              return k
-            }
-            else{
-              for (let d = 5; d < datas.length; d++){
-                console.log(true);
-                m += datas[d] + " "
-              }
-              return m
+        if (text == "first") {
+          return f
+        } else if (text == "second") {
+          for (let l = 2; l < datas.length; l++) {
+            if (l < 5) {
+              k += datas[l] + " "
             }
           }
-    },
-
+          return k
+        } else {
+          for (let d = 5; d < datas.length; d++) {
+            m += datas[d] + " "
+          }
+          return m
+        }
+      }
+    }
   }
 }
 </script>
