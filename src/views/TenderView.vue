@@ -1,6 +1,6 @@
 <script setup>
 import ApiService from '@/services/apiService'
-import { BASE_AVATAR } from '@/config'
+import { BASE_UPLOAD } from '@/config'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
@@ -102,6 +102,9 @@ const fetchTenders = async () => {
 onMounted(() => {
   fetchTenders()
 })
+function isImage(fileName) {
+  return /\.(jpg|jpeg|png|gif)$/i.test(fileName.toLowerCase())
+}
 </script>
 
 <template>
@@ -119,6 +122,64 @@ onMounted(() => {
       </div>
     </div>
   </section>
+<<<<<<< HEAD
+=======
+  <!-- Services -->
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
+    <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
+    <div class="w-full px-12 ">
+      <div v-for="(tender, i) in tenders" :key="i" class=" gap-4">
+        <div class="bg-white w-full shadow-sm">
+          <div class="w-full flex justify-between p-4">
+            <ul>
+              <li class="md:text-[16px] font-semibolfd">Tigray Relief Society</li>
+              <!-- <li class="text-gray-700 text-[14px]">Posted 17 Days ago ???</li> -->
+              <li class="mt-4 bg-gray-500 text-white inline-block text-sm px-2 py-1">
+                {{ tender.title[currentLanguage] }}
+              </li>
+            </ul>
+            <img
+              src="@/assets/00.png"
+              class="w-20 zrounded-full h-20 object-conatin"
+              width="200px"
+              height="200px"
+            />
+          </div>
+
+         <div v-if="tender.image" class="p-4">
+
+
+            <div v-if="isImage(tender.image)">
+                <img
+                  :src="BASE_UPLOAD+tender.image"
+                  alt="Image"
+                  class="h-56 w-56 object-contain"
+                />
+            </div>
+            <div v-else>
+              <a :href="BASE_UPLOAD+tender.image" target="_blank" class="text-blue-500">
+                {{ tender.image }}
+              </a>
+            </div>
+
+          </div>
+
+          <h1 v-else class="w-24 h-24  p-4 text-center font-bold text-6xl">
+            {{ tender.title[currentLanguage] }}
+          </h1>
+        </div>
+        <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
+          <h1>{{ tender.title[currentLanguage] }}</h1>
+          <h6 class="text-gray-500">{{ tender.organization[currentLanguage] }}</h6>
+          <h3 class="text-lg font-bold">
+            {{ tender.deadline }}
+          </h3>
+          <p class="line-clamp-5">{{ tender.description[currentLanguage] }}</p>
+          <router-link to="/about" class="text-[#53900F] font-bold">{{
+            $t('Read More')
+          }}</router-link>
+        </div>
+>>>>>>> 2541c6a5fe05f969f7dae262d939f4666fdeaafa
 
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
     <!-- <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1> -->

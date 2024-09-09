@@ -1,48 +1,74 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import swal from 'sweetalert';
-
-import { useRouter } from 'vue-router';
-const router = useRouter()
-import ApiService from '@/services/apiService';
+import swal from 'sweetalert'
+import { useRouter } from 'vue-router'
+import ApiService from '@/services/apiService'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseButton from '@/components/base/BaseButton.vue' 
+import BaseFileInput from '@/components/base/BaseFileInput.vue' // Import your BaseFileInput component
+
+const router = useRouter()
 const errorMessage = ref('')
-// const successMessage = ref('')
-let job = ref({})
+const successMessage = ref('')
+const job = ref({})
+const file = ref(null) // Define a ref for the file
+
+const handleFileChange = (event) => {
+  file.value = event.target.files[0] // Update the file ref with the selected file
+}
 
 const saveJob = async () => {
   try {
-    const response = await ApiService.post('/admin/vacancies', job.value)
+    const formData = new FormData();
+    
+    // Append job data
+    Object.keys(job.value).forEach(key => {
+      formData.append(key, job.value[key]);
+    });
+
+    // Append file if it exists
+    if (file.value) {
+      formData.append('file', file.value);
+    }
+
+    // Log FormData to debug
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
+    const response = await ApiService.post('/admin/vacancies', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
     if (response.success) {
-      // successMessage.value = response.message
-      // alert("OKK")
       swal({
         title: response.message,
         icon: 'success'
-      })
-      router.push({ name: 'admin-jobs' })
+      });
+      router.push({ name: 'admin-jobs' });
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      errorMessage.value = error.response.data.message
-    } else {
-      router.push({ name: 'NetworkError' })
-    }
+      errorMessage.value = error.response.data.message;
+    } 
+    // else {
+    //   router.push({ name: 'NetworkError' });
+    // }
   }
-}</script>
+};
+
+</script>
+
 <template>
-  <div
-    
-    class=" w-[82%] flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto"
-  >
+  <div class="w-[82%] flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto">
     <div class="w-1/2 bg-white">
       <h1 class="text-center text-xl font-semibold">Vacancy form</h1>
-      
       <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 py-4 px-4">
         <div class="grid grid-cols-12 gap-2">
-          <div class="col-span-6 ">
+          <div class="col-span-6">
             <BaseInput
               v-model="job.jobTitle"
               type="text"
@@ -67,21 +93,20 @@ const saveJob = async () => {
           inputClass="px-8"
           required
           placeholder="location"
-          autocomplete="true"
         ></BaseInput>
         <BaseInput v-model="job.experience" inputClass="px-8" placeholder="experience"></BaseInput>
         <BaseInput
           v-model="job.salary"
           required
           inputClass="px-8"
-          placeholder="sallary"
+          placeholder="salary"
         ></BaseInput>
         <BaseInput
           type="date"
           v-model="job.deadline"
           required
           inputClass="px-8 py-3"
-          placeholder="dadeline"
+          placeholder="deadline"
         ></BaseInput>
         <BaseTextarea
           v-model="job.qualification"
@@ -95,8 +120,9 @@ const saveJob = async () => {
           textareaClasses="px-8"
           placeholder="Description"
         ></BaseTextarea>
-        <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput>
-        <p v-if="message" class="text-red-700">{{ message }}</p>
+        <BaseFileInput @change="handleFileChange" label="Add File" type="file" inputClass="p-2 border border-gray-300 rounded" accept="*" />
+        
+        <p v-if="errorMessage" class="text-red-700">{{ errorMessage }}</p>
         <div class="flex gap-4">
           <BaseButton type="submit" class="self-start">Submit</BaseButton>
           <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="closeModal = false">

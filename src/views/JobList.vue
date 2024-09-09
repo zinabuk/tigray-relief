@@ -7,7 +7,7 @@ import ApiService from '@/services/apiService'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
-
+import {  BASE_UPLOAD } from '@/config'
 const jobs = ref([])
 
 const isApply = ref(false)
@@ -106,6 +106,9 @@ function shareOnTwitter() {
   const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}&hashtags=${encodeURIComponent(hashtags)}`
   window.open(twitterUrl, '_blank')
 }
+function isImage(fileName) {
+  return /\.(jpg|jpeg|png|gif)$/i.test(fileName.toLowerCase())
+}
 
 onMounted(() => {
   fetchJobs()
@@ -201,6 +204,23 @@ onMounted(() => {
             <ul class="py-2">
               <li class="">{{ career.qualification }}</li>
             </ul>
+          </div>
+          <div>
+
+
+            <div v-if="isImage(career.file)">
+                <img
+                  :src="BASE_UPLOAD+career.file"
+                  alt="Image"
+                  class="h-56 w-56 object-contain"
+                />
+            </div>
+            <div v-else>
+              <a :href="BASE_UPLOAD+career.file" target="_blank" class="text-blue-500">
+               {{ career.file }}
+              </a>
+            </div>
+
           </div>
         </div>
         <div>

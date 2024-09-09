@@ -148,6 +148,9 @@ const saveTender = async () => {
   }
 }
 onMounted(fetchTenders)
+
+
+
 </script>
 
 <template>
@@ -210,11 +213,11 @@ onMounted(fetchTenders)
         <div class="flex justify-end gap-2 flex-col">
           <BaseFileInput
             @image-update="handleFileChange($event)"
-            label="Add Picture"
+            label="Add File"
             type="file"
             inputClass="p-2 border border-gray-300 rounded"
             placeholder="Image"
-            accept="image/*"
+            accept="*"
           ></BaseFileInput>
           <span>{{ imageName }}</span>
           <BaseButton type="submit" class="w-full px-2 py-2 rounded"> Save Changes </BaseButton>
@@ -302,11 +305,11 @@ onMounted(fetchTenders)
             <div class="flex justify-end gap-2 flex-col">
               <BaseFileInput
                 @image-update="handleFileChange($event)"
-                label="Add Picture"
+                label="Add File"
                 type="file"
                 inputClass="p-2 border border-gray-300 rounded"
                 placeholder="Image"
-                accept="image/*"
+                accept="*"
               ></BaseFileInput>
               <span>{{ imageName }}</span>
               <BaseButton type="submit" class="w-full px-2 py-2 rounded"> Save Tender </BaseButton>
