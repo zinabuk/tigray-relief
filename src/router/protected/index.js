@@ -229,6 +229,15 @@ const PROTECTED_ROUTES = [
         }
       },
       {
+        path: 'privacy',
+        component: () => import('@/views/protected/PrivacyPolicy.vue'),
+        name: 'privacy-policy',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
+      {
         path: 'team/add',
         component: () => import('@/views/protected/AddTeam.vue'),
         name: 'admin-add-team',

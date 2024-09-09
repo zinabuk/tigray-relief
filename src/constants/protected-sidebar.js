@@ -26,7 +26,9 @@ const SIDEBARITEMS = {
 
     { label: 'Documents', name: 'admin-documents', icon: 'quote-left' },
     { label: 'Publications', name: 'admin-publications', icon: 'quote-left' },
-    { label: 'Strategies', name: 'admin-strategy', icon: 'quote-left' }
+    { label: 'Strategies', name: 'admin-strategy', icon: 'quote-left' },
+    { label: 'Privacy Policy', name: 'privacy-policy', icon: 'quote-left' }
+
   ],
   // ],
   STAFF_TABS: [

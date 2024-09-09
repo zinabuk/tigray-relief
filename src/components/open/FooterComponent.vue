@@ -130,11 +130,11 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
             <router-link to="/">{{ $t('Home') }}</router-link
             ><router-link to="/about">{{ $t('About Us') }}</router-link>
             <router-link to="/our-governance">{{ $t('News and Media') }}</router-link>
-            <router-link to="/donate">{{ $t('Volunteers') }}</router-link
-            ><router-link to="/">{{ $t('Donate') }}</router-link
-            ><router-link to="/">{{ $t('Contact Us') }}</router-link>
-            <router-link to="/">Privacy Ploicy</router-link>
-            <router-link to="/">Terms and Conditions</router-link>
+            <router-link to="/volunteer">{{ $t('Volunteers') }}</router-link
+            ><router-link to="/donate">{{ $t('Donate') }}</router-link
+            ><router-link to="/contact">{{ $t('Contact Us') }}</router-link>
+            <router-link to="/privacy" target="_blank">Privacy Policy</router-link>
+            <!-- <router-link to="/terms" target="_blank">Terms and Conditions</router-link> -->
           </li>
         </ul>
       </div>

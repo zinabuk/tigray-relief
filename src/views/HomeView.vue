@@ -138,13 +138,13 @@ onMounted(() => {
           </h6>
           <div class="flex gap-4">
             <router-link
-              class="bg-[#53900F] border border-yellow-400 hover:bg-[#53900F] text-yellow-400 shadow ztext-yellow-400 px-4 py-2 self-start font-bold"
+              class="bg-[#53900F] border rounded-md border-yellow-400 hover:bg-[#53900F] text-yellow-400 shadow ztext-yellow-400 px-4 py-2 self-start font-bold"
               to="/donate"
               >Donate Now</router-link
             >
             <router-link
               to="/about"
-              class="bg-white border border-yellow-400 hover:bg-[#53900F] hover:text-yellow-400 rounded text-yellow-400 px-4 py-2 self-start font-bold"
+              class="bg-white border border-yellow-400 hover:bg-[#53900F] hover:text-yellow-400 rounded-md text-yellow-400 px-4 py-2 self-start font-bold"
               >{{ $t('Learn More') }}</router-link
             >
           </div>

@@ -51,7 +51,7 @@ onMounted(() => {
   </section>
   <!-- Services -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
-    <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1>
+    <!-- <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1> -->
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 bg-white shadow-xl">
       <div
         v-for="(event, i) in blogs"

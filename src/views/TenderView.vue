@@ -7,6 +7,7 @@ import BaseInput from '@/components/base/BaseInput.vue'
 
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import swal from 'sweetalert'
 const router = useRouter()
 
 const isApply = ref(false)
@@ -14,11 +15,12 @@ const tender = ref({})
 const document = ref('')
 const form = ref({ fullName: '', email: '', phoneNumber: '', document: '' })
 
-
 const captureDocument = (file) => {
   document.value = file
   form.value.document = file
 }
+
+const errorMessage = ref('')
 const submitApplication = async () => {
   try {
     const formData = new FormData()
@@ -27,8 +29,10 @@ const submitApplication = async () => {
     formData.append('phoneNumber', form.value.phoneNumber)
     // formData.append('applicationLetter', form.value.applicationLetter)
     formData.append('document', form.value.document)
-    const response = await ApiService.applyTender('/users/application-tenders/' + tender.value.id, formData)
-    console.log(formData)
+    const response = await ApiService.applyTender(
+      '/users/application-tenders/' + tender.value.id,
+      formData
+    )
     if (response.success) {
       form.value = {}
       document.value = ''
@@ -59,14 +63,13 @@ const submitApplication = async () => {
   }
 }
 
-
+const successMessage = ref('')
 const toggleApply = (tenderToApply) => {
   isApply.value = true
   tender.value = tenderToApply
   successMessage.value = ''
   errorMessage.value = 0
 }
-
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -116,122 +119,110 @@ onMounted(() => {
       </div>
     </div>
   </section>
-  <!-- Services -->
-  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
-    <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
-    <div class="w-full px-12 ">
-      <div v-for="(tender, i) in tenders" :key="i" class=" gap-4">
-        <div>
-        <p class="text-center text-bold text-2xl">  {{ tender.title[currentLanguage] }}</p>
-          <img
-            v-if="tender.image"
-            :src="BASE_AVATAR + tender.image"
-            alt=""
-            class="h-full rounded-xl w-full "
-          />
-          <h1 v-else class="w-24 h-24 text-center font-bold text-6xl">
-            {{ tender.title[currentLanguage] }}
-          </h1>
-        </div>
-        <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
-          <h1>{{ tender.title[currentLanguage] }}</h1>
-          <h6 class="text-gray-500">{{ tender.organization[currentLanguage] }}</h6>
-          <h3 class="text-lg font-bold">
-            {{ tender.deadline }}
-          </h3>
-          <p class="line-clamp-5">{{ tender.description[currentLanguage] }}</p>
-          <router-link to="/about" class="text-[#53900F] font-bold">{{
-            $t('Read More')
-          }}</router-link>
-        </div>
 
-        <div class="w-full flex justify-between bg-white ">
-          <ul class="flex space-x-4  justify-center items-center">
-            <li>
-              <button
-                class="bg-[#53900F] rounded text-white px-2 py-1"
-                @click="toggleApply(tender)"
-              >
-                {{ $t('Apply Now') }}
-              </button>
-            </li>
-          </ul>
-        </div>
-
-      <div
-        class="fixed items-center justify-center rounded-lg inset-0 z-50 bg-[#53900F]/40 flex flex-col gap-4 overflow-auto modal"
-        v-if="isApply"
-      >
-        <div class="bg-white flex flex-col md:px-12 md:py-2 gap-2 overflow-auto">
-          <div class="flex justify-between">
-            <h1 class="text-center font-semibold text-2xl">Application Page</h1>
-          <button
-            class="text-gray-900 self-end bg-gray-300  rounded-full border border-black px-2"
-            @click="isApply = !isApply"
-          >
-            Cancel
-          </button>
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
+    <!-- <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1> -->
+    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 shadow-xl">
+      <div v-for="(tender, i) in tenders" :key="i" class="gap-4 bg-white shadow w-full h-auto p-4">
+        <div class="flex flex-col w-full h-full gap-2 justify-between">
+          <div class="flex flex-col w-full h-auto gap-1">
+            <h1 class="text-lg font-bold">{{ tender.title[currentLanguage] }}</h1>
+            <p class="text-black/70">{{ tender.organization[currentLanguage] }}</p>
+            <p class="text-break">{{ tender.description[currentLanguage] }}</p>
           </div>
-          <hr/>
-          <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
-          <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
-            <div class="flex gap-6">
-              <div>
-                <BaseInput
-                  v-model="form.fullName"
-                  inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
-                  label="Full Name"
-                  required
-                ></BaseInput>
-                <BaseInput
-                  v-model="form.email"
-                  inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
-                  label="Email"
-                  required
-                ></BaseInput>
-                <BaseInput
-                  v-model="form.phoneNumber"
-                  inputClass="px-4 py-2 border-2 outline-none border-iq-color1"
-                  label="Phone Number"
-                  required
-                ></BaseInput>
-              </div>
-              <div>
-              
-
-                <!-- <BaseFileInput
-                  @image-update="captureLetter($event)"
-                  label="Application Letter"
-                  type="file"
-                  accept="application/pdf"
-                  fileClass="my-2"
-                  class="my-4"
-                ></BaseFileInput>
-                <span>{{ form.applicationLetter.name }}</span> -->
-              
-              </div>
-            </div>
-            <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
           <div class="flex justify-between">
-            <div class="flex">
-              <BaseFileInput
-                @image-update="captureDocument($event)"
-                label="document"
-                type="file"
-                accept="application/pdf"
-              ></BaseFileInput>
-            </div>
-            <span v-if="form.document.name">{{ form.document.name }}</span>
-            <span v-else class="text-sm text-red-600">*Only pdf files</span>
-   
-                <BaseButton type="submit">Apply</BaseButton>
+            <button
+              @click="isApply = true"
+              class="self-start bg-[#53900F] text-white px-4 py-1 border rounded-md"
+            >
+              Apply
+            </button>
+
+            <button
+              v-if="tender.image"
+              @click="viewDocument"
+              class="bg-white border-[#53900F] p-1 border rounded-md text-[#53900F]"
+            >
+              <font-awesome-icon icon="eye"></font-awesome-icon> <span>View Document</span>
+            </button>
           </div>
-          </form>
         </div>
-      </div>
-
-
       </div>
     </div>
   </section>
+  <div
+    class="fixed items-center justify-center rounded-lg inset-0 z-50 bg-[#53900F]/40 flex flex-col gap-4 overflow-auto modal"
+    v-if="isApply"
+  >
+    <div
+      class="bg-white flex items-center justify-center border rounded-md md:w-[40%] flex-col md:px-12 md:py-2 gap-2 overflow-auto"
+    >
+      <div class="flex justify-between">
+        <h1 class="text-center font-semibold text-2xl">Application Page</h1>
+      </div>
+      <hr />
+      <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
+      <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
+        <div class="flex gap-6">
+          <div>
+            <BaseInput
+              v-model="form.fullName"
+              inputClass="px-4 py-2  outline-none border-iq-color1"
+              label="Full Name"
+              type="text"
+              required
+            ></BaseInput>
+            <BaseInput
+              v-model="form.email"
+              inputClass="px-4 py-2  outline-none "
+              label="Email"
+              type="email"
+              required
+            ></BaseInput>
+            <BaseInput
+              v-model="form.phoneNumber"
+              inputClass="px-4 "
+              label="Phone Number"
+              required
+            ></BaseInput>
+          </div>
+        </div>
+        <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
+        <div class="flex flex-col gap-2 justify-between">
+          <div class="flex">
+            <BaseFileInput
+              @image-update="captureDocument($event)"
+              label="document"
+              type="file"
+              accept="application/pdf"
+            ></BaseFileInput>
+          </div>
+          <span v-if="form.document.name">{{ form.document.name }}</span>
+          <span v-else class="text-sm text-blue-600">*Only pdf files</span>
+
+          <div class="flex gap-8 items-center zjustify-center">
+            <BaseButton type="submit">Apply</BaseButton>
+            <button class=" px-4 py-2 border rounded-md" @click="isApply = !isApply">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>
+
+<style>
+.modal {
+  animation: modal 0.3s;
+}
+
+@keyframes modal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

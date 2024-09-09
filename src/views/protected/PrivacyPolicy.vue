@@ -36,9 +36,9 @@ const savePolicy = async () => {
     )
     if (response.success) {
       successMessage.value = response.message
-            swal({
+      swal({
         title: response.message,
-        icon: 'success',
+        icon: 'success'
       })
       fetchPolicies()
       resetForm()
@@ -48,7 +48,7 @@ const savePolicy = async () => {
     if (error.response && error.response.status === 404) {
       errorMessage.value = error.response.data.message
     } else {
-      router.push({ name: 'NetworkError' })
+      // router.push({ name: 'NetworkError' })
     }
   }
 }
@@ -126,12 +126,6 @@ onMounted(() => {
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
 
-      <div class="col-span-6 md:col-span-8 flex justify-start items-center">
-        <button @click="toggleLanguage" class="px-4 py-2 rounded text-blue-500">
-          {{ showEnglish ? 'Tigrinya' : 'English' }}
-        </button>
-      </div>
-
       <div class="w-full bg-[#F5F5F5]">
         <div v-for="policy in policies" :key="policy.id" class="w-full">
           <div class="shadow p-4 bg-white">
@@ -169,31 +163,16 @@ onMounted(() => {
                     v-model="policy.title.en"
                     type="text"
                     required
-                    inputClass="p-2 border border-gray-300 rounded"
+                    inputClass="p-2 border w-full border-gray-300 rounded"
                     placeholder="Title (English)"
                   ></BaseInput>
                 </div>
-                <div class="w-full md:w-1/2 px-2 mb-4">
-                  <BaseInput
-                    v-model="policy.title.ti"
-                    type="text"
-                    required
-                    inputClass="p-2 border border-gray-300 rounded"
-                    placeholder="Title (Tigrinya)"
-                  ></BaseInput>
-                </div>
+
                 <div class="w-full px-2 mb-4">
                   <BaseTextarea
                     v-model="policy.policy.en"
                     inputClass="p-2 border border-gray-300 rounded"
                     placeholder="Policy (English)"
-                  ></BaseTextarea>
-                </div>
-                <div class="w-full px-2 mb-4">
-                  <BaseTextarea
-                    v-model="policy.policy.ti"
-                    inputClass="p-2 border border-gray-300 rounded"
-                    placeholder="Policy (Tigrinya)"
                   ></BaseTextarea>
                 </div>
               </div>
@@ -202,7 +181,8 @@ onMounted(() => {
                   @click="closeModal"
                   type="button"
                   class="bg-gray-500 text-white px-4 py-2 rounded"
-                >Cancel</BaseButton>
+                  >Cancel</BaseButton
+                >
                 <BaseButton type="submit" class="bg-[#37a000] text-white px-2 py-2 rounded">{{
                   editMode ? 'Save changes' : 'Save Policy'
                 }}</BaseButton>

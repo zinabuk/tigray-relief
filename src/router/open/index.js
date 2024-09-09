@@ -121,6 +121,14 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'privacy',
+        name: 'privacy',
+        component: () => import('@/views/PrivacyView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'careers',
         name: 'jobs',
         component: () => import('@/views/JobList.vue'),
