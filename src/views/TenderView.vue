@@ -1,6 +1,6 @@
 <script setup>
 import ApiService from '@/services/apiService'
-import { BASE_UPLOAD } from '@/config'
+import { BASE_AVATAR, BASE_UPLOAD } from '@/config'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
@@ -122,74 +122,27 @@ function isImage(fileName) {
       </div>
     </div>
   </section>
-<<<<<<< HEAD
-=======
-  <!-- Services -->
-  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4">
-    <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
-    <div class="w-full px-12 ">
-      <div v-for="(tender, i) in tenders" :key="i" class=" gap-4">
-        <div class="bg-white w-full shadow-sm">
-          <div class="w-full flex justify-between p-4">
-            <ul>
-              <li class="md:text-[16px] font-semibolfd">Tigray Relief Society</li>
-              <!-- <li class="text-gray-700 text-[14px]">Posted 17 Days ago ???</li> -->
-              <li class="mt-4 bg-gray-500 text-white inline-block text-sm px-2 py-1">
-                {{ tender.title[currentLanguage] }}
-              </li>
-            </ul>
-            <img
-              src="@/assets/00.png"
-              class="w-20 zrounded-full h-20 object-conatin"
-              width="200px"
-              height="200px"
-            />
-          </div>
-
-         <div v-if="tender.image" class="p-4">
-
-
-            <div v-if="isImage(tender.image)">
-                <img
-                  :src="BASE_UPLOAD+tender.image"
-                  alt="Image"
-                  class="h-56 w-56 object-contain"
-                />
-            </div>
-            <div v-else>
-              <a :href="BASE_UPLOAD+tender.image" target="_blank" class="text-blue-500">
-                {{ tender.image }}
-              </a>
-            </div>
-
-          </div>
-
-          <h1 v-else class="w-24 h-24  p-4 text-center font-bold text-6xl">
-            {{ tender.title[currentLanguage] }}
-          </h1>
-        </div>
-        <div class="flex flex-col flex-wrap gap-4 items-start justify-censter">
-          <h1>{{ tender.title[currentLanguage] }}</h1>
-          <h6 class="text-gray-500">{{ tender.organization[currentLanguage] }}</h6>
-          <h3 class="text-lg font-bold">
-            {{ tender.deadline }}
-          </h3>
-          <p class="line-clamp-5">{{ tender.description[currentLanguage] }}</p>
-          <router-link to="/about" class="text-[#53900F] font-bold">{{
-            $t('Read More')
-          }}</router-link>
-        </div>
->>>>>>> 2541c6a5fe05f969f7dae262d939f4666fdeaafa
-
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
-    <!-- <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1> -->
     <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 shadow-xl">
       <div v-for="(tender, i) in tenders" :key="i" class="gap-4 bg-white shadow w-full h-auto p-4">
         <div class="flex flex-col w-full h-full gap-2 justify-between">
           <div class="flex flex-col w-full h-auto gap-1">
-            <h1 class="text-lg font-bold">{{ tender.title[currentLanguage] }}</h1>
-            <p class="text-black/70">{{ tender.organization[currentLanguage] }}</p>
-            <p class="text-break">{{ tender.description[currentLanguage] }}</p>
+            <div class="flex gap-2">
+              <h1 class="text-lg zfont-bold">Title</h1>
+              <h1 class="text-lg font-bold">{{ tender.title[currentLanguage] }}</h1>
+            </div>
+            <div class="flex gap-2">
+              <h1 class="text-lg zfont-bold">Bid By</h1>
+              <p class="font-bold">{{ tender.organization[currentLanguage] }}</p>
+            </div>
+            <div class="flex gap-2">
+              <h1 class="text-lg zfont-bold">Deadline</h1>
+              <p class="font-bold">{{ tender.deadline }}</p>
+            </div>
+            <div class="flex gap-2">
+              <h1 class="text-lg zfont-bold">Description</h1>
+              <p class="text-break">{{ tender.description[currentLanguage] }}</p>
+            </div>
           </div>
           <div class="flex justify-between">
             <button
@@ -199,13 +152,14 @@ function isImage(fileName) {
               Apply
             </button>
 
-            <button
-              v-if="tender.image"
-              @click="viewDocument"
+            <a
+              :href="BASE_AVATAR + tender.image"
+              target="_blank"
+              v-if="tender.file"
               class="bg-white border-[#53900F] p-1 border rounded-md text-[#53900F]"
             >
               <font-awesome-icon icon="eye"></font-awesome-icon> <span>View Document</span>
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -253,7 +207,7 @@ function isImage(fileName) {
           <div class="flex">
             <BaseFileInput
               @image-update="captureDocument($event)"
-              label="document"
+              label="Attach document"
               type="file"
               accept="application/pdf"
             ></BaseFileInput>
@@ -263,9 +217,7 @@ function isImage(fileName) {
 
           <div class="flex gap-8 items-center zjustify-center">
             <BaseButton type="submit">Apply</BaseButton>
-            <button class=" px-4 py-2 border rounded-md" @click="isApply = !isApply">
-              Cancel
-            </button>
+            <button class="px-4 py-2 border rounded-md" @click="isApply = !isApply">Cancel</button>
           </div>
         </div>
       </form>

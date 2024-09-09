@@ -1,4 +1,4 @@
- <template>
+<!-- <template>
   <div id="governance" class="bg-[#53900F]/10 overflow-auto">
     <OrgTree v-if="treeData" :data="treeData" />
     <div v-else>Loading...</div> 
@@ -60,10 +60,10 @@ export default {
     },
   },
 };
-</script>
+</script> -->
 
-<style></style> 
-<!-- 
+<!-- <style></style>  -->
+
 <script setup>
 import ApiService from '@/services/apiService'
 
@@ -147,4 +147,4 @@ onMounted(() => {
     transform: scale(1);
   }
 }
-</style> -->
+</style> 

@@ -95,6 +95,7 @@ let imageName = ref('')
 function handleFileChange(image) {
   tender.value.image = image
   imageName.value = image.name
+  console.log(image.name)
 }
 async function deleteContact(tender) {
   const accept = window.confirm('Undo is not possible')
@@ -116,7 +117,7 @@ const updateTender = async () => {
   formData.append('description', JSON.stringify(editForm.value.description))
 
   if (editForm.value.image) {
-    formData.append('image', editForm.value.image)
+    formData.append('file', editForm.value.image)
   }
 
   const res = await ApiService.patch('/admin/tenders/' + editForm.value.id, formData)
@@ -148,9 +149,6 @@ const saveTender = async () => {
   }
 }
 onMounted(fetchTenders)
-
-
-
 </script>
 
 <template>
@@ -216,10 +214,9 @@ onMounted(fetchTenders)
             label="Add File"
             type="file"
             inputClass="p-2 border border-gray-300 rounded"
-            placeholder="Image"
             accept="*"
           ></BaseFileInput>
-          <span>{{ imageName }}</span>
+
           <BaseButton type="submit" class="w-full px-2 py-2 rounded"> Save Changes </BaseButton>
         </div>
       </form>
