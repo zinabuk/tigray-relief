@@ -129,6 +129,14 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'terms',
+        name: 'terms',
+        component: () => import('@/views/TermsAndConditions.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'careers',
         name: 'jobs',
         component: () => import('@/views/JobList.vue'),
