@@ -376,7 +376,7 @@
     </nav>
 
     <div
-    
+      v-if="showOnSmallDevice"
       class="w-full h-screen flex justify-between fixed inset-0 py-6 z-20 bg-white zbg-[#53900F]"
     >
       <button
@@ -394,7 +394,7 @@
           <li>
             <router-link
               :to="{ name: 'home' }"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               class="relative parent-item"
               :class="[{ 'text-[#53900F]': isActive('home') }]"
             >
@@ -451,7 +451,7 @@
               :to="{ name: 'services' }"
               class="relative parent-item"
               @click="showDropDown = !showDropDown"
-              :class="[{ '': isActive('services') }]"
+              :class="[{ 'text-[#53900F]': isActive('services') }]"
             >
               {{ $t('Services') }}</router-link
             >
@@ -689,7 +689,7 @@
 
 <script setup>
 // props are automatically provided in `<script setup>` block
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -698,9 +698,9 @@ import slugify from '@/utils/slugify'
 import apiService from '@/services/apiService'
 const { currentLanguage } = storeToRefs(useAuthStore())
 
-import { useI18n } from 'vue-i18n'
+// import { useI18n } from 'vue-i18n'
 let showDropdown = ref(true)
-const { locale } = useI18n()
+// const { locale } = useI18n()
 
 defineProps({
   items: {
@@ -711,6 +711,13 @@ defineProps({
 let isSmall = ref(false)
 // let showModal = ref(true)
 
+const showOnSmallDevice = computed(() => {
+  return isSmall.value && showDropdown.value
+})
+
+function toggleShowDropDown() {
+  showDropdown.value = false
+}
 const route = useRoute()
 
 function isActive(item) {
