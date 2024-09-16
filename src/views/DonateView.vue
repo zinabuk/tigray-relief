@@ -4,10 +4,10 @@ import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 
 import ApiService from '@/services/apiService'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 
 import swal from 'sweetalert'
-const router = useRouter()
+// const router = useRouter()
 let form = ref({
   service: '',
   firstName: '',
@@ -26,7 +26,7 @@ const submitDonation = async () => {
       form.value = {}
       swal({
         icon: 'success',
-        title: 'Donation information submitted successfuly',
+        title: 'Donation information successfuly submitted. ',
         text: 'We will contact you through your phone number or/and email.'
       })
     }
@@ -107,7 +107,6 @@ let cAmount = ref('')
               >
               <BaseInput
                 type="text"
-                inputClass="border border-yellow-300"
                 label="Enter a program "
                 v-model="form.service"
                 placeholder="Program"
@@ -117,7 +116,6 @@ let cAmount = ref('')
             <div class="grid grid-cols-2 gap-4 mb-4">
               <div>
                 <BaseInput
-                  inputClass="border border-yellow-300"
                   label="First Name*"
                   v-model="form.firstName"
                   placeholder="First Name"
@@ -126,7 +124,6 @@ let cAmount = ref('')
               </div>
               <div>
                 <BaseInput
-                  inputClass="border border-yellow-300"
                   label="Last Name"
                   v-model="form.lastName"
                   placeholder="Last Name"
@@ -135,7 +132,6 @@ let cAmount = ref('')
               </div>
               <div>
                 <BaseInput
-                  inputClass="border border-yellow-300"
                   label="Email"
                   v-model="form.email"
                   placeholder="Email"
@@ -144,7 +140,6 @@ let cAmount = ref('')
               </div>
               <div>
                 <BaseInput
-                  inputClass="border border-yellow-300"
                   label="Phone Number*"
                   v-model="form.phoneNumber"
                   placeholder="Phone Number"
@@ -153,7 +148,6 @@ let cAmount = ref('')
               </div>
               <div>
                 <BaseInput
-                  inputClass="border border-yellow-300"
                   label="Address"
                   v-model="form.address"
                   placeholder="Address"
@@ -162,7 +156,6 @@ let cAmount = ref('')
               </div>
               <div>
                 <BaseInput
-                  inputClass="border border-yellow-300"
                   label="Total Amount*"
                   v-model="form.amount"
                   placeholder="Total Amount"
@@ -170,9 +163,7 @@ let cAmount = ref('')
                 ></BaseInput>
               </div>
             </div>
-            <base-button type="submit" class="bg-[#539000]z rounded px-8 py-2 self-start"
-              >Donate</base-button
-            >
+            <base-button type="submit" class="bg-[#539000]z rounded self-start">Submit</base-button>
           </form>
         </div>
       </div>

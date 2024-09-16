@@ -1,37 +1,55 @@
 <template>
   <div class="w-[82%] flex flex-wrap items-center justify-center">
     <div class="w-1/2">
-      <div class="flex justify-center gap-16 py-2">
-        <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }">English</BaseButton>
-        <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }">Amharic</BaseButton>
-        <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }">Tigrigna</BaseButton>
-      </div>
-      <form @submit.prevent="submitForm" class="w-full bg-white rounded-lg p-6 shadow flex flex-col gap-2" enctype="multipart/form-data">
-        <h1 class="flex justify-center font-bold font-serif">Add event</h1>
+      <form
+        @submit.prevent="submitForm"
+        class="w-full bg-white rounded-lg p-6 shadow flex flex-col gap-2"
+        enctype="multipart/form-data"
+      >
+        <h1 class="flex justify-center font-bold font-serif">Add New / Event</h1>
 
         <!-- Event Title -->
         <div class="flex justify-center">
-          <BaseInput type="text" id="eventTitle" label="Event Title" v-model="event.eventTitle[currentLanguage]" />
+          <BaseInput
+            type="text"
+            id="eventTitle"
+            label="Title"
+            v-model="event.eventTitle[currentLanguage]"
+          />
         </div>
 
         <!-- Event Category -->
         <div class="flex justify-center">
-          <BaseInput type="text" id="category" label="Category" v-model="event.category[currentLanguage]" />
+          <BaseInput
+            type="text"
+            id="category"
+            label="Category"
+            v-model="event.category[currentLanguage]"
+          />
         </div>
 
         <!-- Event Date -->
         <div class="flex justify-center">
-          <BaseInput type="date" id="eventDate" label="Event Date" v-model="event.eventDate" />
+          <BaseInput type="date" id="eventDate" label="Date" v-model="event.eventDate" />
         </div>
 
         <!-- Event Organizer -->
         <div class="flex justify-center">
-          <BaseInput type="text" id="eventOrganizer" label="Event Organizer" v-model="event.eventOrganizer[currentLanguage]" />
+          <BaseInput
+            type="text"
+            id="eventOrganizer"
+            label="By"
+            v-model="event.eventOrganizer[currentLanguage]"
+          />
         </div>
-        
+
         <!-- Event Description -->
         <div>
-          <BaseTextarea v-model="event.eventDescription[currentLanguage]" placeholder="Write an event Description" label="Description"></BaseTextarea>
+          <BaseTextarea
+            v-model="event.eventDescription[currentLanguage]"
+            placeholder="Description"
+            label="Description"
+          ></BaseTextarea>
         </div>
 
         <!-- Event Image -->
@@ -39,20 +57,24 @@
           <div class="flex">
             <!-- <input type="file" id="eventImage" @change="handleFileChange" class="hidden" ref="eventImageInput" /> -->
             <BaseFileInput
-            
-            @change="handleFileChange"
-            label="Add Picture"
+              @change="handleFileChange"
+              label="Add Picture"
               type="file"
               inputClass="p-2 border border-gray-300 rounded"
               placeholder="Image"
               accept="image/*"
-          ></BaseFileInput>
+            ></BaseFileInput>
             <!-- <label for="eventImage" class="cursor-pointer bg-[#539000]/70 hover:bg-white text-white hover:text-[#539000] font-medium py-2 px-4 rounded">image</label> -->
           </div>
-          
+
           <!-- Submit Button -->
           <div class="flex justify-end">
-            <button type="submit" class="bg-[#539000]/80 hover:bg-[#539000] text-white font-medium py-2 px-4 rounded">Save Event</button>
+            <button
+              type="submit"
+              class="bg-[#539000]/80 hover:bg-[#539000] text-white font-medium py-2 px-4 rounded"
+            >
+              Save Event
+            </button>
           </div>
         </div>
       </form>
@@ -82,11 +104,11 @@ export default {
         eventDescription: { en: '', ti: '', am: '' },
         category: { en: '', ti: '', am: '' },
         eventDate: null,
-        eventOrganizer: { en: '', ti: '', am: '' },
+        eventOrganizer: { en: '', ti: '', am: '' }
       }
     }
   },
-  
+
   mounted() {
     this.fetchEvents()
   },
@@ -95,7 +117,7 @@ export default {
       this.event.eventImage = event.target.files[0]
     },
     toggleLanguage(lang) {
-      this.currentLanguage = lang;
+      this.currentLanguage = lang
     },
     async submitForm() {
       try {
@@ -132,7 +154,7 @@ export default {
         eventDescription: { en: '', ti: '', am: '' },
         category: { en: '', ti: '', am: '' },
         eventDate: null,
-        eventOrganizer: { en: '', ti: '', am: '' },
+        eventOrganizer: { en: '', ti: '', am: '' }
       }
     },
     async fetchEvents() {

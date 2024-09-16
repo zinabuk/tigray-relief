@@ -177,11 +177,13 @@ onMounted(() => {
 
         <!-- <router-link class="text-[#539000]" to="/">Read More</router-link> -->
         <div class="flex gap-4">
-          <button @click="deleteTeam(team.id)">
+          <button @click="deleteTeam(team.id)" class="text-red-500">
             <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+            Delete
           </button>
-          <button @click="editTeam(team)">
+          <button @click="editTeam(team)" class="text-blue-500">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+            Edit
           </button>
         </div>
       </div>

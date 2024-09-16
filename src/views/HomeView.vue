@@ -127,11 +127,11 @@ onMounted(() => {
           :src="BASE_AVATAR + hero.heroImage"
         />
         <div
-          class="absolute h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/90 md:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
+          class="absolute h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/30 sm:bg-[#53900f]/90 md:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
           zstyle="box-shadow: 5px 5px 5px 5px rgb(83 144 15/0.9)"
         >
           <div class="wave-container w-full" zdata-aos="fade-left">
-            <p class="zwave-text font-bold text-6xl">{{ hero.heroTitle[currentLanguage] }}</p>
+            <p class="zwave-text font-bold text-6xl flex-wrap break-words">{{ hero.heroTitle[currentLanguage] }}</p>
           </div>
           <h6 class="font- line-clamp-3 text-3xl">
             {{ hero.heroDescription[currentLanguage] }}

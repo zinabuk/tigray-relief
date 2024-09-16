@@ -100,24 +100,24 @@ const updateNew = async () => {
       formData.append('eventImage', editedNew.value.eventImage)
     }
 
-    console.log(`FormData contents before sending:`)
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`)
-    })
+    // console.log(`FormData contents before sending:`)
+    // formData.forEach((value, key) => {
+    //   console.log(`${key}: ${value}`)
+    // })
 
     const response = await ApiService.patch(`/admin/events/${editedNew.value.id}`, formData)
-    console.log('Server response:', response.data)
+    // console.log('Server response:', response.data)
 
     if (response.data.success) {
       closeEditModal()
       fetchNews()
     } else {
-      console.error('Update failed:', response.data.message)
+      // console.error('Update failed:', response.data.message)
     }
   } catch (error) {
     // console.error('Error updating event:', error)
     if (error.response && error.response.data && error.response.status === 404) {
-      console.error('Data not found error:', error.response.data)
+      // console.error('Data not found error:', error.response.data)
     } else {
       setTimeout(() => {
         router.push({ name: 'NetworkError' })

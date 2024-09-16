@@ -71,7 +71,7 @@ const editForm = ref({
   organization: { en: '', ti: '', am: '' },
   deadline: '',
   description: { en: '', ti: '', am: '' },
-  image: ''
+  file: null
 })
 let formatDate = ref('')
 function editContact(career) {
@@ -88,14 +88,14 @@ let tender = ref({
   organization: { en: '', ti: '', am: '' },
   deadline: '',
   description: { en: '', ti: '', am: '' },
-  image: ''
+  file: null
 })
 
 let imageName = ref('')
-function handleFileChange(image) {
-  tender.value.image = image
-  imageName.value = image.name
-  console.log(image.name)
+function handleFileChange(file) {
+  tender.value.file = file.name
+  imageName.value = file.name
+  alert(file.name)
 }
 async function deleteContact(tender) {
   const accept = window.confirm('Undo is not possible')
@@ -116,8 +116,8 @@ const updateTender = async () => {
   formData.append('deadline', editForm.value.deadline)
   formData.append('description', JSON.stringify(editForm.value.description))
 
-  if (editForm.value.image) {
-    formData.append('file', editForm.value.image)
+  if (editForm.value.file) {
+    formData.append('file', editForm.value.file)
   }
 
   const res = await ApiService.patch('/admin/tenders/' + editForm.value.id, formData)
@@ -126,6 +126,7 @@ const updateTender = async () => {
       icon: 'success',
       title: 'New Tender successfully added.'
     })
+    fetchTenders()
   }
 }
 
@@ -136,16 +137,18 @@ const saveTender = async () => {
   formData.append('deadline', tender.value.deadline)
   formData.append('description', JSON.stringify(tender.value.description))
 
-  if (tender.value.image) {
-    formData.append('image', tender.value.image)
+  if (tender.value.file) {
+    formData.append('file', tender.value.file)
   }
 
+  console.log('Tender ' + formData)
   const res = await ApiService.post('/admin/tenders', formData)
   if (res.success) {
     swal({
       icon: 'success',
       title: 'New Tender successfully added.'
     })
+    fetchTenders()
   }
 }
 onMounted(fetchTenders)

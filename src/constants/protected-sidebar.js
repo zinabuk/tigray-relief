@@ -1,10 +1,10 @@
 const SIDEBARITEMS = {
   ADMIN_TABS: [
-    { label: 'Dashboard', name: 'admin-home', icon: 'user' },
+    // { label: 'Dashboard', name: 'admin-home', icon: 'user' },
     { label: 'Heros', name: 'admin-hero', icon: 'cogs' },
     { label: 'About us', name: 'admin-about', icon: 'handshake' },
     { label: 'Our history', name: 'admin-hitory', icon: 'handshake' },
-    { label: 'Org Structure', name: 'admin-oganizational', icon: 'handshake' },
+    // { label: 'Org Structure', name: 'admin-oganizational', icon: 'handshake' },
     { label: 'Services', name: 'admin-services', icon: 'cogs' },
     //   { label: 'Works', name: 'products', icon: 'box-open' },
     { label: 'Key Personnel', name: 'team', icon: 'handshake' },
@@ -27,7 +27,6 @@ const SIDEBARITEMS = {
     { label: 'Publications', name: 'admin-publications', icon: 'quote-left' },
     { label: 'Strategies', name: 'admin-strategy', icon: 'quote-left' },
     { label: 'Privacy Policy', name: 'privacy-policy', icon: 'quote-left' }
-
   ],
   // ],
   STAFF_TABS: [

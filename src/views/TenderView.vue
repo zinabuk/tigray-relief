@@ -153,7 +153,7 @@ function isImage(fileName) {
             </button>
 
             <a
-              :href="BASE_AVATAR + tender.image"
+              :href="BASE_UPLOAD + tender.file"
               target="_blank"
               v-if="tender.file"
               class="bg-white border-[#53900F] p-1 border rounded-md text-[#53900F]"
