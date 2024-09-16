@@ -367,7 +367,7 @@
           alt="Logo of iq"
           width="40"
           height="40"
-          class="w-[40px] h-auto"
+          class="w-[120px] h-auto"
         />
       </router-link>
       <button @click="isSmall = true">
@@ -376,8 +376,8 @@
     </nav>
 
     <div
-      v-if="isSmall && showDropDown"
-      class="w-full h-screen flex justify-between fixed inset-0 py-6 z-20 bg-yellow-400"
+    
+      class="w-full h-screen flex justify-between fixed inset-0 py-6 z-20 bg-white zbg-[#53900F]"
     >
       <button
         @click="isSmall = !isSmall"
@@ -387,7 +387,7 @@
       </button>
 
       <nav
-        class="w-full px-[1%] flex flex-col justify-between items-center pb-12 zfont-bold bg-yellow-400 text-white h-screen overflow-auto"
+        class="w-full px-[1%] flex flex-col justify-between items-center pb-12 zfont-bold Zbg-yellow-400 ztext-white h-screen overflow-auto"
         data-aos="fade-left"
       >
         <ul class="flex flex-col gap-2 font-bold zuppercase">
@@ -407,7 +407,7 @@
               :to="{ name: 'about' }"
               @click="showDropDown = !showDropDown"
               class="relative parent-item h-full w-full"
-              :class="[{ 'text-yellow-400': isActive('about') }]"
+              :class="[{ 'text-[#53900F]': isActive('about') }]"
             >
               {{ $t('About Us') }}</router-link
             >
@@ -650,7 +650,7 @@
         </div>
       </div> -->
       </nav>
-      <div class="relative group">
+      <!-- <div class="relative group">
         <h1><font-awesome-icon icon="globe" class="mx-1"></font-awesome-icon>{{ language }}</h1>
         <ul
           class="absolute ztop-[100%] hidden group-hover:flex z-50 bg-yellow-400 right-0 p-4 shadow-2xl text-white"
@@ -682,7 +682,7 @@
             <hr />
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </header>
 </template>
@@ -717,27 +717,27 @@ function isActive(item) {
   return route.name === item
 }
 
-let language = ref('En')
+// let language = ref('En')
 
-let showLang = ref(false)
-function changeLanguage(lang) {
-  locale.value = lang
-  showLang.value = false
-  localStorage.setItem('lang', lang)
-  currentLanguage.value = lang
+// let showLang = ref(false)
+// function changeLanguage(lang) {
+//   locale.value = lang
+//   showLang.value = false
+//   localStorage.setItem('lang', lang)
+//   currentLanguage.value = lang
 
-  showDropdown.value = !showDropdown.value
-  if (lang === 'en') {
-    language.value = 'En'
-  } else if (lang === 'ti') {
-    language.value = 'ትግ'
-  } else {
-    language.value = 'አማ'
-  }
-  setTimeout(() => {
-    showDropdown.value = true
-  }, 300)
-}
+//   showDropdown.value = !showDropdown.value
+//   if (lang === 'en') {
+//     language.value = 'En'
+//   } else if (lang === 'ti') {
+//     language.value = 'ትግ'
+//   } else {
+//     language.value = 'አማ'
+//   }
+//   setTimeout(() => {
+//     showDropdown.value = true
+//   }, 300)
+// }
 
 let infoG = ref([])
 const fetchInfography = async () => {
