@@ -209,8 +209,10 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
   </section>
   <!-- bg-[#53900F]/10  -->
   <div class="w-full bg-[#53900F]/10 text-black flex flex-col md:flex-row justify-between px-[2%]">
-    <p class="text-center p-2">© 2024 REST. All rights reserved.</p>
-    <div class="flex gap-2 items-center justify-center">
+    <p class="text-center p-2 text-sm">
+      ©{{ new Date().getFullYear() }} REST. All rights reserved.
+    </p>
+    <div class="flex gap-2 items-center justify-center text-sm">
       <h1>Powered by</h1>
       <a href="https://iq-businesses.com/" target="_blank" class="text-gray-600"
         >IQ Business Group PLC</a

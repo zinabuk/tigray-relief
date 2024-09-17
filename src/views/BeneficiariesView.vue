@@ -37,22 +37,20 @@ onMounted(() => {
 
 <template>
   <section class="w-full">
-    <div class="w-full relative">
-      <!-- <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
+    <div class="w-full relative hidden md:block">
+      <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
-      > -->
-        <!-- <h1 class="text-4xl font-bold">Beneficiaries</h1> -->
+      >
+        <h1 class="text-4xl font-bold">Programs</h1>
         <div class="flex gap-4">
-          <router-link to="/" class="px-4 py-2 rounded-xl font-bold">{{
-            $t('Home')
-          }}</router-link>
+          <router-link to="/" class="px-4 py-2 rounded-xl font-bold">{{ $t('Home') }}</router-link>
           <router-link to="/beneficiaries" class="text-[#539000] px-4 py-2">{{
-            $t('Beneficiaries')
+            $t('Programs')
           }}</router-link>
         </div>
       </div>
-    <!-- </div> -->
+    </div>
   </section>
   <!-- Services -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">

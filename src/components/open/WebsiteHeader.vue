@@ -19,24 +19,28 @@
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'twitter'"
             :icon="['fab', 'twitter']"
-            class="text-white p-2 rounded"
+            class="text-white hover:text-white/80 p-2 rounded"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'youtube'"
             :icon="['fab', 'youtube']"
-            class="text-white p-2 rounded"
+            class="text-white hover:text-white/80 p-2 rounded"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'telegram'"
             :icon="['fab', 'telegram']"
-            class="text-white p-2 rounded"
+            class="text-white hover:text-white/80 p-2 rounded"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'linkedin'"
             :icon="['fab', 'linkedin']"
-            class="text-white p-2 rounded"
+            class="text-white hover:text-white/80 p-2 rounded"
           />
-          <font-awesome-icon v-else :icon="['fab', 'whatsapp']" class="text-white p-2 rounded" />
+          <font-awesome-icon
+            v-else
+            :icon="['fab', 'whatsapp']"
+            class="text-white p-2 rounded hover:text-white/80"
+          />
         </a>
       </div>
       <div
@@ -376,7 +380,7 @@
     </nav>
 
     <div
-      v-if="showOnSmallDevice"
+      v-if="isSmall"
       class="w-full h-screen flex justify-between fixed inset-0 py-6 z-20 bg-white zbg-[#53900F]"
     >
       <button
@@ -405,7 +409,7 @@
           <li class="relative group">
             <router-link
               :to="{ name: 'about' }"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               class="relative parent-item h-full w-full"
               :class="[{ 'text-[#53900F]': isActive('about') }]"
             >
@@ -425,7 +429,7 @@
 
               <router-link
                 :to="{ name: 'beneficiaries' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
               >
                 <span class="hover:text-[#53900F]">
@@ -434,7 +438,7 @@
               </router-link>
               <router-link
                 :to="{ name: 'policy' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('policy') }]"
                 class="hover:text-[#288FB2]z"
               >
@@ -450,7 +454,7 @@
             <router-link
               :to="{ name: 'services' }"
               class="relative parent-item"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('services') }]"
             >
               {{ $t('Services') }}</router-link
@@ -466,7 +470,7 @@
                 class="hover:text-[#288FB2]z"
                 v-for="(service, i) in services"
                 :key="i"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
               >
                 <span class="hover:text-[#53900F]">
                   {{ $t(`${service.serviceTitle[currentLanguage]}`) }}
@@ -479,7 +483,7 @@
             <router-link
               :to="{ name: 'blogs' }"
               class="relative parent-item"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('blogs') }]"
             >
               {{ $t('News') }}</router-link
@@ -490,7 +494,7 @@
           <li class="relative group">
             <router-link
               :to="{ name: 'documents' }"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               class="relative parent-item h-full w-full"
               :class="[{ 'text-[#53900F]': isActive('documents') }]"
             >
@@ -501,7 +505,7 @@
             <div class="px-4 flex flex-col" zdata-aos="fade-left">
               <router-link
                 :to="{ name: 'documents' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('documents') }]"
                 class="w-full"
               >
@@ -510,7 +514,7 @@
 
               <router-link
                 :to="{ name: 'publications' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('publications') }]"
               >
                 <span class="hover:text-[#53900F]"> {{ $t('Publications') }} </span>
@@ -518,7 +522,7 @@
 
               <router-link
                 :to="{ name: 'strategy' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('Strategy') }]"
                 class="hover:text-[#288FB2]z"
               >
@@ -530,7 +534,7 @@
               <router-link
                 :to="{ name: 'gallery' }"
                 class="relative parent-item"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('gallery') }]"
               >
                 <span class="hover:text-[#53900F]">
@@ -544,7 +548,7 @@
             <router-link
               :to="{ name: 'jobs' }"
               class="relative parent-item"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('tenders') }]"
             >
               {{ $t('Get Involved') }}</router-link
@@ -556,7 +560,7 @@
               <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
               <router-link
                 :to="{ name: 'jobs' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('jobs') }]"
                 class="hover:text-[#288FB2]z"
               >
@@ -566,7 +570,7 @@
               </router-link>
               <router-link
                 :to="{ name: 'volunteer' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('volunteer') }]"
                 class="hover:text-[#288FB2]z"
               >
@@ -578,7 +582,7 @@
               <router-link
                 :to="{ name: 'tenders' }"
                 href="#structure_section"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 class="hover:text-[#288FB2]z"
               >
                 <!-- @click="scrollToSection(el.id)" -->
@@ -588,7 +592,7 @@
               </router-link>
               <router-link
                 :to="{ name: 'faqs' }"
-                @click="showDropDown = !showDropDown"
+                @click="toggleShowDropDown"
                 class="hover:text-[#288FB2]z"
               >
                 <!-- @click="scrollToSection(el.id)" -->
@@ -604,7 +608,7 @@
             <router-link
               :to="{ name: 'contact' }"
               class="relative parent-item"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('contact') }]"
             >
               {{ $t('Contact Us') }}</router-link
@@ -614,7 +618,7 @@
           <li>
             <router-link
               :to="{ name: 'donate' }"
-              @click="showDropDown = !showDropDown"
+              @click="toggleShowDropDown"
               class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse rounded-md"
               >{{ $t('Donate') }}
               <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
@@ -716,6 +720,7 @@ const showOnSmallDevice = computed(() => {
 })
 
 function toggleShowDropDown() {
+  isSmall.value = false
   showDropdown.value = false
 }
 const route = useRoute()

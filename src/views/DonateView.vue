@@ -50,7 +50,7 @@ let cAmount = ref('')
 
 <template>
   <section class="w-full">
-    <div class="w-full relative">
+    <div class="w-full relative hidden md:block">
       <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
@@ -96,7 +96,7 @@ let cAmount = ref('')
           </div>
         </div>
 
-        <div v-if="showForm">
+        <div zv-if="showForm">
           <h2 class="text-2xl font-bold mb-2">Donation Form</h2>
           <p class="text-gray-500 mb-4">"*" indicates required fields</p>
           <form class="flex flex-col" @submit.prevent="submitDonation">
@@ -182,7 +182,7 @@ let cAmount = ref('')
           <BaseInput v-model="fName" placeholder="Full Name" required></BaseInput>
         </div>
         <div class="flex flex-col">
-          <BaseInput v-model="telebirrAccount" placeholder="Telebirr Account"></BaseInput>
+          <BaseInput v-model="telebirrAccount" placeholder="... Account"></BaseInput>
         </div>
         <div class="flex flex-col">
           <BaseInput v-model="cAmount" placeholder="Contribution Amount"></BaseInput>

@@ -41,7 +41,7 @@ onMounted(() => {
 
 <template>
   <section class="w-full">
-    <div class="w-full relative">
+    <div class="w-full relative hidden md:block">
       <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"

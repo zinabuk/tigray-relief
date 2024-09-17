@@ -279,40 +279,34 @@ onMounted(fetchPartners)
         <BaseInput
           v-model="form.businessName[currentLanguage]"
           type="text"
-          required
-          inputClass="px-8 py-1"
+          required 
           placeholder="Your business name"
         ></BaseInput>
         <BaseInput
           v-model="form.email"
-          type="email"
-          inputClass="px-8 py-1"
+          type="email" 
           required
           placeholder="Enter Your Email"
           autocomplete="true"
         ></BaseInput>
         <BaseInput
           v-model="form.phoneNumber"
-          type="text"
-          inputClass="px-8 py-1"
+          type="text" 
           required
           placeholder="Enter Your Phone number"
         ></BaseInput>
         <BaseInput
-          v-model="form.website"
-          inputClass="px-8 py-1"
+          v-model="form.website" 
           placeholder="Enter your website's link"
         ></BaseInput>
         <BaseInput
           v-model="form.specializeArea[currentLanguage]"
-          required
-          inputClass="px-8 py-1"
+          required 
           placeholder="Specialize area"
         ></BaseInput>
         <BaseTextarea
           v-model="form.description[currentLanguage]"
-          rows="4"
-          textareaClasses="px-8"
+          rows="4" 
           placeholder="Description"
         ></BaseTextarea>
         <div class="flex justify-between">

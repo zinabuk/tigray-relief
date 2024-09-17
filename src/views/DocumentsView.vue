@@ -1,26 +1,9 @@
 <script setup>
-import ApiService from '@/services/apiService'
-import { BASE_AVATAR } from '@/config'
+import ApiService from '@/services/apiService' 
 import { BASE_UPLOAD } from '@/config'
 
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-
-import swal from 'sweetalert'
-const router = useRouter()
-
-const isApply = ref(false)
-const tender = ref({})
-const document = ref('')
-const form = ref({ fullName: '', email: '', phoneNumber: '', document: '' })
-
-// /admin/documents
-// /admin/publications
-const captureDocument = (file) => {
-  document.value = file
-  form.value.document = file
-}
-
+ 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 const { currentLanguage } = storeToRefs(useAuthStore())
@@ -55,7 +38,7 @@ onMounted(() => {
 
 <template>
   <section class="w-full">
-    <div class="w-full relative">
+    <div class="w-full relative hidden md:block">
       <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
@@ -75,14 +58,14 @@ onMounted(() => {
       <div
         v-for="(document, i) in documents"
         :key="i"
-        class="grid gap-4 shadow zp-4 rounded-xl bg-white p-2"
+        class="grid gap-4 shadow zp-4 bg-white  "
       >
         <div class="relative group">
           <img
             v-if="document.image"
             :src="BASE_UPLOAD + document.image"
             alt=""
-            class="h-[300px] w-full rounded-xl zw-full object-cover"
+            class="h-[300px] w-full  zw-full object-cover"
           />
           <div
             class="gap-4 items-end p-4 justify-start flex absolute inset-0 zgroup-hover:bg-[#53900F]/60"
