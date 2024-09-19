@@ -153,7 +153,7 @@ onMounted(() => {
           :src="BASE_AVATAR + hero.heroImage"
         />
         <div
-          class="absolute h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/60 sm:bg-[#53900f]/90 md:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
+          class="absolute h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/60 sm:bg-[#53900f]/90 zmd:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
           zstyle="box-shadow: 5px 5px 5px 5px rgb(83 144 15/0.9)"
         >
           <div class="wave-container w-full" zdata-aos="fade-left">
@@ -229,16 +229,16 @@ onMounted(() => {
           class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
           data-aos="fade-right"
         >
-          <p class="text-xl font-light">{{ $t('A decades of expertise') }}</p>
           <h1 class="text-yellow-400 text-6xl">1978</h1>
+          <p class="text-xl font-light">{{ $t('A decades of expertise') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">
-          <p class="text-xl text-ce font-light">{{ $t('Completed Projects') }}</p>
           <h1 class="text-yellow-400 text-6xl">1,000 +</h1>
+          <p class="text-xl text-ce font-light">{{ $t('Completed Projects') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-left">
-          <p class="text-xl font-light">{{ $t('Impacted Beneficiaries') }}</p>
           <h1 class="text-yellow-400 text-6xl">3,000,000 +</h1>
+          <p class="text-xl font-light">{{ $t('Impacted Beneficiaries') }}</p>
         </div>
       </div>
       <!-- <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold self-start"
@@ -347,7 +347,7 @@ onMounted(() => {
     <swiper
       :slides-per-view="2"
       :modules="[Autoplay, Pagination, Navigation]"
-      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }"
+      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: false }"
       loop
       class="w-full flex flex-wrap items-center justify-center"
       :navigation="{ clickable: true }"
