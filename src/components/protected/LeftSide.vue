@@ -27,12 +27,11 @@ watchEffect(() => {
 <template>
   <div :class="`${barClass}`" v-bind="$attrs">
     <ul class=" ">
-      <li v-for="(item, index) in navigationItems" :key="index" class="pl-2">
+      <li v-for="(item, index) in navigationItems" :key="index" class="pl-2 text-[14px]">
         <router-link
           :to="{ name: item.name }"
           :class="{
-            'bg-[#53900F]/50 text-[#53900F] border   rounded-r-2xl font-bold ':
-              $route.name === item.name
+            'bg-[#53900F]/50 text-[#53900F] border ': $route.name === item.name
           }"
           exact
           active-class=""
@@ -40,7 +39,7 @@ watchEffect(() => {
           exact-path="true"
         >
           <font-awesome-icon v-if="item.icon" :icon="item.icon" />
-          <span v-if="!minimize "> {{ item.label }}</span>
+          <span v-if="!minimize"> {{ item.label }}</span>
         </router-link>
       </li>
     </ul>

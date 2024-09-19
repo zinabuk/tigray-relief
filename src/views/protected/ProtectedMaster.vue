@@ -65,7 +65,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="w-full bg-[#53900F]/15">
+  <section class="w-full bg-[#53900F]/5">
     <header
       class="flex items-center justify-between sticky shadow zbg-white/100 z-20 top-0 px-2 zbg-[#53900F] bg-white"
     >

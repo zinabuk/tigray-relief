@@ -103,8 +103,34 @@ const fetchPartners = async () => {
   }
 }
 
+const faqs = ref([])
+const fetchFaqs = async () => {
+  try {
+    const response = await ApiService.get('/admin/faqs')
+    if (response) {
+      faqs.value = response.data.slice(0, 5).map((item) => ({
+        ...item,
+        question: JSON.parse(item.question),
+        answer: JSON.parse(item.answer)
+      }))
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {}, 2000)
+    }
+  }
+}
+
+const faqIndex = ref(null)
+
+const toggleAccordion = (index) => {
+  faqIndex.value = faqIndex.value === index ? '' : index
+}
+
 onMounted(() => {
-  fetchServices(), fetchNews(), fetchPartners(), fetchHeroes()
+  fetchServices(), fetchNews(), fetchPartners(), fetchHeroes(), fetchFaqs()
 })
 
 //const originalText = 'Relief Society of Tigray'
@@ -156,7 +182,7 @@ onMounted(() => {
   </main>
 
   <!-- Services -->
-  <section class="w-full bg-green-900/10 px-[2%] flex flex-col gap-4 py-12">
+  <section class="w-full bg-[#53900F]/5 px-[2%] flex flex-col gap-4 py-12">
     <h1 class="text-center text-4xl font-semibold">{{ $t('Services') }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
@@ -222,9 +248,9 @@ onMounted(() => {
   </section>
 
   <!-- Donation section -->
-  <section class="w-full px-[2%] py-12 bg-green-900/10 overflow-hidden">
+  <section class="w-full px-[2%] py-12 bg-[#53900F]/5 overflow-hidden">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-right">
+      <div class="p-4 flex flex-col gap-2 bg-white" data-aos="fade-right">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
         <img src="@/assets/download.jpg" alt="" class="h-24 object-cover" />
         <h1 class="text-2xl font-bold">{{ $t('Become a volunteer') }}</h1>
@@ -240,7 +266,7 @@ onMounted(() => {
           {{ $t('Join Now') }}</router-link
         >
       </div>
-      <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-up">
+      <div class="p-4 flex flex-col gap-2 bg-white" data-aos="fade-up">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
         <img src="@/assets/donation.png" alt="" class="h-24 object-cover" />
         <h1 class="text-2xl font-bold">{{ $t('Send donation') }}</h1>
@@ -257,7 +283,7 @@ onMounted(() => {
           $t('Send Now')
         }}</router-link>
       </div>
-      <div class="p-4 flex flex-col gap-2 bg-gray-50" data-aos="fade-left">
+      <div class="p-4 flex flex-col gap-2 bg-white" data-aos="fade-left">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
         <img src="@/assets/contact.png" alt="" class="h-24 object-cover" />
         <h1 class="text-2xl font-bold">{{ $t('Contact Us') }}</h1>
@@ -319,7 +345,7 @@ onMounted(() => {
   <section class="w-full px-[2%] py-12 flex flex-col items-center justify-center gap-4">
     <h1 class="text-3xl font-bold">{{ $t('Our Partners') }}</h1>
     <swiper
-      :slides-per-view="1"
+      :slides-per-view="2"
       :modules="[Autoplay, Pagination, Navigation]"
       :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true }"
       loop
@@ -327,8 +353,8 @@ onMounted(() => {
       :navigation="{ clickable: true }"
       :pagination="{ clickable: true }"
       :breakpoints="{
-        '768': { slidesPerView: 2, spaceBetween: 20 },
-        '1024': { slidesPerView: 4, spaceBetween: 30 }
+        '768': { slidesPerView: 3, spaceBetween: 20 },
+        '1024': { slidesPerView: 6, spaceBetween: 30 }
       }"
     >
       <swiper-slide
@@ -351,6 +377,37 @@ onMounted(() => {
       </swiper-slide>
     </swiper>
   </section>
+
+  <!-- FAQs -->
+  <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8 bg-[#53900F]/5">
+    <ul class="grid grid-cols-1 gap-6 w-full">
+      <li v-for="(faq, index) in faqs" :key="index" class="w-full">
+        <button
+          class="w-full border border-t-0 border-r-0 border-l-0 rounded p-2 flex flex-col"
+          @click="toggleAccordion(index)"
+          :class="[{ 'bg-[#288FB2]/30x bg-white': faqIndex === index }]"
+        >
+          <div :class="['w-full flex justify-between font-semibold']">
+            <!-- <span
+              :class="[
+                'w-6 text-center flex items-center justify-center h-6 text-sm rounded-full border',
+                { 'text-[#288FB2] bg-white': faqIndex === index }
+              ]"
+              >{{ index < 10 ? '0' + index : index }}</span
+            > -->
+            <p class="text-[20px]">{{ faq.question[currentLanguage] }}</p>
+            <span v-if="faqIndex != index">+</span>
+            <span v-else class="text-[#288FB2] w-6 h-6 rounded-full border bg-white">-</span>
+          </div>
+          <!-- <transition name="accordion"> -->
+          <p v-show="faqIndex === index" class="py-6 text-smz panel text-black/95">
+            {{ faq.answer[currentLanguage] }}
+          </p>
+          <!-- </transition> -->
+        </button>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <style scoped>

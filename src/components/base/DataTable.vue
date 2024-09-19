@@ -26,7 +26,7 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody v-if="paginatedData && paginatedData.length">
+          <tbody v-if="paginatedData && paginatedData.length > 1">
             <tr v-for="(value, i) in paginatedData" :key="i" class="hover:bg-gray-100 border">
               <td class="" v-for="(header, i) in tableHeaders" :key="i">
                 <span v-if="header !== 'Applicants' && header !== 'Logo'" class="line-clamp-2">
