@@ -8,7 +8,7 @@
 
     <!-- Contact Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 place-content-center">
-      <div v-for="(contact, i) in contacts" :key="i" class="p-4 flex flex-col gap-2 bg-white justify-between shadow-xl">
+      <div v-for="(contact, i) in contacts" :key="i" class="p-4 flex flex-col gap-2 bg-white justify-between shadow">
         <p class="text-xl font-semibold">{{ contact.platform }}</p>
         <a :href="contact.link" target="_blank" class="text-blue-500 underline">{{ contact.link }}</a>
         <div class="flex gap-2 justify-end">

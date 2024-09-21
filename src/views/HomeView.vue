@@ -360,7 +360,7 @@ onMounted(() => {
       <swiper-slide
         v-for="(partner, i) in partners"
         :key="i"
-        class="relative w-full works flex items-center justify-center zshadow-xl hover:bg-yellow-400 gap-6 p-4"
+        class="relative w-full works flex items-center justify-center zshadow-xl hover:bg-[#53900F] gap-6 p-4"
       >
         <div class="w-32 h-32 mx-auto overflow-hidden">
           <img

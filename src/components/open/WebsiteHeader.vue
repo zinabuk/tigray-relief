@@ -226,7 +226,7 @@
               <hr class="text-[#001F3F]" />
             </router-link>
 
-            <router-link
+            <!-- <router-link
               :to="{ name: 'publications' }"
               :class="[{ 'text-[#53900F]': isActive('publications') }]"
             >
@@ -243,7 +243,7 @@
                 {{ $t('Strategy') }}
               </span>
               <hr />
-            </router-link>
+            </router-link> -->
 
             <router-link
               :to="{ name: 'gallery' }"
