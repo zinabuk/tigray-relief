@@ -65,7 +65,7 @@ onMounted(() => {
             v-if="document.image"
             :src="BASE_UPLOAD + document.image"
             alt=""
-            class="h-[300px] w-full  zw-full object-cover"
+            class="h-[222px] w-full object-cover"
           />
           <div
             class="gap-4 items-end p-4 justify-start flex absolute inset-0 zgroup-hover:bg-[#53900F]/60"

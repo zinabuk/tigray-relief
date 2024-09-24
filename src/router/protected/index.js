@@ -5,7 +5,6 @@ const PROTECTED_ROUTES = [
     component: () => import('@/views/protected/ProtectedMaster.vue'),
 
     children: [
-      
       {
         path: '',
         component: () => import('@/views/protected/HeroView.vue'),
@@ -283,6 +282,11 @@ const PROTECTED_ROUTES = [
         path: 'gallery',
         component: () => import('@/views/protected/GalleryView.vue'),
         name: 'admin-gallery'
+      },
+      {
+        path: '/quill',
+        name: 'quill',
+        component: () => import('@/views/QUILLJS.vue')
       }
     ]
   }

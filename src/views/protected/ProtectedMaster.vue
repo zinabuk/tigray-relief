@@ -181,7 +181,7 @@ onUnmounted(() => {
 
         <div class="w-full flex  relative">
       <LeftSide
-        bar-class="shadow-lgx px-2 h-screen sticky left-0 top-[84px] z-10 bottom-0 overflow-auto bg-white
+        bar-class="shadow-lgx px-2 h-screen sticky left-0 ztop-[84px] z-10 bottom-0 overflow-auto bg-white
         "
         :class="[!minimize? 'w-[18%]' : 'w-2%', 'py-4']"
       ></LeftSide>

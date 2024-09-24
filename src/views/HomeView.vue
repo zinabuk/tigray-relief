@@ -349,7 +349,7 @@ onMounted(() => {
       :modules="[Autoplay, Pagination, Navigation]"
       :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: false }"
       loop
-      class="w-full flex flex-wrap items-center justify-center"
+      class="w-full flex flex-wrap items-center justify-center overflow-hidden flex-col gap-8"
       :navigation="{ clickable: true }"
       :pagination="{ clickable: true }"
       :breakpoints="{
@@ -360,9 +360,9 @@ onMounted(() => {
       <swiper-slide
         v-for="(partner, i) in partners"
         :key="i"
-        class="relative w-full works flex items-center justify-center zshadow-xl hover:bg-[#53900F] gap-6 p-4"
+        class="relative w-full works flex items-center justify-center zshadow-xl zhover:bg-[#53900F] gap-6 p-4 overflow-hidden"
       >
-        <div class="w-32 h-32 mx-auto overflow-hidden">
+        <div class="w-32 h-32 mx-auto">
           <img
             v-if="partner.logo"
             :src="BASE_AVATAR + partner.logo"
@@ -380,6 +380,9 @@ onMounted(() => {
 
   <!-- FAQs -->
   <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8 bg-[#53900F]/5">
+    <div class="flex items-center justify-center text-3xl font-bold">
+      <h1>Frequently Asked Questions</h1>
+    </div>
     <ul class="grid grid-cols-1 gap-6 w-full">
       <li v-for="(faq, index) in faqs" :key="index" class="w-full">
         <button
@@ -410,7 +413,8 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
+<style>
+/* if scoped attribite is added, swiper styles wont work */
 @keyframes wave-animation {
   0% {
     transform: translateY(0);
@@ -428,5 +432,75 @@ onMounted(() => {
 
 .wave-text {
   animation: wave-animation 1.5s ease-in-out infinite;
+}
+
+/* Custom styles for Swiper Pagination */
+.swiper-pagination {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  /* margin-to: 50px; */
+  margin-top: 60px;
+  padding-top: 60px;
+}
+
+.swiper-pagination-bullet {
+  background: #53900f; /* Active color */
+  opacity: 0.6; /* Inactive color */
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 5px;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  transform: scale(1.2); /* Scale effect on active bullet */
+}
+
+/* Custom styles for Swiper Navigation */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #53900f; /* Button color */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8); /* Button background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition:
+    background 0.3s,
+    transform 0.3s;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 1); /* Button hover effect */
+  transform: scale(1.1); /* Scale effect on hover */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px; /* Icon size */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 30px;
+    height: 30px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+  }
 }
 </style>

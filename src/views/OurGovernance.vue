@@ -108,28 +108,33 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-full px-[1%] py-12 flex flex-col items-center gap-4">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 place-content-center">
-      <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-4 shadow bg-white">
+  <section class="w-full px-[1%] md:px-[6%] py-12 flex flex-col bg-[#53900F]/5 items-center gap-4">
+    <div class="w-full bg-white p-4 flex items-center justify-center text-5xl text-[#53900F]">
+      <h1>Our Leadership</h1>
+    </div>
+    <div class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center">
+      <div v-for="(team, i) in teams" :key="i" class="flex flex-col gap-4 zshadow zbg-white">
         <img
           v-if="team.image"
           :src="BASE_AVATAR + team.image"
           alt=""
-          class="zring-2 zring-yellow-300 rounded-sm"
+          class="zring-2 zring-yellow-300 w-full h-full rounded-sm"
         />
         <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
+        <div class="flex flex-col gap-2">
         <h1 class="text-[18px] font-bold">{{ team.fullName[currentLanguage] }}</h1>
         <div class="relative">
           <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
           <hr class="h-[2px] absolute inset-0 bg-gray-200" />
         </div>
-        <p class="line-clamp-2 font-bold text-[16px]">
+        <p class="line-clamp-2 zfont-bold text-[16px]">
           {{ team.profession[currentLanguage] }}
         </p>
-        <p class="line-clamp-5 text-[14px]">
+        <!-- <p class="line-clamp-5 text-[14px]">
           {{ team.biography[currentLanguage] }}
-        </p>
+        </p> -->
       </div>
+    </div>
     </div>
   </section>
 </template>
@@ -147,4 +152,4 @@ onMounted(() => {
     transform: scale(1);
   }
 }
-</style> 
+</style>

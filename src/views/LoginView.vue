@@ -46,9 +46,9 @@ async function handleLogin() {
 </script>
 
 <template>
-  <section class="w-full py-12 bg-green-900/10 h-screen px-[6%] flex items-center justify-center">
+  <section class="w-full py-12 bg-[#53900f]/5 h-screen px-[6%] flex items-center justify-center">
     <div
-      class="shadow-innerz border-2 flex flex-col justify-center rounded-md p-12 space-y-4 md:w-4/12 bg-white shadow-xl"
+      class=" flex flex-col justify-center rounded-md p-12 space-y-4 md:w-4/12 bg-white shadow"
     >
       <img
         src="@/assets/rest-logo.png"
@@ -61,7 +61,7 @@ async function handleLogin() {
       <form @submit.prevent="handleLogin" class="w-full flex flex-col gap-4 items-center">
         <BaseInput
           v-model="formData.username"
-          inputClass="focus:border focus:outline-none border-yellow-300 bg-[#539000]/30 border-iq-color1 focus:bg-white focus:text-black px-4 py-3 w-full"
+          inputClass="focus:border focus:outline-none     focus:text-black px-4 py-3 w-full"
           placeholder="Email / phone number"
           required
           label="Username"
@@ -69,7 +69,7 @@ async function handleLogin() {
         <BaseInput
           type="password"
           v-model="formData.password"
-          inputClass="focus:border focus:outline-none border-yellow-300 focus:bg-white focus:text-black  bg-[#539000]/30  px-4  py-3  w-full"
+          inputClass="focus:border focus:outline-none focus:text-black    px-4  py-3  w-full"
           placeholder="your password"
           label="Password"
           required

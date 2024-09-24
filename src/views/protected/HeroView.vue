@@ -160,18 +160,10 @@ onMounted(() => {
       </BaseButton>
     </div>
     <div v-if="heroes.length" class="col-span-12 w-full">
-      <!-- <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <div v-if="successMessage" class="success-message">{{ successMessage }}</div> -->
       <div class="w-full mx-auto">
-        <!-- <div class="col-span-6 md:col-span-8 flex justify-start items-center">
-          <button @click="toggleLanguage" class="px-4 py-2 rounded text-blue-500">
-            {{ showEnglish ? 'Tigrinya' : 'English' }}
-          </button>
-        </div> -->
-
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div v-for="hero in heroes" :key="hero.id" class="w-full md:w-auto">
-            <div class="shadow-xl flex flex-col gap-2 p-4 zmax-w-xs bg-white">
+          <div v-for="hero in heroes" :key="hero.id" class="w-full h-full md:w-auto">
+            <div class="shadow flex flex-col gap-2 p-4 zmax-w-xs bg-white">
               <img
                 v-if="hero.heroImage"
                 :src="`${BASE_AVATAR}${hero.heroImage}`"
@@ -292,7 +284,7 @@ onMounted(() => {
             </button>
           </div>
           <div class="">
-            <div class="flex justify-center gap-16 py-2">
+            <!-- <div class="flex justify-center gap-16 py-2">
               <BaseButton
                 @click="toggleLanguage('en')"
                 :class="{
@@ -320,7 +312,7 @@ onMounted(() => {
               >
                 Tigrigna
               </BaseButton>
-            </div>
+            </div> -->
             <form @submit.prevent="updateHero" class="flex flex-col gap-4">
               <div class="">
                 <div class="w-full zmd:w-1/2 py-4 flex px-2">
