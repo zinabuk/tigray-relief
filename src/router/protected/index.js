@@ -284,7 +284,7 @@ const PROTECTED_ROUTES = [
         name: 'admin-gallery'
       },
       {
-        path: '/quill',
+        path: 'quill',
         name: 'quill',
         component: () => import('@/views/QUILLJS.vue')
       }

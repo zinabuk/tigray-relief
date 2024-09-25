@@ -1,5 +1,6 @@
 <template>
-  <div class="input-container relative flex flex-col">
+  <div class="input-container relative flex w-full flex-col ">
+    <!-- <label for="">{{ label }}</label> -->
     <input
       v-bind="$attrs"
       :accept="accept"
@@ -13,7 +14,7 @@
       :icon="icon"
       class="absolute top-1/2 transform -translate-y-1/2 left-4 text-whsite"
     />
-    <label for="label" v-if="label" class="font-semibold border bg-white py-3 px-6 self-start">{{
+    <label for="label" v-if="label" class="font-semibold border bg-white py-3 ml-4 px-6 self-start">{{
       label
     }}</label>
   </div>

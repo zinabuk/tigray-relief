@@ -13,26 +13,23 @@ const route = useRoute()
 const tableHeaders = [
   { label: 'Name', field: 'fullName' },
   { label: 'Email', field: 'email' },
-  { label: 'Phone Number', field: 'phoneNumber' },
+  { label: 'Cover Letter', field: 'message' },
   { label: 'Resume', field: 'resume' }
 ]
 
 const actions = [
-  
   {
     label: 'delete',
     action: deleteJob,
     icon: 'trash',
     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
   }
-
 ]
 const searchApplicants = ref('')
 const jobs = ref([])
 const getJob = async () => {
-  
   try {
-    const response = await ApiService.get('users/all-applicants/'+route.params.id)
+    const response = await ApiService.get('users/all-applicants/' + route.params.id)
     jobs.value = response.data
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -58,14 +55,14 @@ const filteredJobs = computed(() => {
   }
 })
 
-async function deleteJob  (applicant) {
+async function deleteJob(applicant) {
   try {
     const sure = window.confirm('Are you sure?')
     if (sure) {
       const response = await ApiService.delete(applicant.id)
       if (response.success) {
         alert('Applicant deleted successfully')
-        getJob()  // Refresh the list of applicants after deletion
+        getJob() // Refresh the list of applicants after deletion
       }
     }
   } catch (error) {
@@ -80,7 +77,7 @@ onMounted(getJob)
 </script>
 
 <template>
- <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
+  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
     <div class="flex justify-between w-full">
       <h2 class="text-xl font-bold">Job Applicants</h2>
       <div class="self-end">
@@ -93,22 +90,38 @@ onMounted(getJob)
         ></base-input>
       </div>
     </div>
-    
-     <div class="w-full">
-      <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions" createExport=true exportTitle="vacancies" >
-       <template #applicationLetter="{ item }" >
-          <a  class="hover:text-primary action-cell" :href="BASE_UPLOAD + `${item.applicationLetter}`" target="_blank" title="download letter">
-             {{ item.applicationLetter }}
+
+    <div class="w-full">
+      <DataTable
+        :tableHeaders="tableHeaders"
+        :tableValues="jobs"
+        :actions="actions"
+        createExport="true"
+        exportTitle="vacancies"
+      >
+        <template #applicationLetter="{ item }">
+          <a
+            class="hover:text-primary action-cell"
+            :href="BASE_UPLOAD + `${item.applicationLetter}`"
+            target="_blank"
+            title="download letter"
+          >
+            {{ item.applicationLetter }}
           </a>
-      </template>
-      <template #cv="{ item }" >
-         <a class="hover:text-primary action-cell" :href="BASE_UPLOAD + `${item.cv}`" target="_blank" title="download cv">
+        </template>
+        <template #cv="{ item }">
+          <a
+            class="hover:text-primary action-cell"
+            :href="BASE_UPLOAD + `${item.cv}`"
+            target="_blank"
+            title="download cv"
+          >
             {{ item.cv }}
           </a>
-      </template>
+        </template>
       </DataTable>
     </div>
-<!--     
+    <!--     
     <div class="overflow-x-auto">
       <table class="min-w-full bg-white">
         <thead>

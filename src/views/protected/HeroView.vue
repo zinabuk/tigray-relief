@@ -19,16 +19,16 @@ import swal from 'sweetalert'
 // import { useAuthStore } from '@/stores/auth'
 // const { language } = storeToRefs(useAuthStore())
 
-const router = useRouter()
+// const router = useRouter()
 const heroData = ref({
   heroTitle: { en: '', ti: '', am: '' },
   heroDescription: { en: '', ti: '', am: '' },
   heroImage: null
 })
 const currentLanguage = ref('en')
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
+// const toggleLanguage = (lang) => {
+//   currentLanguage.value = lang
+// }
 
 const heroes = ref([])
 const errorMessage = ref('')
@@ -156,7 +156,7 @@ onMounted(() => {
     <div class="flex justify-between w-full">
       <h2 class="text-xl font-bold">Brands</h2>
       <BaseButton @click="showModal = true" class="">
-        <font-awesome-icon icon="plus" class="text-yellow-500"></font-awesome-icon> Add Branding
+        <font-awesome-icon icon="plus" class="ztext-yellow-500"></font-awesome-icon> Add Branding
       </BaseButton>
     </div>
     <div v-if="heroes.length" class="col-span-12 w-full">

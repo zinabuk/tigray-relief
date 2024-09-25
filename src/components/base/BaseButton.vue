@@ -1,6 +1,6 @@
 <template>
   <div class="input-container relative">
-    <button class="px-4 py-2 border rounded-md bg-[#53900F] text-yellow-400" v-bind="$attrs" :disabled="disabled">
+    <button class="px-4 py-2 border rounded-md bg-[#53900F] text-white" v-bind="$attrs" :disabled="disabled">
       <font-awesome-icon
         v-if="icon"
         :icon="icon"

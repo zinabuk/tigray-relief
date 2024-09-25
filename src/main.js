@@ -4,6 +4,9 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './assets/main.css'
 
+// import { QuillEditor } from 'vue-quill-editor'
+// import 'quill/dist/quill.snow.css' // Import Quill CSS
+
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
@@ -135,6 +138,7 @@ const app = createApp(App)
 
 //register font awesome
 app.component('font-awesome-icon', FontAwesomeIcon)
+// app.component('QuillEditor', QuillEditor)
 
 app.use(createPinia())
 app.use(router)

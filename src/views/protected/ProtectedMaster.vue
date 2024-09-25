@@ -55,9 +55,9 @@ onMounted(() => {
   document.addEventListener('click', handleClickOutside)
 })
 
-function toggleNavBar() {
-  store.navOpened = !store.navOpened
-}
+// function toggleNavBar() {
+//   store.navOpened = !store.navOpened
+// }
 // Clean up the event listener on component unmount
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)

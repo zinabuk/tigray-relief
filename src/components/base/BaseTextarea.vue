@@ -9,7 +9,7 @@
       :cols="cols"
       :id="label"
       :class="textareaClasses"
-      class="px-4 py-2 w-full border border-[#53900F] focus:border-[#260efa] focus:outline-none"
+      class="px-4 py-2 w-full border rounded-md border-[#53900F] focus:border-[#260efa] focus:outline-none"
     ></textarea>
     <font-awesome-icon
       v-if="icon"

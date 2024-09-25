@@ -1,7 +1,7 @@
 <template>
-  <section class="w-[82%] ">
+  <section class="w-[82%]" dir="ltr">
     <QuillEditor v-model="content"></QuillEditor>
-    <button @click="submit">Send</button>
+    <button @click="submit" class="bg-[#53900F] text-white">Send</button>
   </section>
 </template>
 
