@@ -1,6 +1,6 @@
 <template>
   <section class="w-[82%]" dir="ltr">
-    <QuillEditor v-model="content"></QuillEditor>
+    <QuillEditor v-model:content="description"></QuillEditor>
     <button @click="submit" class="bg-[#53900F] text-white">Send</button>
   </section>
 </template>
@@ -8,9 +8,9 @@
 <script setup>
 import { ref } from 'vue'
 import QuillEditor from '@/components/base/QuillEditor.vue'
-const content = ref('')
+const description = ref('')
 
 const submit = () => {
-  alert(content.value)
+  alert(description.value)
 }
 </script>

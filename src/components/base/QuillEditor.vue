@@ -41,7 +41,7 @@ onMounted(() => {
 
   quill.value.on('text-change', () => {
     const content = quill.value.root.innerHTML
-    emit('update:modelValue', content)
+    emit('update:content', content)
   })
 })
 
