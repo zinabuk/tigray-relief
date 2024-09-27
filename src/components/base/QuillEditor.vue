@@ -23,19 +23,21 @@ onMounted(() => {
         ['bold', 'italic', 'underline'],
         [{ header: [1, 2, 3, false] }],
         [{ list: 'ordered' }, { list: 'bullet' }],
-        ['clean'],
-        ['direction', 'rtl'] // Optional: Add RTL support
+        ['clean']
       ]
     },
     placeholder: 'Type something...',
     bounds: editorContainer.value,
     clipboard: {
       matchVisual: false
-    }
+    } 
   })
 
-  // Set initial content and direction based on content
+  // Set initial content and ensure LTR direction
   quill.value.root.innerHTML = props.modelValue || ''
+
+  // Set direction explicitly
+  quill.value.root.style.direction = 'ltr'
 
   quill.value.on('text-change', () => {
     const content = quill.value.root.innerHTML
@@ -48,6 +50,8 @@ watch(
   (newVal) => {
     if (quill.value) {
       quill.value.root.innerHTML = newVal
+      // Ensure LTR direction when updating
+      quill.value.root.style.direction = 'ltr'
     }
   }
 )
@@ -56,5 +60,7 @@ watch(
 <style scoped>
 .quill-editor {
   /* height: 300px; Adjust height as needed */
+  direction: ltr; /* Ensure LTR direction */
+  
 }
 </style>
