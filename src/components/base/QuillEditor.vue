@@ -1,6 +1,6 @@
 <template>
   <section class="w-full">
-    <div ref="editorContainer" class="quill-editor w-full flex flex-col"></div>
+    <div ref="editorContainer" class="quill-editor w-full flex flex-col shadow"></div>
   </section>
 </template>
 
