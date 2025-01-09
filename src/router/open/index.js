@@ -240,6 +240,5 @@ const OPEN_ROUTES = [
     name: 'timeline',
     component: () => import('@/views/TimeLine.vue')
   }
- 
 ]
 export default OPEN_ROUTES
