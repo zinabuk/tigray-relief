@@ -325,9 +325,9 @@
           <router-link
             :to="{ name: 'donate' }"
             class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse rounded-md"
+            ><font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
             >{{ $t('Donate') }}
-            <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
-          ></router-link>
+          </router-link>
         </li>
       </ul>
 

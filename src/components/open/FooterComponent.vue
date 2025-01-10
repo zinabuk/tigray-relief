@@ -6,13 +6,15 @@ import apiService from '@/services/apiService'
 import BaseInput from '../base/BaseInput.vue'
 // import BaseButton from '../base/BaseButton.vue'
 
-const currentLanguage = ref(localStorage.getItem('lang'))
+const currentLanguage = ref(localStorage.getItem('lang') || 'en')
 
 const services = ref([])
 const fetchServices = async () => {
   try {
     const response = await apiService.get('/admin/services')
     if (response.success) {
+      console.log(response.data)
+
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
@@ -28,9 +30,7 @@ let medias = ref([])
 const fetchMedia = async () => {
   try {
     const response = await apiService.get('/admin/social-medias')
-
     if (response.success) {
-      // alert('OK')
       medias.value = response.data
     }
   } catch (error) {
@@ -43,7 +43,6 @@ const subscribe = async () => {
   const response = await apiService.post('/users/subscribers', Subscriber.value)
   if (response.success) {
     swal({ icon: 'success', title: 'Successfuly subscribed!', text: response.message })
-    // message.value = response.message
     Subscriber.value = {}
     setTimeout(() => {
       // message.value = ''
@@ -59,32 +58,20 @@ const fetchInfography = async () => {
     if (response.success) {
       // alert('OK')
       infoG.value = response.data
-      console.log(infoG.value)
     }
   } catch (error) {
     alert(error)
   }
 }
 
-onMounted(fetchServices(), fetchInfography(), fetchMedia())
+onMounted(() => {
+  fetchServices(), fetchInfography(), fetchMedia()
+})
 </script>
 
 <template>
   <section class="w-full px-[2%] bg-[#53900F] font-bodld text-white py-12 text-[12px]">
     <div class="w-full grid grid-cols-1 md:grid-cols-4 py-8 gap-4">
-      <!-- <div>
-        <img
-          src="@/assets/rest-logo.png"
-          alt=""
-          width="200px"
-          height="100px"
-          class="px-4 py-2 w-52 h-28"
-        />
-        <p class="text-lg">
-          We offer crisis response and development programs, including food aid, healthcare,
-          education, water and sanitation, and livelihood initiatives.
-        </p>
-      </div> -->
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">{{ $t('Contacts') }}</h1>
         <!-- <hr /> -->
@@ -105,15 +92,13 @@ onMounted(fetchServices(), fetchInfography(), fetchMedia())
         <!-- <hr /> -->
 
         <ul class="flex flex-col">
-          <li class="flex flex-col text-[14px]">
+          <li class="flex flex-col text-[14px]" v-for="(service, i) in services" :key="i">
             <router-link
               :to="{
                 name: 'service-detail',
                 params: { title: service.serviceTitle[currentLanguage] }
               }"
               class="hover:text-[#288FB2]z"
-              v-for="(service, i) in services"
-              :key="i"
               ><span class="hover:text-white/80 text-white">
                 {{ $t(`${service.serviceTitle[currentLanguage]}`) }}
               </span>
