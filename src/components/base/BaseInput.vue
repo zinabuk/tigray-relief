@@ -21,7 +21,6 @@
 </template>
 
 <script setup>
-// import { defineProps } from 'vue'
 defineProps({
   modelValue: {
     type: String,
