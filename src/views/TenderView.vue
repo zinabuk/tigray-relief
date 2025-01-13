@@ -1,14 +1,14 @@
 <script setup>
 import ApiService from '@/services/apiService'
-import { BASE_AVATAR, BASE_UPLOAD } from '@/config'
+import { BASE_UPLOAD } from '@/config'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
 
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import swal from 'sweetalert'
-const router = useRouter()
+// const router = useRouter()
 
 const isApply = ref(false)
 const tender = ref({})
@@ -63,13 +63,13 @@ const submitApplication = async () => {
   }
 }
 
-const successMessage = ref('')
-const toggleApply = (tenderToApply) => {
-  isApply.value = true
-  tender.value = tenderToApply
-  successMessage.value = ''
-  errorMessage.value = 0
-}
+// const successMessage = ref('')
+// const toggleApply = (tenderToApply) => {
+//   isApply.value = true
+//   tender.value = tenderToApply
+//   successMessage.value = ''
+//   errorMessage.value = 0
+// }
 
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -102,9 +102,6 @@ const fetchTenders = async () => {
 onMounted(() => {
   fetchTenders()
 })
-function isImage(fileName) {
-  return /\.(jpg|jpeg|png|gif)$/i.test(fileName.toLowerCase())
-}
 </script>
 
 <template>
