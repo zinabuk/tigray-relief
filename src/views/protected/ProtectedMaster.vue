@@ -1,5 +1,3 @@
-
-
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -13,7 +11,6 @@ const { logOut } = useAuthStore()
 const router = useRouter()
 const name = ref(localStorage.getItem('name'))
 
-
 const { minimize } = storeToRefs(useAuthStore())
 let showModal = ref(false)
 const hideDropdown = () => {
@@ -26,7 +23,7 @@ const captureImage = async ($event) => {
 
   const formData = new FormData()
   formData.append('avatar', image.value)
-  const response = await ApiService.patch("/admin/edit-profile/",formData)
+  const response = await ApiService.patch('/admin/edit-profile/', formData)
   if (response.success) {
     // alert('profile picture successfuly updated')
     localStorage.setItem('avatar', response.data.avatar)
@@ -69,7 +66,7 @@ onUnmounted(() => {
     <header
       class="flex items-center justify-between sticky shadow zbg-white/100 z-20 top-0 px-2 zbg-[#53900F] bg-white"
     >
-      <div :class="[!minimize ? 'w-[18%]' : 'w-[2%] gap-2', 'flex items-center justify-between ']">
+      <div z:class="[!minimize ? 'w-[18%]' : 'w-[2%] gap-2', 'flex items-center justify-between ']">
         <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" v-if="!minimize" />
         <img
           src="@/assets/rest-logo.png"
@@ -79,9 +76,9 @@ onUnmounted(() => {
           v-else
         />
 
-        <button @click="minimize = !minimize">
+        <!-- <button @click="minimize = !minimize">
           <font-awesome-icon icon="bars" class="text-yellow-300"></font-awesome-icon>
-        </button>
+        </button> -->
       </div>
       <div class="flex justify-center items-center gap-8">
         <div class="">
@@ -95,99 +92,94 @@ onUnmounted(() => {
         <div class="relative text-center">
           <font-awesome-icon icon="bell" class="text-blue-500 text-xl"></font-awesome-icon>
         </div>
-            <button @click="showModal = !showModal" class="flex gap-4 relative">
-              <div class="w-8 h-8 overflow-hidden relative">
-                <img
-                  v-if="avatar"
-                  :src="BASE_AVATAR + `${avatar}`"
-                  alt="Profile"
-                  class="w-full h-full rounded-full"
-                />
-                <!-- <img
+        <button @click="showModal = !showModal" class="flex gap-4 relative">
+          <div class="w-8 h-8 overflow-hidden relative">
+            <img
+              v-if="avatar"
+              :src="BASE_AVATAR + `${avatar}`"
+              alt="Profile"
+              class="w-full h-full rounded-full"
+            />
+            <!-- <img
                   v-else
                   src="@/assets/account.png"
                   alt="my profile"
                   class="w-full h-full rounded-full"
                 /> -->
-              </div>
-              <div class="flex px-2 py-1 gap-4 justify-between items-center bg-white/70">
-                <p class="">{{ name }}</p>
+          </div>
+          <div class="flex px-2 py-1 gap-4 justify-between items-center bg-white/70">
+            <p class="">{{ name }}</p>
+            <font-awesome-icon
+              icon="chevron-down"
+              class="absolutex text-lgz font-semibold"
+            ></font-awesome-icon>
+          </div>
+          <div
+            v-if="showModal"
+            class="absolute bg-white/100 shadow-lg top-[100%] flex flex-col right-0 px-12 py-4 z-20 gap-4"
+            ref="toggleDropdown"
+            zdata-aos="fade-up"
+          >
+            <div class="w-20 h-20 relative p-1">
+              <img
+                v-if="avatar"
+                :src="BASE_AVATAR + `${avatar}`"
+                alt="Profile"
+                class="w-full h-full rounded-full"
+              />
+              <!-- <img v-else src="@/assets/account.png" alt="my profile" class="w-full h-full" /> -->
+
+              <button class="absolute right-0 bottom-3 cursor-pointer">
+                <input
+                  class="absolute right-0 bottom-0 w-full h-full opacity-0 cursor-pointer"
+                  type="file"
+                  @change="captureImage($event)"
+                />
                 <font-awesome-icon
-                  icon="chevron-down"
-                  class="absolutex text-lgz font-semibold"
+                  icon="camera"
+                  class="text-xl inset-0 cursor-pointer"
                 ></font-awesome-icon>
-              </div>
-              <div
-                v-if="showModal"
-                class="absolute bg-white/100 shadow-lg top-[100%] flex flex-col right-0 px-12 py-4 z-20 gap-4"
-                ref="toggleDropdown"
-                zdata-aos="fade-up"
+              </button>
+            </div>
+
+            <div class="flex flex-col gap-4">
+              <router-link
+                :to="{ name: 'users' }"
+                class="flex gap-2 items-center text-sm"
+                exact-active-class="meyla-color4"
+                @click="hideDropdown"
+              >
+                <font-awesome-icon icon="user-circle" class="text-sm"></font-awesome-icon>
+                <span>Users</span></router-link
               >
 
-                <div class="w-20 h-20 relative p-1">
-                  <img
-                    v-if="avatar"
-                    :src="BASE_AVATAR + `${avatar}`"
-                    alt="Profile"
-                    class="w-full h-full rounded-full"
-                  />
-                  <!-- <img v-else src="@/assets/account.png" alt="my profile" class="w-full h-full" /> -->
+              <router-link
+                :to="{ name: 'account' }"
+                class="flex gap-2 items-center text-sm"
+                exact-active-class="meyla-color4"
+                @click="hideDropdown"
+              >
+                <font-awesome-icon icon="user-circle" class="text-sm"></font-awesome-icon>
+                <span> My account</span></router-link
+              >
 
-                  <button class="absolute right-0 bottom-3 cursor-pointer">
-                    <input
-                      class="absolute right-0 bottom-0 w-full h-full opacity-0 cursor-pointer"
-                      type="file"
-                      @change="captureImage($event)"
-                    />
-                    <font-awesome-icon
-                      icon="camera"
-                      class="text-xl inset-0 cursor-pointer"
-                    ></font-awesome-icon>
-                  </button>
-                </div>
-              
-                <div class="flex flex-col gap-4">
-
-                                
-                  <router-link
-                    :to="{ name: 'users' }"
-                    class="flex gap-2 items-center text-sm"
-                    exact-active-class="meyla-color4"
-                    @click="hideDropdown"
-                  >
-                    <font-awesome-icon icon="user-circle" class="text-sm"></font-awesome-icon>
-                    <span>Users</span></router-link
-                  >
-
-                  <router-link
-                    :to="{ name: 'account' }"
-                    class="flex gap-2 items-center text-sm"
-                    exact-active-class="meyla-color4"
-                    @click="hideDropdown"
-                  >
-                    <font-awesome-icon icon="user-circle" class="text-sm"></font-awesome-icon>
-                    <span> My account</span></router-link
-                  >
-
-                  <button class="flex gap-2 items-center text-red-600 text-sm" @click="userLogOut">
-                    <font-awesome-icon icon="sign-out-alt" class="text-red-600"></font-awesome-icon>
-                    <span>log out</span>
-                  </button>
-                </div>
-              </div>
-            </button>
+              <button class="flex gap-2 items-center text-red-600 text-sm" @click="userLogOut">
+                <font-awesome-icon icon="sign-out-alt" class="text-red-600"></font-awesome-icon>
+                <span>log out</span>
+              </button>
+            </div>
           </div>
-        </header>
+        </button>
+      </div>
+    </header>
 
-        <div class="w-full flex  relative">
+    <div class="w-full flex relative">
       <LeftSide
-        bar-class="shadow-lgx px-2 h-screen sticky left-0 ztop-[84px] z-10 bottom-0 overflow-auto bg-white
+        bar-class="shadow-lgx px-2 h-screen sticky left-0 top-[68px] z-10 bottom-0 overflow-auto bg-white w-[18%] py-4
         "
-        :class="[!minimize? 'w-[18%]' : 'w-2%', 'py-4']"
+        z:class="[!minimize ? 'w-[18%]' : 'w-2%', 'py-4']"
       ></LeftSide>
       <router-view></router-view>
     </div>
-      </section>
+  </section>
 </template>
-
-

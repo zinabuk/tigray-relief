@@ -6,7 +6,7 @@ const PROTECTED_ROUTES = [
     children: [
       {
         path: '',
-        component: () => import('@/views/protected/HeroView.vue'),
+        component: () => import('@/views/protected/DashboardView.vue'),
         name: 'admin-home',
         meta: {
           requiresAuth: true,
