@@ -65,9 +65,9 @@ onMounted(fetchInfography)
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
         <h1 class="text-4xl font-bold">{{ $t('Contact Us') }}</h1>
-        <a href="#contact-us" class="bg-[#539000] px-4 py-2 rounded-xl text-white font-bold"
-          >{{ $t('Scroll to the form')}}</a
-        >
+        <a href="#contact-us" class="bg-[#539000] px-4 py-2 rounded-xl text-white font-bold">{{
+          $t('Scroll to the form')
+        }}</a>
       </div>
     </div>
     <!-- <div class="w-full relative">
@@ -140,20 +140,13 @@ onMounted(fetchInfography)
         <div class="w-full flex flex-col gap-4 shadow-xl zborder zrounded-xl p-4">
           <h1 v-if="success" class="text-green-500 bg-white">{{ success }}</h1>
           <form @submit.prevent="submitContact" class="w-full flex flex-col gap-4">
-            <BaseInput
-              v-model="form.fullName"
-              type="text"
-              inputClass="border border-yellow-300"
-              required
-              label="Full Name"
-            ></BaseInput>
+            <BaseInput v-model="form.fullName" type="text" required label="Full Name"></BaseInput>
             <BaseInput
               v-model="form.email"
               type="email"
               required
               label="Email address"
-              autocomplete="true"
-              inputClass="border border-yellow-300"
+              autocomplete="true" 
             ></BaseInput>
 
             <div class="flex flex-col md:flex-row gap-2 w-full">
@@ -162,7 +155,6 @@ onMounted(fetchInfography)
                 type="text"
                 required
                 autocomplete="on"
-                inputClass="border border-yellow-300"
                 label="Phone Number"
               ></BaseInput>
               <BaseInput
@@ -170,7 +162,6 @@ onMounted(fetchInfography)
                 type="text"
                 required
                 label="Your message subject"
-                inputClass="border border-yellow-300"
               ></BaseInput>
             </div>
             <BaseTextarea
@@ -178,7 +169,6 @@ onMounted(fetchInfography)
               rows="4"
               label="Enter your message"
               placeholder=""
-              textareaClasses="border border-yellow-300"
             ></BaseTextarea>
 
             <BaseButton type="submit">Send Message</BaseButton>

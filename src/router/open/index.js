@@ -153,15 +153,15 @@ const OPEN_ROUTES = [
           requiresAuth: false
         }
       },
-      {
-        path: 'blogs/:title',
-        name: 'blog-detail2',
-        props: true,
-        component: () => import('@/views/BlogDetail2.vue'),
-        meta: {
-          requiresAuth: false
-        }
-      },
+      // {
+      //   path: 'blogs/:title',
+      //   name: 'blog-detail2',
+      //   props: true,
+      //   component: () => import('@/views/BlogDetail2.vue'),
+      //   meta: {
+      //     requiresAuth: false
+      //   }
+      // },
       {
         path: 'tenders',
         name: 'tenders',
