@@ -79,10 +79,10 @@ watchEffect(() => {
 onMounted(getNews(), getNew())
 </script>
 <template>
-  <section class="w-full bg-[#288fb2]/10">
+  <section class="w-full bg-[#53900F]/5">
     <div class="flex justify-center py-12 px-[7%]">
       <div class="relative w-full md:w-[60%] flex flex-col items-center justify-center group">
-        <div class="w-full max-h-[600px] overflow-hiddden">
+        <div class="w-full max-h-[200px] overflow-hiddden">
           <img
             v-if="event.image"
             :src="BASE_AVATAR + `${event.image}`"

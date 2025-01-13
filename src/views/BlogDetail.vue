@@ -58,7 +58,7 @@ async function getNews() {
         ...item,
         category: JSON.parse(item.category),
         eventTitle: JSON.parse(item.eventTitle),
-        eventDescription: JSON.parse(item.eventDescription),
+        eventDescription: JSON.parse(item.eventDescription)
       }))
     }
   } catch (error) {
@@ -104,7 +104,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-full bg-[#288fb2]/10">
+  <section class="w-full bg-[#53900F]/5">
     <div class="flex justify-center py-12 px-[2%]" v-if="blogDetail && blogDetail.length > 0">
       <div
         class="relative w-full md:w-[80%] flex flex-col items-center justify-center group"
@@ -116,7 +116,7 @@ onMounted(() => {
             v-if="blog.eventImage"
             :src="BASE_AVATAR + `${blog.eventImage}`"
             alt="My company"
-            class="w-full h-full object-cover object-center"
+            class="w-full h-full object-cover object-top"
             loading="lazy"
           />
         </div>
@@ -135,7 +135,7 @@ onMounted(() => {
             </p>
 
             <div class="py-6">
-              <h1 class="ztext-white font-bold">{{ $t('SHARE ON SOCIAL MEDIA') }}</h1>
+              <h1 class="ztext-white">{{ $t('Share on social media') }}</h1>
               <div class="flex">
                 <a class="ztext-white" href="#" @click="shareOnFacebook()">
                   <font-awesome-icon :icon="['fab', 'facebook']" class="text-whitex p-2 rounded">
@@ -154,36 +154,43 @@ onMounted(() => {
       </div>
     </div>
     <section
-      class="w-full px-[1%] md:px-[10%] py-4 md:py-12 news bg-white flex flex-col items-center justify-center gap-6"
+      class="w-full px-[1%] md:px-[2%] py-4 md:py-12 news bg-white flex flex-col items-center justify-center gap-6"
     >
-      <div class="flex flex-col justify-center items-center gap-4 bg-[#288fb2]/10 p-6">
+      <div class="flex flex-col justify-center items-center gap-4">
         <div class="flex flex-col items-center justify-center">
           <h1 class="text text-xl md:text-4xl font-semibold">Latest News</h1>
-          <hr class="w-3/4 bg-[#288FB2] h-[2px]" />
+          <!-- <hr class="w-3/4 bg-[#288FB2] h-[2px]" /> -->
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div
             v-for="(event, index) in news"
             :key="index"
             data-aos="fade-upx"
-            class="relative group bg-white/100x border rounded bg-white shadow-xl"
+            class="relative flex flex-col justify-between group bg-white/100x border rounded bg-white shadow-xl"
           >
             <div>
               <img :src="BASE_AVATAR + event.eventImage" alt="" />
             </div>
             <div class="flex flex-col gap-2 p-2">
-              <h1 class="font-semibold text-lg">{{ event.eventTitle[currentLanguage] }}</h1>
+              <router-link
+                class="text-black font-semibold"
+                :to="{
+                  name: 'blog-detail',
+                  params: { title: slugify(event.eventTitle[currentLanguage]) }
+                }"
+                >{{ event.eventTitle[currentLanguage] }}</router-link
+              >
               <p class="line-clamp-5">{{ event.eventDescription[currentLanguage] }}</p>
             </div>
-            <div class="flex justify-center">
+            <div class="flex r px-2">
               <router-link
-            :to="{
-              name: 'blog-detail2',
-              params: { title: slugify(event.eventTitle[currentLanguage]) }
-            }"
-            class="text-green-600 font-bold"
-            >{{ $t('Read More') }}</router-link
-          >
+                :to="{
+                  name: 'blog-detail',
+                  params: { title: slugify(event.eventTitle[currentLanguage]) }
+                }"
+                class="text-[#53900F] font-bold"
+                >{{ $t('Read More') }}</router-link
+              >
             </div>
           </div>
         </div>

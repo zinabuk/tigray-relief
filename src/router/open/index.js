@@ -79,7 +79,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'blogs',
+        path: 'news',
         name: 'blogs',
         component: () => import('@/views/BlogsView.vue'),
         meta: {
