@@ -31,9 +31,9 @@ const fetchHistories = async () => {
 
 const showAddModal = ref(false)
 const currentLanguage = ref('en')
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
+// const toggleLanguage = (lang) => {
+//   currentLanguage.value = lang
+// }
 const form = ref({
   id: null,
   year: '',

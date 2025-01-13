@@ -33,7 +33,7 @@ const PROTECTED_ROUTES = [
       {
         path: 'history',
         component: () => import('@/views/protected/HistoryView.vue'),
-        name: 'admin-hitory',
+        name: 'admin-history',
         meta: {
           requiresAuth: true,
           role: ['admin']

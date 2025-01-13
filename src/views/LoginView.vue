@@ -11,7 +11,6 @@ const role = ref(localStorage.getItem('role') || '')
 const { errorMessage } = storeToRefs(useAuthStore())
 
 const router = useRouter()
-
 watchEffect(() => {
   if (role.value === 'admin') {
     router.push({ name: 'dashboard' })
@@ -47,9 +46,7 @@ async function handleLogin() {
 
 <template>
   <section class="w-full py-12 bg-[#53900f]/5 h-screen px-[6%] flex items-center justify-center">
-    <div
-      class=" flex flex-col justify-center rounded-md p-12 space-y-4 md:w-4/12 bg-white shadow"
-    >
+    <div class="flex flex-col justify-center rounded-md p-12 space-y-4 md:w-4/12 bg-white shadow">
       <img
         src="@/assets/rest-logo.png"
         class="w- h- mx-auto object-fit bg-cover object-center"
