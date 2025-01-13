@@ -384,6 +384,32 @@ onMounted(() => {
     </swiper>
   </section>
 
+  <!-- Embeding facebook posts -->
+  <section class="w-full px-[2%] py-12 flex flex-col items-center justify-center">
+    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Responsive Facebook Embed -->
+      <iframe
+        src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500"
+        class="w-full md:w-auto max-w-full h-[450px] shadow-md md:h-[700px] border-none overflow-hidden"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+      ></iframe>
+      <iframe
+        src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500"
+      ></iframe>
+      <iframe
+        src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0s4Bx73zzVLCYw4viyNZfwJXaPiU9FXE6z9TUj24UydXRXVjB4TZUnU5nrNsB1iedl&show_text=true&width=500"
+        class="w-full md:w-auto max-w-full h-[450px] shadow-md md:h-[700px] border-none overflow-hidden"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+      ></iframe>
+    </div>
+  </section>
+
   <!-- FAQs -->
   <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8 bg-[#53900F]/5">
     <div class="flex items-center justify-center text-3xl font-bold">
