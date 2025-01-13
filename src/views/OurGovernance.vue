@@ -1,79 +1,7 @@
-<!-- <template>
-  <div id="governance" class="bg-[#53900F]/10 overflow-auto">
-    <OrgTree v-if="treeData" :data="treeData" />
-    <div v-else>Loading...</div> 
-  </div>
-</template>
-
-<script>
-import ApiService from '@/services/apiService';
-import { BASE_AVATAR } from '@/config';
-import OrgTree from '@/components/open/OpenTree.vue';
-
-export default {
-  name: 'App',
-  components: {
-    OrgTree,
-  },
-  data() {
-    return {
-      treeData: null, 
-    };
-  },
-  created() {
-    ApiService.get('/users/organizational-structure')
-      .then(response => {
-        console.log('API response:', response);
-        const fetchedData = response.data;
-        const transformedData = this.transformData(fetchedData);
-        console.log('Transformed data:', transformedData);
-        this.treeData = transformedData;
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-  },
-  methods: {
-    transformData(flatData) {
-      console.log('Original flatData:', flatData); // Debugging line
-      const idMap = {};
-      flatData.forEach(node => {
-        idMap[node.id] = { 
-          ...node, 
-          children: [], 
-          image:`${BASE_AVATAR}${node.image}`  
-        };
-      });
-      let root = null;
-      flatData.forEach(node => {
-        if (node.parentId) {
-          const parent = idMap[node.parentId];
-          if (parent) {
-            parent.children.push(idMap[node.id]);
-          }
-        } else {
-          root = idMap[node.id];
-        }
-      });
-      console.log('Constructed idMap:', idMap); // Debugging line
-      return root;
-    },
-  },
-};
-</script> -->
-
-<!-- <style></style>  -->
-
 <script setup>
 import ApiService from '@/services/apiService'
 
 import { BASE_AVATAR } from '@/config'
-// const news = async () => {
-//   const response = await ApiService.get()
-// }
-
-// import { useRouter } from 'vue-router'
-// const router = useRouter()
 import { ref, onMounted } from 'vue'
 const currentLanguage = ref('en')
 
@@ -109,32 +37,34 @@ onMounted(() => {
 
 <template>
   <section class="w-full px-[1%] md:px-[6%] py-12 flex flex-col bg-[#53900F]/5 items-center gap-4">
-    <div class="w-full bg-white p-4 flex items-center justify-center text-5xl text-[#53900F]">
-      <h1>Our Leadership</h1>
+    <div class="w-full zbg-white p-4 flex items-center justify-center md:text-3xl ztext-[#53900F]">
+      <h1>Board Members</h1>
     </div>
-    <div class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center">
-      <div v-for="(team, i) in teams" :key="i" class="flex flex-col gap-4 zshadow zbg-white">
+    <div
+      class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center"
+    >
+      <div v-for="(team, i) in teams" :key="i" class="flex flex-col gap-4 justify-start zshadow zbg-white">
         <img
           v-if="team.image"
           :src="BASE_AVATAR + team.image"
           alt=""
-          class="zring-2 zring-yellow-300 w-full h-full rounded-sm"
+          class="zring-2 zring-yellow-300 w-full h-[220px] rounded-sm"
         />
         <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
         <div class="flex flex-col gap-2">
-        <h1 class="text-[18px] font-bold">{{ team.fullName[currentLanguage] }}</h1>
-        <div class="relative">
-          <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
-          <hr class="h-[2px] absolute inset-0 bg-gray-200" />
-        </div>
-        <p class="line-clamp-2 zfont-bold text-[16px]">
-          {{ team.profession[currentLanguage] }}
-        </p>
-        <!-- <p class="line-clamp-5 text-[14px]">
+          <h1 class="text-[18px] font-bold">{{ team.fullName[currentLanguage] }}</h1>
+          <div class="relative">
+            <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
+            <hr class="h-[2px] absolute inset-0 bg-gray-200" />
+          </div>
+          <p class="line-clamp-2 zfont-bold text-[16px]">
+            {{ team.profession[currentLanguage] }}
+          </p>
+          <!-- <p class="line-clamp-5 text-[14px]">
           {{ team.biography[currentLanguage] }}
         </p> -->
+        </div>
       </div>
-    </div>
     </div>
   </section>
 </template>

@@ -104,8 +104,8 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'our-governance',
-        name: 'governance',
+        path: 'board-members',
+        name: 'board-members',
         component: () => import('@/views/OurGovernance.vue'),
         meta: {
           requiresAuth: false

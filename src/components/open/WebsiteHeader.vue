@@ -134,11 +134,11 @@
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
             <router-link
-              :to="{ name: 'governance' }"
-              :class="[{ 'text-[#53900F]': isActive('governance') }]"
+              :to="{ name: 'board-members' }"
+              :class="[{ 'text-[#53900F]': isActive('board-members') }]"
             >
               <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Our Governance') }} </span>
+              <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
 

@@ -16,7 +16,7 @@ import { ref, onMounted } from 'vue'
 
 // import { useRouter } from 'vue-router'
 
-const modules = [Autoplay, Pagination, Navigation]
+// const modules = [Autoplay, Pagination, Navigation]
 
 // const router = useRouter()
 
