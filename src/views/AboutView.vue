@@ -188,7 +188,7 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
   <div class="relative w-full flex flex-col px-[2%] gap-4 py-12 bg-[#53900F]/5 overflow-hidden">
     <div class="grid md:grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
       <div
-        class="flex gap-4 bg-white shadow-2xl p-4 w-full"
+        class="flex gap-4 bg-white shadow-2xl p-4 w-full rounded-md"
         :class="[i % 2 === 0 ? 'md:order-1' : 'md:order-2']"
         :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
       >
@@ -211,7 +211,7 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
 
       <div
         :class="[i % 2 === 0 ? 'md:order-2 w-full' : 'md:order-1 w-full', 'flex gap-6 w-full']"
-        class="w-full"
+        class="w-full rounded-md"
         :data-aos="i % 2 === 0 ? 'fade-left' : 'fade-right'"
       >
         <div
