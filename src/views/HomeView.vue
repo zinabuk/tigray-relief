@@ -183,8 +183,8 @@ onMounted(() => {
 
   <!-- Services -->
   <section class="w-full bg-[#53900F]/5 px-[2%] flex flex-col gap-4 py-12">
-    <h1 class="text-center text-4xl font-semibold">{{ $t('Services') }}</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <h1 class="text-center text-4xl font-semibold">Services</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center" data-aos="fade-up">
       <div
         v-for="(service, i) in services"
         :key="i"
@@ -248,7 +248,10 @@ onMounted(() => {
   </section>
 
   <!-- Donation section -->
-  <section class="w-full px-[2%] py-12 bg-[#53900F]/5 overflow-hidden">
+  <section
+    class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5 overflow-hidden"
+  >
+    <h1 class="text-3xl font-bold">Engage with us</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div class="p-4 flex flex-col gap-2 bg-white" data-aos="fade-right">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
@@ -305,13 +308,16 @@ onMounted(() => {
   <!-- End of donation section -->
 
   <!-- Start of news section -->
-  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5">
+  <section
+    class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5 overflow-hidden"
+  >
     <h1 class="text-3xl font-bold">{{ $t('News and stories from us') }}</h1>
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
       <div
         v-for="(event, i) in blogs.slice(0, 4)"
         :key="i"
         class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-2 shadow"
+        :data-aos="i % 2 == 0 ? 'fade-right' : 'fade-left'"
       >
         <div class="overflow-hidden">
           <img
