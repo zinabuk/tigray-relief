@@ -14,7 +14,7 @@ const router = useRouter()
 
 watchEffect(() => {
   if (role.value === 'admin') {
-    router.push({ name: 'admin-home' })
+    router.push({ name: 'dashboard' })
   } else {
     router.push({ name: 'staff-home' })
   }

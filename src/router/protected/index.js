@@ -1,13 +1,12 @@
 const PROTECTED_ROUTES = [
   {
     path: '/rest',
-    name: 'dashboard',
     component: () => import('@/views/protected/ProtectedMaster.vue'),
     children: [
       {
         path: '',
         component: () => import('@/views/protected/DashboardView.vue'),
-        name: 'admin-home',
+        name: 'dashboard',
         meta: {
           requiresAuth: true,
           role: ['admin']
@@ -114,7 +113,7 @@ const PROTECTED_ROUTES = [
         component: () => import('@/views/protected/AccountManagement.vue')
       },
       {
-        path: 'blogs',
+        path: 'news',
         component: () => import('@/views/protected/BlogsView.vue'),
         name: 'admin-blogs',
         meta: {
@@ -196,7 +195,7 @@ const PROTECTED_ROUTES = [
         }
       },
       {
-        path: 'blogs/add',
+        path: 'news/add',
         component: () => import('@/views/protected/AddBlog.vue'),
         name: 'admin-add-blogs',
         meta: {
