@@ -107,7 +107,7 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
     id="establishment"
   >
     <div class="flex flex-col zshadow-xl p-4" v-for="(aboutus, i) in about" :key="i">
-      <h1 class="text-4xl font-bold mb-4">Who we are.</h1>
+      <h1 class="text-4xl font-bold mb-4">Background</h1>
       <p class="text-lg" data-aos="fade-right">
         {{ aboutus.establishment[currentLanguage] }}
       </p>
@@ -185,21 +185,22 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
     </div>
   </section>
   <!-- timeline -->
-  <div class="relative w-full flex flex-col px-[2%] gap-4 py-12 bg-[#53900F]/15">
+  <div class="relative w-full flex flex-col px-[2%] gap-4 py-12 bg-[#53900F]/5 overflow-hidden">
     <div class="grid md:grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
       <div
         class="flex gap-4 bg-white shadow-2xl p-4 w-full"
         :class="[i % 2 === 0 ? 'md:order-1' : 'md:order-2']"
+        :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
       >
         <div class="p-2 space-y-6 w-full">
           <div class="timeline-content">
             <div class="timeline-year">
-              <span class="text-[20px] font-bold text-center">{{ history.year }}</span>
+              <span class="text-[#53900F] font-bold text-center text-sm">{{ history.year }}</span>
             </div>
             <img
               :src="BASE_AVATAR + history.image"
               alt="Timeline image"
-              class="timeline-image zrounded-lg h-[180px] w-full object-contain"
+              class="timeline-image zrounded-lg h-[180px] w-full object-contain transform transition hover:scale-110 duration-300"
             />
           </div>
         </div>
@@ -211,12 +212,16 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
       <div
         :class="[i % 2 === 0 ? 'md:order-2 w-full' : 'md:order-1 w-full', 'flex gap-6 w-full']"
         class="w-full"
+        :data-aos="i % 2 === 0 ? 'fade-left' : 'fade-right'"
       >
         <div
-          class="h-full border-2 border-gray-500 border-r-0 border-t-0 border-b-0 relative flex flex-col zjustify-between"
+          class="h-full border-2 border-gray-500 border-r-0 border-t-0 border-b-0 relative flex flex-col justify-between zoverflow-hidden"
         >
-          <div class="h-4 w-4 bg-blue-600 rounded-full absolute -left-2"></div>
-          <div class="h-4 w-4 bg-blue-600 rounded-full absolute -left-2 bottom-4"></div>
+          <!-- Animated Circle -->
+          <div
+            class="h-4 w-4 bg-[#53900F] rounded-full absolute -left-2"
+            style="animation: move-down 5s infinite ease-in-out"
+          ></div>
         </div>
 
         <div class="p-8 bg-white shadow-2xl">
@@ -225,36 +230,6 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
       </div>
     </div>
   </div>
-  <!-- Our Public Figures section
-  <section class="flex flex-col px-[1%] md:px-[2%] gap-4 py-6 md:py-12 bg-white">
-    <h1 class="text-4xl font-bold text-center">Our Public Figures</h1>
-    <div
-      class="flex flex-wrap gap-4 py-8 justify-center items-center"
-      v-if="teams.length && teams.length > 0"
-    >
-      <div
-        v-for="(team, index) in teams"
-        :key="index"
-        data-aos="fade-up"
-        class="py-6 px-4 text-center w-full md:w-1/4 bg-green-900/10 rounded shadow-xl hover:bg-green-900 hover:text-white"
-      >
-        <div class="w-32 h-32 rounded-full overflow-hidden mx-auto ring-2 ring-yellow-300">
-          <img
-            v-if="team.image"
-            :src="BASE_AVATAR + team.image"
-            alt="yes"
-            class="h-full w-full ring-2 ring-yellow-300 rounded-full"
-          />
-        </div>
-        <h1 class="text-xl font-semibold">{{ team.fullName[currentLanguage] }}</h1>
-        <p class="text-blue-700">{{ team.profession[currentLanguage] }}</p>
-        <p>{{ team.biography[currentLanguage] }}</p>
-      </div>
-    </div>
-    <div v-else>
-      <h1>No team to display</h1>
-    </div>
-  </section> -->
 </template>
 
 <style>
@@ -262,5 +237,18 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
   min-height: calc(100vh - 80px);
   display: flex;
   align-items: center;
+}
+
+@keyframes move-down {
+  0% {
+    top: 0; /* Start at the top */
+  }
+  50% {
+    top: 100%; /* Move to the bottom of the container */
+    transform: translateY(-100%);
+  }
+  100% {
+    top: 0; /* Return to the top */
+  }
 }
 </style>
