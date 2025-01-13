@@ -342,7 +342,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <router-link to="/blogs" class="text-[#53900F] underline text-xl">{{
+    <router-link to="/blogs" class="text-[#53900F]z underline text-xl">{{
       $t('View All News and Events')
     }}</router-link>
   </section>
@@ -387,7 +387,7 @@ onMounted(() => {
   <!-- FAQs -->
   <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8 bg-[#53900F]/5">
     <div class="flex items-center justify-center text-3xl font-bold">
-      <h1>Frequently Asked Questions</h1>
+      <h1 class="text-center">Frequently Asked Questions</h1>
     </div>
     <ul class="grid grid-cols-1 gap-6 w-full">
       <li v-for="(faq, index) in faqs" :key="index" class="w-full">
