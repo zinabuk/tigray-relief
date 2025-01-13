@@ -18,19 +18,19 @@ let form = ref({
 
 const submitVolunteer = async () => {
   swal({
-      icon: "success",
-      title: "You have submitted successfuly",
-      text: "We will contact you soon."
-     })
+    icon: 'success',
+    title: 'You have submitted successfuly',
+    text: 'We will contact you soon.'
+  })
   try {
     const response = await ApiService.post('/users/volunteer', form.value)
     // alert(response.success)
     if (response.success) {
-     swal({
-      icon: "success",
-      title: "You have submitted successfuly",
-      text: "We will contact you soon."
-     })
+      swal({
+        icon: 'success',
+        title: 'You have submitted successfuly',
+        text: 'We will contact you soon.'
+      })
       form.value = {}
     }
   } catch (error) {
@@ -86,7 +86,6 @@ let showModal = ref(false)
             >
             <BaseInput
               type="text"
-              inputClass="border border-yellow-300"
               label="Enter your area of interest "
               v-model="form.interestedIn"
               placeholder="Interested in"
@@ -96,7 +95,6 @@ let showModal = ref(false)
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
               <BaseInput
-                inputClass="border border-yellow-300"
                 label="First Name*"
                 v-model="form.firstName"
                 placeholder="First Name"
@@ -105,7 +103,6 @@ let showModal = ref(false)
             </div>
             <div>
               <BaseInput
-                inputClass="border border-yellow-300"
                 label="Last Name"
                 v-model="form.lastName"
                 placeholder="Last Name"
@@ -114,7 +111,6 @@ let showModal = ref(false)
             </div>
             <div>
               <BaseInput
-                inputClass="border border-yellow-300"
                 label="Email"
                 v-model="form.email"
                 placeholder="Email"
@@ -123,7 +119,6 @@ let showModal = ref(false)
             </div>
             <div>
               <BaseInput
-                inputClass="border border-yellow-300"
                 label="Phone Number*"
                 v-model="form.phoneNumber"
                 placeholder="Phone Number"
@@ -132,22 +127,12 @@ let showModal = ref(false)
             </div>
             <div>
               <BaseTextarea
-                inputClass="border border-yellow-300"
                 label="Description"
                 v-model="form.description"
                 placeholder="Description"
                 required
               ></BaseTextarea>
             </div>
-            <!-- <div>
-              <BaseInput
-                inputClass="border border-yellow-300"
-                label="Total Amount*"
-                v-model="form.amount"
-                placeholder="Total Amount"
-                required
-              ></BaseInput>
-            </div> -->
           </div>
           <base-button type="submit" class="bg-[#539000]z rounded px-8 py-2 self-start"
             >Submit</base-button
