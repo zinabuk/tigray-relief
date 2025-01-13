@@ -6,7 +6,7 @@ const SIDEBARITEMS = {
       { label: 'About Us', name: 'admin-about', icon: 'handshake' },
       { label: 'Our History', name: 'admin-history', icon: 'handshake' },
       { label: 'Services', name: 'admin-services', icon: 'cogs' },
-      { label: 'Our Governance', name: 'team', icon: 'handshake' },
+      { label: 'Board Memebers', name: 'team', icon: 'handshake' },
       { label: 'News', name: 'admin-blogs', icon: 'newspaper' },
       { label: 'Partners', name: 'partner', icon: 'handshake' },
       { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
