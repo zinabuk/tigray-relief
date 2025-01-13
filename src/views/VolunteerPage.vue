@@ -140,7 +140,6 @@ let showModal = ref(false)
         </form>
       </div>
     </section>
-
     <div
       id="telebirr_modal"
       class="fixed inset-0 flex items-center justify-center bg-black/40 z-50"

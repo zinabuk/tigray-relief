@@ -3,7 +3,6 @@ const PROTECTED_ROUTES = [
     path: '/rest',
     name: 'dashboard',
     component: () => import('@/views/protected/ProtectedMaster.vue'),
-
     children: [
       {
         path: '',

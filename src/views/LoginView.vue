@@ -90,7 +90,7 @@ async function handleLogin() {
           <span>Login</span>
         </BaseButton>
       </form>
-      <h1 class="text-lg font-semibold text-red-400" v-if="errorMessage">{{ errorMessage }}</h1>
+      <h1 class="text-d text-red-500" v-if="errorMessage">{{ errorMessage }}</h1>
     </div>
   </section>
 </template>
