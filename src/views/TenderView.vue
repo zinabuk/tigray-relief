@@ -122,7 +122,10 @@ function isImage(fileName) {
       </div>
     </div>
   </section>
-  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
+  <section
+    class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10"
+    v-if="tenders && tenders.length > 0"
+  >
     <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 shadow-xl">
       <div v-for="(tender, i) in tenders" :key="i" class="gap-4 bg-white shadow w-full h-auto p-4">
         <div class="flex flex-col w-full h-full gap-2 justify-between">
@@ -165,6 +168,7 @@ function isImage(fileName) {
       </div>
     </div>
   </section>
+  <section v-else class="w-full px-[2%] py-4 text-center">No content for the moment</section>
   <div
     class="fixed items-center justify-center rounded-lg inset-0 z-50 bg-[#53900F]/40 flex flex-col gap-4 overflow-auto modal"
     v-if="isApply"

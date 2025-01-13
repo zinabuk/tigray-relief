@@ -211,7 +211,7 @@ onMounted(fetchTeams(), getAboutus(), fetchHistories())
 
       <div
         :class="[i % 2 === 0 ? 'md:order-2 w-full' : 'md:order-1 w-full', 'flex gap-6 w-full']"
-        class="w-full rounded-md"
+        class="rounded-md w-full"
         :data-aos="i % 2 === 0 ? 'fade-left' : 'fade-right'"
       >
         <div
