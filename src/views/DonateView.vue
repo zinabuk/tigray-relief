@@ -71,7 +71,7 @@ let cAmount = ref('')
         <div>
           <h4 class="text-lg font-bold mb-2">Donate to bring a relief to our communities</h4>
           <div class="grid grid-cols-2 gap-12">
-            <button
+            <!-- <button
               @click="showForm = !showForm"
               class="p-2 inline-block self-start rounded"
               :class="[
@@ -81,8 +81,8 @@ let cAmount = ref('')
               ]"
             >
               {{ showForm ? 'Hide REST form' : 'Use REST form' }}
-            </button>
-            <button
+            </button> -->
+            <!-- <button
               class="p-2 inline-block self-start rounded"
               :class="[
                 showForm === true
@@ -92,11 +92,11 @@ let cAmount = ref('')
               @click="(showModal = true), (showForm = false)"
             >
               Use other service
-            </button>
+            </button> -->
           </div>
         </div>
 
-        <div zv-if="showForm">
+        <div  >
           <h2 class="text-2xl font-bold mb-2">Donation Form</h2>
           <p class="text-gray-500 mb-4">"*" indicates required fields</p>
           <form class="flex flex-col" @submit.prevent="submitDonation">
