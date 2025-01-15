@@ -12,7 +12,7 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 const { currentLanguage } = storeToRefs(useAuthStore())
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 // import { useRouter } from 'vue-router'
 
@@ -23,15 +23,20 @@ import { ref, onMounted } from 'vue'
 // let isLoading = '';
 const heroes = ref([])
 const errorMessage = ref('')
+const isLoading = ref(false)
 const fetchHeroes = async () => {
+  isLoading.value = true
   try {
     const response = await ApiService.get('users/home')
     // alert(response.data.length)
-    heroes.value = response.data.map((item) => ({
-      ...item,
-      heroTitle: JSON.parse(item.heroTitle),
-      heroDescription: JSON.parse(item.heroDescription)
-    }))
+    if (response.success) {
+      heroes.value = response.data.map((item) => ({
+        ...item,
+        heroTitle: JSON.parse(item.heroTitle),
+        heroDescription: JSON.parse(item.heroDescription)
+      }))
+      isLoading.value = false
+    }
   } catch (error) {
     errorMessage.value = 'Failed to fetch achievements'
   }
@@ -129,6 +134,7 @@ const toggleAccordion = (index) => {
   faqIndex.value = faqIndex.value === index ? '' : index
 }
 
+const hasHeros = computed(() => heroes.value.length)
 onMounted(() => {
   fetchServices(), fetchNews(), fetchPartners(), fetchHeroes(), fetchFaqs()
 })
@@ -137,7 +143,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="w-full h-full flex flex-col">
+  <main class="w-full h-full flex flex-col" v-if="hasHeros && heroes[0].heroImage">
     <Swiper
       :slides-per-view="1"
       :modules="[Autoplay, Pagination, Navigation]"
@@ -180,6 +186,12 @@ onMounted(() => {
       </swiper-slide>
     </Swiper>
   </main>
+  <div
+    class="w-full h-[calc(100vh_-_120px)] md:h-[calc(100vh_-_80px)] flex items-center justify-center"
+    v-if="isLoading"
+  >
+    <h1 class="loader"></h1>
+  </div>
 
   <!-- Services -->
   <section class="w-full bg-[#53900F]/5 px-[2%] flex flex-col gap-4 py-12">
@@ -223,7 +235,6 @@ onMounted(() => {
         Rest is a highly acclaimed non-profit organization dedicated to supporting the international
         Tigrai community in overcoming the broad range of conditions ...
       </p> -->
-
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full overflow-hidden">
         <div
           class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
@@ -386,11 +397,11 @@ onMounted(() => {
 
   <!-- Embeding facebook posts -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center justify-center">
-    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Responsive Facebook Embed -->
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500"
-        class="w-full md:w-auto max-w-full h-[450px] shadow-md md:h-[700px] border-none overflow-hidden"
+        class="w-full shadow-md md:h-[700px] border-none overflow-hidden"
         scrolling="no"
         frameborder="0"
         allowfullscreen="true"
@@ -398,14 +409,6 @@ onMounted(() => {
       ></iframe>
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500"
-      ></iframe>
-      <iframe
-        src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0s4Bx73zzVLCYw4viyNZfwJXaPiU9FXE6z9TUj24UydXRXVjB4TZUnU5nrNsB1iedl&show_text=true&width=500"
-        class="w-full md:w-auto max-w-full h-[450px] shadow-md md:h-[700px] border-none overflow-hidden"
-        scrolling="no"
-        frameborder="0"
-        allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
       ></iframe>
     </div>
   </section>
@@ -533,6 +536,26 @@ onMounted(() => {
   .swiper-pagination-bullet {
     width: 10px;
     height: 10px;
+  }
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  --b: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(#0000 10%, #53900f) content-box;
+  -webkit-mask: repeating-conic-gradient(#0000 0deg, #000 1deg 20deg, #0000 21deg 36deg),
+    radial-gradient(farthest-side, #0000 calc(100% - var(--b) - 1px), #000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: l4 1s infinite steps(10);
+}
+@keyframes l4 {
+  to {
+    transform: rotate(1turn);
   }
 }
 </style>
