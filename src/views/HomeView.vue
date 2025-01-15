@@ -35,7 +35,10 @@ const fetchHeroes = async () => {
         heroTitle: JSON.parse(item.heroTitle),
         heroDescription: JSON.parse(item.heroDescription)
       }))
-      isLoading.value = false
+
+      heroes.value.length && heroes.value[0].heroImage
+        ? (isLoading.value = false)
+        : (isLoading.value = true)
     }
   } catch (error) {
     errorMessage.value = 'Failed to fetch achievements'
@@ -143,7 +146,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="w-full h-full flex flex-col" v-if="hasHeros && heroes[0].heroImage">
+  <main class="w-full h-full flex flex-col" v-if="hasHeros && !isLoading">
     <Swiper
       :slides-per-view="1"
       :modules="[Autoplay, Pagination, Navigation]"
@@ -397,11 +400,11 @@ onMounted(() => {
 
   <!-- Embeding facebook posts -->
   <section class="w-full px-[2%] py-12 flex flex-col items-center justify-center">
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8">
       <!-- Responsive Facebook Embed -->
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500"
-        class="w-full shadow-md md:h-[700px] border-none overflow-hidden"
+        class="w-full h-[400px] shadow-md md:h-[700px] border-none overflow-hidden"
         scrolling="no"
         frameborder="0"
         allowfullscreen="true"
@@ -409,6 +412,11 @@ onMounted(() => {
       ></iframe>
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500"
+        class="w-full h-[400px] shadow-md md:h-[700px] border-none overflow-hidden"
+        scrolling="no"
+        frameborder="0"
+        allowfullscreen="true"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
       ></iframe>
     </div>
   </section>
