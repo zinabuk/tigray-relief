@@ -1,7 +1,7 @@
 <script setup>
 import ApiService from '@/services/apiService'
 import { onMounted, ref } from 'vue'
-import {BASE_AVATAR} from '@/config' 
+import { BASE_AVATAR } from '@/config'
 const partners = ref([])
 const currentLanguage = 'en'
 const fetchPartners = async () => {
@@ -46,26 +46,28 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div
-      class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center"
-    >
+    <div class="w-full px-[4%] py-12 flex flex-col items-center justify-center">
       <div
-        v-for="(partner, i) in partners"
-        :key="i"
-        class="flex flex-col gap-4 justify-start zshadow zbg-white"
+        class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center"
       >
-        <a :href="partner.website" v-if="partner.website" target="_blank">
-          <div class="w-32 h-32 mx-auto">
-            <img
-              v-if="partner.logo"
-              :src="BASE_AVATAR + partner.logo"
-              :alt="partner.businessName"
-              class="w-full h-full rounded-full object-cover"
-            />
-            <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black"></h2>
-          </div>
-          <p class="text-center font-bold">{{ partner.businessName[currentLanguage] }}</p></a
+        <div
+          v-for="(partner, i) in partners"
+          :key="i"
+          class="flex flex-col gap-4 justify-start zshadow zbg-white"
         >
+          <a :href="partner.website" v-if="partner.website" target="_blank">
+            <div class="w-32 h-32 mx-auto">
+              <img
+                v-if="partner.logo"
+                :src="BASE_AVATAR + partner.logo"
+                :alt="partner.businessName"
+                class="w-full h-full rounded-full object-cover"
+              />
+              <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black"></h2>
+            </div>
+            <p class="text-center font-bold">{{ partner.businessName[currentLanguage] }}</p></a
+          >
+        </div>
       </div>
     </div>
   </section>
