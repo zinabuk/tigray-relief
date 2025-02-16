@@ -105,7 +105,7 @@
               :class="[{ 'text-[#53900F]': isActive('board-members') }]"
             >
                @click="scrollToSection(el.id)" -->
-              <!-- <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
+            <!-- <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>  -->
             <router-link
