@@ -65,50 +65,12 @@
           </h1>
         </div>
       </div>
-      <!-- <div class="flex gap-8 items-center justify-center"> -->
-      <!-- <div class="relative group flex items-center justify-center">
-          <h1 class="flex items-center justify-center gap-1">
-            <font-awesome-icon icon="globe"></font-awesome-icon>{{ language }}
-          </h1>
-          <ul
-            class="absolute top-[100%] hidden group-hover:flex z-50 bg-white right-0 p-4 text-black shadow-2xl"
-          >
-            <li class="flex flex-col gap-2 group-hover:flex-col p-2">
-              <button
-                @click="changeLanguage('en')"
-                class="flex items-center justify-center hover:text-[#53900F]"
-              >
-                English
-              </button>
-              <hr />
-              <button
-                @click="changeLanguage('ti')"
-                class="flex items-center justify-center hover:text-[#53900F]"
-              >
-                ትግርኛ
-              </button>
-              <hr />
-              <button
-                @click="changeLanguage('am')"
-                class="flex items-center justify-center hover:text-[#53900F]"
-              >
-                ኣማርኛ
-              </button>
-              <hr />
-            </li>
-          </ul>
-        </div> -->
-      <!-- </div> -->
     </div>
     <nav
       class="w-full px-[1%] flex justify-between items-center py- zfont-bold bg-white/100 shadow-2xl"
     >
-      <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
-        <img
-          src="@/assets/rest-logo.png"
-          alt="Logo of REST"
-          class="rounded-fullz h-24 object-contain"
-        />
+      <router-link to="/" class="flex items-center hover:border-b-0 py-1" title="REST">
+        <img src="@/assets/rest.jpg" alt="Logo of REST" class="rounded-fullz h-24 object-contain" />
       </router-link>
       <ul class="flex gap-4 font-bold zuppercase">
         <li>
@@ -179,13 +141,15 @@
           >
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
             <router-link
-              :to="{
-                name: 'service-detail',
-                params: { title: slugify(service.serviceTitle[currentLanguage]) }
-              }"
               class="hover:text-[#288FB2]z"
               v-for="(service, i) in services"
               :key="i"
+              :to="{
+                name: 'service-detail',
+                params: {
+                  title: service.serviceTitle[currentLanguage]
+                }
+              }"
             >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
@@ -225,25 +189,6 @@
               <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
-
-            <!-- <router-link
-              :to="{ name: 'publications' }"
-              :class="[{ 'text-[#53900F]': isActive('publications') }]"
-            >
-              <span class="hover:text-[#53900F]"> {{ $t('Publications') }} </span>
-              <hr class="text-[#001F3F]" />
-            </router-link>
-
-            <router-link
-              :to="{ name: 'strategy' }"
-              :class="[{ 'text-[#53900F]': isActive('Strategy') }]"
-              class="hover:text-[#288FB2]z"
-            >
-              <span class="hover:text-[#53900F]">
-                {{ $t('Strategy') }}
-              </span>
-              <hr />
-            </router-link> -->
 
             <router-link
               :to="{ name: 'gallery' }"
@@ -330,34 +275,6 @@
           </router-link>
         </li>
       </ul>
-
-      <!-- <div class="relative group">
-        
-        <font-awesome-icon icon="globe" class="text-xl relative group"
-          ><font-awesome-icon icon="chervon-down absolute right-0"></font-awesome-icon
-        ></font-awesome-icon>
-        <div
-          class="absolute hidden shadow space-y-2 group-hover:block right-0 p-6 bg-white"
-          id="languageDropdown"
-          v-if="showDropdown"
-          :class="{ 'text-black': changeBackground }"
-        >
-          <button
-            @click="changeLang('en')"
-            class="hover:text-green-500"
-            :class="{ 'text-green-500': locale === 'en' }"
-          >
-            English
-          </button>
-          <button
-            @click="changeLang('tig')"
-            class="hover:text-green-500"
-            :class="{ 'text-green-500': locale === 'tig' }"
-          >
-            ትግርኛ
-          </button>
-        </div>
-      </div> -->
     </nav>
   </header>
 
@@ -465,7 +382,7 @@
               <router-link
                 :to="{
                   name: 'service-detail',
-                  params: { title: slugify(service.serviceTitle[currentLanguage]) }
+                  params: { title: service.serviceTitle[currentLanguage] }
                 }"
                 class="hover:text-[#288FB2]z"
                 v-for="(service, i) in services"
@@ -692,16 +609,11 @@
 </template>
 
 <script setup>
-// props are automatically provided in `<script setup>` block
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from '@/stores/auth'
-import slugify from '@/utils/slugify'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router' 
 
 import apiService from '@/services/apiService'
-const { currentLanguage } = storeToRefs(useAuthStore())
-
+const currentLanguage = ref(localStorage.getItem('lang') || 'en')
 // import { useI18n } from 'vue-i18n'
 let showDropdown = ref(true)
 // const { locale } = useI18n()
@@ -715,9 +627,9 @@ defineProps({
 let isSmall = ref(false)
 // let showModal = ref(true)
 
-const showOnSmallDevice = computed(() => {
-  return isSmall.value && showDropdown.value
-})
+// const showOnSmallDevice = computed(() => {
+//   return isSmall.value && showDropdown.value
+// })
 
 function toggleShowDropDown() {
   isSmall.value = false
@@ -729,35 +641,11 @@ function isActive(item) {
   return route.name === item
 }
 
-// let language = ref('En')
-
-// let showLang = ref(false)
-// function changeLanguage(lang) {
-//   locale.value = lang
-//   showLang.value = false
-//   localStorage.setItem('lang', lang)
-//   currentLanguage.value = lang
-
-//   showDropdown.value = !showDropdown.value
-//   if (lang === 'en') {
-//     language.value = 'En'
-//   } else if (lang === 'ti') {
-//     language.value = 'ትግ'
-//   } else {
-//     language.value = 'አማ'
-//   }
-//   setTimeout(() => {
-//     showDropdown.value = true
-//   }, 300)
-// }
-
 let infoG = ref([])
 const fetchInfography = async () => {
   try {
     const response = await apiService.get('/admin/contact-address')
-
     if (response.success) {
-      // alert('OK')
       infoG.value = response.data.splice(0, 1)
     }
   } catch (error) {
@@ -771,7 +659,6 @@ const fetchMedia = async () => {
     const response = await apiService.get('/admin/social-medias')
 
     if (response.success) {
-      // alert('OK')
       medias.value = response.data
     }
   } catch (error) {
@@ -779,19 +666,18 @@ const fetchMedia = async () => {
   }
 }
 
-const changeBackground = ref(false)
+// const changeBackground = ref(false)
 
 // const scroll = true
-const handleScroll = () => {
-  changeBackground.value = window.scrollY > 80 && window.scrollY < 3600
-}
+// const handleScroll = () => {
+//   changeBackground.value = window.scrollY > 80 && window.scrollY < 3600
+// }
 
-import ApiService from '@/services/apiService'
 const services = ref([])
 const fetchServices = async () => {
   try {
-    const response = await ApiService.get('/admin/services')
-    if (response) {
+    const response = await apiService.get('/admin/services')
+    if (response.success) {
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
@@ -799,21 +685,17 @@ const fetchServices = async () => {
       }))
     }
   } catch (error) {
-    // alert(error)
+    alert('error')
   }
 }
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
+
+// {
+//     // getSettings()
+//     window.addEventListener('scroll', handleScroll)
+//   },
+onMounted(() => {
+  fetchServices(), fetchInfography(), fetchMedia()
 })
-onMounted(
-  () => {
-    // getSettings()
-    window.addEventListener('scroll', handleScroll)
-  },
-  fetchServices(),
-  fetchInfography(),
-  fetchMedia()
-)
 </script>
 
 <style scoped>

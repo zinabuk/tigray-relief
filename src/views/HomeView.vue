@@ -10,7 +10,7 @@ import 'swiper/swiper-bundle.css'
 // }
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
-const { currentLanguage } = storeToRefs(useAuthStore())
+const { currentLanguage } = storeToRefs(useAuthStore() || 'en')
 
 import { ref, onMounted, computed } from 'vue'
 

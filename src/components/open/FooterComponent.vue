@@ -12,9 +12,7 @@ const services = ref([])
 const fetchServices = async () => {
   try {
     const response = await apiService.get('/admin/services')
-    if (response.success) {
-      console.log(response.data)
-
+    if (response.success) { 
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
