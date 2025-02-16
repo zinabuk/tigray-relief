@@ -94,15 +94,20 @@
             class="absolute hidden group-hover:flex bg-white p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
             data-aos="fade-left"
           >
+            <router-link :to="{ name: 'about' }" :class="[{ 'text-[#53900F]': isActive('about') }]">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('Mission / Vision /Strategy') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <router-link
+            <!-- <router-link
               :to="{ name: 'board-members' }"
               :class="[{ 'text-[#53900F]': isActive('board-members') }]"
             >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
+               @click="scrollToSection(el.id)" -->
+              <!-- <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
               <hr class="text-[#001F3F]" />
-            </router-link>
+            </router-link>  -->
             <router-link
               :to="{ name: 'history' }"
               :class="[{ 'text-[#53900F]': isActive('history') }]"

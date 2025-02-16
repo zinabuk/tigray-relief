@@ -30,39 +30,52 @@ onMounted(() => {
 
 <template>
   <section class="w-full px-[1%] md:px-[6%] py-12 flex flex-col bg-[#53900F]/5 items-center gap-4">
-    <div class="w-full zbg-white p-4 flex items-center justify-center md:text-3xl ztext-[#53900F]">
-      <h1>Board Members</h1>
-    </div>
-    <div
-      class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center"
-    >
+      <!-- timeline -->
+  <div class="relative w-full flex flex-col px-[2%] gap-4 py-12 bg-[#53900F]/5 overflow-hidden">
+    <div class="grid md:grid-cols-2 gap-6 w-full" v-for="(history, i) in histories" :key="i">
       <div
-        v-for="(team, i) in teams"
-        :key="i"
-        class="flex flex-col gap-4 justify-start zshadow zbg-white"
+        class="flex gap-4 bg-white shadow-2xl p-4 w-full rounded-md"
+        :class="[i % 2 === 0 ? 'md:order-1' : 'md:order-2']"
+        :data-aos="i % 2 === 0 ? 'fade-right' : 'fade-left'"
       >
-        <img
-          v-if="team.image"
-          :src="BASE_AVATAR + team.image"
-          alt=""
-          class="zring-2 zring-yellow-300 w-full h-[220px] rounded-sm"
-        />
-        <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
-        <div class="flex flex-col gap-2">
-          <h1 class="text-[18px] font-bold">{{ team.fullName[currentLanguage] }}</h1>
-          <div class="relative">
-            <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
-            <hr class="h-[2px] absolute inset-0 bg-gray-200" />
+        <div class="p-2 space-y-6 w-full">
+          <div class="timeline-content">
+            <div class="timeline-year">
+              <span class="text-[#53900F] font-bold text-center text-sm">{{ history.year }}</span>
+            </div>
+            <img
+              :src="BASE_AVATAR + history.image"
+              alt="Timeline image"
+              class="timeline-image zrounded-lg h-[180px] w-full object-contain transform transition hover:scale-110 duration-300"
+            />
           </div>
-          <p class="line-clamp-2 zfont-bold text-[16px]">
-            {{ team.profession[currentLanguage] }}
-          </p>
-          <!-- <p class="line-clamp-5 text-[14px]">
-          {{ team.biography[currentLanguage] }}
-        </p> -->
+        </div>
+      </div>
+      <!-- <div :class="[i % 2 === 0 ? 'order-2 flex justify-end ' : 'order-1']">
+       
+      </div> -->
+
+      <div
+        :class="[i % 2 === 0 ? 'md:order-2 w-full' : 'md:order-1 w-full', 'flex gap-6 w-full']"
+        class="rounded-md w-full"
+        :data-aos="i % 2 === 0 ? 'fade-left' : 'fade-right'"
+      >
+        <div
+          class="h-full border-2 border-gray-500 border-r-0 border-t-0 border-b-0 relative flex flex-col justify-between zoverflow-hidden"
+        >
+          <!-- Animated Circle -->
+          <div
+            class="h-4 w-4 bg-[#53900F] rounded-full absolute -left-2"
+            style="animation: move-down 5s infinite ease-in-out"
+          ></div>
+        </div>
+
+        <div class="p-8 bg-white shadow-2xl">
+          <p>{{ history.description[currentLanguage] }}</p>
         </div>
       </div>
     </div>
+  </div>
   </section>
 </template>
 
