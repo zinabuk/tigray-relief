@@ -103,6 +103,14 @@
               <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
+            <router-link
+              :to="{ name: 'history' }"
+              :class="[{ 'text-[#53900F]': isActive('history') }]"
+            >
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
 
             <router-link
               :to="{ name: 'beneficiaries' }"
@@ -129,7 +137,7 @@
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('FAQs') }}
-              </span> 
+              </span>
               <hr class="text-[#001F3F]" />
             </router-link>
             <router-link
@@ -264,15 +272,7 @@
             </router-link>
           </div>
         </li>
-        <!-- <li>
-          <router-link
-            :to="{ name: 'contact' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('contact') }]"
-          >
-            {{ $t('Contact Us') }}</router-link
-          >
-        </li> -->
+
         <li>
           <router-link
             :to="{ name: 'donate' }"

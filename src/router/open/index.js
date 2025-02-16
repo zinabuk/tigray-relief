@@ -61,6 +61,14 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'history',
+        name: 'history',
+        component: () => import('@/views/HistoryView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'volunteer',
         name: 'volunteer',
         component: () => import('@/views/VolunteerPage.vue'),
