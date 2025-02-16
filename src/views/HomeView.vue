@@ -198,34 +198,34 @@ onMounted(() => {
 
   <!-- Services -->
   <section class="w-full bg-[#53900F]/5 px-[2%] flex flex-col gap-4 py-12">
-    <h1 class="text-center text-4xl font-semibold">Services</h1>
+    <h1 class="text-center text-4xl font-semibold">{{ $t('What We Do') }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center" data-aos="fade-up">
       <div
         v-for="(service, i) in services"
         :key="i"
-        class="flex flex-col gap-2 relative shadow-xl bg-white h-64 border rounded-xl"
+        class="flex flex-col gap-2 relative group shadow-xl bg-white h-64 border rounded-xl overflow-hidden"
       >
         <img
           v-if="service.serviceImage"
           :src="BASE_AVATAR + service.serviceImage"
           alt=""
-          class="w-full h-full absolute inset-0 border rounded-xl object-cover"
+          class="w-full h-full absolute inset-0 border rounded-xl object-cover group"
         />
 
         <div
-          class="absolute inset-0 flex flex-col justify-end bg-black/30 p-4 hover:bg-green-900/90"
+          class="absolute inset-0 flex flex-col justify-center bg-black/40 p-4 transition-all duration-500 ease-in-out group-hover:bg-black/60"
         >
-          <h1 class="text-2xl font-bold text-white line-clamp-2">
+          <h1
+            class="text-2xl font-bold text-white line-clamp-2 mt-auto transition-transform duration-500 ease-in-out transform group-hover:translate-y-[-20%]"
+          >
             {{ service.serviceTitle[currentLanguage] }}
           </h1>
+          <p
+            class="hidden group-hover:block text-white transition-transform duration-500 ease-in-out transform zgroup-hover:translate-y-[-10%] line-clamp-4 text-justify"
+          >
+            {{ service.serviceDescription[currentLanguage] }}
+          </p>
         </div>
-        <!-- <div class="relative">
-          <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-green-600"></span>
-          <hr class="h-[2px] absolute inset-0 bg-gray-200" />
-        </div> -->
-        <!-- <p class="line-clamp-5">
-          {{ service.serviceDescription[currentLanguage] }}
-        </p> -->
       </div>
     </div>
   </section>
@@ -382,18 +382,20 @@ onMounted(() => {
         :key="i"
         class="relative w-full works flex items-center justify-center zshadow-xl zhover:bg-[#53900F] gap-6 p-4 overflow-hidden"
       >
-        <div class="w-32 h-32 mx-auto">
-          <img
-            v-if="partner.logo"
-            :src="BASE_AVATAR + partner.logo"
-            :alt="partner.businessName"
-            class="w-full h-full rounded-full object-cover"
-          />
-          <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black">
-            <!-- {{ partner.businessName[currentLanguage][0] }} -->
-          </h2>
-        </div>
-        <p class="text-center font-bold">{{ partner.businessName[currentLanguage] }}</p>
+        <a :href="partner.website" v-if="partner.website" target="_blank">
+          <div class="w-32 h-32 mx-auto">
+            <img
+              v-if="partner.logo"
+              :src="BASE_AVATAR + partner.logo"
+              :alt="partner.businessName"
+              class="w-full h-full rounded-full object-cover"
+            />
+            <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black">
+              <!-- {{ partner.businessName[currentLanguage][0] }} -->
+            </h2>
+          </div>
+          <p class="text-center font-bold">{{ partner.businessName[currentLanguage] }}</p></a
+        >
       </swiper-slide>
     </swiper>
   </section>

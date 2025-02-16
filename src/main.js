@@ -132,7 +132,7 @@ AOS.init({ duration: 2000 })
 import App from './App.vue'
 import router from './router'
 
-import '../node_modules/timeline-vuejs/dist/timeline-vuejs.css'
+// import '../node_modules/timeline-vuejs/dist/timeline-vuejs.css'
 
 const app = createApp(App)
 
