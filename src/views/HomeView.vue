@@ -6,18 +6,11 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/swiper-bundle.css'
-
-// }
+ 
 const currentLanguage = 'en'
 import { ref, onMounted, computed } from 'vue'
 
-// import { useRouter } from 'vue-router'
 
-// const modules = [Autoplay, Pagination, Navigation]
-
-// const router = useRouter()
-
-// let isLoading = '';
 const heroes = ref([])
 const errorMessage = ref('')
 const isLoading = ref(false)
@@ -128,12 +121,12 @@ const fetchFaqs = async () => {
   }
 }
 
-const faqIndex = ref(null)
+// const faqIndex = ref(null)
 
-const toggleAccordion = (index) => {
-  // Set the current index or close it if it's already open
-  faqIndex.value = faqIndex.value === index ? null : index
-}
+// const toggleAccordion = (index) => {
+//   // Set the current index or close it if it's already open
+//   faqIndex.value = faqIndex.value === index ? null : index
+// }
 const hasHeros = computed(() => heroes.value.length)
 
 const teams = ref([])
