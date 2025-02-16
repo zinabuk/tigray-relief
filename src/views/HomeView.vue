@@ -6,10 +6,9 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/swiper-bundle.css'
- 
+
 const currentLanguage = 'en'
 import { ref, onMounted, computed } from 'vue'
-
 
 const heroes = ref([])
 const errorMessage = ref('')
@@ -369,7 +368,6 @@ onMounted(() => {
             class="text-[#53900F] font-bold"
             >{{ $t('Read More') }}</router-link
           >
-         
         </div>
       </div>
     </div>
@@ -461,7 +459,7 @@ onMounted(() => {
       <!-- Responsive Facebook Embed with Likes and Comments -->
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
-        class="w-full   shadow-md max-h-[400px] border-none overflow-hidden"
+        class="w-full shadow-md max-h-[400px] border-none overflow-hidden"
         scrolling="no"
         frameborder="0"
         allowfullscreen="true"
@@ -470,7 +468,7 @@ onMounted(() => {
 
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500&appId&show_faces=true&share=true"
-        class="w-full max-h-[400px] shadow-md   border-none overflow-hidden"
+        class="w-full max-h-[400px] shadow-md border-none overflow-hidden"
         scrolling="no"
         frameborder="0"
         allowfullscreen="true"
@@ -481,27 +479,27 @@ onMounted(() => {
 
   <!-- FAQs -->
   <!-- <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8 bg-[#53900F]/5">   -->
-    <!-- <div class="flex items-center justify-center text-3xl font-bold">
+  <!-- <div class="flex items-center justify-center text-3xl font-bold">
       <h1 class="text-center">Frequently Asked Questions</h1>
     </div> -->
-    <!-- <ul class="grid grid-cols-1 gap-6 w-full">
+  <!-- <ul class="grid grid-cols-1 gap-6 w-full">
       <li v-for="(faq, index) in faqs" :key="index" class="w-full">
         <button
           class="w-full border border-t-0 border-r-0 border-l-0 rounded p-2 flex flex-col"
           @click="toggleAccordion(index)"
           :class="[{ 'bg-[#288FB2]/30x bg-white': faqIndex === index }]"
         > -->
-          <!-- <div :class="['w-full flex justify-between font-semibold']">
+  <!-- <div :class="['w-full flex justify-between font-semibold']">
             <p class="text-[20px]">{{ faq.question[currentLanguage] }}</p>
             <span v-if="faqIndex !== index">+</span>
             <span v-else class="text-[#288FB2] w-6 h-6 rounded-full border bg-white">-</span>
           </div> -->
-          <!-- <transition name="accordion"> -->
-          <!-- <p v-show="faqIndex === index" class="py-6 text-smz panel text-black/95">
+  <!-- <transition name="accordion"> -->
+  <!-- <p v-show="faqIndex === index" class="py-6 text-smz panel text-black/95">
             {{ faq.answer[currentLanguage] }}
           </p> -->
-          <!-- </transition> -->
-        <!-- </button>
+  <!-- </transition> -->
+  <!-- </button>
       </li>
     </ul>
   </div> -->
