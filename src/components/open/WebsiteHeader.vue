@@ -117,27 +117,26 @@
               <hr class="text-[#001F3F]" />
             </router-link>
 
-            <router-link
+            <!-- <router-link
               :to="{ name: 'beneficiaries' }"
               :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
             >
-              <!-- @click="scrollToSection(el.id)" -->
+            
               <span class="hover:text-[#53900F]">
                 {{ $t('Our Programs') }}
               </span>
               <hr class="text-[#001F3F]" />
-            </router-link>
-            <router-link
+            </router-link> -->
+            <!-- <router-link
               :to="{ name: 'policy' }"
               :class="[{ 'text-[#53900F]': isActive('policy') }]"
               class="hover:text-[#288FB2]z"
             >
-              <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('Policy strategy') }}
               </span>
               <hr class="text-[#001F3F]" />
-            </router-link>
+            </router-link> -->
             <router-link :to="{ name: 'faqs' }" class="hover:text-[#288FB2]z">
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
