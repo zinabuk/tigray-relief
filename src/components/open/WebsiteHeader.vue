@@ -152,6 +152,14 @@
             >
               {{ $t('Contact Us') }}</router-link
             >
+            <router-link
+              :to="{ name: 'partners-open' }"
+              class="relative parent-item"
+              @click="toggleShowDropDown"
+              :class="[{ 'text-[#53900F]': isActive('partners-open') }]"
+            >
+              {{ $t('Partners') }}</router-link
+            >
           </div>
         </li>
         <li class="relative group">

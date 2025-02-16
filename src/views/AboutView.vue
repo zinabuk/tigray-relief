@@ -188,9 +188,9 @@ onMounted(() => {
       </div>
     </div>
   </section>
-  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10">
-    <!-- <h1 class="text-3xl font-bold">Tenders we currently have..</h1> -->
-    <div class="w-full flex flex-col gap- bg-white">
+  <section class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-white">
+    <h1 class="text-3xl font-bold">Strategies</h1>
+    <div class="w-full flex flex-col gap-4 bg-white">
       <div
         v-for="(benefer, i) in policies"
         :key="i"

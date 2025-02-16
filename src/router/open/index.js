@@ -69,6 +69,14 @@ const OPEN_ROUTES = [
         }
       },
       {
+        path: 'partners',
+        name: 'partners-open',
+        component: () => import('@/views/PartnersOpen.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
         path: 'volunteer',
         name: 'volunteer',
         component: () => import('@/views/VolunteerPage.vue'),
@@ -189,7 +197,7 @@ const OPEN_ROUTES = [
       {
         path: 'policy',
         name: 'policy',
-        component: () => import('@/views/PolicyView.vue'),
+        component: () => import('@/views/PartnersOpen.vue'),
         meta: {
           requiresAuth: false
         }
