@@ -476,33 +476,6 @@ onMounted(() => {
       ></iframe>
     </div>
   </section>
-
-  <!-- FAQs -->
-  <!-- <div class="px-[2%] md:px-[10%] grid grid-cols-1 gap-6 py- md:py-8 bg-[#53900F]/5">   -->
-  <!-- <div class="flex items-center justify-center text-3xl font-bold">
-      <h1 class="text-center">Frequently Asked Questions</h1>
-    </div> -->
-  <!-- <ul class="grid grid-cols-1 gap-6 w-full">
-      <li v-for="(faq, index) in faqs" :key="index" class="w-full">
-        <button
-          class="w-full border border-t-0 border-r-0 border-l-0 rounded p-2 flex flex-col"
-          @click="toggleAccordion(index)"
-          :class="[{ 'bg-[#288FB2]/30x bg-white': faqIndex === index }]"
-        > -->
-  <!-- <div :class="['w-full flex justify-between font-semibold']">
-            <p class="text-[20px]">{{ faq.question[currentLanguage] }}</p>
-            <span v-if="faqIndex !== index">+</span>
-            <span v-else class="text-[#288FB2] w-6 h-6 rounded-full border bg-white">-</span>
-          </div> -->
-  <!-- <transition name="accordion"> -->
-  <!-- <p v-show="faqIndex === index" class="py-6 text-smz panel text-black/95">
-            {{ faq.answer[currentLanguage] }}
-          </p> -->
-  <!-- </transition> -->
-  <!-- </button>
-      </li>
-    </ul>
-  </div> -->
 </template>
 
 <style>

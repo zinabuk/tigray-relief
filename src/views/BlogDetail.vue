@@ -2,7 +2,7 @@
 // import SpinningCard from '@/components/open/SpinningCard.vue'
 import slugify from '@/utils/slugify'
 import { ref, onMounted, watchEffect } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 // import dayjs from 'dayjs'
 import ApiService from '@/services/apiService'
 
