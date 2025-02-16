@@ -42,7 +42,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'about',
+        path: 'who-we-are',
         name: 'about',
         // route level code-splitting
         // this generates a separate chunk (About.[hash].js) for this route
@@ -53,7 +53,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'services',
+        path: 'what-we-do',
         name: 'services',
         component: () => import('@/views/ServicesView.vue'),
         meta: {
