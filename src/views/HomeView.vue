@@ -134,9 +134,9 @@ const fetchFaqs = async () => {
 const faqIndex = ref(null)
 
 const toggleAccordion = (index) => {
-  faqIndex.value = faqIndex.value === index ? '' : index
+  // Set the current index or close it if it's already open
+  faqIndex.value = faqIndex.value === index ? null : index
 }
-
 const hasHeros = computed(() => heroes.value.length)
 onMounted(() => {
   fetchServices(), fetchNews(), fetchPartners(), fetchHeroes(), fetchFaqs()
@@ -437,15 +437,9 @@ onMounted(() => {
           :class="[{ 'bg-[#288FB2]/30x bg-white': faqIndex === index }]"
         >
           <div :class="['w-full flex justify-between font-semibold']">
-            <!-- <span
-              :class="[
-                'w-6 text-center flex items-center justify-center h-6 text-sm rounded-full border',
-                { 'text-[#288FB2] bg-white': faqIndex === index }
-              ]"
-              >{{ index < 10 ? '0' + index : index }}</span
-            > -->
+          
             <p class="text-[20px]">{{ faq.question[currentLanguage] }}</p>
-            <span v-if="faqIndex != index">+</span>
+            <span v-if="faqIndex !== index">+</span>
             <span v-else class="text-[#288FB2] w-6 h-6 rounded-full border bg-white">-</span>
           </div>
           <!-- <transition name="accordion"> -->
