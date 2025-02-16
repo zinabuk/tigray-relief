@@ -3,7 +3,7 @@ import ApiService from '@/services/apiService'
 
 import { BASE_AVATAR } from '@/config'
 import { ref, onMounted } from 'vue'
-const currentLanguage = ref('en')
+const currentLanguage = ref(localStorage.getItem('lang') || 'en')
 
 const teams = ref([])
 const fetchTeams = async () => {
@@ -43,7 +43,11 @@ onMounted(() => {
     <div
       class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center"
     >
-      <div v-for="(team, i) in teams" :key="i" class="flex flex-col gap-4 justify-start zshadow zbg-white">
+      <div
+        v-for="(team, i) in teams"
+        :key="i"
+        class="flex flex-col gap-4 justify-start zshadow zbg-white"
+      >
         <img
           v-if="team.image"
           :src="BASE_AVATAR + team.image"
