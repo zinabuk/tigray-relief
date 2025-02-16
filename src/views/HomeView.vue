@@ -243,15 +243,15 @@ onMounted(() => {
           class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
           data-aos="fade-right"
         >
-          <h1 class="text-yellow-400 text-6xl">1978</h1>
+          <h1 class="text-yellow-400 text-5xl md:text-6xl">1978</h1>
           <p class="text-xl font-light">{{ $t('A decades of expertise') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">
-          <h1 class="text-yellow-400 text-6xl">1,000 +</h1>
+          <h1 class="text-yellow-400 text-5xl md:text-6xl">1,000 +</h1>
           <p class="text-xl text-ce font-light">{{ $t('Completed Projects') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-left">
-          <h1 class="text-yellow-400 text-6xl">3,000,000 +</h1>
+          <h1 class="text-yellow-400 text-5xl md:text-6xl">3,000,000 +</h1>
           <p class="text-xl font-light">{{ $t('Impacted Beneficiaries') }}</p>
         </div>
       </div>
@@ -356,7 +356,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <router-link to="/blogs" class="text-[#53900F]z underline text-xl">{{
+    <router-link to="/news" class="text-[#53900F]z underline underline-offset-4 text-xl">{{
       $t('View All News and Events')
     }}</router-link>
   </section>
@@ -390,9 +390,7 @@ onMounted(() => {
               :alt="partner.businessName"
               class="w-full h-full rounded-full object-cover"
             />
-            <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black">
-              <!-- {{ partner.businessName[currentLanguage][0] }} -->
-            </h2>
+            <h2 v-else class="w-24 h-24 font-semibold text-6xl text-center text-black"></h2>
           </div>
           <p class="text-center font-bold">{{ partner.businessName[currentLanguage] }}</p></a
         >
@@ -401,12 +399,14 @@ onMounted(() => {
   </section>
 
   <!-- Embeding facebook posts -->
-  <section class="w-full px-[2%] py-12 flex flex-col items-center justify-center">
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+  <section class="w-full px-[2%] py-12 flex flex-col gap-4 items-center justify-center">
+    <h1 class="text-3xl font-bold">{{ $t('Facebook Posts') }}</h1>
+
+    <div class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20">
       <!-- Responsive Facebook Embed -->
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500"
-        class="w-full h-[400px] shadow-md md:h-[700px] border-none overflow-hidden"
+        class="w-full h-[400px] shadow-md md:h-[500px] border-none overflow-hidden"
         scrolling="no"
         frameborder="0"
         allowfullscreen="true"
@@ -414,7 +414,7 @@ onMounted(() => {
       ></iframe>
       <iframe
         src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500"
-        class="w-full h-[400px] shadow-md md:h-[700px] border-none overflow-hidden"
+        class="w-full h-[400px] shadow-md md:h-[400px] border-none overflow-hidden"
         scrolling="no"
         frameborder="0"
         allowfullscreen="true"
