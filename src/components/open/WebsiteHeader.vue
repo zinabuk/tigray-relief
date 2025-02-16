@@ -88,43 +88,79 @@
             class="relative parent-item h-full w-full"
             :class="[{ 'text-[#53900F]': isActive('about') }]"
           >
-            {{ $t('About Us') }}</router-link
+            {{ $t('Who We Are') }}</router-link
           >
           <div
             class="absolute hidden group-hover:flex bg-white p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
             data-aos="fade-left"
           >
+            <router-link :to="{ name: 'about' }" :class="[{ 'text-[#53900F]': isActive('about') }]">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('Mission / Vision /Strategy') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>
             <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <router-link
+            <!-- <router-link
               :to="{ name: 'board-members' }"
               :class="[{ 'text-[#53900F]': isActive('board-members') }]"
             >
+               @click="scrollToSection(el.id)" -->
+            <!-- <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
+              <hr class="text-[#001F3F]" />
+            </router-link>  -->
+            <router-link
+              :to="{ name: 'history' }"
+              :class="[{ 'text-[#53900F]': isActive('history') }]"
+            >
               <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
+              <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
 
-            <router-link
+            <!-- <router-link
               :to="{ name: 'beneficiaries' }"
               :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
             >
-              <!-- @click="scrollToSection(el.id)" -->
+            
               <span class="hover:text-[#53900F]">
                 {{ $t('Our Programs') }}
               </span>
               <hr class="text-[#001F3F]" />
-            </router-link>
-            <router-link
+            </router-link> -->
+            <!-- <router-link
               :to="{ name: 'policy' }"
               :class="[{ 'text-[#53900F]': isActive('policy') }]"
               class="hover:text-[#288FB2]z"
             >
-              <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('Policy strategy') }}
               </span>
-              <!-- <hr class="text-[#001F3F]" /> -->
+              <hr class="text-[#001F3F]" />
+            </router-link> -->
+            <router-link   :to="{ name: 'faqs' }"
+            :class="[{ 'text-[#53900F]': isActive('faqs') }]" class="hover:text-[#288FB2]z">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]">
+                {{ $t('FAQs') }}
+              </span>
+              <hr class="text-[#001F3F]" />
             </router-link>
+            <router-link
+              :to="{ name: 'contact' }"
+              class="relative parent-item"
+              @click="toggleShowDropDown"
+              :class="[{ 'text-[#53900F]': isActive('contact') }]"
+            >
+              {{ $t('Contact Us') }}</router-link
+            >
+            <router-link
+              :to="{ name: 'partners-open' }"
+              class="relative parent-item"
+              @click="toggleShowDropDown"
+              :class="[{ 'text-[#53900F]': isActive('partners-open') }]"
+            >
+              {{ $t('Partners') }}</router-link
+            >
           </div>
         </li>
         <li class="relative group">
@@ -133,7 +169,7 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('services') }]"
           >
-            {{ $t('Services') }}</router-link
+            {{ $t('What We Do') }}</router-link
           >
           <div
             class="absolute hidden group-hover:flex bg-white p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
@@ -165,7 +201,7 @@
             class="relative parent-item"
             :class="[{ 'text-[#53900F]': isActive('blogs') }]"
           >
-            {{ $t('News') }}</router-link
+            {{ $t('News & Stories') }}</router-link
           >
         </li>
 
@@ -176,7 +212,7 @@
             class="relative parent-item h-full w-full"
             :class="[{ 'text-[#53900F]': isActive('documents') }]"
           >
-            {{ $t('Resources') }}</router-link
+            {{ $t('Resources & Reports') }}</router-link
           >
           <div
             class="absolute hidden group-hover:flex bg-white p-6 flex-col left-0 gap-4 min-w-56 overflow-auto child top-[100%] border rounded-xl"
@@ -222,7 +258,7 @@
               class="hover:text-[#288FB2]z"
             >
               <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Careers') }} </span>
+              <span class="hover:text-[#53900F]"> Careers </span>
               <hr class="text-[#53900F]" />
             </router-link>
             <router-link
@@ -247,25 +283,9 @@
               </span>
               <hr class="text-[#53900F]" />
             </router-link>
-            <router-link :to="{ name: 'faqs' }" class="hover:text-[#288FB2]z">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('FAQs') }}
-              </span>
-              <hr />
-              <!-- <hr class="text-[#001F3F]" /> -->
-            </router-link>
           </div>
         </li>
-        <li>
-          <router-link
-            :to="{ name: 'contact' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('contact') }]"
-          >
-            {{ $t('Contact Us') }}</router-link
-          >
-        </li>
+
         <li>
           <router-link
             :to="{ name: 'donate' }"
@@ -482,7 +502,7 @@
                 class="hover:text-[#288FB2]z"
               >
                 <!-- @click="scrollToSection(el.id)" -->
-                <span class="hover:text-[#53900F]"> {{ $t('Careers') }} </span>
+                <span class="hover:text-[#53900F]"> Careers </span>
                 <!-- <hr class="text-[#53900F]" /> -->
               </router-link>
               <router-link
@@ -521,17 +541,7 @@
             </div>
           </li>
           <hr />
-          <li>
-            <router-link
-              :to="{ name: 'contact' }"
-              class="relative parent-item"
-              @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('contact') }]"
-            >
-              {{ $t('Contact Us') }}</router-link
-            >
-          </li>
-          <hr />
+
           <li>
             <router-link
               :to="{ name: 'donate' }"
@@ -610,7 +620,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router' 
+import { useRoute } from 'vue-router'
 
 import apiService from '@/services/apiService'
 const currentLanguage = ref(localStorage.getItem('lang') || 'en')

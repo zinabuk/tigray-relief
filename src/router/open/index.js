@@ -42,7 +42,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'about',
+        path: 'who-we-are',
         name: 'about',
         // route level code-splitting
         // this generates a separate chunk (About.[hash].js) for this route
@@ -53,9 +53,25 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'services',
+        path: 'what-we-do',
         name: 'services',
         component: () => import('@/views/ServicesView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: 'history',
+        name: 'history',
+        component: () => import('@/views/HistoryView.vue'),
+        meta: {
+          requiresAuth: false
+        }
+      },
+      {
+        path: 'partners',
+        name: 'partners-open',
+        component: () => import('@/views/PartnersOpen.vue'),
         meta: {
           requiresAuth: false
         }
@@ -181,7 +197,7 @@ const OPEN_ROUTES = [
       {
         path: 'policy',
         name: 'policy',
-        component: () => import('@/views/PolicyView.vue'),
+        component: () => import('@/views/PartnersOpen.vue'),
         meta: {
           requiresAuth: false
         }

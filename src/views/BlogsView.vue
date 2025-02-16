@@ -20,14 +20,14 @@ const fetchNews = async () => {
       blogs.value = response.data.map((item) => ({
         ...item,
         category: JSON.parse(item.category),
-        eventTitle: JSON.parse(item.eventTitle)
+        eventTitle: JSON.parse(item.eventTitle),
+        eventDescription: JSON.parse(item.eventDescription)
       }))
     }
   } catch (error) {
     // alert(error)
   }
 }
-
 
 onMounted(() => {
   fetchNews()
@@ -41,9 +41,11 @@ onMounted(() => {
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">{{$t('News')}}</h1>
+        <h1 class="text-4xl font-bold">{{ $t('News') }}</h1>
         <div class="flex gap-4">
-          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">{{$t('Home')}}</a>
+          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">{{
+            $t('Home')
+          }}</a>
           <a href="/services" class="text-[#539000] px-4 py-2">news / events</a>
         </div>
       </div>
@@ -78,6 +80,7 @@ onMounted(() => {
           <h3 class="text-lg font-bold">
             {{ event.eventTitle[currentLanguage] }}
           </h3>
+          <p class="line-clamp-3">{{ event.eventDescription[currentLanguage] }}</p>
           <router-link
             :to="{
               name: 'blog-detail',

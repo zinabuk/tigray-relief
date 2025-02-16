@@ -7,12 +7,11 @@ import BaseInput from '../base/BaseInput.vue'
 // import BaseButton from '../base/BaseButton.vue'
 
 const currentLanguage = ref(localStorage.getItem('lang') || 'en')
-
 const services = ref([])
 const fetchServices = async () => {
   try {
     const response = await apiService.get('/admin/services')
-    if (response.success) { 
+    if (response.success) {
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
@@ -195,11 +194,11 @@ onMounted(() => {
     <p class="text-center p-2 text-sm">
       ©{{ new Date().getFullYear() }} REST. All rights reserved.
     </p>
-    <!-- <div class="flex gap-2 items-center justify-center text-sm">
+    <div class="flex gap-2 items-center justify-center text-sm">
       <h1>Powered by</h1>
       <a href="https://iq-businesses.com/" target="_blank" class="text-gray-600"
         >IQ Business Group PLC</a
       >
-    </div> -->
+    </div>
   </div>
 </template>
