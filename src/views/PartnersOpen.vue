@@ -1,6 +1,7 @@
 <script setup>
 import ApiService from '@/services/apiService'
 import { onMounted, ref } from 'vue'
+import {BASE_AVATAR} from '@/config' 
 const partners = ref([])
 const currentLanguage = 'en'
 const fetchPartners = async () => {
@@ -48,7 +49,6 @@ onMounted(() => {
     <div
       class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center"
     >
-      <p>{{ partners }}</p>
       <div
         v-for="(partner, i) in partners"
         :key="i"
