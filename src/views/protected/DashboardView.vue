@@ -28,7 +28,7 @@
       </div>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
       <div class="bg-white shadow-lg rounded-lg p-6">
         <h2 class="text-xl font-semibold text-center">Volunteers Distribution</h2>
         <apexchart type="pie" :options="volunteersChartOptions" :series="volunteersChartSeries" />
@@ -36,8 +36,8 @@
       <div class="bg-white shadow-lg rounded-lg p-6">
         <h2 class="text-xl font-semibold text-center">Donations Distribution</h2>
         <apexchart type="pie" :options="donationsChartOptions" :series="donationsChartSeries" />
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
