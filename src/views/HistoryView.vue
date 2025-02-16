@@ -5,33 +5,26 @@ import { BASE_AVATAR } from '@/config'
 import { ref, onMounted } from 'vue'
 const currentLanguage = ref(localStorage.getItem('lang') || 'en')
 
-const teams = ref([])
-const fetchTeams = async () => {
+const histories = ref([])
+const fetchHistories = async () => {
   try {
-    const response = await ApiService.get('/admin/our-teams')
-
-    if (response.success) {
-      teams.value = response.data.map((item) => ({
+    const response = await ApiService.get('/users/histories')
+    if (response) {
+      histories.value = response.data.map((item) => ({
         ...item,
-        fullName: JSON.parse(item.fullName),
-        profession: JSON.parse(item.profession),
-        biography: JSON.parse(item.biography)
+        description: JSON.parse(item.description)
       }))
     }
   } catch (error) {
-    // alert(error)
     if (error.response && error.response.data && error.response.status === 404) {
-      return
+      alert(error)
     } else {
-      setTimeout(() => {
-        // router.push({ name: 'NetworkError' })
-      }, 2000)
+      setTimeout(() => {}, 2000)
     }
   }
 }
-
 onMounted(() => {
-  fetchTeams()
+  fetchHistories()
 })
 </script>
 
