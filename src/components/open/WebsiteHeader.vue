@@ -137,7 +137,8 @@
               </span>
               <hr class="text-[#001F3F]" />
             </router-link> -->
-            <router-link :to="{ name: 'faqs' }" class="hover:text-[#288FB2]z">
+            <router-link   :to="{ name: 'faqs' }"
+            :class="[{ 'text-[#53900F]': isActive('faqs') }]" class="hover:text-[#288FB2]z">
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('FAQs') }}

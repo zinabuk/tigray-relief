@@ -7,12 +7,11 @@ import BaseInput from '../base/BaseInput.vue'
 // import BaseButton from '../base/BaseButton.vue'
 
 const currentLanguage = ref(localStorage.getItem('lang') || 'en')
-
 const services = ref([])
 const fetchServices = async () => {
   try {
     const response = await apiService.get('/admin/services')
-    if (response.success) { 
+    if (response.success) {
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
