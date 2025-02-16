@@ -60,7 +60,26 @@ import {
   faPlus,
   faHeart,
   faTimes,
-  faDownload
+  faDownload,
+  faGift, 
+  faStar, 
+  faInfoCircle, 
+  faHistory, 
+  faHandsHelping, 
+  faUsers, 
+  faPeopleCarry, 
+  faQuestionCircle,
+  faUserCheck, 
+  faShieldAlt, 
+  faAddressCard, 
+  faShareAlt, 
+  faFile, 
+  faBook, 
+  faLightbulb, 
+  faLock, 
+  faBriefcase, 
+  faImages,
+  faFileAlt
 } from '@fortawesome/free-solid-svg-icons'
 
 import {
@@ -123,7 +142,26 @@ library.add(
   faHeart,
   faTimes,
   faWhatsapp,
-  faDownload
+  faDownload,
+  faGift, 
+  faStar, 
+  faInfoCircle, 
+  faHistory, 
+  faHandsHelping, 
+  faUsers, 
+  faPeopleCarry, 
+  faQuestionCircle, 
+  faUserCheck, 
+  faShieldAlt, 
+  faAddressCard, 
+  faShareAlt, 
+  faFile, 
+  faBook, 
+  faLightbulb, 
+  faLock, 
+  faFileAlt ,
+  faBriefcase, 
+  faImages 
 )
 
 AOS.init({ duration: 2000 })

@@ -1,46 +1,43 @@
 const SIDEBARITEMS = {
   ADMIN_TABS: {
     CORE_TABS: [
-      { label: 'Dashboard', name: 'dashboard', icon: 'home' },
-      { label: 'Heros', name: 'admin-hero', icon: 'cogs' },
-      { label: 'About Us', name: 'admin-about', icon: 'handshake' },
-      { label: 'Our History', name: 'admin-history', icon: 'handshake' },
-      { label: 'Services', name: 'admin-services', icon: 'cogs' },
-      { label: 'Board Memebers', name: 'team', icon: 'handshake' },
-      { label: 'News', name: 'admin-blogs', icon: 'newspaper' },
-      { label: 'Partners', name: 'partner', icon: 'handshake' },
-      { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
-      { label: 'Vacancy', name: 'admin-jobs', icon: 'quote-left' },
-      { label: 'Volunteers', name: 'admin-volunteers', icon: 'user' },
-      { label: 'Gallery', name: 'admin-gallery', icon: 'quote-left' }
+      { label: 'Dashboard', name: 'dashboard', icon: 'tachometer-alt' }, 
+      { label: 'Homes', name: 'admin-hero', icon: 'home' }, 
+      { label: 'Who We Are', name: 'admin-about', icon: 'info-circle' }, 
+      { label: 'Our History', name: 'admin-history', icon: 'history' }, 
+      { label: 'What We Do', name: 'admin-services', icon: 'hands-helping' }, 
+      { label: 'Board Members', name: 'team', icon: 'users' }, 
+      { label: 'News & Stories', name: 'admin-blogs', icon: 'newspaper' },
+      { label: 'Our Partners', name: 'partner', icon: 'handshake' }, 
+      { label: 'Tenders', name: 'admin-tenders', icon: 'file-alt' }, 
+      { label: 'Careers', name: 'admin-jobs', icon: 'briefcase' }, 
+      { label: 'Volunteers', name: 'admin-volunteers', icon: 'people-carry' }, 
+      { label: 'Gallery', name: 'admin-gallery', icon: 'images' }
     ],
 
     SUPPORT_TABS: [
-      { label: 'Messages', name: 'messages', icon: 'comment-dots' },
-      { label: 'Donations', name: 'donations', icon: 'quote-left' },
-      { label: 'FAQs', name: 'admin-faqs', icon: 'quote-left' },
-      { label: 'Beneficiary', name: 'admin-beneficiary', icon: 'quote-left' },
-      { label: 'Policy', name: 'admin-policy', icon: 'quote-left' },
-      { label: 'Contact Address', name: 'admin-contacts', icon: 'quote-left' },
-      { label: 'Social Media', name: 'admin-socialMedias', icon: 'quote-left' },
-      { label: 'Documents', name: 'admin-documents', icon: 'quote-left' },
-      { label: 'Publications', name: 'admin-publications', icon: 'quote-left' },
-      { label: 'Strategies', name: 'admin-strategy', icon: 'quote-left' },
-      { label: 'Privacy Policy', name: 'privacy-policy', icon: 'quote-left' }
+      { label: 'Messages', name: 'messages', icon: 'envelope' },
+      { label: 'Donations', name: 'donations', icon: 'gift' }, 
+      { label: 'FAQs', name: 'admin-faqs', icon: 'question-circle' }, 
+      { label: 'Beneficiary', name: 'admin-beneficiary', icon: 'user-check' }, 
+      { label: 'Policy', name: 'admin-policy', icon: 'shield-alt' }, 
+      { label: 'Contact Address', name: 'admin-contacts', icon: 'address-card' }, 
+      { label: 'Social Medias', name: 'admin-socialMedias', icon: 'share-alt' }, 
+      { label: 'Documents', name: 'admin-documents', icon: 'file' }, 
+      { label: 'Publications', name: 'admin-publications', icon: 'book' }, 
+      { label: 'Strategies', name: 'admin-strategy', icon: 'lightbulb' }, 
+      { label: 'Privacy Policy', name: 'privacy-policy', icon: 'lock' }
     ]
   },
-  // ],
   STAFF_TABS: [
-    { label: 'Dashboard', name: 'admin-home', icon: 'user' },
-    { label: 'Services', name: 'admin-services', icon: 'cogs' },
-    { label: 'Partners', name: 'partner', icon: 'handshake' },
-
-    { label: 'Donations', name: 'donations', icon: 'quote-left' },
-    //   { label: 'Vacancies', name: 'in-vacancy', icon: 'suitcase' },
-    { label: 'News', name: 'admin-blogs', icon: 'newspaper' },
-    { label: 'Messages', name: 'messages', icon: 'quote-left' },
-    { label: 'Tenders', name: 'admin-tenders', icon: 'quote-left' },
-    { label: 'Gallery', name: 'admin-gallery', icon: 'quote-left' }
+    { label: 'Dashboard', name: 'admin-home', icon: 'tachometer-alt' }, 
+    { label: 'Services', name: 'admin-services', icon: 'tools' }, 
+    { label: 'Partners', name: 'partner', icon: 'handshake' }, 
+    { label: 'Donations', name: 'donations', icon: 'gift' },
+    { label: 'News', name: 'admin-blogs', icon: 'newspaper' }, 
+    { label: 'Messages', name: 'messages', icon: 'envelope' }, 
+    { label: 'Tenders', name: 'admin-tenders', icon: 'file-alt' }, 
+    { label: 'Gallery', name: 'admin-gallery', icon: 'images' } 
   ]
 }
 
