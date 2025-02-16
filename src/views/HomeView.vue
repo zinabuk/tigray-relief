@@ -66,7 +66,8 @@ const fetchNews = async () => {
       blogs.value = response.data.map((item) => ({
         ...item,
         category: JSON.parse(item.category),
-        eventTitle: JSON.parse(item.eventTitle)
+        eventTitle: JSON.parse(item.eventTitle),
+        eventDescription: JSON.parse(item.eventDescription)
       }))
     }
   } catch (error) {
@@ -362,11 +363,13 @@ onMounted(() => {
           <h3 class="text-lg font-bold">
             {{ event.eventTitle[currentLanguage] }}
           </h3>
+          <p class="line-clamp-2">{{ event.eventDescription[currentLanguage] }}</p>
           <router-link
             :to="{ name: 'blog-detail', params: { title: event.eventTitle[currentLanguage] } }"
             class="text-[#53900F] font-bold"
             >{{ $t('Read More') }}</router-link
           >
+         
         </div>
       </div>
     </div>
