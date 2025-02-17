@@ -120,7 +120,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'board-members',
+        path: 'managing-directors',
         name: 'board-members',
         component: () => import('@/views/OurGovernance.vue'),
         meta: {
@@ -249,7 +249,6 @@ const OPEN_ROUTES = [
     path: '/Login',
     name: 'login',
     component: () => import('@/views/LoginView.vue')
-  },
-  
+  }
 ]
 export default OPEN_ROUTES

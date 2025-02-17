@@ -38,7 +38,7 @@ onMounted(() => {
 <template>
   <section class="w-full px-[1%] md:px-[6%] py-12 flex flex-col bg-[#53900F]/5 items-center gap-4">
     <div class="w-full zbg-white p-4 flex items-center justify-center md:text-3xl ztext-[#53900F]">
-      <h1>Board Members</h1>
+      <h1>Managing Directors</h1>
     </div>
     <div
       class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-center place-content-center"

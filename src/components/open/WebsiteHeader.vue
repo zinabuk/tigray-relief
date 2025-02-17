@@ -102,55 +102,40 @@
             <router-link :to="{ name: 'about' }" :class="[{ 'text-[#53900F]': isActive('about') }]">
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]"> {{ $t('Mission / Vision /Strategy') }} </span>
-              <hr class="text-[#001F3F]" />
+              <hr class="text-[#000]" />
             </router-link>
-            
+
             <router-link
               :to="{ name: 'history' }"
               :class="[{ 'text-[#53900F]': isActive('history') }]"
             >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
-              <hr class="text-[#001F3F]" />
+              <hr class="text-[#000]" />
+            </router-link>
+            <router-link :to="{ name: 'board-members' }" :class="[{ 'text-[#53900F]': isActive('board-members') }]">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('Managing Directors') }} </span>
+              <hr class="text-[#000]" />
             </router-link>
             <router-link
               :to="{ name: 'partners-open' }"
               class="relative parent-item"
-              @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('partners-open') }]"
             >
-              {{ $t('Partners') }}</router-link
-            >
+              <span class="hover:text-[#53900F]">{{ $t('Partners') }}</span>
+              <hr class="text-[#000]" />
+            </router-link>
 
-            <!-- <router-link
-              :to="{ name: 'beneficiaries' }"
-              :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
-            >
-            
-              <span class="hover:text-[#53900F]">
-                {{ $t('Our Programs') }}
-              </span>
-              <hr class="text-[#001F3F]" />
-            </router-link> -->
-            <!-- <router-link
-              :to="{ name: 'policy' }"
-              :class="[{ 'text-[#53900F]': isActive('policy') }]"
-              class="hover:text-[#288FB2]z"
-            >
-              <span class="hover:text-[#53900F]">
-                {{ $t('Policy strategy') }}
-              </span>
-              <hr class="text-[#001F3F]" />
-            </router-link> -->
-           
             <router-link
               :to="{ name: 'contact' }"
               class="relative parent-item"
               @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('contact') }]"
             >
-              {{ $t('Contact Us') }}</router-link
-            >
+              <span> {{ $t('Contact Us') }}</span>
+              <hr class="text-[#000]"
+            /></router-link>
             <router-link
               :to="{ name: 'faqs' }"
               :class="[{ 'text-[#53900F]': isActive('faqs') }]"
@@ -160,9 +145,8 @@
               <span class="hover:text-[#53900F]">
                 {{ $t('FAQs') }}
               </span>
-              <hr class="text-[#001F3F]" />
+              <hr class="text-[#000]" />
             </router-link>
-           
           </div>
         </li>
         <li class="relative group">

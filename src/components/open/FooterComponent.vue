@@ -163,28 +163,32 @@ onMounted(() => {
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'twitter'"
             :icon="['fab', 'twitter']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-white/80 hover:font-semibold p-2 rounded"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'youtube'"
             :icon="['fab', 'youtube']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-white/80 hover:font-semibold p-2 rounded"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'telegram'"
             :icon="['fab', 'telegram']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-white/80 hover:font-semibold p-2 rounded"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'linkedin'"
             :icon="['fab', 'linkedin']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-white/80 hover:font-semibold p-2 rounded"
           />
-          
+          <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'instagram'"
+            :icon="['fab', 'instagram']"
+            class="text-white hover:text-white/80 hover:font-semibold p-2 rounded"
+          />
           <font-awesome-icon
             v-else
             :icon="['fab', 'whatsapp']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-white/80 hover:font-semibold p-2 rounded"
           />
         </a>
       </div>
