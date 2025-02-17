@@ -359,6 +359,11 @@
                   {{ $t('Mission / Vision / Strategy') }}
                 </span>
               </router-link>
+              <router-link :to="{ name: 'board-members' }" @click="toggleShowDropDown" :class="[{ 'text-[#53900F]': isActive('board-members') }]">
+              <!-- @click="scrollToSection(el.id)" -->
+              <span class="hover:text-[#53900F]"> {{ $t('Managing Directors') }} </span>
+             
+            </router-link>
               <router-link
                 :to="{ name: 'history' }"
                 @click="toggleShowDropDown"
