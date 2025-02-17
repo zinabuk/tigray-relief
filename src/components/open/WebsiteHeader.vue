@@ -37,6 +37,11 @@
             class="text-white hover:text-white/80 p-2 rounded"
           />
           <font-awesome-icon
+            v-else-if="social.platform.toLowerCase() === 'instagram'"
+            :icon="['fab', 'instagram']"
+            class="text-white hover:text-white/80 p-2 rounded"
+          />
+          <font-awesome-icon
             v-else
             :icon="['fab', 'whatsapp']"
             class="text-white p-2 rounded hover:text-white/80"
@@ -137,8 +142,11 @@
               </span>
               <hr class="text-[#001F3F]" />
             </router-link> -->
-            <router-link   :to="{ name: 'faqs' }"
-            :class="[{ 'text-[#53900F]': isActive('faqs') }]" class="hover:text-[#288FB2]z">
+            <router-link
+              :to="{ name: 'faqs' }"
+              :class="[{ 'text-[#53900F]': isActive('faqs') }]"
+              class="hover:text-[#288FB2]z"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]">
                 {{ $t('FAQs') }}
@@ -304,32 +312,32 @@
     <nav class="w-full h-full flex justify-between py-4 bg-white">
       <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
         <img
-          src="@/assets/rest-logo.png"
-          alt="Logo of iq"
-          width="40"
-          height="40"
-          class="w-[120px] h-auto"
+          src="@/assets/rest.jpg"
+          alt="Logo of REST"
+          width="20"
+          height="20"
+          class="h-12 w-12 px-0 object-contain"
         />
       </router-link>
-      <button @click="isSmall = true">
+      <button @click.prevent="showSmallDeviceNavigation(true)">
         <font-awesome-icon icon="bars"></font-awesome-icon>
       </button>
     </nav>
 
     <div
       v-if="isSmall"
-      class="w-full h-screen flex justify-between fixed inset-0 py-6 z-20 bg-white zbg-[#53900F]"
+      class="w-full h-screen flex justify-between fixed inset-0 py-6 z-50 bg-white zbg-[#53900F]"
+      data-aos="fade-left"
     >
       <button
         @click="isSmall = !isSmall"
         class="self-start mx-4 text-blue-40z0 font-semibold text-gray-700 text-2xl"
       >
-        <font-awesome-icon icon="times" class="text-4xl"></font-awesome-icon>
+        <font-awesome-icon icon="times" class="text-3xl"></font-awesome-icon>
       </button>
 
       <nav
         class="w-full px-[1%] flex flex-col justify-between items-center pb-12 zfont-bold Zbg-yellow-400 ztext-white h-screen overflow-auto"
-        data-aos="fade-left"
       >
         <ul class="flex flex-col gap-2 font-bold zuppercase">
           <li>
@@ -350,19 +358,19 @@
               class="relative parent-item h-full w-full"
               :class="[{ 'text-[#53900F]': isActive('about') }]"
             >
-              {{ $t('About Us') }}</router-link
+              {{ $t('Who We Are') }}</router-link
             >
 
             <hr />
 
             <div class="px-4 flex flex-col" zdata-aos="fade-left">
-              <router-link
+              <!-- <router-link
                 :to="{ name: 'governance' }"
                 @click="showDropDown = false"
                 :class="[{ 'text-[#53900F]': isActive('governance') }]"
               >
                 <span class="hover:text-[#53900F]"> {{ $t('Organizational Structure') }} </span>
-              </router-link>
+              </router-link> -->
 
               <router-link
                 :to="{ name: 'beneficiaries' }"
@@ -370,17 +378,45 @@
                 :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
               >
                 <span class="hover:text-[#53900F]">
-                  {{ $t('Our Beneficiaries') }}
+                  {{ $t('Mission / Vision / Strategy') }}
                 </span>
               </router-link>
               <router-link
-                :to="{ name: 'policy' }"
+                :to="{ name: 'history' }"
                 @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('policy') }]"
+                :class="[{ 'text-[#53900F]': isActive('history') }]"
+              >
+                <!-- @click="scrollToSection(el.id)" -->
+                <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
+              </router-link>
+              <router-link
+                :to="{ name: 'faqs' }"
+                @click="toggleShowDropDown"
+                :class="[{ 'text-[#53900F]': isActive('faqs') }]"
                 class="hover:text-[#288FB2]z"
               >
                 <span class="hover:text-[#53900F]">
-                  {{ $t('Policy strategy') }}
+                  {{ $t('FAQs') }}
+                </span>
+              </router-link>
+              <router-link
+                :to="{ name: 'contact' }"
+                @click="toggleShowDropDown"
+                :class="[{ 'text-[#53900F]': isActive('contact') }]"
+                class="hover:text-[#288FB2]z"
+              >
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Contact Us') }}
+                </span>
+              </router-link>
+              <router-link
+                :to="{ name: 'partners' }"
+                @click="toggleShowDropDown"
+                :class="[{ 'text-[#53900F]': isActive('partners') }]"
+                class="hover:text-[#288FB2]z"
+              >
+                <span class="hover:text-[#53900F]">
+                  {{ $t('Partners') }}
                 </span>
               </router-link>
             </div>
@@ -394,7 +430,7 @@
               @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('services') }]"
             >
-              {{ $t('Services') }}</router-link
+              {{ $t('What We Do') }}</router-link
             >
             <hr />
 
@@ -423,7 +459,7 @@
               @click="toggleShowDropDown"
               :class="[{ 'text-[#53900F]': isActive('blogs') }]"
             >
-              {{ $t('News') }}</router-link
+              {{ $t('News & Stories') }}</router-link
             >
           </li>
           <hr />
@@ -449,15 +485,15 @@
                 <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
               </router-link>
 
-              <router-link
+              <!-- <router-link
                 :to="{ name: 'publications' }"
                 @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('publications') }]"
               >
                 <span class="hover:text-[#53900F]"> {{ $t('Publications') }} </span>
-              </router-link>
+              </router-link> -->
 
-              <router-link
+              <!-- <router-link
                 :to="{ name: 'strategy' }"
                 @click="toggleShowDropDown"
                 :class="[{ 'text-[#53900F]': isActive('Strategy') }]"
@@ -466,7 +502,7 @@
                 <span class="hover:text-[#53900F]">
                   {{ $t('Strategy') }}
                 </span>
-              </router-link>
+              </router-link> -->
 
               <router-link
                 :to="{ name: 'gallery' }"
@@ -527,17 +563,7 @@
                   {{ $t('Tenders') }}
                 </span>
               </router-link>
-              <router-link
-                :to="{ name: 'faqs' }"
-                @click="toggleShowDropDown"
-                class="hover:text-[#288FB2]z"
-              >
-                <!-- @click="scrollToSection(el.id)" -->
-                <span class="hover:text-[#53900F]">
-                  {{ $t('FAQs') }}
-                </span>
-                <!-- <hr class="text-[#001F3F]" /> -->
-              </router-link>
+              
             </div>
           </li>
           <hr />
@@ -547,9 +573,10 @@
               :to="{ name: 'donate' }"
               @click="toggleShowDropDown"
               class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse rounded-md"
-              >{{ $t('Donate') }}
-              <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
-            ></router-link>
+            >
+              <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon>
+              {{ $t('Donate') }}
+            </router-link>
           </li>
         </ul>
 
@@ -581,39 +608,6 @@
         </div>
       </div> -->
       </nav>
-      <!-- <div class="relative group">
-        <h1><font-awesome-icon icon="globe" class="mx-1"></font-awesome-icon>{{ language }}</h1>
-        <ul
-          class="absolute ztop-[100%] hidden group-hover:flex z-50 bg-yellow-400 right-0 p-4 shadow-2xl text-white"
-        >
-          <li class="flex flex-col gap-2 group-hover:flex-col p-2">
-            <button
-              @click="changeLanguage('en')"
-              class="flex cursor-pointer hover:text-[#53900F]"
-              :class="[language === 'En' ? 'text-[#53900F]' : '']"
-            >
-              English
-            </button>
-            <hr />
-            <button
-              @click="changeLanguage('ti')"
-              class="flex hover:text-[#53900F]"
-              :class="[language === 'ti' ? 'text-[#53900F]' : '']"
-            >
-              ትግርኛ
-            </button>
-            <hr />
-            <button
-              @click="changeLanguage('am')"
-              class="flex hover:text-[#53900F]"
-              :class="[language === 'አማ' ? 'text-[#53900F]' : '']"
-            >
-              አማርኛ
-            </button>
-            <hr />
-          </li>
-        </ul>
-      </div> -->
     </div>
   </header>
 </template>
@@ -634,7 +628,11 @@ defineProps({
     required: true
   }
 })
-let isSmall = ref(false)
+const isSmall = ref(false)
+function showSmallDeviceNavigation(arg) {
+  alert(arg)
+  isSmall.value = arg
+}
 // let showModal = ref(true)
 
 // const showOnSmallDevice = computed(() => {

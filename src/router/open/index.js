@@ -95,7 +95,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'news',
+        path: 'news-stories',
         name: 'blogs',
         component: () => import('@/views/BlogsView.vue'),
         meta: {
@@ -161,7 +161,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'blogs/:title',
+        path: 'news-stories/:title',
         name: 'blog-detail',
         props: true,
         component: () => import('@/views/BlogDetail.vue'),
@@ -245,16 +245,11 @@ const OPEN_ROUTES = [
       }
     ]
   },
-
   {
     path: '/Login',
     name: 'login',
     component: () => import('@/views/LoginView.vue')
   },
-  {
-    path: '/timeline',
-    name: 'timeline',
-    component: () => import('@/views/TimeLine.vue')
-  }
+  
 ]
 export default OPEN_ROUTES

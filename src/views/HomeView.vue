@@ -177,26 +177,29 @@ onMounted(() => {
           :src="BASE_AVATAR + hero.heroImage"
         />
         <div
-          class="absolute h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-2 text-white justify-center px-4 bg-[#53900f]/60 sm:bg-[#53900f]/90 zmd:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
-          zstyle="box-shadow: 5px 5px 5px 5px rgb(83 144 15/0.9)"
+          class="relative h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-8 md:gap-6 text-white items-center md:items-start justify-center px-4 bg-black/60 sm:bg-black/70 zmd:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
         >
+          <!-- Custom Shape -->
+          <div
+            class="absolute top-0 left-0 z-10 w-16 h-full bg-gradient-to-b from-[#53900F]/70 to-transparent clip-shape"
+          ></div>
           <div class="wave-container w-full" zdata-aos="fade-left">
-            <p class="zwave-text font-bold text-4xl md:text-6xl flex-wrap break-words">
+            <p class="zwave-text font-bold text-3xl md:text-5xl flex-wrap break-words">
               {{ hero.heroTitle[currentLanguage] }}
             </p>
           </div>
-          <h6 class="font- line-clamp-3 text-xl md:text-3xl">
+          <h6 class="font- line-clamp-3 text-xl">
             {{ hero.heroDescription[currentLanguage] }}
           </h6>
-          <div class="flex gap-4">
+          <div class="flex w-full gap-8 md:gap-6">
             <router-link
-              class="bg-[#53900F] border rounded-md border-yellow-400 hover:bg-[#53900F] text-yellow-400 shadow ztext-yellow-400 px-4 py-2 self-start font-bold"
+              class="bg-[#53900F] hover:bg-[#53900F]/80 w-1/2 md:w-[32%] border rounded-md border-yellow-400 hover:bg-[#53900F] text-yellow-400 shadow ztext-yellow-400 px-4 py-2 self-start font-bold"
               to="/donate"
               >Donate Now</router-link
             >
             <router-link
               to="/about"
-              class="bg-white border border-yellow-400 hover:bg-[#53900F] hover:text-yellow-400 rounded-md text-yellow-400 px-4 py-2 self-start font-bold"
+              class="bg-white hover:bg-white/80 border w-1/2 md:w-[32%] border-yellow-400 hover:text-yellow-400 rounded-md text-yellow-400 px-4 py-2 self-start font-bold"
               >{{ $t('Learn More') }}</router-link
             >
           </div>
@@ -587,5 +590,8 @@ onMounted(() => {
   to {
     transform: rotate(1turn);
   }
+}
+.clip-shape {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 10% 80%);
 }
 </style>
