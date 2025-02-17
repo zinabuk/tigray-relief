@@ -375,7 +375,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <router-link to="/news" class="text-[#53900F]z underline underline-offset-4 text-xl">{{
+    <router-link to="/news-stories" class="text-[#53900F]z underline underline-offset-4 text-xl">{{
       $t('View All News and Stories')
     }}</router-link>
   </section>

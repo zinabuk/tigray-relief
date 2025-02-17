@@ -104,15 +104,7 @@
               <span class="hover:text-[#53900F]"> {{ $t('Mission / Vision /Strategy') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
-            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <!-- <router-link
-              :to="{ name: 'board-members' }"
-              :class="[{ 'text-[#53900F]': isActive('board-members') }]"
-            >
-               @click="scrollToSection(el.id)" -->
-            <!-- <span class="hover:text-[#53900F]"> {{ $t('Board Members') }} </span>
-              <hr class="text-[#001F3F]" />
-            </router-link>  -->
+            
             <router-link
               :to="{ name: 'history' }"
               :class="[{ 'text-[#53900F]': isActive('history') }]"
@@ -121,6 +113,14 @@
               <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
               <hr class="text-[#001F3F]" />
             </router-link>
+            <router-link
+              :to="{ name: 'partners-open' }"
+              class="relative parent-item"
+              @click="toggleShowDropDown"
+              :class="[{ 'text-[#53900F]': isActive('partners-open') }]"
+            >
+              {{ $t('Partners') }}</router-link
+            >
 
             <!-- <router-link
               :to="{ name: 'beneficiaries' }"
@@ -142,6 +142,15 @@
               </span>
               <hr class="text-[#001F3F]" />
             </router-link> -->
+           
+            <router-link
+              :to="{ name: 'contact' }"
+              class="relative parent-item"
+              @click="toggleShowDropDown"
+              :class="[{ 'text-[#53900F]': isActive('contact') }]"
+            >
+              {{ $t('Contact Us') }}</router-link
+            >
             <router-link
               :to="{ name: 'faqs' }"
               :class="[{ 'text-[#53900F]': isActive('faqs') }]"
@@ -153,22 +162,7 @@
               </span>
               <hr class="text-[#001F3F]" />
             </router-link>
-            <router-link
-              :to="{ name: 'contact' }"
-              class="relative parent-item"
-              @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('contact') }]"
-            >
-              {{ $t('Contact Us') }}</router-link
-            >
-            <router-link
-              :to="{ name: 'partners-open' }"
-              class="relative parent-item"
-              @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('partners-open') }]"
-            >
-              {{ $t('Partners') }}</router-link
-            >
+           
           </div>
         </li>
         <li class="relative group">

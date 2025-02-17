@@ -180,6 +180,7 @@ onMounted(() => {
             :icon="['fab', 'linkedin']"
             class="text-white hover:text-white/80 p-2 rounded"
           />
+          
           <font-awesome-icon
             v-else
             :icon="['fab', 'whatsapp']"
