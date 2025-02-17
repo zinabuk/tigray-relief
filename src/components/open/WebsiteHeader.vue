@@ -319,7 +319,7 @@
           class="h-12 w-12 px-0 object-contain"
         />
       </router-link>
-      <button @click.prevent="showSmallDeviceNavigation(true)">
+      <button @click.prevent="showSmallDeviceNavigation">
         <font-awesome-icon icon="bars"></font-awesome-icon>
       </button>
     </nav>
@@ -563,7 +563,6 @@
                   {{ $t('Tenders') }}
                 </span>
               </router-link>
-              
             </div>
           </li>
           <hr />
@@ -629,9 +628,8 @@ defineProps({
   }
 })
 const isSmall = ref(false)
-function showSmallDeviceNavigation(arg) {
-  alert(arg)
-  isSmall.value = arg
+function showSmallDeviceNavigation() {
+  isSmall.value = !isSmall.value
 }
 // let showModal = ref(true)
 
