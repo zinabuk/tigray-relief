@@ -113,7 +113,10 @@
               <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
               <hr class="text-[#000]" />
             </router-link>
-            <router-link :to="{ name: 'board-members' }" :class="[{ 'text-[#53900F]': isActive('board-members') }]">
+            <router-link
+              :to="{ name: 'board-members' }"
+              :class="[{ 'text-[#53900F]': isActive('board-members') }]"
+            >
               <!-- @click="scrollToSection(el.id)" -->
               <span class="hover:text-[#53900F]"> {{ $t('Managing Directors') }} </span>
               <hr class="text-[#000]" />
@@ -342,14 +345,6 @@
             <hr />
 
             <div class="px-4 flex flex-col" zdata-aos="fade-left">
-              <!-- <router-link
-                :to="{ name: 'governance' }"
-                @click="showDropDown = false"
-                :class="[{ 'text-[#53900F]': isActive('governance') }]"
-              >
-                <span class="hover:text-[#53900F]"> {{ $t('Organizational Structure') }} </span>
-              </router-link> -->
-
               <router-link
                 :to="{ name: 'beneficiaries' }"
                 @click="toggleShowDropDown"
@@ -359,11 +354,14 @@
                   {{ $t('Mission / Vision / Strategy') }}
                 </span>
               </router-link>
-              <router-link :to="{ name: 'board-members' }" @click="toggleShowDropDown" :class="[{ 'text-[#53900F]': isActive('board-members') }]">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Managing Directors') }} </span>
-             
-            </router-link>
+              <router-link
+                :to="{ name: 'board-members' }"
+                @click="toggleShowDropDown"
+                :class="[{ 'text-[#53900F]': isActive('board-members') }]"
+              >
+                <!-- @click="scrollToSection(el.id)" -->
+                <span class="hover:text-[#53900F]"> {{ $t('Managing Directors') }} </span>
+              </router-link>
               <router-link
                 :to="{ name: 'history' }"
                 @click="toggleShowDropDown"
