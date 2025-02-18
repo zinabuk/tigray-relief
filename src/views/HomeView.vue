@@ -198,7 +198,7 @@ onMounted(() => {
               >Donate Now</router-link
             >
             <router-link
-              to="/about"
+              to="/who-we-are"
               class="bg-white hover:bg-white/80 border w-1/2 md:w-[32%] border-yellow-400 hover:text-yellow-400 rounded-md text-yellow-400 px-4 py-2 self-start font-bold"
               >{{ $t('Learn More') }}</router-link
             >
