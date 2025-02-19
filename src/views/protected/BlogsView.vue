@@ -126,6 +126,7 @@ const updateNew = async () => {
   }
 }
 
+const less = ref(true)
 onMounted(() => {
   fetchNews()
 })
@@ -153,11 +154,18 @@ onMounted(() => {
               {{ event.category[currentLanguage] || '' }} | {{ event.eventDate }}
             </h6>
             <h3 class="text- font-bold">{{ event.eventTitle[currentLanguage] || '' }}</h3>
-            <p class="line-clamp-5">{{ event.eventDescription[currentLanguage] || '' }}</p>
-            <button class="text-sm text-blue-600 font-light">Show More</button>
+            <p :class="less === true ? 'line-clamp-5' : ''">
+              {{ event.eventDescription[currentLanguage] || '' }}
+            </p>
+            <button
+              @click="less = !less"
+              class="text-sm text-black font-bold underline underline-offset-2"
+            >
+              Show More
+            </button>
           </div>
         </div>
-        <div class="w-full flex gap-6">
+        <div class="w-full flex gap-6 my-2">
           <button
             @click="openEditModal(event)"
             class="text-blue-500 bg-slate-200 px-2 rounded text-sm"
