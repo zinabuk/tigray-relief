@@ -175,7 +175,7 @@ onUnmounted(() => {
 
     <div class="w-full grid grid-cols-12 gap-4 relative">
       <LeftSide
-        barClass="hidden md:block md:col-span-2 py-4 flex flex-col gap-4 shadow-lg px-2 h-screen sticky left-0 top-0 z-10 bottom-0 max-md:overflow-auto overflow-y-auto left-side-scroll"
+        barClass="hidden md:block md:col-span-2 py-4 flex flex-col gap-4 shadow-xl px-2 h-screen sticky left-0 top-0 z-10 bottom-0 max-md:overflow-auto overflow-y-auto left-side-scroll"
       ></LeftSide>
       <router-view class="col-span-10"></router-view>
     </div>

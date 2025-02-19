@@ -147,37 +147,40 @@ onMounted(() => {
 </script>
 
 <template>
-  <section
-    :class="[
+  <section class="col-span-10 p-4 flex flex-col bg-slate-50">
+    <!-- :class="[
       !minimize ? 'w-[82%]' : 'w-[98%]',
       'px-[6%] py-12 flex flex-col items-center gap-4 bg-whitez'
-    ]"
-  >
-    <div class="flex justify-between w-full">
-      <h2 class="text-xl font-bold">Brands</h2>
-      <BaseButton @click="showModal = true" class="">
-        <font-awesome-icon icon="plus" class="ztext-yellow-500"></font-awesome-icon> Add Branding
+    ]" -->
+    <div class="flex flex-col w-full">
+      <h2 class="text-xl font-bold">Hero Section</h2>
+      <BaseButton
+        @click="showModal = true"
+        class="self-end"
+        buttonClass="px-4 py-0 self-end flex gap-2 items-center my-2 shadow"
+      >
+        <font-awesome-icon icon="plus" class="text-sm"></font-awesome-icon> New
       </BaseButton>
     </div>
     <div v-if="heroes.length" class="col-span-12 w-full">
       <div class="w-full mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div v-for="hero in heroes" :key="hero.id" class="w-full h-full md:w-auto">
-            <div class="shadow flex flex-col gap-2 p-4 zmax-w-xs bg-white">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+          <div v-for="hero in heroes" :key="hero.id" class="w-full flex flex-col justify-between h-full md:w-auto bg-white">
+            <div class="flex flex-col">
               <img
                 v-if="hero.heroImage"
                 :src="`${BASE_AVATAR}${hero.heroImage}`"
                 alt="Hero Image"
-                class="w-full h-36 object-cover mb-4"
+                class="w-full h-36 object-cover mb-2"
               />
-              <div>
+              <div class="px-2">
                 <h3 class="font-bold">{{ hero.heroTitle[currentLanguage] }}</h3>
                 <p class="break-words">{{ hero.heroDescription[currentLanguage] }}</p>
               </div>
-              <div class="flex justify-end space-x-2">
-                <button @click="editItem(hero)" class="text-blue-500">edit</button>
-                <button @click="deleteItem(hero.id)" class="text-red-500">delete</button>
-              </div>
+            </div>
+            <div class="flex p-2 gap-4">
+              <button @click="editItem(hero)" class="text-blue-500 bg-slate-100 px-2  rounded">Edit</button>
+              <button @click="deleteItem(hero.id)" class="text-red-500 bg-slate-100 px-2">Delete</button>
             </div>
           </div>
         </div>

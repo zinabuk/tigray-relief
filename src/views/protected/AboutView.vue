@@ -145,64 +145,61 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section class="col-span-10 p-4 flex flex-col items-center gap-4">
     <!-- Services -->
     <button
       @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
+      class="text-white bg-[#539000] self-end border flex items-center px-2 gap-2 border-[#539000]"
     >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add
+      <font-awesome-icon icon="add" class="rounded-full"></font-awesome-icon>
+      New
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-1 gap-4 place-content-center">
       <div
         v-for="(service, i) in services"
         :key="i"
-        class="p-4 flex flex-col gap-2 justify-between shadow-xl overflow-hidden"
+        class="p-4 flex flex-col gap-2 justify-between shadow overflow-hidden"
       >
         <img
           :src="BASE_AVATAR + service.images"
           alt=""
           class="max-h-[300px] rounded-xl w-full object-cover zhover:scale-[1.2] transition-transform zdelay-500 duration-500 overflow-hidden"
         />
-        <div class="hover:bg-[#53900F] hover:text-white p-2 rounded">
-          <p class="text-2xl text-bold">Establishment</p>
-          <p class="line-clamp-5">
+        <div class="p-2 rounded">
+          <p class="text-xl font-semibold">Establishment</p>
+          <p class="line-clamp-5a">
             {{ service.establishment[currentLanguage] }}
           </p>
         </div>
-        <div class="hover:bg-[#53900F] hover:text-white p-2 rounded">
-          <p class="text-2xl text-bold"><Menu:context></Menu:context>Mission</p>
-          <p class="line-clamp-5">
+        <div class="p-2 rounded">
+          <p class="text-xl font-semibold"><Menu:context></Menu:context>Mission</p>
+          <p class="line-clamp-z5">
             {{ service.mission[currentLanguage] }}
           </p>
         </div>
-        <div class="hover:bg-[#53900F] hover:text-white p-2 rounded">
-          <p class="text-2xl text-bold">Vision</p>
-          <p class="text-xl">{{ service.vision[currentLanguage] }}</p>
+        <div class="p-2 rounded">
+          <p class="text-xl font-semibold">Vision</p>
+          <p class="text-xla">{{ service.vision[currentLanguage] }}</p>
         </div>
-        <div class="hover:bg-[#53900F] hover:text-white p-2 rounded">
-          <p class="text-2xl text-bold">Core Values</p>
-          <p class="line-clamp-5">
+        <div class="p-2 rounded">
+          <p class="text-xl font-semibold">Core Values</p>
+          <p class="line-clamp-5x">
             {{ service.coreValues[currentLanguage] }}
           </p>
         </div>
 
-        <div class="hover:bg-[#53900F] hover:text-white p-2 rounded">
-          <p class="text-2xl text-bold">Strategies</p>
-          <p class="text-xl">{{ service.expertise[currentLanguage] }}</p>
+        <div class="p-2 rounded">
+          <p class="te">Strategies</p>
+          <p class="s-xl">{{ service.expertise[currentLanguage] }}</p>
         </div>
 
-        <div class="flex gap-2 justify-end">
-          <button @click="editService(service)">
-            <font-awesome-icon icon="edit" class="text-blue-400"></font-awesome-icon>
+        <div class="flex gap-4 p-2">
+          <button @click="editService(service)" class="text-blue-400 bg-slate-200 px-2">
+            <font-awesome-icon icon="edit"></font-awesome-icon>Edit
           </button>
-          <button @click="deleteService(service.id)">
-            <font-awesome-icon icon="trash" class="text-red-400"></font-awesome-icon>
+          <button @click="deleteService(service.id)" class="text-red-400 bg-slate-200 px-2">
+            <font-awesome-icon icon="trash"></font-awesome-icon>Delete
           </button>
         </div>
       </div>
