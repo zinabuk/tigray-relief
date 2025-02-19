@@ -19,13 +19,11 @@
         <h2 class="text-xl zfont-semibold">Total Volunteers</h2>
       </div>
       <div class="bg-white shadow rounded-lg p-6 text-s space-y-4">
-       
         <p class="text-5xl font-bold text-green-500">{{ totalVacancies }}</p>
         <h2 class="text-xl font-">Total Vacancies</h2>
       </div>
 
       <div class="bg-white shadow rounded-lg p-6 text-centers space-y-4">
-        
         <p class="text-5xl font-bold text-pink-500">{{ totalDonations }}</p>
         <h2 class="text-xl font-">Total Donations</h2>
       </div>

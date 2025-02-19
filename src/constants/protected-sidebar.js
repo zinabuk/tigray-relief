@@ -2,7 +2,7 @@ const SIDEBARITEMS = {
   ADMIN_TABS: {
     CORE_TABS: [
       { label: 'Dashboard', name: 'dashboard', icon: 'tachometer-alt' }, 
-      { label: 'Hero Section', name: 'admin-hero', icon: 'home' }, 
+      { label: 'Hero Section', name: 'admin-hero', icon: 'cogs'  }, 
       { label: 'Who We Are', name: 'admin-about', icon: 'info-circle' }, 
       { label: 'Our History', name: 'admin-history', icon: 'history' }, 
       { label: 'What We Do', name: 'admin-services', icon: 'hands-helping' }, 

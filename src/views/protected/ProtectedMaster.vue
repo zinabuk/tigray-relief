@@ -173,13 +173,40 @@ onUnmounted(() => {
       </div>
     </header>
 
-    <div class="w-full flex relative">
+    <div class="w-full grid grid-cols-12 gap-4 relative">
       <LeftSide
-        bar-class="shadow-lgx px-2 h-screen sticky left-0 top-[68px] z-10 bottom-0 overflow-auto bg-white w-[18%] py-4
-        "
-        z:class="[!minimize ? 'w-[18%]' : 'w-2%', 'py-4']"
+        barClass="hidden md:block md:col-span-2 py-4 flex flex-col gap-4 shadow-lg px-2 h-screen sticky left-0 top-0 z-10 bottom-0 max-md:overflow-auto overflow-y-auto left-side-scroll"
       ></LeftSide>
-      <router-view></router-view>
+      <router-view class="col-span-10"></router-view>
     </div>
   </section>
 </template>
+
+<style scoped>
+/* Custom thin scrollbar */
+::-webkit-scrollbar {
+  width: 6px; /* Adjust width to make it thin */
+  background-color: #53900f;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Light gray track */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Darker scrollbar for visibility */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Slightly darker when hovered */
+}
+
+/* Ensure it applies to the specific LeftSide component */
+.left-side-scroll {
+  overflow-y: auto;
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: #888 #f1f1f1; /* Thumb and track color */
+}
+</style>
