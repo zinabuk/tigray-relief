@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useAuthStore } from '@/stores/auth'
-const { minimize } = storeToRefs(useAuthStore())
+// import { useRouter } from 'vue-router'
+// import { storeToRefs } from 'pinia'
+// import { useAuthStore } from '@/stores/auth'
+// const { minimize } = storeToRefs(useAuthStore())
 
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import BaseInput from '@/components/base/BaseInput.vue'
