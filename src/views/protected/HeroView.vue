@@ -175,7 +175,7 @@ onMounted(() => {
               />
               <div class="px-2">
                 <h3 class="font-bold">{{ hero.heroTitle[currentLanguage] }}</h3>
-                <p class="break-words">{{ hero.heroDescription[currentLanguage] }}</p>
+                <p class="break-words ">{{ hero.heroDescription[currentLanguage] }}</p>
               </div>
             </div>
             <div class="flex p-2 gap-4">

@@ -17,7 +17,7 @@ const fetchHistories = async () => {
     if (response) {
       histories.value = response.data.map((item) => ({
         ...item,
-        description: JSON.parse(item.description),
+        description: JSON.parse(item.description)
       }))
     }
   } catch (error) {
@@ -128,16 +128,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="col-span-10 p-4 flex flex-col items-center gap-4 bg-slate-50 ">
+  <section class="col-span-10 p-4 flex flex-col items-center gap-4 bg-slate-50">
     <!-- Histories -->
     <button
       @click="showAddModal = true"
-      class="bg-[#53900F] text-white self-end border flex items-center px-2 rounded-2xl py-1 "
+      class="bg-[#53900F] text-white self-end border flex items-center px-2 rounded-2xl py-1"
     >
-      <font-awesome-icon
-        icon="add"
-        class=""
-      ></font-awesome-icon>
+      <font-awesome-icon icon="add" class=""></font-awesome-icon>
       Add History
     </button>
 
@@ -145,27 +142,29 @@ onMounted(() => {
       <div
         v-for="(service, i) in histories"
         :key="i"
-        class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
+        class="flex flex-col gap-2 justify-between bg-white shadow"
       >
-        <img
-          v-if="service.image"
-          :src="BASE_AVATAR + service.image"
-          alt=""
-          class="w-36 h-36 ring-2 ring-yellow-300 rounded-sm mx-auto"
-        />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">
-          {{ service.year }}
-        </p>
-        <h1 class="text-2xl font-bold">{{ service.year }}</h1>
-        <p class="line-clamp-5">
-          {{ service.description[currentLanguage] }}
-        </p>
-        <div class="flex gap-2 justify-end">
-          <button @click="editService(service)">
-            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+        <div class="flex flex-col gap-2">
+          <img
+            v-if="service.image"
+            :src="BASE_AVATAR + service.image"
+            alt=""
+            class="w-full h-36 rounded-sm object-cover mr-auto"
+          />
+          <p v-else class="w-20 h-20 rounded-full text-6xl">
+            {{ service.year }}
+          </p>
+          <h1 class="text-xl font-bold px-2">{{ service.year }}</h1>
+          <p class="line-clamp-5z text-ajustify px-2">
+            {{ service.description[currentLanguage] }}
+          </p>
+        </div>
+        <div class="flex gap-6 p-2">
+          <button @click="editService(service)" class="text-blue-500 bg-slate-200 px-2">
+            <font-awesome-icon icon="edit"></font-awesome-icon>Edit
           </button>
-          <button @click="deleteService(service.id)">
-            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+          <button @click="deleteService(service.id)" class="text-red-500 bg-slate-200 px-2">
+            <font-awesome-icon icon="trash"></font-awesome-icon>Delete
           </button>
         </div>
       </div>
@@ -236,14 +235,13 @@ onMounted(() => {
               </div>
               <div class="flex justify-end gap-2 flex-col">
                 <BaseFileInput
-                
                   label="add Picture"
                   @image-update="handleFileChange($event)"
-                    type="file"
-                    inputClass="p-2 border border-gray-300 rounded"
-                    placeholder="Image"
-                    accept="image/*"
-                  >
+                  type="file"
+                  inputClass="p-2 border border-gray-300 rounded"
+                  placeholder="Image"
+                  accept="image/*"
+                >
                   <BaseButton type="submit" class="w-full px-2 py-2 rounded"></BaseButton>
                 </BaseFileInput>
 

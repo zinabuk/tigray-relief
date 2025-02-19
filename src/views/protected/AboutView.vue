@@ -168,7 +168,7 @@ onMounted(() => {
         /> -->
         <div class="p-2 rounded bg-white flex flex-col gap-2">
           <p class="text-xl font-semibold">Establishment</p>
-          <p class="line-clamp-5a">
+          <p class="line-clamp-5a ">
             {{ service.establishment[currentLanguage] }}
           </p>
         </div>
