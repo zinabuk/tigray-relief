@@ -135,12 +135,11 @@ onMounted(() => {
   <section class="col-span-10 flex flex-col bg-slate-50 flex-wrap gap-2 p-4">
     <router-link
       :to="{ name: 'admin-add-blogs' }"
-      class="bg-[#53900F] self-end text-white rounded-2xl flex items-center px-2 py-1"
+      class="bg-[#53900F] self-end text-white rounded-2xl flex items-center px-2"
     >
       <font-awesome-icon icon="add"></font-awesome-icon>
       Add New | Story
     </router-link>
-
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 px-12">
       <div
         v-for="(event, i) in blogs"
@@ -149,13 +148,13 @@ onMounted(() => {
       >
         <div class="">
           <img :src="BASE_AVATAR + event.eventImage" alt="" class="h-48 w-full object-cover" />
-
           <div class="flex flex-col flex-wrap gap-2 items-start justify-center">
             <h6 class="text-gray-500">
               {{ event.category[currentLanguage] || '' }} | {{ event.eventDate }}
             </h6>
             <h3 class="text- font-bold">{{ event.eventTitle[currentLanguage] || '' }}</h3>
-            <p class="line-clamp-5a">{{ event.eventDescription[currentLanguage] || '' }}</p>
+            <p class="line-clamp-5">{{ event.eventDescription[currentLanguage] || '' }}</p>
+            <button class="text-sm text-blue-600 font-light">Show More</button>
           </div>
         </div>
         <div class="w-full flex gap-6">
