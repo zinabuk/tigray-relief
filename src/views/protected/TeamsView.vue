@@ -144,46 +144,49 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
+  <section class="col-span-10 p-4 flex flex-col bg-slate-50 items-center gap-4">
     <!-- Services -->
     <button
       @click="showModal()"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
+      class="bg-[#53900F] self-end border flex items-center px-2 py-1 rounded-2xl text-white gap-2"
     >
-      <font-awesome-icon
-        icon="add"
-        class="zbg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add Personnel
+      <font-awesome-icon icon="add"></font-awesome-icon>
+      Add Director
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 place-content-center">
-      <div v-for="(team, i) in teams" :key="i" class="flex flex-col gap-2 p-1 shadow bg-white">
-        <img
-          v-if="team.image"
-          :src="BASE_AVATAR + team.image"
-          alt=""
-          class="zring-yellow-300 rounded-sm"
-        />
-        <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
-        <h1 class="text-2xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
-        <div class="relative">
-          <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
-          <hr class="h-[2px] absolute inset-0 bg-gray-200" />
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 place-content-center">
+      <div
+        v-for="(team, i) in teams"
+        :key="i"
+        class="flex flex-col gap-2 p-1 justify-between shadow bg-white"
+      >
+        <div class="w-full h-auto">
+          <img
+            v-if="team.image"
+            :src="BASE_AVATAR + team.image"
+            alt=""
+            class="h-36 w-full rounded-sm"
+          />
+          <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
+          <h1 class="text-2xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
+          <div class="relative">
+            <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
+            <hr class="h-[2px] absolute inset-0 bg-gray-200" />
+          </div>
+          <p class="line-clamp-5">
+            {{ team.profession[currentLanguage] }}
+          </p>
         </div>
-        <p class="line-clamp-5">
-          {{ team.profession[currentLanguage] }}
-        </p>
 
         <!-- <router-link class="text-[#539000]" to="/">Read More</router-link> -->
         <div class="flex gap-4">
-          <button @click="deleteTeam(team.id)" class="text-red-500">
-            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
-            Delete
-          </button>
-          <button @click="editTeam(team)" class="text-blue-500">
-            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+          <button @click="editTeam(team)" class="text-blue-500 bg-slate-200 rounded px-2">
+            <font-awesome-icon icon="edit"></font-awesome-icon>
             Edit
+          </button>
+          <button @click="deleteTeam(team.id)" class="text-red-500 bg-slate-200 px-2 rounded">
+            <font-awesome-icon icon="trash"></font-awesome-icon>
+            Delete
           </button>
         </div>
       </div>

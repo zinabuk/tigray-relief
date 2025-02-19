@@ -33,9 +33,9 @@ const fetchServices = async () => {
 
 let showAddModal = ref(false)
 const currentLanguage = ref('en')
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
+// const toggleLanguage = (lang) => {
+//   currentLanguage.value = lang
+// }
 const form = ref({
   id: null,
   serviceTitle: { en: '', ti: '', am: '' },
@@ -154,7 +154,7 @@ onMounted(() => {
             alt=""
             class="w-full h-36 object-cover object-top rounded-sm mx-auto"
           />
-          <p v-else class=" rounded-full text-6xl">
+          <p v-else class="rounded-full text-6xl">
             {{ service.serviceTitle[currentLanguage] }}
           </p>
           <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
@@ -162,7 +162,7 @@ onMounted(() => {
             {{ service.serviceDescription[currentLanguage] }}
           </p>
         </div>
-        <div class="flex gap-4 px-2">
+        <div class="flex gap-4">
           <button @click="editService(service)" class="text-blue-500 bg-slate-200 px-2 rounded">
             <font-awesome-icon icon="edit"></font-awesome-icon>Edit
           </button>
