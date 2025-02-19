@@ -2,29 +2,32 @@
   <div class="w-full p-6">
     <h1 class="text-xl zfont-bold mb-6">Dashboard</h1>
     <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="bg-white shadow rounded-lg p-6 text-center">
-        <h2 class="text-xl font-semibold">Total Services</h2>
-        <p class="text-2xl font-bold text-blue-500">{{ totalServices }}</p>
+      <div class="bg-white shadow rounded-lg p-4 md:p-6 space-y-4 text-centser">
+        <p class="text-5xl font-bold text-blue-500z">{{ totalServices }}</p>
+        <h2 class="text-xl">What We Do</h2>
       </div>
-      <div class="bg-white shadow rounded-lg p-6 text-center">
-        <h2 class="text-xl font-semibold">Total Vacancies</h2>
-        <p class="text-2xl font-bold text-green-500">{{ totalVacancies }}</p>
+      <div class="bg-white shadow rounded-lg p-4 md:p-6 text- space-y-4">
+        <p class="text-5xl font-bold text-yellow-500">{{ totalBoardMembers }}</p>
+        <h2 class="text-xl">Total Board Members</h2>
       </div>
-      <div class="bg-white shadow rounded-lg p-6 text-center">
-        <h2 class="text-xl font-semibold">Total Board Members</h2>
-        <p class="text-2xl font-bold text-yellow-500">{{ totalBoardMembers }}</p>
+      <div class="bg-white shadow-lg rounded-lg p-6 text- space-y-4">
+        <p class="text-5xl font-bold text-indigo-500">{{ totalPartners }}</p>
+        <h2 class="text-xl zfont-semibold">Total Partners</h2>
       </div>
-      <div class="bg-white shadow rounded-lg p-6 text-center">
-        <h2 class="text-xl font-semibold">Total Volunteers</h2>
-        <p class="text-2xl font-bold text-teal-500">{{ totalVolunteers }}</p>
+      <div class="bg-white shadow rounded-lg p-6 text-s space-y-4">
+        <p class="text-5xl font-bold text-teal-500">{{ totalVolunteers }}</p>
+        <h2 class="text-xl zfont-semibold">Total Volunteers</h2>
       </div>
-      <div class="bg-white shadow rounded-lg p-6 text-center">
-        <h2 class="text-xl font-semibold">Total Donations</h2>
-        <p class="text-2xl font-bold text-pink-500">{{ totalDonations }}</p>
+      <div class="bg-white shadow rounded-lg p-6 text-s space-y-4">
+       
+        <p class="text-5xl font-bold text-green-500">{{ totalVacancies }}</p>
+        <h2 class="text-xl font-">Total Vacancies</h2>
       </div>
-      <div class="bg-white shadow-lg rounded-lg p-6 text-center">
-        <h2 class="text-xl font-semibold">Total Partners</h2>
-        <p class="text-2xl font-bold text-indigo-500">{{ totalPartners }}</p>
+
+      <div class="bg-white shadow rounded-lg p-6 text-centers space-y-4">
+        
+        <p class="text-5xl font-bold text-pink-500">{{ totalDonations }}</p>
+        <h2 class="text-xl font-">Total Donations</h2>
       </div>
     </div>
 
