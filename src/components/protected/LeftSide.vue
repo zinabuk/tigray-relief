@@ -45,11 +45,11 @@ watchEffect(() => {
           }"
           exact
           active-class=""
-          class="px-2 hover:bg-[#53900F] w-full hover:text-white flex gap-4 items-center"
+          class="px-2 hover:bg-[#53900F] w-full hover:text-white flex gap-4 py-[1px] items-center"
           exact-path="true"
         >
           <font-awesome-icon v-if="item.icon" :icon="item.icon" class="w-4" />
-          <span v-if="!minimize" class="text-[14pxa]"> {{ item.label }}</span>
+          <span v-if="!minimize" class="text-[14px]"> {{ item.label }}</span>
         </router-link>
       </li>
     </ul>

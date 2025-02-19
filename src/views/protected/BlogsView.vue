@@ -135,30 +135,41 @@ onMounted(() => {
   <section class="col-span-10 flex flex-col bg-slate-50 flex-wrap gap-2 p-4">
     <router-link
       :to="{ name: 'admin-add-blogs' }"
-      class="bg-[#53900F] self-end  text-white rounded-2xl flex items-center px-2 py-1"
+      class="bg-[#53900F] self-end text-white rounded-2xl flex items-center px-2 py-1"
     >
       <font-awesome-icon icon="add"></font-awesome-icon>
       Add New | Story
     </router-link>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <div v-for="(event, i) in blogs" :key="i" class="grid grid-cols-1 bg-white gap- p-2">
-        <div class="h-48">
-          <img :src="BASE_AVATAR + event.eventImage" alt="" class="h-full w-full object-cover" />
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 px-12">
+      <div
+        v-for="(event, i) in blogs"
+        :key="i"
+        class="w-full flex flex-col justify-between bg-white gap- p-2"
+      >
+        <div class="">
+          <img :src="BASE_AVATAR + event.eventImage" alt="" class="h-48 w-full object-cover" />
+
+          <div class="flex flex-col flex-wrap gap-2 items-start justify-center">
+            <h6 class="text-gray-500">
+              {{ event.category[currentLanguage] || '' }} | {{ event.eventDate }}
+            </h6>
+            <h3 class="text- font-bold">{{ event.eventTitle[currentLanguage] || '' }}</h3>
+            <p class="line-clamp-5a">{{ event.eventDescription[currentLanguage] || '' }}</p>
+          </div>
         </div>
-        <div class="flex flex-col flex-wrap gap-2 items-start justify-center">
-          <h6 class="text-gray-500">
-            {{ event.category[currentLanguage] || '' }} | {{ event.eventDate }}
-          </h6>
-          <h3 class="text-lg font-bold">{{ event.eventTitle[currentLanguage] || '' }}</h3>
-          <p class="line-clamp-5">{{ event.eventDescription[currentLanguage] || '' }}</p>
-        </div>
-        <div class="w-full flex justify-end gap-6">
-          <button @click="openEditModal(event)">
-            <font-awesome-icon icon="edit" class="text-blue-700"></font-awesome-icon>
+        <div class="w-full flex gap-6">
+          <button
+            @click="openEditModal(event)"
+            class="text-blue-500 bg-slate-200 px-2 rounded text-sm"
+          >
+            <font-awesome-icon icon="edit"></font-awesome-icon>Edit
           </button>
-          <button @click="deleteBlog(event.id)">
-            <font-awesome-icon icon="trash" class="text-red-700"></font-awesome-icon>
+          <button
+            @click="deleteBlog(event.id)"
+            class="text-red-500 text-sm bg-slate-200 px-2 rounded"
+          >
+            <font-awesome-icon icon="trash" class="text-sm"></font-awesome-icon>Delete
           </button>
         </div>
       </div>
