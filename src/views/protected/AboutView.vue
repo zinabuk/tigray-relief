@@ -190,7 +190,7 @@ onMounted(() => {
         </div>
 
         <div class="p-2 rounded">
-          <p class="te">Strategies</p>
+          <p class="text-xl font-semibold">Strategies</p>
           <p class="s-xl">{{ service.expertise[currentLanguage] }}</p>
         </div>
 
@@ -221,7 +221,7 @@ onMounted(() => {
           </div>
           <div class="bg-white flex flex-col gap-2 w-full pt-2">
             <div class="flex w-full justify-between">
-              <button
+              <!-- <button
                 @click="toggleLanguage('en')"
                 :class="{
                   'border-2 border-b-[#53900F]': currentLanguage === 'en',
@@ -230,8 +230,8 @@ onMounted(() => {
                 class="px-4 py-1"
               >
                 English
-              </button>
-              <button
+              </button> -->
+              <!-- <button
                 @click="toggleLanguage('ti')"
                 :class="{
                   'border-2 border-b-[#53900F]': currentLanguage === 'ti',
@@ -240,8 +240,8 @@ onMounted(() => {
                 class="px-4 py-1"
               >
                 ትግርኛ
-              </button>
-              <button
+              </button> -->
+              <!-- <button
                 @click="toggleLanguage('am')"
                 :class="{
                   'border-2 border-b-[#53900F]': currentLanguage === 'am',
@@ -250,7 +250,7 @@ onMounted(() => {
                 class="px-4 py-1"
               >
                 አማርኛ
-              </button>
+              </button> -->
             </div>
             <form @submit.prevent="saveService" class="flex flex-col gap-4 overflow-auto">
               <div class="flex flex-col gap-2">
