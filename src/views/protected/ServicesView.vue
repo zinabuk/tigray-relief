@@ -97,20 +97,20 @@ const saveService = async () => {
 }
 
 const deleteService = async (id) => {
-   const sure = window.confirm('Are you sure to delete this team?')
+  const sure = window.confirm('Are you sure to delete this team?')
   if (sure) {
-  try {
-    const response = await ApiService.delete('/admin/services/' + id)
+    try {
+      const response = await ApiService.delete('/admin/services/' + id)
 
-    if (response.success) {
-      fetchServices()
-    } else {
+      if (response.success) {
+        fetchServices()
+      } else {
+        errorMessage.value = 'Failed to save Partner'
+      }
+    } catch (error) {
       errorMessage.value = 'Failed to save Partner'
     }
-  } catch (error) {
-    errorMessage.value = 'Failed to save Partner'
   }
-}
 }
 
 const closeModal = () => {
@@ -131,44 +131,43 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section class="col-span-10 p-4 flex flex-col items-center gap-4">
     <!-- Services -->
     <button
       @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
+      class="bg-[#53900F] self-end border flex items-center px-2 py-1 gap-2 text-white rounded-2xl"
     >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add Service
+      <font-awesome-icon icon="add"></font-awesome-icon>
+      Add What We Do
     </button>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
         v-for="(service, i) in services"
         :key="i"
-        class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
+        class="p-4 flex flex-col gap-2 bg-white justify-between shadow"
       >
-        <img
-          v-if="service.serviceImage"
-          :src="BASE_AVATAR + service.serviceImage"
-          alt=""
-          class="w-36 h-36 ring-2 ring-yellow-300 rounded-sm mx-auto"
-        />
-        <p v-else class="w-20 h-20 rounded-full text-6xl">
-          {{ service.serviceTitle[currentLanguage] }}
-        </p>
-        <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
-        <p class="line-clamp-5">
-          {{ service.serviceDescription[currentLanguage] }}
-        </p>
-        <div class="flex gap-2 justify-end">
-          <button @click="editService(service)">
-            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+        <div class="w-full h-auto">
+          <img
+            v-if="service.serviceImage"
+            :src="BASE_AVATAR + service.serviceImage"
+            alt=""
+            class="w-full h-36 object-cover object-top rounded-sm mx-auto"
+          />
+          <p v-else class=" rounded-full text-6xl">
+            {{ service.serviceTitle[currentLanguage] }}
+          </p>
+          <h1 class="text-2xl font-bold">{{ service.serviceTitle[currentLanguage] }}</h1>
+          <p class="line-clamp-5">
+            {{ service.serviceDescription[currentLanguage] }}
+          </p>
+        </div>
+        <div class="flex gap-4 px-2">
+          <button @click="editService(service)" class="text-blue-500 bg-slate-200 px-2 rounded">
+            <font-awesome-icon icon="edit"></font-awesome-icon>Edit
           </button>
-          <button @click="deleteService(service.id)">
-            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+          <button @click="deleteService(service.id)" class="text-red-500 bg-slate-200 px-2">
+            <font-awesome-icon icon="trash"></font-awesome-icon>Delete
           </button>
         </div>
       </div>
@@ -241,10 +240,10 @@ onMounted(() => {
                 <BaseFileInput
                   @image-update="handleFileChange($event)"
                   label="Add Picture"
-                    type="file"
-                    inputClass="p-2 border border-gray-300 rounded"
-                    placeholder="Image"
-                    accept="image/*"
+                  type="file"
+                  inputClass="p-2 border border-gray-300 rounded"
+                  placeholder="Image"
+                  accept="image/*"
                 ></BaseFileInput>
                 <span>{{ logo }}</span>
                 <BaseButton type="submit" class="w-full px-2 py-2 rounded">
