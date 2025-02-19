@@ -149,9 +149,9 @@ onMounted(() => {
     <!-- Services -->
     <button
       @click="showAddModal = true"
-      class="text-white bg-[#539000] self-end border flex items-center px-2 gap-2 border-[#539000]"
+      class="text-white bg-[#539000] self-end border rounded-2xl flex items-center px-2 gap-2 border-[#539000]"
     >
-      <font-awesome-icon icon="add" class="rounded-full"></font-awesome-icon>
+      <font-awesome-icon icon="add" class="rou"></font-awesome-icon>
       New
     </button>
 
@@ -161,35 +161,35 @@ onMounted(() => {
         :key="i"
         class="p-4 flex flex-col gap-2 justify-between shadow overflow-hidden"
       >
-        <img
+        <!-- <img
           :src="BASE_AVATAR + service.images"
           alt=""
           class="max-h-[300px] rounded-xl w-full object-cover zhover:scale-[1.2] transition-transform zdelay-500 duration-500 overflow-hidden"
-        />
-        <div class="p-2 rounded">
+        /> -->
+        <div class="p-2 rounded bg-white flex flex-col gap-2">
           <p class="text-xl font-semibold">Establishment</p>
           <p class="line-clamp-5a">
             {{ service.establishment[currentLanguage] }}
           </p>
         </div>
-        <div class="p-2 rounded">
+        <div class="p-2 rounded bg-white flex flex-col gap-2">
           <p class="text-xl font-semibold"><Menu:context></Menu:context>Mission</p>
           <p class="line-clamp-z5">
             {{ service.mission[currentLanguage] }}
           </p>
         </div>
-        <div class="p-2 rounded">
+        <div class="p-2 rounded bg-white flex flex-col gap-2">
           <p class="text-xl font-semibold">Vision</p>
           <p class="text-xla">{{ service.vision[currentLanguage] }}</p>
         </div>
-        <div class="p-2 rounded">
+        <div class="p-2 rounded bg-white flex flex-col gap-2">
           <p class="text-xl font-semibold">Core Values</p>
           <p class="line-clamp-5x">
             {{ service.coreValues[currentLanguage] }}
           </p>
         </div>
 
-        <div class="p-2 rounded">
+        <div class="p-2 rounded bg-white flex flex-col gap-2">
           <p class="text-xl font-semibold">Strategies</p>
           <p class="s-xl">{{ service.expertise[currentLanguage] }}</p>
         </div>
