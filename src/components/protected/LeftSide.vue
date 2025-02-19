@@ -41,11 +41,11 @@ watchEffect(() => {
         <router-link
           :to="{ name: item.name }"
           :class="{
-            'bg-[#53900F]/70 text-white border ': $route.name === item.name
+            'bg-[#53900F] text-white border ': $route.name === item.name
           }"
           exact
           active-class=""
-          class="px-2 hover:bg-[#53900F]/30 w-full hover:text-white flex gap-4 items-center"
+          class="px-2 hover:bg-[#53900F]/80 w-full hover:text-white flex gap-4 items-center"
           exact-path="true"
         >
           <font-awesome-icon v-if="item.icon" :icon="item.icon" class="w-4" />
@@ -64,7 +64,7 @@ watchEffect(() => {
         <router-link
           :to="{ name: item.name }"
           :class="{
-            'bg-[#53900F]/50 text-[#53900F] border ': $route.name === item.name
+            'bg-[#53900F] text-white border ': $route.name === item.name
           }"
           exact
           active-class=""

@@ -128,20 +128,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section class="col-span-10 p-4 flex flex-col items-center gap-4 bg-slate-50 ">
     <!-- Histories -->
     <button
       @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
+      class="bg-[#53900F] text-white self-end border flex items-center px-2 rounded-2xl py-1 "
     >
       <font-awesome-icon
         icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
+        class=""
       ></font-awesome-icon>
       Add History
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 place-content-center">
       <div
         v-for="(service, i) in histories"
         :key="i"

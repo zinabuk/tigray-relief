@@ -157,7 +157,7 @@ onMounted(() => {
       <BaseButton
         @click="showModal = true"
         class="self-end"
-        buttonClass="px-4 py-0 self-end flex gap-2 items-center my-2 shadow"
+        buttonClass="px-4 py-0 self-end flex gap-2 items-center border rounded-2xl my-2 shadow"
       >
         <font-awesome-icon icon="plus" class="text-sm"></font-awesome-icon> New
       </BaseButton>

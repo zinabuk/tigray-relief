@@ -92,10 +92,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-full col-spzan-10">
+  <section class="w-full">
     <div class="w-full flex flex-col gap-2 py-6">
-      
-       
+      <!-- <div class="flex justify-end mb-4">
+        <button @click="toggleLanguage" class="px-4 py-2 rounded text-blue-500">
+          {{ language ==='en' ? 'Tigrinya' : 'English' }}
+        </button>
+      </div> -->
       <div v-for="(about, index) in aboutus" :key="index" class="w-full">
         
         <div class="bg-white w-full grid grid-cols-2 md:grid-cols-3 ic gap-4">
