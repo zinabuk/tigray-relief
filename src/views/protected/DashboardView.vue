@@ -1,8 +1,8 @@
 <template>
-  <div class="p-6">
-    <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-      <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+  <div class=" w-full p-6">
+    <h1 class="text-xl zfont-bold mb-6">Dashboard</h1>
+    <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white shadow rounded-lg p-6 text-center">
         <h2 class="text-xl font-semibold">Total Services</h2>
         <p class="text-2xl font-bold text-blue-500">{{ totalServices }}</p>
       </div>

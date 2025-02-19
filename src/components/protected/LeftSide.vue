@@ -29,7 +29,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div :class="`${barClass}`" v-bind="$attrs" v-if="role === 'admin'">
+  <div :class="`${barClass}`" v-bind="$attrs" v-if="role === 'admin'" class="shadow-xl">
     <h1 class="text-sm">System</h1>
     <ul class="w-full">
       <li v-for="(item, index) in core_tabs" :key="index" class="pl-2 text-[14px]">
