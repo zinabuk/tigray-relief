@@ -132,7 +132,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="col-span-10 flex flex-col flex-wrap gap-2 p-4">
+  <section class="col-span-10 flex flex-col bg-slate-50 flex-wrap gap-2 p-4">
     <router-link
       :to="{ name: 'admin-add-blogs' }"
       class="bg-[#53900F] self-end  text-white rounded-2xl flex items-center px-2 py-1"
