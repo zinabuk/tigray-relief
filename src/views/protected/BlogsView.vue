@@ -126,7 +126,11 @@ const updateNew = async () => {
   }
 }
 
-const less = ref(true)
+const expandedIndex = ref(null)
+
+function toggleShow(idx) {
+  expandedIndex.value = expandedIndex.value === idx ? null : idx
+}
 onMounted(() => {
   fetchNews()
 })
@@ -154,14 +158,14 @@ onMounted(() => {
               {{ event.category[currentLanguage] || '' }} | {{ event.eventDate }}
             </h6>
             <h3 class="text- font-bold">{{ event.eventTitle[currentLanguage] || '' }}</h3>
-            <p :class="less === true ? 'line-clamp-5' : ''">
+            <p :class="expandedIndex === i ? '' : 'line-clamp-5'">
               {{ event.eventDescription[currentLanguage] || '' }}
             </p>
             <button
-              @click="less = !less"
+              @click.prevent="toggleShow(i)"
               class="text-sm text-black font-bold underline underline-offset-2"
             >
-              Show More
+              {{ expandedIndex === i ? 'Show Less' : 'Show More' }}
             </button>
           </div>
         </div>

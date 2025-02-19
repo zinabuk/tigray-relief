@@ -154,7 +154,7 @@ onMounted(fetchPartners)
 </script>
 
 <template>
-  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
+  <section class="col-span-10 flex flex-col flex-wrap gap-2 p-4 bg-slate-50">
     <button class="bg-white text-[#539000] self-end px-2 py-1" @click="toggleAdd($event)">
       Add Partner <span v-if="isAdd">ok</span>
     </button>
@@ -173,7 +173,7 @@ onMounted(fetchPartners)
         <img
           :src="BASE_AVATAR + partner.logo"
           alt=""
-          class="h-36 w-36 object-contain object-center"
+          class="h-36 w-full object-contain object-center"
         />
         <div class="flex flex-col zjustify-between gap-1">
           <div class="flex gap-4 flex-wrap">
