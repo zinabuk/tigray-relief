@@ -132,16 +132,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
+  <section class="col-span-10 flex flex-col flex-wrap gap-2 p-4">
     <router-link
       :to="{ name: 'admin-add-blogs' }"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 mr-auto bg-white border-[#539000]"
+      class="bg-[#53900F] self-end  text-white rounded-2xl flex items-center px-2 py-1"
     >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add New | Event
+      <font-awesome-icon icon="add"></font-awesome-icon>
+      Add New | Story
     </router-link>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

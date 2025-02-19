@@ -160,7 +160,7 @@ onMounted(() => {
         :key="i"
         class="flex flex-col gap-2 p-1 justify-between shadow bg-white"
       >
-        <div class="w-full h-auto">
+        <div class="w-full h-auto flex flex-col gap-2">
           <img
             v-if="team.image"
             :src="BASE_AVATAR + team.image"
@@ -168,12 +168,12 @@ onMounted(() => {
             class="h-36 w-full rounded-sm"
           />
           <p v-else class="w-20 h-20 rounded-full text-2xl">{{ team.fullName[currentLanguage] }}</p>
-          <h1 class="text-2xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
+          <h1 class="text-xl font-bold">{{ team.fullName[currentLanguage] }}</h1>
           <div class="relative">
             <span class="w-1/4 absolute z-20 inset-0 h-[2px] bg-green-600"></span>
             <hr class="h-[2px] absolute inset-0 bg-gray-200" />
           </div>
-          <p class="line-clamp-5">
+          <p class="line-clamp-5a">
             {{ team.profession[currentLanguage] }}
           </p>
         </div>
