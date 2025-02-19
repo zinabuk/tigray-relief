@@ -113,7 +113,7 @@ onMounted(() => {
       >
         <h1 class="text-4xl font-bold">Tenders</h1>
         <div class="flex gap-4">
-          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">Home</a>
+          <a href="/" class="px-4 py-2 rounded-xl text-white font-bold">Home</a>
           <a href="/tenders" class="text-[#539000] px-4 py-2">Tenders</a>
         </div>
       </div>

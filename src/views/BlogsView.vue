@@ -43,10 +43,10 @@ onMounted(() => {
       >
         <h1 class="text-4xl font-bold">{{ $t('News') }}</h1>
         <div class="flex gap-4">
-          <a href="#contact-us" class="px-4 py-2 rounded-xl text-white font-bold">{{
+          <a href="/" class="px-4 py-2 rounded-xl text-white font-bold">{{
             $t('Home')
           }}</a>
-          <a href="/services" class="text-[#539000] px-4 py-2">news / events</a>
+          <a href="/news-stories" class="text-[#539000] px-4 py-2">News & Stories</a>
         </div>
       </div>
     </div>

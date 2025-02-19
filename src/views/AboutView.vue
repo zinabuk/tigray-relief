@@ -99,7 +99,7 @@ onMounted(() => {
             >{{ $t('Home') }}
           </router-link>
           <span>/</span>
-          <router-link to="/services" class="text-[#539000] px-4 py-2">{{
+          <router-link to="/who-we-are" class="text-[#539000] px-4 py-2">{{
             $t('About Us')
           }}</router-link>
         </div>

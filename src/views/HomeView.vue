@@ -378,7 +378,7 @@ onMounted(() => {
     <router-link to="/news-stories" class="text-[#53900F]z underline underline-offset-4 text-xl">{{
       $t('View All News and Stories')
     }}</router-link>
-  </section> 
+  </section>
 
   <!-- partners -->
   <section
@@ -419,29 +419,34 @@ onMounted(() => {
     </swiper>
   </section>
 
-  <!-- Embeding facebook posts -->
+ 
+  <!-- Embedding Facebook posts -->
   <section class="w-full px-[2%] py-12 flex flex-col gap-4 items-center justify-center">
-    <h1 class="text-3xl font-bold">{{ $t('Facebook Posts') }}</h1>
+    <h1 class="text-3xl font-bold">{{ $t('Latest Social Media Posts') }}</h1>
 
-    <div class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-20">
-      <!-- Responsive Facebook Embed with Likes and Comments -->
-      <iframe
-        src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
-        class="w-full shadow-md max-h-[400px] border-none overflow-hidden"
-        scrolling="no"
-        frameborder="0"
-        allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-      ></iframe>
+    <div class="w-full md:w-[80%] grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      <!-- Responsive Facebook Embed -->
+      <div class="w-full flex justify-center">
+        <iframe
+          src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
+          class="w-full max-w-[500px] min-w-[300px] md:min-w-[400px] h-[450px] shadow-md border-none overflow-hidden"
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        ></iframe>
+      </div>
 
-      <iframe
-        src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500&appId&show_faces=true&share=true"
-        class="w-full max-h-[400px] shadow-md border-none overflow-hidden"
-        scrolling="no"
-        frameborder="0"
-        allowfullscreen="true"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-      ></iframe>
+      <div class="w-full flex justify-center">
+        <iframe
+          src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500&appId&show_faces=true&share=true"
+          class="w-full max-w-[500px] min-w-[300px] md:min-w-[400px] h-[450px] shadow-md border-none overflow-hidden"
+          scrolling="no"
+          frameborder="0"
+          allowfullscreen="true"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        ></iframe>
+      </div>
     </div>
   </section>
 </template>

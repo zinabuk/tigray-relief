@@ -2,7 +2,7 @@
 import { ref, onMounted, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 
-import slugify from '@/utils/slugify'
+// import slugify from '@/utils/slugify'
 import ApiService from '@/services/apiService'
 import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
@@ -41,7 +41,7 @@ async function getService() {
   }
 }
 
-const services = ref([])
+// const services = ref([])
 // async function getServices() {
 //   try {
 //     const response = await ApiService.get('/admin/services')
@@ -69,7 +69,6 @@ onMounted(getService)
 </script>
 <template>
   <section class="w-full">
-   
     <div
       class="w-full relative max-h-[222px] overflow-hidden"
       v-for="(serve, index) in service"
@@ -91,21 +90,29 @@ onMounted(getService)
             $t('Home')
           }}</router-link>
           <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
-          <router-link to="/services" class="px-4 py-2">{{ $t('Services') }}</router-link>
+          <router-link to="/what-we-do" class="px-4 py-2">{{ $t('What We Do') }}</router-link>
 
           <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
 
-          <router-link to="/services" class="text-[#539000] px-4 py-2">{{
-            serve.serviceTitle[currentLanguage]
-          }}</router-link>
+          <router-link
+            :to="{
+              name: 'service-detail',
+              params: { title: serve.serviceTitle[currentLanguage] }
+            }"
+            class="text-[#539000] px-4 py-2"
+            >{{ serve.serviceTitle[currentLanguage] }}</router-link
+          >
         </div>
       </div>
     </div>
   </section>
   <section class="w-full px-[2%] py-12 bg-[#53900F]/10">
-    <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-4 bg-white"  v-for="(serve, index) in service"
-    :key="index">
-      <div class="relative w-full flex flex-col gap-4 group md:col-span-12" >
+    <div
+      class="w-full grid grid-cols-1 md:grid-cols-12 gap-4 bg-white"
+      v-for="(serve, index) in service"
+      :key="index"
+    >
+      <div class="relative w-full flex flex-col gap-4 group md:col-span-12">
         <div class="w-full max-h-[600px] overflow-hiddden">
           <img
             v-if="serve.serviceImage"
@@ -125,7 +132,7 @@ onMounted(getService)
         </div>
       </div>
     </div>
-  </section> 
+  </section>
   <!-- <div class="w-full px-[2%] bg-white py-12 grid grid-cols-1 md:grid-cols-2 gap-4">
     <div v-for="(service, i) in services" :key="i" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
