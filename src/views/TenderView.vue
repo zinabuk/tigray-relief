@@ -81,12 +81,7 @@ const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
     if (response) {
-      tenders.value = response.data.map((item) => ({
-        ...item,
-        title: JSON.parse(item.title),
-        organization: JSON.parse(item.organization),
-        description: JSON.parse(item.description)
-      }))
+      tenders.value = response.data
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
