@@ -1,7 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-// import { useRouter } from 'vue-router'
-// const router = useRouter()
+import { ref, onMounted } from 'vue'  
 import swal from 'sweetalert'
 import ApiService from '@/services/apiService'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
