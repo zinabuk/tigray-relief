@@ -186,9 +186,9 @@ const PROTECTED_ROUTES = [
         }
       },
       {
-        path: 'policy',
-        component: () => import('@/views/protected/PolicyView.vue'),
-        name: 'admin-policy',
+        path: 'strategies',
+        component: () => import('@/views/protected/StrategiesView.vue'),
+        name: 'admin-strategies',
         meta: {
           requiresAuth: true,
           role: ['admin']

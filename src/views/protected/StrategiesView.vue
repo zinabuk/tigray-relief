@@ -72,7 +72,10 @@ const savePolicy = async () => {
   }
   try {
     if (edit.value) {
-      const response = await ApiService.patch('/users/policy-and-strategy/' + form.value.id, formData)
+      const response = await ApiService.patch(
+        '/users/policy-and-strategy/' + form.value.id,
+        formData
+      )
       if (response.success) {
         successMessage.value = response.message
         fetchPolicies()
@@ -130,30 +133,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section class="col-span-10 px-[2%] py-12 flex flex-col items-center gap-4 bg-slate-50 ro">
     <!-- Policies -->
-    <button
-      @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
-    >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add Policy
+    <button @click="showAddModal = true" class="text-white self-end shadow bg-[#53900F] px-2 py-1 rounded-full">
+      <font-awesome-icon icon="add"></font-awesome-icon>
+      Add Strategy
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 place-content-center">
       <div
         v-for="(policy, i) in policies"
         :key="i"
-        class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
+        class="p-4 flex flex-col gap-2 justify-between shadow bg-white"
       >
         <img
           v-if="policy.image"
           :src="BASE_AVATAR + policy.image"
           alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
+          class="w-full h-32 zrounded-full object-cover object-top mx-auto"
         />
         <p v-else class="w-20 h-20 rounded-full text-6xl">
           {{ policy.title[currentLanguage] }}
@@ -162,7 +159,7 @@ onMounted(() => {
         <p class="line-clamp-5">
           {{ policy.description[currentLanguage] }}
         </p>
-        <div class="flex gap-2 justify-end">
+        <div class="flex gap-4">
           <button @click="editPolicy(policy)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
           </button>
