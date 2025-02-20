@@ -20,7 +20,6 @@ const SIDEBARITEMS = {
       { label: 'Donations', name: 'donations', icon: 'gift' },
       { label: 'FAQs', name: 'admin-faqs', icon: 'question-circle' },
       { label: 'Strategies', name: 'admin-strategies', icon: 'shield-alt' },
-
       // { label: 'Policy', name: 'admin-policy', icon: 'shield-alt' },
       { label: 'Contact Address', name: 'admin-contacts', icon: 'address-card' },
       { label: 'Social Medias', name: 'admin-socialMedias', icon: 'share-alt' },

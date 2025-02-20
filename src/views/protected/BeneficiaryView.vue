@@ -133,7 +133,10 @@ onMounted(() => {
     class="col-span-10 px-[2%] py-12 flex flex-col items-center gap-4 bg-slate-50 rounded-2xl"
   >
     <!-- Beneficiaries -->
-    <button @click="showAddModal = true" class="text-white self-end bg-[#53900F] px-2 rounded-full py-1 shadow">
+    <button
+      @click="showAddModal = true"
+      class="text-white self-end bg-[#53900F] px-2 rounded-full py-1 shadow"
+    >
       <font-awesome-icon icon="add"></font-awesome-icon>
       Add Beneficiary
     </button>
@@ -142,13 +145,13 @@ onMounted(() => {
       <div
         v-for="(beneficiary, i) in beneficiaries"
         :key="i"
-        class="p-4 flex flex-col gap-2 zbg-white  justify-between shadow"
+        class="p-4 flex flex-col gap-2 zbg-white bg-white justify-between shadow"
       >
         <img
           v-if="beneficiary.image"
           :src="BASE_AVATAR + beneficiary.image"
           alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
+          class="w-full h-24 mx-auto"
         />
 
         <h1 class="text-2xl font-bold">{{ beneficiary.title[currentLanguage] }}</h1>

@@ -110,10 +110,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[1%] py-12 flex flex-col items-center gap-4">
+  <section class="col-span-10 px-[1%] py-12 flex flex-col items-center gap-4">
     <button
       @click="isAdding = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 bg-white border-[#539000]"
+      class="text-[#539000] self-end border flex items-center px-2     border-[#539000]"
     >
       <font-awesome-icon
         icon="add"
