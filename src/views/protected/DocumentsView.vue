@@ -54,7 +54,7 @@
           </div>
           <div class="bg-white flex flex-col gap-2 w-full pt-2">
             <div class="flex w-full justify-between">
-              <button
+              <!-- <button
                 @click="toggleLanguage('en')"
                 :class="{
                   'border-2 border-b-[#53900F]': currentLanguage === 'en',
@@ -63,7 +63,7 @@
                 class="px-4 py-1"
               >
                 English
-              </button>
+              </button> -->
             </div>
             <form @submit.prevent="saveDocument" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
@@ -199,15 +199,7 @@ const saveDocument = async () => {
   // }
   try {
     if (edit.value) {
-      const response = await ApiService.request({
-        url: '/admin/documents',
-        data: formData,
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-
+      const response = await ApiService.patch('/admin/documents/' + form.value.id, formData)
       if (response.success) {
         successMessage.value = response.data.message
         fetchDocuments()
@@ -216,15 +208,8 @@ const saveDocument = async () => {
         errorMessage.value = 'Failed to save Document'
       }
     } else {
-      const res = await ApiService.request({
-        url: '/admin/documents',
-        data: formData,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      if (res.data.success) {
+      const res = await ApiService.post('/admin/documents', formData)
+      if (res.success) {
         successMessage.value = res.data.message
         fetchDocuments()
         closeModal()

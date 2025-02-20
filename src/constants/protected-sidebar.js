@@ -25,7 +25,7 @@ const SIDEBARITEMS = {
       { label: 'Contact Address', name: 'admin-contacts', icon: 'address-card' },
       { label: 'Social Medias', name: 'admin-socialMedias', icon: 'share-alt' },
       { label: 'Documents', name: 'admin-documents', icon: 'file' },
-      { label: 'Publications', name: 'admin-publications', icon: 'book' },
+      // { label: 'Publications', name: 'admin-publications', icon: 'book' },
       // { label: 'Strategies', name: 'admin-strategy', icon: 'lightbulb' },
       { label: 'Privacy Policy', name: 'privacy-policy', icon: 'lock' },
       { label: 'Beneficiary', name: 'admin-beneficiary', icon: 'user-check' }
