@@ -1,5 +1,5 @@
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section class="w-[%] px-[6%] py-12 flex flex-col items-center gap-4 bg-slate-50">
     <!-- Add Contact Button -->
     <button
       @click="showAddModal = true"
@@ -13,31 +13,40 @@
     </button>
 
     <!-- Contact Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="w-full gap-4 place-content-center">
       <div
         v-for="(contact, i) in contacts"
         :key="i"
-        class="p-4 flex flex-col gap-2 bg-white justify-between shadow-xl"
+        class="p-4 flex flex-col gap-2 bg-white justify-between"
       >
-        <div class="flex gap-2">
-          <h1>Email: </h1>
+        <div class="flex gap-12">
+          <h1>Email:</h1>
           <p class="">{{ contact.mail }}</p>
         </div>
-        <div class="flex gap-2">
-        <h1 >Phone: </h1>  <p>{{ contact.contactNumber }}</p>
+        <div class="flex gap-12">
+          <h1>Phone:</h1>
+          <p>{{ contact.contactNumber }}</p>
         </div>
-        <div class="flex gap-2">
-         <h1 >Address: </h1> <p>{{ contact.address }}</p>
+        <div class="flex gap-12">
+          <h1>Address:</h1>
+          <p>{{ contact.address }}</p>
         </div>
-        <div class="flex gap-2">
-        <h1>Open Hours</h1>  <p>{{ contact.openHours }}</p>
+        <div class="flex gap-12">
+          <h1>Open Hours</h1>
+          <p>{{ contact.openHours }}</p>
         </div>
-        <div class="flex gap-2 justify-end">
-          <button @click="editContact(contact)">
-            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+        <div class="flex gap-6">
+          <button
+            @click="editContact(contact)"
+            class="bg-slate-200 px-2 rounded text-sm text-blue-500"
+          >
+            Edit
           </button>
-          <button @click="deleteContact(contact.id)">
-            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+          <button
+            @click="deleteContact(contact.id)"
+            class="bg-slate-200 px-2 rounded text-sm text-red-500"
+          >
+            Delete
           </button>
         </div>
       </div>
@@ -193,7 +202,7 @@ onMounted(() => {
 
 <style scoped>
 /* Add scoped styles if needed */
-h1{
+h1 {
   font-size: 20px;
   font-weight: 600;
 }
