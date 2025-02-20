@@ -1,11 +1,10 @@
 <template>
   <section class="w-[%] px-[6%] py-12 flex flex-col items-center gap-4 bg-slate-50">
-    <!-- Add Contact Button -->
+    
     <button
       @click="showAddModal = true"
       class="bg-[#53900F] self-end shadow flex items-center px-2 py-1 text-white rounded-2xl"
-    >
-      <!-- <font-awesome-icon icon="plus"></font-awesome-icon> -->
+    > 
       Add Contact
     </button>
 
