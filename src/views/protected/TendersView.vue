@@ -1,6 +1,6 @@
 <script setup>
 // import { ref } from 'vue'/
-import DataTable from '@/components/base/DataTable.vue'
+import DataTable from '@/components/base/DataTableT.vue'
 import ApiService from '@/services/apiService'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
@@ -16,12 +16,7 @@ const toggleLanguage = (lang) => {
 
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const tableHeaders = [
-  { label: 'Title', field: 'title' },
-  { label: 'Organization', field: 'organization' },
-  { label: 'Description', field: 'description' },
-  { label: 'Deadline', field: 'deadline' }
-]
+
 const tenders = ref([])
 // const actions = [
 //   {
@@ -46,10 +41,8 @@ const tenders = ref([])
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
-    if (response) { 
-      tenders.value = response.data;
-      console.log(Array.isArray(response.data));
-      
+    if (response) {
+      tenders.value = response.data
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -92,7 +85,6 @@ let imageName = ref('')
 function handleFileChange(file) {
   tender.value.file = file.name
   imageName.value = file.name
-  
 }
 async function deleteContact(tender) {
   const accept = window.confirm('Undo is not possible')
@@ -147,21 +139,30 @@ const saveTender = async () => {
     fetchTenders()
   }
 }
-onMounted(()=>{fetchTenders()})
+
+const tableHeaders = [
+  { label: 'Title', field: 'title' },
+  { label: 'Organization', field: 'organization' },
+  { label: 'Description', field: 'description' },
+  { label: 'Deadline', field: 'deadline' }
+]
+onMounted(() => {
+  fetchTenders()
+})
 </script>
 
 <template>
   <section class="col-span-10 flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <button @click="showAddModal = true" class="bg-[#539000] text-white rounded-2xl shadow self-end px-2 py-1">
-      Add Tender
-    </button>
-    <DataTable
-      :tableHeaders="tableHeaders"
-      :tableValues="tenders" 
-    v-if="tenders.length"
+    <button
+      @click="showAddModal = true"
+      class="bg-[#539000] text-white rounded-2xl shadow self-end px-2 py-1"
     >
-    </DataTable>
+      Add Tender
+    </button> 
+    <DataTable :table-values="tenders" :table-headers="tableHeaders"></DataTable>
+    <div v-for="(tender, i) in tenders" :key="i">{{ tender.title }}</div>
   </section>
+
   <div
     class="modal fixed inset-0 flex z-30 justify-center items-center bg-white/80 overflow-auto py-12"
     v-if="isEditing"

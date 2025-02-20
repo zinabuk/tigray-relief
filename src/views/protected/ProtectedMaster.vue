@@ -114,8 +114,6 @@ onUnmounted(() => {
                 alt="Profile"
                 class="w-full h-full rounded-full"
               />
-              <!-- <img v-else src="@/assets/account.png" alt="my profile" class="w-full h-full" /> -->
-
               <button class="absolute right-0 bottom-3 cursor-pointer">
                 <input
                   class="absolute right-0 bottom-0 w-full h-full opacity-0 cursor-pointer"
@@ -139,7 +137,6 @@ onUnmounted(() => {
                 <font-awesome-icon icon="user-check" class="text-sm"></font-awesome-icon>
                 <span>Users</span></router-link
               >
-
               <router-link
                 :to="{ name: 'account' }"
                 class="flex gap-2 items-center text-sm"
@@ -149,7 +146,6 @@ onUnmounted(() => {
                 <font-awesome-icon icon="user-circle" class="text-sm"></font-awesome-icon>
                 <span> My account</span></router-link
               >
-
               <button class="flex gap-2 items-center text-red-600 text-sm" @click="userLogOut">
                 <font-awesome-icon icon="sign-out-alt" class="text-red-600"></font-awesome-icon>
                 <span>log out</span>
