@@ -58,7 +58,7 @@ async function handleLogin() {
       <form @submit.prevent="handleLogin" class="w-full flex flex-col gap-4 items-center">
         <BaseInput
           v-model="formData.username"
-          inputClass="focus:border focus:outline-none     focus:text-black px-4 py-3 w-full"
+          inputClass="focus:border focus:outline-none     focus:text-black px-4 py-1 w-full"
           placeholder="Email / phone number"
           required
           label="Username"
@@ -66,7 +66,7 @@ async function handleLogin() {
         <BaseInput
           type="password"
           v-model="formData.password"
-          inputClass="focus:border focus:outline-none focus:text-black    px-4  py-3  w-full"
+          inputClass="focus:border focus:outline-none focus:text-black    px-4  py-1  w-full"
           placeholder="your password"
           label="Password"
           required
@@ -77,7 +77,7 @@ async function handleLogin() {
           >Forgot Password</router-link
         >
         <BaseButton
-          class="w-full button flex group items-center justify-center gap-4 transition-colors delay-200 duration-1000 border rounded-xl hover:border-[#53900]"
+          class="w-full button flex group items-center justify-center gap-4 transition-colors delay-200 duration-1000 border rounded-xl p-2 hover:border-[#53900]"
           type="submit"
         >
           <p
