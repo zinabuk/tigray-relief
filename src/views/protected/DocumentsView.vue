@@ -1,15 +1,11 @@
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
-  
+  <section class="col-span-10 px-4 py-12 flex flex-col items-center gap-4 bg-slate-50">
     <!-- Documents -->
     <button
       @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
+      class="bg-[#53900F] self-end flex items-center px-2 py-1 text-white"
     >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
+      <font-awesome-icon icon="add"></font-awesome-icon>
       Add Document
     </button>
 
@@ -17,20 +13,21 @@
       <div
         v-for="(document, i) in documents"
         :key="i"
-        class="p-4 flex flex-col gap-2 bg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl"
+        class="p-4 flex flex-col gap-2 bg-whitejustify-between shadow"
       >
-        <h1 class="text-2xl font-bold">{{ document.title[currentLanguage] }}</h1>
-        <p class="line-clamp-5">{{ document.description[currentLanguage] }}</p>
         <img
           v-if="document.image"
-          :src="BASE_UPLOAD + document.image"
+          :src="BASE_AVATAR + document.image"
           alt=""
-          class="w-24 h-24 ring-2 ring-yellow-300 rounded-full mx-auto"
+          class="w-full h-36 object-cover object-top"
         />
-        <a :href="BASE_UPLOAD + document.document" target="_blank" class="text-blue-500 underline">
-          {{ document.document }}
+        <h1 class="text-2xl font-bold">{{ document.title[currentLanguage] }}</h1>
+        <p class="line-clamp-5">{{ document.description[currentLanguage] }}</p>
+
+        <a :href="BASE_UPLOAD + document.document" target="_blank" class="text-blue-400 underline">
+          <font-awesome-icon icon="download"></font-awesome-icon> {{ document.document }}
         </a>
-        <div class="flex gap-2 justify-end">
+        <div class="flex gap-8">
           <button @click="editDocument(document)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
           </button>
@@ -67,26 +64,6 @@
               >
                 English
               </button>
-              <button
-                @click="toggleLanguage('ti')"
-                :class="{
-                  'border-2 border-b-[#53900F]': currentLanguage === 'ti',
-                  'bg-gray-200': currentLanguage !== 'ti'
-                }"
-                class="px-4 py-1"
-              >
-                ትግርኛ
-              </button>
-              <button
-                @click="toggleLanguage('am')"
-                :class="{
-                  'border-2 border-b-[#53900F]': currentLanguage === 'am',
-                  'bg-gray-200': currentLanguage !== 'am'
-                }"
-                class="px-4 py-1"
-              >
-                አማርኛ
-              </button>
             </div>
             <form @submit.prevent="saveDocument" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
@@ -104,21 +81,21 @@
                   placeholder="Document description"
                 ></BaseTextarea>
               </div>
-              <div class="flex justify-end gap-2 flex-col">
-                <div class="flex justify-between">
+              <div class="flex j flex-col">
+                <div class="flex justify-between items-center gap-2">
                   <BaseFileInput
-                  @change="handleFileChange"
-                  label="Attach Document"
-                  type="file"
-                  inputClass="p-2 border border-gray-300 rounded"
-                  placeholder="Image"
-                  accept="application/pdf"
-                ></BaseFileInput>
-                <BaseInput
+                    @change="handleFileChange"
+                    label="Attach Document"
+                    type="file"
+                    inputClass=" border border-gray-300 rounded"
+                    placeholder="Image"
+                    accept="application/pdf"
+                  ></BaseFileInput>
+                  <BaseInput
                     @change="handleImageChange"
                     label="Add picture"
                     type="file"
-                    inputClass="p-2 border border-gray-300 rounded"
+                    inputClass="border border-gray-300 rounded"
                     placeholder="Image"
                     accept="image/*"
                   ></BaseInput>
@@ -139,14 +116,13 @@
 
 <script setup>
 import ApiService from '@/services/apiService'
-import {BASE_AVATAR}  from '@/config'
+import { BASE_AVATAR } from '@/config'
 import { BASE_UPLOAD } from '@/config'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import { ref, onMounted } from 'vue'
-
 
 const documents = ref([])
 const fetchDocuments = async () => {
@@ -178,7 +154,7 @@ const form = ref({
   title: { en: '', ti: '', am: '' },
   description: { en: '', ti: '', am: '' },
   document: '',
-  image:''
+  image: ''
 })
 
 const logo = ref('')
@@ -188,8 +164,7 @@ const handleFileChange = (event) => {
   logo.value = file.name
 }
 
-
-const image1=ref('')
+const image1 = ref('')
 const handleImageChange = (event) => {
   const file = event.target.files[0]
   form.value.image = file
@@ -224,17 +199,31 @@ const saveDocument = async () => {
   // }
   try {
     if (edit.value) {
-      const response = await ApiService.patch('/admin/documents/' + form.value.id, formData)
-      if (response.data.success) {
+      const response = await ApiService.request({
+        url: '/admin/documents',
+        data: formData,
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+
+      if (response.success) {
         successMessage.value = response.data.message
         fetchDocuments()
         closeModal()
-        router.push({ name: 'admin-documents' })
       } else {
         errorMessage.value = 'Failed to save Document'
       }
     } else {
-      const res = await ApiService.post('/admin/documents', formData)
+      const res = await ApiService.request({
+        url: '/admin/documents',
+        data: formData,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
       if (res.data.success) {
         successMessage.value = res.data.message
         fetchDocuments()
@@ -271,7 +260,7 @@ const closeModal = () => {
     title: { en: '', ti: '', am: '' },
     description: { en: '', ti: '', am: '' },
     document: '',
-    image:''
+    image: ''
   }
   edit.value = false
   logo.value = ''
