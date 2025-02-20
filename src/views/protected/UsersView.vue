@@ -10,8 +10,8 @@ import { BASE_AVATAR } from '@/config'
 //   const response = await ApiService.get()
 // }
 
-import { useRouter } from 'vue-router'
-const router = useRouter()
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
 import { ref, onMounted } from 'vue'
 
 const teams = ref([])
@@ -41,7 +41,6 @@ const deleteTeam = async (id) => {
   if (sure) {
     const res = await ApiService.delete('/admin/our-teams/' + id)
     if (res.success) {
-    
       fetchUsers()
     }
   }
@@ -100,7 +99,8 @@ const submitUser = async () => {
   user.value.role = 'staff'
   const response = await ApiService.post('/admin/register', user.value)
   if (response.success) {
-    alert('OK')
+    alert('Successfully registered.')
+    fetchUsers()
   }
 }
 
@@ -110,10 +110,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="col-span-10 px-[1%] py-12 flex flex-col items-center gap-4">
+  <section class="col-span-10 px-[1%] py-12 flex flex-col gap-4">
     <button
       @click="isAdding = true"
-      class="text-[#539000] self-end border flex items-center px-2     border-[#539000]"
+      class="text-[#53900F] self-end border flex items-center px-2 border-[#53900F]"
     >
       <font-awesome-icon
         icon="add"
@@ -122,7 +122,7 @@ onMounted(() => {
       Add User
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div v-for="(team, i) in teams" :key="i" class="p-4 flex flex-col gap-2 bg-white">
         <img
           v-if="team.avatar"
@@ -142,10 +142,12 @@ onMounted(() => {
         <p>{{ team.phoneNumber }}</p>
         <!-- <router-link class="text-[#539000]" to="/">Read More</router-link> -->
         <div class="flex gap-4">
-          <button @click="deleteTeam(team._id)">
+          <button>
+            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+          </button>
+          <button @click="deleteTeam(team.id)">
             <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
           </button>
-          <button><font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon></button>
         </div>
       </div>
     </div>

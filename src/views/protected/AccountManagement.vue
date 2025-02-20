@@ -5,7 +5,7 @@ const router = useRouter()
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import ApiService from '@/services/apiService'
-import { BASE_AVATAR } from '@/config';
+import { BASE_AVATAR } from '@/config'
 const myProfile = ref({})
 const profile = async () => {
   try {
@@ -38,6 +38,9 @@ const changePassword = async () => {
         form.value = {}
         confirmPassword.value = ''
         errorMessage.value = ''
+        setTimeout(() => {
+          successMessage.value = ''
+        }, 3000)
       }
     } else {
       confirmError.value = 'please confirm password'
@@ -57,7 +60,7 @@ const editProfile = async (profile) => {
 }
 const submit = async () => {
   try {
-    const response = await ApiService.patch('/admin/profile/',editForm.value)
+    const response = await ApiService.patch('/admin/profile/', editForm.value)
     if (response.success) {
       successMessage.value = response.message
       editForm.value = {}
@@ -83,37 +86,35 @@ onMounted(profile)
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-gray-200 rounded-2xl">
-
+  <section class="col-span-10 px-[2%] py-12 flex flex-col bg-slate-50 rounded-2xl">
     <div class="grid md:grid-cols-12 gap-4 w-full">
-      <div
-        class="col-span-8  bg-white flex flex-col gap-2 relative p-4 border-t-2 border-meyla-color1"
-      >
+      <div class="col-span-8 bg-white flex flex-col gap-2 relative p-4 border-t-4">
         <div>
           <img
             v-if="myProfile.avatar"
-             :src="BASE_AVATAR + `${myProfile.avatar}`"
-              alt="Profile"
-               class="w-24 h-24 rounded-full"/>
+            :src="BASE_AVATAR + `${myProfile.avatar}`"
+            alt="Profile"
+            class="w-24 h-24 rounded-full"
+          />
 
-          <h1 class="">Full Name</h1>
+          <h1 class="font-semibold">Full Name</h1>
           <h3>{{ myProfile.name }}</h3>
         </div>
         <div>
-          <h1 class="">Email Address</h1>
+          <h1 class="font-semibold">Email Address</h1>
           <h1>{{ myProfile.email }}</h1>
         </div>
         <div>
-          <h1 class="">Phone Number</h1>
+          <h1 class="font-semibold">Phone Number</h1>
           <h1>{{ myProfile.phoneNumber }}</h1>
         </div>
-        <button @click="editProfile(myProfile)" class="text-blue-500">
+        <button @click="editProfile(myProfile)" class="text-blue-500 self-start">
           <font-awesome-icon icon="edit"></font-awesome-icon>
         </button>
       </div>
       <div class="col-span-4 bg-white p-4">
         <h1 class="text-center">Change Password</h1>
-        <p v-if="successMessage" class="text-small text-meyla-color1">{{ successMessage }}</p>
+        <p v-if="successMessage" class="text-small text-green-500">{{ successMessage }}</p>
         <form @submit.prevent="changePassword" class="flex flex-col gap-2">
           <BaseInput
             label="Current Password"
@@ -140,7 +141,7 @@ onMounted(profile)
           <span v-if="confirmError" class="text-red-700 text-center text-sm">{{
             confirmError
           }}</span>
-          <BaseButton>Save Changes</BaseButton>
+          <BaseButton class="px-2 py-1">Save Changes</BaseButton>
         </form>
       </div>
     </div>
