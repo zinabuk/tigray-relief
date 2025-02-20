@@ -149,7 +149,7 @@ onUnmounted(() => {
                 exact-active-class="meyla-color4"
                 @click="hideDropdown"
               >
-                <font-awesome-icon icon="user-circle" class="text-sm"></font-awesome-icon>
+                <font-awesome-icon icon="user-check" class="text-sm"></font-awesome-icon>
                 <span>Users</span></router-link
               >
 

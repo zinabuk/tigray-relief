@@ -54,16 +54,7 @@
           </div>
           <div class="bg-white flex flex-col gap-2 w-full pt-2">
             <div class="flex w-full justify-between">
-              <!-- <button
-                @click="toggleLanguage('en')"
-                :class="{
-                  'border-2 border-b-[#53900F]': currentLanguage === 'en',
-                  'bg-gray-200': currentLanguage !== 'en'
-                }"
-                class="px-4 py-1"
-              >
-                English
-              </button> -->
+            
             </div>
             <form @submit.prevent="saveDocument" class="flex flex-col gap-4">
               <div class="flex flex-col gap-6">
@@ -146,9 +137,9 @@ const fetchDocuments = async () => {
 
 const showAddModal = ref(false)
 const currentLanguage = ref('en')
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
+// const toggleLanguage = (lang) => {
+//   currentLanguage.value = lang
+// }
 const form = ref({
   id: null,
   title: { en: '', ti: '', am: '' },
