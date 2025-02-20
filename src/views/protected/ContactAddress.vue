@@ -3,12 +3,9 @@
     <!-- Add Contact Button -->
     <button
       @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
+      class="bg-[#53900F] self-end shadow flex items-center px-2 py-1 text-white rounded-2xl"
     >
-      <font-awesome-icon
-        icon="plus"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
+      <!-- <font-awesome-icon icon="plus"></font-awesome-icon> -->
       Add Contact
     </button>
 
@@ -203,7 +200,6 @@ onMounted(() => {
 <style scoped>
 /* Add scoped styles if needed */
 h1 {
-  font-size: 20px;
   font-weight: 600;
 }
 </style>
