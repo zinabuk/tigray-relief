@@ -163,7 +163,7 @@ onMounted(() => {
             </p>
             <button
               @click.prevent="toggleShow(i)"
-              class="text-sm text-black font-bold underline underline-offset-2"
+              class="text-sm text-black fonlt-bold underline underline-offset-2"
             >
               {{ expandedIndex === i ? 'Show Less' : 'Show More' }}
             </button>

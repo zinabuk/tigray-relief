@@ -155,15 +155,9 @@ onMounted(fetchPartners)
 
 <template>
   <section class="col-span-10 flex flex-col flex-wrap gap-2 p-4 bg-slate-50">
-    <button class="bg-white text-[#539000] self-end px-2 py-1" @click="toggleAdd($event)">
-      Add Partner <span v-if="isAdd">ok</span>
+    <button class="text-white bg-[#53900F] rounded-2xl shadow self-end px-2 py-1" @click="toggleAdd($event)">
+      Add Partner
     </button>
-    <!-- <DataTable
-      :tableHeaders="tableHeaders"
-      :tableValues="partnerships"
-      :actions="actions"
-      :currentLanguage="currentLanguage"
-    ></DataTable> -->
     <section class="w-full grid grid-cols-4 gap-6">
       <div
         v-for="(partner, index) in partnerships"
@@ -176,13 +170,14 @@ onMounted(fetchPartners)
           class="h-36 w-full object-contain object-center"
         />
         <div class="flex flex-col zjustify-between gap-1">
-          <div class="flex gap-4 flex-wrap">
+          <div class="flex gap-4m justify-between flex-wrap">
             <h1 class="f text-sm font-semibold">Company:</h1>
             <h1 class="text-sm break-words">{{ partner.businessName[currentLanguage] }}</h1>
           </div>
-          <div class="flex gap-4 flex-wrap">
+          <div class="flex gap4 justify-between flex-wrap">
             <h1 class="text-sm font-semibold">Website:</h1>
-            <p class="text-sm break-words">{{ partner.website }}</p>
+            <a :href="partner.website" target="_blank">{{ partner.website }}</a>
+            <!-- <p class="text-sm break-words">{{ partner.website }}</p> -->
           </div>
 
           <div class="flex gap-4">
@@ -212,7 +207,7 @@ onMounted(fetchPartners)
         </button>
       </div>
 
-      <form @submit.prevent="updatePartner" class="w-full flex flex-col gap-2 px-1">
+      <form @submit.prevent="updatePartner" class="w-full flex flex-col gap-2 p-2">
         <BaseInput
           v-model="editForm.businessName[currentLanguage]"
           type="text"
@@ -225,11 +220,12 @@ onMounted(fetchPartners)
           label="Email"
           required
           inputClass="px-4 py-3"
-          placeholder="Job Title"
+          placeholder="Email"
         ></BaseInput>
         <BaseInput
           v-model="editForm.website"
-          inputClass="px-8 py-3"
+          inputClass="px-4 py-3"
+          label="Website URL"
           placeholder="Enter your website's link"
         ></BaseInput>
 
@@ -239,8 +235,8 @@ onMounted(fetchPartners)
             type="file"
             label="Add Logo"
           ></BaseFileInput>
-          <BaseButton type="submit">Save Changes</BaseButton>
         </div>
+        <BaseButton type="submit">Save Changes</BaseButton>
       </form>
     </div>
   </div>
@@ -267,16 +263,16 @@ onMounted(fetchPartners)
           v-model="form.businessName[currentLanguage]"
           type="text"
           required
-          placeholder="Your business name"
+          label="Partner Name"
         ></BaseInput>
         <BaseInput
           v-model="form.email"
           required
-          placeholder="Enter Your Email"
+          label="Partner Email"
           autocomplete="true"
         ></BaseInput>
 
-        <BaseInput v-model="form.website" placeholder="Enter your website's link"></BaseInput>
+        <BaseInput v-model="form.website" label="Website URL"></BaseInput>
 
         <div class="flex justify-between">
           <!-- <BaseFileInput
@@ -290,9 +286,8 @@ onMounted(fetchPartners)
             label="Add Logo"
           ></BaseFileInput>
           <p v-if="message" class="text-red-700">{{ message }}</p>
-
-          <BaseButton type="submit" class="self-start">Submit</BaseButton>
         </div>
+        <BaseButton type="submit" class="self-start px-4 py-1">Submit</BaseButton>
       </form>
     </div>
   </div>

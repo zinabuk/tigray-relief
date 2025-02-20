@@ -106,35 +106,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section class="col-span-10 px-[2%] py-12 flex flex-col items-center gap-4 rounded-2xl">
     <!-- FAQs -->
-    <button
-      @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
-    >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
-      Add FAQ
+    <button @click="showAddModal = true" class="bg-[#53900F] text-white px-2 rounded-2xl self-end">
+      <font-awesome-icon icon="add"></font-awesome-icon>
+      New FAQ
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 place-content-center">
       <div
         v-for="(faq, i) in faqs"
         :key="i"
-        class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
+        class="p-4 flex flex-col gap-2 zbg-white justify-between shadow bg-white"
       >
         <h1 class="text-2xl font-bold">{{ faq.question[currentLanguage] }}</h1>
         <p class="line-clamp-5">
           {{ faq.answer[currentLanguage] }}
         </p>
-        <div class="flex gap-2 justify-end">
-          <button @click="editFaq(faq)">
-            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+        <div class="flex gap-4">
+          <button @click="editFaq(faq)" class="text-blue-500 bg-slate-200 px-2 rounded">
+            Edit
           </button>
-          <button @click="deleteFaq(faq.id)">
-            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+          <button @click="deleteFaq(faq.id)" class="text-red-500 bg-slate-200 px-2 rounded">
+            Delete
           </button>
         </div>
       </div>

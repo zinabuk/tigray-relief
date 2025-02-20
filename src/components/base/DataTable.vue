@@ -1,5 +1,6 @@
 <template>
   <section class="w-full">
+    
     <div class="py-2 px-2 w-full bg-white  flex flex-col gap-2">
       <div class="flex justify-end">
         <div class="">
@@ -23,7 +24,7 @@
               <th v-for="(head, i) in tableHeaders" :key="i" class="" @click="sortBy(head.field)">
                 {{ head.label }}
               </th>
-              <th>Actions</th>
+              <!-- <th>Actions</th> -->
             </tr>
           </thead>
           <tbody v-if="paginatedData && paginatedData.length > 1">

@@ -23,36 +23,33 @@ const tableHeaders = [
   { label: 'Deadline', field: 'deadline' }
 ]
 const tenders = ref([])
-const actions = [
-  {
-    label: 'edit',
-    action: editContact,
-    icon: 'edit',
-    style: 'hover:cursor-pointer text-blue-500 py-1 px-2'
-  },
-  {
-    label: 'delete',
-    action: deleteContact,
-    icon: 'trash',
-    style: 'hover:cursor-pointer text-red-500 py-1 px-2'
-  },
-  {
-    label: 'verify',
-    action: viewApplicants,
-    icon: 'eye',
-    style: 'hover:cursor-pointer text-green-500 py-1 px-2'
-  }
-]
+// const actions = [
+//   {
+//     label: 'edit',
+//     action: editContact,
+//     icon: 'edit',
+//     style: 'hover:cursor-pointer text-blue-500 py-1 px-2'
+//   },
+//   {
+//     label: 'delete',
+//     action: deleteContact,
+//     icon: 'trash',
+//     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
+//   },
+//   {
+//     label: 'verify',
+//     action: viewApplicants,
+//     icon: 'eye',
+//     style: 'hover:cursor-pointer text-green-500 py-1 px-2'
+//   }
+// ]
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
-    if (response) {
-      tenders.value = response.data.map((item) => ({
-        ...item,
-        title: JSON.parse(item.title),
-        organization: JSON.parse(item.organization),
-        description: JSON.parse(item.description)
-      }))
+    if (response) { 
+      tenders.value = response.data;
+      console.log(Array.isArray(response.data));
+      
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -67,10 +64,10 @@ const fetchTenders = async () => {
 
 const isEditing = ref(false)
 const editForm = ref({
-  title: { en: '', ti: '', am: '' },
-  organization: { en: '', ti: '', am: '' },
+  title: '',
+  organization: '',
   deadline: '',
-  description: { en: '', ti: '', am: '' },
+  description: '',
   file: null
 })
 let formatDate = ref('')
@@ -84,10 +81,10 @@ import swal from 'sweetalert'
 
 let showAddModal = ref(false)
 let tender = ref({
-  title: { en: '', ti: '', am: '' },
-  organization: { en: '', ti: '', am: '' },
+  title: '',
+  organization: '',
   deadline: '',
-  description: { en: '', ti: '', am: '' },
+  description: '',
   file: null
 })
 
@@ -95,7 +92,7 @@ let imageName = ref('')
 function handleFileChange(file) {
   tender.value.file = file.name
   imageName.value = file.name
-  alert(file.name)
+  
 }
 async function deleteContact(tender) {
   const accept = window.confirm('Undo is not possible')
@@ -111,10 +108,10 @@ async function viewApplicants(career) {
 }
 const updateTender = async () => {
   const formData = new FormData()
-  formData.append('title', JSON.stringify(editForm.value.title))
-  formData.append('organization', JSON.stringify(editForm.value.organization))
+  formData.append('title', editForm.value.title)
+  formData.append('organization', editForm.value.organization)
   formData.append('deadline', editForm.value.deadline)
-  formData.append('description', JSON.stringify(editForm.value.description))
+  formData.append('description', editForm.value.description)
 
   if (editForm.value.file) {
     formData.append('file', editForm.value.file)
@@ -132,16 +129,15 @@ const updateTender = async () => {
 
 const saveTender = async () => {
   const formData = new FormData()
-  formData.append('title', JSON.stringify(tender.value.title))
-  formData.append('organization', JSON.stringify(tender.value.organization))
+  formData.append('title', tender.value.title)
+  formData.append('organization', tender.value.organization)
   formData.append('deadline', tender.value.deadline)
-  formData.append('description', JSON.stringify(tender.value.description))
+  formData.append('description', tender.value.description)
 
   if (tender.value.file) {
     formData.append('file', tender.value.file)
   }
 
-  console.log('Tender ' + formData)
   const res = await ApiService.post('/admin/tenders', formData)
   if (res.success) {
     swal({
@@ -151,19 +147,18 @@ const saveTender = async () => {
     fetchTenders()
   }
 }
-onMounted(fetchTenders)
+onMounted(()=>{fetchTenders()})
 </script>
 
 <template>
-  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <button @click="showAddModal = true" class="bg-[#539000] text-white self-end px-2 py-1">
+  <section class="col-span-10 flex flex-col flex-wrap gap-2 px-[1%] py-12">
+    <button @click="showAddModal = true" class="bg-[#539000] text-white rounded-2xl shadow self-end px-2 py-1">
       Add Tender
     </button>
     <DataTable
       :tableHeaders="tableHeaders"
-      :tableValues="tenders"
-      :actions="actions"
-      :currentLanguage="currentLanguage"
+      :tableValues="tenders" 
+    v-if="tenders.length"
     >
     </DataTable>
   </section>
@@ -175,40 +170,34 @@ onMounted(fetchTenders)
       class="bg-white/100 flex flex-col gap-3 justify-center items-center shadow p-2 overflow-auto"
     >
       <button @click="isEditing = !isEditing" class="self-end text-2xl text-red-500">X</button>
-
-      <!-- <div class="flex justify-center gap-16 py-2">
-          <BaseButton @click="toggleLanguage('en')" :class="{ 'bg-green-900 text-white': currentLanguage === 'en', 'bg-gray-200': currentLanguage !== 'en' }"> English </BaseButton>
-         <BaseButton @click="toggleLanguage('am')" :class="{ 'bg-green-900 text-white': currentLanguage === 'am', 'bg-gray-200': currentLanguage !== 'am' }"> Amharic </BaseButton>
-         <BaseButton @click="toggleLanguage('ti')" :class="{ 'bg-green-900 text-white': currentLanguage === 'ti', 'bg-gray-200': currentLanguage !== 'ti' }"> Tigrigna </BaseButton>
-        </div> -->
       <form @submit.prevent="updateTender" class="flex flex-col gap-4">
         <div class="flex flex-col gap-6">
           <BaseInput
-            v-model="editForm.title[currentLanguage]"
+            v-model="editForm.title"
             type="text"
             required
             inputClass="p-2 border border-gray-300 rounded"
-            placeholder="Tender Title"
+            label="Tender Title"
           ></BaseInput>
           <BaseInput
-            v-model="editForm.organization[currentLanguage]"
+            v-model="editForm.organization"
             type="text"
             required
             inputClass="p-2 border border-gray-300 rounded"
-            placeholder="Orgainzation"
+            label="Orgainzation"
           ></BaseInput>
           <BaseInput
             v-model="editForm.deadline"
             type="date"
             required
             inputClass="p-2 border border-gray-300 rounded"
-            placeholder="Tender Deadline"
+            label="Tender Deadline"
           ></BaseInput>
 
           <BaseTextarea
-            v-model="editForm.description[currentLanguage]"
+            v-model="editForm.description"
             inputClass="p-2 border border-gray-300 rounded"
-            placeholder="Tender Description "
+            label="Tender Description "
           ></BaseTextarea>
         </div>
         <div class="flex justify-end gap-2 flex-col">
@@ -228,10 +217,10 @@ onMounted(fetchTenders)
 
   <div
     v-if="showAddModal"
-    class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-[#53900F]/40 bg-opacity-50 modal"
+    class="fixed inset-0 overflow-auto flex items-center z-50 justify-center modal bg-black/40 bg-opacity-50 modal"
   >
     <div class="bg-white shadow-lg w-full max-w-md p-6">
-      <div class="text-center flex flex-col gap-4">
+      <div class="text-cente flex flex-col gap-4">
         <div class="flex justify-between">
           <h3 class="text-lg font-medium text-gray-900">Add Tender</h3>
           <button
@@ -275,31 +264,31 @@ onMounted(fetchTenders)
           <form @submit.prevent="saveTender" class="flex flex-col gap-4">
             <div class="flex flex-col gap-6">
               <BaseInput
-                v-model="tender.title[currentLanguage]"
+                v-model="tender.title"
                 type="text"
                 required
                 inputClass="p-2 border border-gray-300 rounded"
-                placeholder="Tender Title"
+                label="Tender Title"
               ></BaseInput>
               <BaseInput
-                v-model="tender.organization[currentLanguage]"
+                v-model="tender.organization"
                 type="text"
                 required
                 inputClass="p-2 border border-gray-300 rounded"
-                placeholder="Orgainzation"
+                label="Orgainzation"
               ></BaseInput>
               <BaseInput
                 v-model="tender.deadline"
                 type="date"
                 required
                 inputClass="p-2 border border-gray-300 rounded"
-                placeholder="Tender Deadline"
+                label="Tender Deadline"
               ></BaseInput>
 
               <BaseTextarea
-                v-model="tender.description[currentLanguage]"
+                v-model="tender.description"
                 inputClass="p-2 border border-gray-300 rounded"
-                placeholder="Tender Description "
+                label="Tender Description "
               ></BaseTextarea>
             </div>
             <div class="flex justify-end gap-2 flex-col">

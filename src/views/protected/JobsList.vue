@@ -11,11 +11,11 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const isAdd = ref(false)
-const toggleAdd = () => {
-  isAdd.value = true
-}
+// const toggleAdd = () => {
+//   isAdd.value = true
+// }
 
-const currentLanguage = ref('en')
+// const currentLanguage = ref('en')
 const tableHeaders = [
   { label: 'Job Title', field: 'jobTitle' },
   { label: 'Location', field: 'location' },
@@ -119,9 +119,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <router-link class="bg-[#539000] text-white self-end px-2 py-1" :to="{ name: 'create-job' }"
-      >Add jobs</router-link
+  <section class="col-span-10 flex flex-col flex-wrap gap-2 px-[1%] py-12">
+    <router-link class="bg-[#53900F] text-white rounded-2xl shadow self-end px-2 py-1" :to="{ name: 'create-job' }"
+      >New job</router-link
     >
     <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions"></DataTable>
   </section>

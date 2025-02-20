@@ -177,7 +177,7 @@ onUnmounted(() => {
       <LeftSide
         barClass="hidden md:block md:col-span-2 py-4 flex flex-col gap-4 shadow-xl px-2 h-screen sticky left-0 top-0 z-10 bottom-0 max-md:overflow-auto overflow-y-auto left-side-scroll"
       ></LeftSide>
-      <router-view class="col-span-10"></router-view>
+      <router-view class="col-span-10 bg-slate-50"></router-view>
     </div>
   </section>
 </template>

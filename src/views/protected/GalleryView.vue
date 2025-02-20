@@ -85,7 +85,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] bg-gray-50 px-[6%] py-12">
+  <section class="col-span-10 bg-slate-50 px-[6%] py-12">
     <div class="grid grid-cols-1 md:grid-cols-12 place-items-start">
       <div class="col-span-9">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
@@ -96,23 +96,24 @@ onMounted(() => {
               class="w-48 h-48 object-cover object-center transition-all duration-1000 hover:scale-[110%]"
             />
             <div class="flex gap-4">
-              <button @click="deleteGallery(gallery.id)">
-                <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+              <button @click="editGallery(gallery)" class="text-blue-500 bg-slate-200 rounded px-2">
+                <font-awesome-icon icon="edit" ></font-awesome-icon>Edit
               </button>
-              <button @click="editGallery(gallery)">
-                <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+              <button @click="deleteGallery(gallery.id)" class="text-red-500 bg-slate-200 rounded px-2">
+                <font-awesome-icon icon="trash" ></font-awesome-icon>Delete
               </button>
+             
             </div>
           </div>
         </div>
       </div>
       <div class="col-span-3 flex flex-col p-6 bg-white shadow">
-        <form @submit.prevent="saveGallery" v-if="!editingGalleryId">
+        <form @submit.prevent="saveGallery" v-if="!editingGalleryId" class="flex flex-col gap-1">
           <BaseFileInput @image-update="captureImage" label="Add Gallery"
           type="file"
-          accept="image/*"
+          accept="image/*" 
           ></BaseFileInput>
-          <BaseButton type="submit">Save</BaseButton>
+          <BaseButton type="submit" class="w-full">Save</BaseButton>
         </form>
         <form @submit.prevent="saveEditedGallery" v-else>
           <BaseFileInput @image-update="captureEditImage" label="Edit Gallery"
@@ -120,7 +121,7 @@ onMounted(() => {
           accept="image/*"
           ></BaseFileInput>
           <BaseButton type="submit">Update</BaseButton>
-          <BaseButton type="button"  class="bg-yellow-500" @click="editingGalleryId = null; editImage = null">Cancel</BaseButton>
+          <BaseButton type="button"  class="bg-gray-500" @click="editingGalleryId = null; editImage = null">Cancel</BaseButton>
         </form>
       </div>
     </div>

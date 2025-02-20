@@ -102,7 +102,7 @@ onMounted(fetchDonations)
 </script>
 
 <template>
-  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
+  <section class="col-span-10 flex flex-col flex-wrap gap-2 px-[1%] py-12">
     <!-- <router-link :to="{ name: 'home' }" class="bg-[#539000] text-white self-end px-2 py-1"
       >Add Donation</router-link
     > -->

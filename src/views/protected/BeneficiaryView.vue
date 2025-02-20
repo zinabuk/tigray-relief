@@ -18,7 +18,7 @@ const fetchBeneficiaries = async () => {
       beneficiaries.value = response.data.map((item) => ({
         ...item,
         title: JSON.parse(item.title),
-        description: JSON.parse(item.description),
+        description: JSON.parse(item.description)
       }))
     }
   } catch (error) {
@@ -129,24 +129,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-[82%] px-[6%] py-12 flex flex-col items-center gap-4 bg-white rounded-2xl">
+  <section
+    class="col-span-10 px-[2%] py-12 flex flex-col items-center gap-4 bg-slate-50 rounded-2xl"
+  >
     <!-- Beneficiaries -->
-    <button
-      @click="showAddModal = true"
-      class="text-[#539000] self-end border flex items-center px-2 py-1 border-[#539000]"
-    >
-      <font-awesome-icon
-        icon="add"
-        class="bg-white text-[#539000] p-2 rounded-full"
-      ></font-awesome-icon>
+    <button @click="showAddModal = true" class="text-white self-end bg-[#53900F] px-2 rounded-full py-1 shadow">
+      <font-awesome-icon icon="add"></font-awesome-icon>
       Add Beneficiary
     </button>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 place-content-center">
       <div
         v-for="(beneficiary, i) in beneficiaries"
         :key="i"
-        class="p-4 flex flex-col gap-2 zbg-white hover:bg-[#53900F] hover:text-white justify-between shadow-xl bg-[#53900F]/10"
+        class="p-4 flex flex-col gap-2 zbg-white  justify-between shadow"
       >
         <img
           v-if="beneficiary.image"
@@ -159,7 +155,7 @@ onMounted(() => {
         <p class="line-clamp-5">
           {{ beneficiary.description[currentLanguage] }}
         </p>
-        <div class="flex gap-2 justify-end">
+        <div class="flex gap-4">
           <button @click="editBeneficiary(beneficiary)">
             <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
           </button>
