@@ -80,15 +80,8 @@ onUnmounted(() => {
           <font-awesome-icon icon="bars" class="text-yellow-300"></font-awesome-icon>
         </button> -->
       </div>
-      <div class="flex justify-center items-center gap-8">
-        <div class="">
-          <!-- <input
-            type="search"
-            placeholder="Search"
-            class="px-4 border-2 border-t-0 outline-none border-r-0 border-l-0 py-2"
-          /> -->
-        </div>
-
+      <div class="flex zjustify-center items-center gap-8">
+         
         <div class="relative text-center">
           <font-awesome-icon icon="bell" class="text-blue-500 text-xl"></font-awesome-icon>
         </div>
@@ -100,12 +93,6 @@ onUnmounted(() => {
               alt="Profile"
               class="w-full h-full rounded-full"
             />
-            <!-- <img
-                  v-else
-                  src="@/assets/account.png"
-                  alt="my profile"
-                  class="w-full h-full rounded-full"
-                /> -->
           </div>
           <div class="flex px-2 py-1 gap-4 justify-between items-center bg-white/70">
             <p class="">{{ name }}</p>
@@ -146,7 +133,7 @@ onUnmounted(() => {
               <router-link
                 :to="{ name: 'users' }"
                 class="flex gap-2 items-center text-sm"
-                exact-active-class="meyla-color4"
+                exact-active-class=""
                 @click="hideDropdown"
               >
                 <font-awesome-icon icon="user-check" class="text-sm"></font-awesome-icon>
@@ -156,7 +143,7 @@ onUnmounted(() => {
               <router-link
                 :to="{ name: 'account' }"
                 class="flex gap-2 items-center text-sm"
-                exact-active-class="meyla-color4"
+                exact-active-class="-color4"
                 @click="hideDropdown"
               >
                 <font-awesome-icon icon="user-circle" class="text-sm"></font-awesome-icon>
