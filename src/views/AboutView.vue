@@ -208,7 +208,7 @@ onMounted(() => {
           class="self-start rounded-full min-w-[28px] min-h-[28px] flex items-center justify-center bg-slate-100"
         >
           <font-awesome-icon
-            icon="eye"
+            icon="handshake"
             class="text-blue-500 text-left rounded-full"
           ></font-awesome-icon>
         </div>
