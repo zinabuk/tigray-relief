@@ -56,10 +56,12 @@ const saveJob = async () => {
 
 <template>
   <div
-    class="w-[82%] flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto"
+    class="w-[82%] flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto p-2"
   >
-    <div><button @click.prevent="$router.push({ name: 'admin-jobs' })">Go back</button></div>
-    <div class="w-full md:w-3/4 bg-white">
+    <div class="self-start">
+      <button @click.prevent="$router.push({ name: 'admin-jobs' })">Go back</button>
+    </div>
+    <div class="w-full md:w-3/4 bg-">
       <h1 class="text-center text-xl font-semibold">Vacancy form</h1>
       <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 py-4 px-4">
         <div class="grid grid-cols-12 gap-2">
@@ -69,7 +71,7 @@ const saveJob = async () => {
               type="text"
               required
               inputClass="px-8"
-              placeholder="job title"
+              placeholder="Job Title"
             ></BaseInput>
           </div>
           <div class="col-span-6">
@@ -78,7 +80,7 @@ const saveJob = async () => {
               type="text"
               inputClass="px-8"
               required
-              placeholder="employment type"
+              placeholder="Employment Type"
             ></BaseInput>
           </div>
         </div>
@@ -87,37 +89,42 @@ const saveJob = async () => {
           type="text"
           inputClass="px-8"
           required
-          placeholder="location"
+          placeholder="Work Place"
         ></BaseInput>
-        <BaseInput v-model="job.experience" inputClass="px-8" placeholder="experience"></BaseInput>
-        <BaseInput v-model="job.salary" required inputClass="px-8" placeholder="salary"></BaseInput>
+        <BaseInput v-model="job.experience" inputClass="px-8" placeholder="Experience"></BaseInput>
+        <BaseInput v-model="job.salary" required inputClass="px-8" placeholder="Salary"></BaseInput>
         <BaseInput
           type="date"
           v-model="job.deadline"
           required
           inputClass="px-8 py-3"
-          placeholder="deadline"
+          placeholder="Deadline"
         ></BaseInput>
         <BaseTextarea
           v-model="job.qualification"
           rows="4"
           textareaClasses="px-8"
-          placeholder="qualification"
+          placeholder="Qualification"
         ></BaseTextarea>
+
         <BaseTextarea
           v-model="job.description"
           rows="4"
           textareaClasses="px-8"
           placeholder="Description"
         ></BaseTextarea>
-        <BaseFileInput
-          @change="handleFileChange"
-          label="Add File"
-          type="file"
-          inputClass="p-2 border border-gray-300 rounded"
-          accept="*"
-        />
 
+        <div class="flex relative bg-white">
+          <font-awesome-icon icon="file" class="absolute bottom-4"></font-awesome-icon>
+          <BaseFileInput
+            @change="handleFileChange"
+            label="Add File"
+            type="file"
+            class="py-[2px]"
+            inputClass="pl-4 px-2 py-[2px] border border-gray-300 rounded"
+            accept="*"
+          />
+        </div>
         <p v-if="errorMessage" class="text-red-700">{{ errorMessage }}</p>
         <div class="flex gap-4">
           <BaseButton type="submit" class="self-start">Submit</BaseButton>
