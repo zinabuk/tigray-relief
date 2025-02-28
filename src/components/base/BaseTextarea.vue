@@ -1,6 +1,6 @@
 <template>
   <div class="input-container relative w-full">
-    <label :for="label" v-if="label" class="font-semibold">{{ label }}</label>
+    <label :for="label" v-if="label" class="font-semibdold">{{ label }}</label>
     <textarea
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"

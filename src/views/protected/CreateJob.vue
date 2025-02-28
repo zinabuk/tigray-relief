@@ -7,6 +7,7 @@ import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue' // Import your BaseFileInput component
+import RichTextInput from '@/components/base/RichTextInput.vue'
 
 const router = useRouter()
 const errorMessage = ref('')
@@ -42,6 +43,8 @@ const saveJob = async () => {
         title: response.message,
         icon: 'success'
       })
+      job.value = {}
+      file.value = ''
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -62,7 +65,7 @@ const saveJob = async () => {
       <button @click.prevent="$router.push({ name: 'admin-jobs' })">Go back</button>
     </div>
     <div class="w-full md:w-3/4 bg-">
-      <h1 class="text-center text-xl font-semibold">Vacancy form</h1>
+      <h1 class="text-center text-lg font-semibold">New Job</h1>
       <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 py-4 px-4">
         <div class="grid grid-cols-12 gap-2">
           <div class="col-span-6">
@@ -71,7 +74,7 @@ const saveJob = async () => {
               type="text"
               required
               inputClass="px-8"
-              placeholder="Job Title"
+              label="Job Title"
             ></BaseInput>
           </div>
           <div class="col-span-6">
@@ -80,7 +83,7 @@ const saveJob = async () => {
               type="text"
               inputClass="px-8"
               required
-              placeholder="Employment Type"
+              label="Employment Type"
             ></BaseInput>
           </div>
         </div>
@@ -89,31 +92,34 @@ const saveJob = async () => {
           type="text"
           inputClass="px-8"
           required
-          placeholder="Work Place"
+          label="Work Place"
         ></BaseInput>
-        <BaseInput v-model="job.experience" inputClass="px-8" placeholder="Experience"></BaseInput>
-        <BaseInput v-model="job.salary" required inputClass="px-8" placeholder="Salary"></BaseInput>
+        <BaseInput v-model="job.experience" inputClass="px-8" label="Experience"></BaseInput>
+        <BaseInput v-model="job.salary" required inputClass="px-8" label="Salary"></BaseInput>
         <BaseInput
           type="date"
           v-model="job.deadline"
           required
           inputClass="px-8 py-3"
-          placeholder="Deadline"
+          label="Deadline"
         ></BaseInput>
         <BaseTextarea
           v-model="job.qualification"
           rows="4"
           textareaClasses="px-8"
-          placeholder="Qualification"
+          label="Qualification"
         ></BaseTextarea>
 
-        <BaseTextarea
+        <!-- <BaseTextarea
           v-model="job.description"
           rows="4"
           textareaClasses="px-8"
-          placeholder="Description"
-        ></BaseTextarea>
-
+          label="Description"
+        ></BaseTextarea> -->
+        <div class="flex flex-col">
+          <h1>Description</h1>
+          <RichTextInput v-model:content="job.description"></RichTextInput>
+        </div>
         <div class="flex relative bg-white">
           <BaseFileInput
             @change="handleFileChange"
