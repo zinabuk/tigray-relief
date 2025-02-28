@@ -115,26 +115,19 @@ const saveJob = async () => {
         ></BaseTextarea>
 
         <div class="flex relative bg-white">
-          <font-awesome-icon icon="file" class="absolute bottom-4"></font-awesome-icon>
           <BaseFileInput
             @change="handleFileChange"
-            label="Add File"
+            label="Attach File"
             type="file"
-            class="py-[2px]"
+            icon="file"
+            fileClass="py-[2px] cursor-pointer"
             inputClass="pl-4 px-2 py-[2px] border border-gray-300 rounded"
             accept="*"
           />
         </div>
         <p v-if="errorMessage" class="text-red-700">{{ errorMessage }}</p>
         <div class="flex gap-4">
-          <BaseButton type="submit" class="self-start">Submit</BaseButton>
-          <button
-            type="button"
-            class="bg-gray-600 text-white px-4 py-2"
-            @click="closeModal = false"
-          >
-            Cancel
-          </button>
+          <BaseButton type="submit" class="self-start px-4 py-[2px]">Save</BaseButton>
         </div>
       </form>
     </div>

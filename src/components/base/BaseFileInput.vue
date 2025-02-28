@@ -11,16 +11,20 @@
     <font-awesome-icon
       v-if="icon"
       :icon="icon"
-      class="absolute top-1/2 transform -translate-y-1/2 left-4 text-white"
+      class="absolute top-1/2 transform -translate-y-1/2 left-4 ztext-white"
     />
-    <label :for="uniqueId" v-if="label" class="font-semibold border bg-white py-3 ml-4 px-6 self-start">
+    <label
+      :for="uniqueId"
+      v-if="label"
+      class="font-semibold border bg-white py-3 ml-4 px-6 self-start"
+    >
       {{ label }}
     </label>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 defineProps({
   icon: {
@@ -39,17 +43,17 @@ defineProps({
     type: String,
     default: ''
   }
-});
+})
 
-const emit = defineEmits(['image-update']);
+const emit = defineEmits(['image-update'])
 
 // Generate a unique ID for each instance
-const uniqueId = `file-input-${Math.random().toString(36).substr(2, 9)}`;
+const uniqueId = `file-input-${Math.random().toString(36).slice(2, 9)}`
 
 const onFileChange = ($event) => {
-  let file = $event.target.files[0];
+  let file = $event.target.files[0]
   if (file) {
-    emit('image-update', file);
+    emit('image-update', file)
   }
-};
+}
 </script>
