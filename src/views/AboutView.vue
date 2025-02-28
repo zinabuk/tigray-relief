@@ -142,49 +142,82 @@ onMounted(() => {
       :key="i"
     >
       <div
-        class="p-6 flex flex-col gap-4 bg-white items-center justify-center zshadow-xl"
+        class="p-6 flex flex-col gap-12 bg-white items-centerz justify-between rounded-xl shadow-xl"
         data-aos="fade-right"
       >
         <!-- <font-awesome-icon icon="bullseye" class="text-6xl text-[#539000]"></font-awesome-icon> -->
-        <img
+        <!-- <img
           src="https://restindia.org/wp-content/uploads/2022/09/target.png"
           alt=""
           class="w-24 h-24"
-        />
-        <h1 class="text-2xl font-bold">Our Mission</h1>
-        <p class="lowercase">
-          {{ aboutus.mission[currentLanguage] }}
-        </p>
+        /> -->
+
+        <div
+          class="self-start rounded-full min-w-[28px] min-h-[28px] flex items-center justify-center bg-slate-100"
+        >
+          <font-awesome-icon
+            icon="bullseye"
+            class="text-[#53900F] text-left rounded-full"
+          ></font-awesome-icon>
+        </div>
+        <div class="flex flex-col gap-1">
+          <h1 class="text-2xl font-bold">Our Mission</h1>
+          <p class="lowercase">
+            {{ aboutus.mission[currentLanguage] }}
+          </p>
+        </div>
       </div>
 
       <div
-        class="p-6 flex flex-col gap-4 zshadow-xl bg-white items-center justify-center"
+        class="p-6 flex flex-col gap-12 shadow-xl bg-white zitems-center rounded-xl"
         data-aos="fade-up"
       >
-        <img
+        <!-- <img
           src="https://restindia.org/wp-content/uploads/2022/09/vision.png"
           alt=""
           class="w-24 h-24"
-        />
-        <h1 class="text-2xl font-bold">Our Vision</h1>
-        <p class="lowercase">
-          {{ aboutus.vision[currentLanguage] }}
-        </p>
+        /> -->
+
+        <div
+          class="self-start rounded-full min-w-[28px] min-h-[28px] flex items-center justify-center bg-slate-100"
+        >
+          <font-awesome-icon
+            icon="eye"
+            class="text-yellow-400 text-left rounded-full"
+          ></font-awesome-icon>
+        </div>
+        <div class="flex flex-col gap-1">
+          <h1 class="text-2xl font-bold">Our Vision</h1>
+          <p class="lowercase">
+            {{ aboutus.vision[currentLanguage] }}
+          </p>
+        </div>
       </div>
       <div
-        class="p-6 flex flex-col gap-4 zshadow-xl bg-white items-center justify-center"
+        class="p-6 flex flex-col shadow-xl gap-12 rounded-xl bg-white zitems-center"
         data-aos="fade-left"
       >
         <!-- <font-awesome-icon icon="balance-scale" class="text-6xl text-[#539000]"></font-awesome-icon> -->
-        <img
+        <!-- <img
           src="https://restindia.org/wp-content/uploads/2022/09/united.png"
           alt=""
           class="w-24 h-24"
-        />
-        <h1 class="text-2xl font-bold">Our Values</h1>
-        <p class="lowercase">
-          {{ aboutus.coreValues[currentLanguage] }}
-        </p>
+        /> -->
+
+        <div
+          class="self-start rounded-full min-w-[28px] min-h-[28px] flex items-center justify-center bg-slate-100"
+        >
+          <font-awesome-icon
+            icon="eye"
+            class="text-blue-500 text-left rounded-full"
+          ></font-awesome-icon>
+        </div>
+        <div class="flex flex-col gap-1">
+          <h1 class="text-2xl font-bold">Our Values</h1>
+          <p class="lowercase">
+            {{ aboutus.coreValues[currentLanguage] }}
+          </p>
+        </div>
       </div>
     </div>
   </section>

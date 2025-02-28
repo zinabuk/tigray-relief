@@ -1,12 +1,9 @@
 // main.js
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './assets/main.css'
-
 // import { QuillEditor } from 'vue-quill-editor'
 // import 'quill/dist/quill.snow.css' // Import Quill CSS
-
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
@@ -16,6 +13,7 @@ import i18n from '@/plugins/i18n'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
+  faBullseye,
   faCoffee,
   faUser,
   faCog,
@@ -53,7 +51,6 @@ import {
   faCamera,
   faBars,
   faGlobe,
-  faBullseye,
   faBinoculars,
   faBalanceScale,
   faBrain,
@@ -61,23 +58,23 @@ import {
   faHeart,
   faTimes,
   faDownload,
-  faGift, 
-  faStar, 
-  faInfoCircle, 
-  faHistory, 
-  faHandsHelping, 
-  faUsers, 
-  faPeopleCarry, 
+  faGift,
+  faStar,
+  faInfoCircle,
+  faHistory,
+  faHandsHelping,
+  faUsers,
+  faPeopleCarry,
   faQuestionCircle,
-  faUserCheck, 
-  faShieldAlt, 
-  faAddressCard, 
-  faShareAlt, 
-  faFile, 
-  faBook, 
-  faLightbulb, 
-  faLock, 
-  faBriefcase, 
+  faUserCheck,
+  faShieldAlt,
+  faAddressCard,
+  faShareAlt,
+  faFile,
+  faBook,
+  faLightbulb,
+  faLock,
+  faBriefcase,
   faImages,
   faFileAlt
 } from '@fortawesome/free-solid-svg-icons'
@@ -92,7 +89,8 @@ import {
   faInstagram
 } from '@fortawesome/free-brands-svg-icons'
 
-library.add(
+library.add( 
+  faBullseye,
   faCoffee,
   faUser,
   faCog,
@@ -145,25 +143,25 @@ library.add(
   faTimes,
   faWhatsapp,
   faDownload,
-  faGift, 
-  faStar, 
-  faInfoCircle, 
-  faHistory, 
-  faHandsHelping, 
-  faUsers, 
-  faPeopleCarry, 
-  faQuestionCircle, 
-  faUserCheck, 
-  faShieldAlt, 
-  faAddressCard, 
-  faShareAlt, 
-  faFile, 
-  faBook, 
-  faLightbulb, 
-  faLock, 
-  faFileAlt ,
-  faBriefcase, 
-  faImages 
+  faGift,
+  faStar,
+  faInfoCircle,
+  faHistory,
+  faHandsHelping,
+  faUsers,
+  faPeopleCarry,
+  faQuestionCircle,
+  faUserCheck,
+  faShieldAlt,
+  faAddressCard,
+  faShareAlt,
+  faFile,
+  faBook,
+  faLightbulb,
+  faLock,
+  faFileAlt,
+  faBriefcase,
+  faImages
 )
 
 AOS.init({ duration: 2000 })
