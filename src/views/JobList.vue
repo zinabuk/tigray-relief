@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'  
+import { ref, onMounted } from 'vue'
 import swal from 'sweetalert'
 import ApiService from '@/services/apiService'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
@@ -15,25 +15,14 @@ const career = ref({})
 // const successMessage = ref('')
 const errorMessage = ref('')
 
-// const toggleApply = (job) => {
-//   isApply.value = true
-//   career.value = job
-//   successMessage.value = ''
-//   errorMessage.value = 0
-// }
-
 const letter = ref('')
 const resume = ref('')
 const form = ref({ fullName: '', email: '', resume: '', message: '' })
 
-// const captureLetter = (file) => {
-//   letter.value = file
-//   form.value.applicationLetter = file
-// }
-
-const captureResume = (file) => {
-  resume.value = file
-  form.value.resume = file
+const captureResume = (event) => {
+  alert(event)
+  // resume.value = file
+  // form.value.resume = file
 }
 
 async function fetchJobs() {
@@ -48,10 +37,13 @@ const submitApplication = async () => {
     formData.append('fullName', form.value.fullName)
     formData.append('email', form.value.email)
     formData.append('phoneNumber', form.value.phoneNumber)
+    formData.append('message', form.value.message)
+
     // formData.append('applicationLetter', form.value.applicationLetter)
-    formData.append('resume', form.value.resume)
+    if (resume.value) {
+      formData.append('resume', resume.value)
+    }
     const response = await ApiService.applyJob('/users/applications/' + career.value.id, formData)
-    console.log(formData)
     if (response.success) {
       form.value = {}
       resume.value = ''
@@ -106,8 +98,12 @@ function shareOnTwitter() {
   window.open(twitterUrl, '_blank')
 }
 function isImage(fileName) {
-  return /\.(jpg|jpeg|png|gif)$/i.test(fileName.toLowerCase())
+  if (fileName) {
+    return /\.(jpg|jpeg|png|gif)$/i.test(fileName.toLowerCase())
+  }
 }
+
+const showApplicationModal = ref(false)
 
 onMounted(() => {
   fetchJobs()
@@ -117,169 +113,168 @@ onMounted(() => {
 <template>
   <div class="w-full md:p-[2%] flex items-center justify-center bg-[#53900F]/10">
     <div
-      class="w-full md:w-[80%] py-2 flex flex-col gap-5 bg-red-40r0 justify-center items-start"
+      class="w-full md:w-[80%] py-4 flex flex-col gap-5 bg-white shadow-md rounded-lg p-6"
       v-if="jobs.length > 0"
     >
-      <div class="w-full grid grid-cols-12 shadow" v-for="(career, index) in jobs" :key="index">
+      <div
+        class="w-full grid grid-cols-12 shadow-md rounded-md overflow-hidden"
+        v-for="(career, index) in jobs"
+        :key="index"
+      >
         <div class="col-span-12 md:col-span-8">
-          <div
-            class="pt-3 w-full text-[14px] flex flex-col bg-white justify-center mx-auto px-8 shadow-inner"
-          >
-            <h2 class="w-full text-[16px] pt-4 font-semibold">Job Detail</h2>
-            <ul class="w-full flex flex-wrap py-4">
+          <!-- Job Details -->
+          <div class="bg-white w-full p-6 shadow-sm">
+            <!-- <h2 class="text-lg font-semibold text-gray-800">Job Detail</h2> -->
+            <h1 class="text-lg font-semibold">{{ career.jobTitle }}</h1>
+            <ul class="w-full flex flex-wrap py-4 text-gray-700">
               <li class="w-full md:basis-1/2">
-                Experience:
-                <span class="pl-2 text-sm font-semibold"> {{ career.experience }}</span>
+                <span class="font-medium">Experience:</span>
+                <span class="pl-2">{{ career.experience }}</span>
               </li>
               <li class="w-full md:basis-1/2">
-                Salary: <span class="pl-2 font-semibold"> {{ career.salary }}</span>
+                <span class="font-medium">Salary:</span>
+                <span class="pl-2">{{ career.salary }}</span>
               </li>
               <li class="w-full md:basis-1/2">
-                Country: <span class="pl-2 text-sm font-semibold"> Ethiopia</span>
+                <span class="font-medium">Country:</span>
+                <span class="pl-2">Ethiopia</span>
               </li>
               <li class="w-full md:basis-1/2">
-                Location:
-                <span class="pl-2 font-semibold"> Tigray</span>
+                <span class="font-medium">Location:</span>
+                <span class="pl-2">Tigray</span>
               </li>
               <li class="w-full md:basis-1/2">
-                Employment Type:
-                <span class="pl-2 text-sm font-semibold">{{ career.employmentType }}</span>
+                <span class="font-medium">Employment Type:</span>
+                <span class="pl-2">{{ career.employmentType }}</span>
               </li>
-
-              <li class="divide-x-2 w-full md:basis-1/2">
-                Deadline:
-                <span class="text-red-500 text-sm font-semibold">{{ career.deadline }}</span>
+              <li class="w-full md:basis-1/2 text-red-500">
+                <span class="font-medium">Deadline:</span>
+                <span class="pl-2">{{ career.deadline }}</span>
               </li>
             </ul>
           </div>
-          <div class="bg-white w-full p-4">
-            <div class="w-full p-4">
-              <h1 class="text-[16px] font-semibold">Job Description</h1>
-              <ul class="py-2">
-                <li class="">{{ career.description }}</li>
-              </ul>
-            </div>
+
+          <!-- Job Description -->
+          <div class="bg-white w-full p-6 shadow-sm">
+            <h1 class="text-lg font-semibold text-gray-800">Job Description</h1>
+            <p class="py-2 text-gray-700">{{ career.description }}</p>
           </div>
-          <div class="bg-white w-full p-4">
-            <div class="w-full p-4">
-              <h1 class="text-[16px] font-semibold">Job Requirement:</h1>
-              <ul class="py-2">
-                <li class="">{{ career.qualification }}</li>
-              </ul>
-            </div>
-            <div>
+
+          <!-- Job Requirements -->
+          <div class="bg-white w-full p-6 shadow-sm">
+            <h1 class="text-lg font-semibold text-gray-800">Job Requirements</h1>
+            <p class="py-2 text-gray-700">{{ career.qualification }}</p>
+
+            <!-- Job File (Image or Download) -->
+            <div class="mt-4">
               <div v-if="isImage(career.file)">
                 <img
                   :src="BASE_UPLOAD + career.file"
-                  alt="Image"
-                  class="h-24 w-24 object-contain"
+                  alt="Job File"
+                  class="h-24 w-24 object-contain border border-gray-300 shadow-sm rounded-md"
                 />
               </div>
               <div v-else>
-                <a :href="BASE_UPLOAD + career.file" target="_blank" class="text-blue-500">
+                <a
+                  :href="BASE_UPLOAD + career.file"
+                  target="_blank"
+                  class="text-blue-500 hover:underline"
+                >
                   {{ career.file }}
                 </a>
               </div>
             </div>
           </div>
-          <div class="bg-white p-3">
-            <h1 class="txt-white font-bold">{{ $t('SHARE ON SOCIAL MEDIA') }}</h1>
-            <div class="flex">
-              <a class="txt-white" href="#" @click="shareOnFacebook()">
-                <font-awesome-icon :icon="['fab', 'facebook']" class="text-whitex p-2 rounded">
-                </font-awesome-icon> </a
-              ><a class="txt-white" href="#" @click="shareOnTwitter()">
-                <font-awesome-icon :icon="['fab', 'twitter']" class="text-whitex p-2 rounded">
-                </font-awesome-icon> </a
-              ><a class="txt-white" href="#" @click="shareOnLinkedIn()">
-                <font-awesome-icon :icon="['fab', 'linkedin']" class="text-whitex p-2 rounded">
-                </font-awesome-icon>
+          <button @click.prevent="showApplicationModal = true">Easy Apply</button>
+          <!-- Social Media Sharing -->
+          <div class="bg-white p-4 shadow-sm">
+            <h1 class="text-gray-800 font-semibold">Share on Social Media</h1>
+            <div class="flex space-x-3 mt-2">
+              <a href="#" @click="shareOnFacebook()" class="text-blue-600 hover:text-blue-800">
+                <font-awesome-icon :icon="['fab', 'facebook']" class="text-2xl"></font-awesome-icon>
+              </a>
+              <a href="#" @click="shareOnTwitter()" class="text-blue-400 hover:text-blue-600">
+                <font-awesome-icon :icon="['fab', 'twitter']" class="text-2xl"></font-awesome-icon>
+              </a>
+              <a href="#" @click="shareOnLinkedIn()" class="text-blue-700 hover:text-blue-900">
+                <font-awesome-icon :icon="['fab', 'linkedin']" class="text-2xl"></font-awesome-icon>
               </a>
             </div>
           </div>
         </div>
-        <div
-          class="bg-white flex flex-col md:p-12 gap-2 overflow-auto col-span-12 md:col-span-4 p-4 borde"
-        >
-          <div class="flex justify-between">
-            <h1 class="text-center font-semibold">Application Form</h1>
-            <!-- <button
-              class="text-gray-900 self-end bg-white border border-black px-2"
-              @click="isApply = !isApply"
-            >
-              Cancel
-            </button> -->
-          </div>
-
-          <form @submit.prevent="submitApplication" class="flex w-full flex-col gap-4">
-            <div class="flex w-full gap-6">
-              <div class="w-full space-y-2">
-                <BaseInput
-                  v-model="form.fullName"
-                  inputClass=""
-                  label="Name"
-                  class="w-full"
-                  required
-                ></BaseInput>
-                <BaseInput
-                  v-model="form.email"
-                  inputClass=""
-                  label="Email"
-                  class="w-full"
-                  required
-                ></BaseInput>
-                <BaseTextarea
-                  v-model="form.message"
-                  label="Message"
-                  placeholder="Your cover message/letter sent to employer"
-                ></BaseTextarea>
-                <!-- <BaseInput
-                  v-model="form.phoneNumber"
-                  inputClass=""
-                  label="Phone Number"
-                  class="w-full"
-                  required
-                ></BaseInput> -->
-              </div>
-            </div>
-            <div class="flex justify-between w-full flex-col gap-2">
-              <div class="flex w-full px-4">
-                <BaseFileInput
-                  @image-update="captureResume($event)"
-                  label="Browse your CV"
-                  type="file"
-                  accept="application/pdf"
-                  icon="camera"
-                  fileClass=""
-                >
-                </BaseFileInput>
-              </div>
-              <span class="text-sm font">Maximum file upload size: 128MB</span>
-              <span>{{ form.resume.name }}</span>
-              <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
-
-              <BaseButton type="submit" class="w-full">Apply Now</BaseButton>
-            </div>
-          </form>
-        </div>
-        <!-- <div class="w-full flex justify-between bg-white p-4"> -->
-        <!-- <ul class="flex space-x-4 p-4 justify-center items-center">
-            <li> -->
-        <!-- <button
-                class="bg-[#53900F] rounded text-white px-2 py-1"
-                @click="toggleApply(career)"
-              >
-                {{ $t('Apply Now') }}
-              </button> -->
-        <!-- </li>
-          </ul>
-        </div> -->
       </div>
     </div>
 
-    <div v-else>No jobs available this time</div>
+    <!-- No Jobs Available -->
+    <div v-else class="text-gray-600 text-lg font-medium py-6">No jobs available at this time</div>
+
+    <div
+      class="fixed z-50 inset-0 bg-slate-100/40 flex items-center justify-center"
+      v-if="showApplicationModal"
+    >
+      <div class="bg-white w-full md:w-1/2 flex flex-col md:p-12 gap-4 p-6 rounded-lg shadow-lg">
+        <div class="flex justify-center">
+          <h1 class="text-lg font-semibold text-gray-800">Application Form</h1>
+        </div>
+
+        <form @submit.prevent="submitApplication" class="flex w-full flex-col gap-4">
+          <!-- Input Fields -->
+          <div class="w-full space-y-4">
+            <BaseInput
+              v-model="form.fullName"
+              label="Full Name"
+              class="w-full"
+              required
+            ></BaseInput>
+
+            <BaseInput
+              v-model="form.email"
+              label="Email Address"
+              class="w-full"
+              required
+            ></BaseInput>
+
+            <BaseTextarea
+              v-model="form.message"
+              label="Application Letter"
+              class="w-full"
+              required
+            ></BaseTextarea>
+          </div>
+
+          <!-- File Upload -->
+          <div class="w-full space-y-2">
+            <BaseFileInput
+              @image-update="captureResume($event)"
+              label="Upload Your CV (PDF)"
+              type="file"
+              accept="application/pdf"
+              icon="file"
+              class="w-fullz"
+            ></BaseFileInput>
+
+            <span class="text-sm text-gray-600">Maximum file size: **128MB**</span>
+            <span class="text-sm text-green-700" v-if="form.resume.name">{{
+              form.resume.name
+            }}</span>
+          </div>
+
+          <!-- Error Message -->
+          <p class="text-red-600 text-sm" v-if="errorMessage">{{ errorMessage }}</p>
+
+          <!-- Submit Button -->
+          <BaseButton
+            type="submit"
+            class="w-full bg-green-600z text-white py-2 rounded-lg hzover:bg-green-700"
+          >
+            Apply Now
+          </BaseButton>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
+
 <style scoped>
 .img-1 {
   animation: img-spin 2s linear infinite;
