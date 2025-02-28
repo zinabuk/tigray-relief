@@ -21,7 +21,6 @@ const handleFileChange = (event) => {
 const saveJob = async () => {
   try {
     const formData = new FormData()
-
     // Append job data
     Object.keys(job.value).forEach((key) => {
       formData.append(key, job.value[key])
@@ -31,13 +30,6 @@ const saveJob = async () => {
     if (file.value) {
       formData.append('file', file.value)
     }
-
-    // Log FormData to debug
-    // for (let pair of formData.entries()) {
-    //   console.log(`${pair[0]}: ${pair[1]}`)
-    // }
-
-    console.log(formData)
 
     const response = await ApiService.post('/admin/vacancies', formData, {
       headers: {
@@ -50,7 +42,6 @@ const saveJob = async () => {
         title: response.message,
         icon: 'success'
       })
-      router.push({ name: 'admin-jobs' })
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -67,7 +58,8 @@ const saveJob = async () => {
   <div
     class="w-[82%] flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto"
   >
-    <div class="w-1/2 bg-white">
+    <div><button @click.prevent="$router.push({ name: 'admin-jobs' })">Go back</button></div>
+    <div class="w-full md:w-3/4 bg-white">
       <h1 class="text-center text-xl font-semibold">Vacancy form</h1>
       <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 py-4 px-4">
         <div class="grid grid-cols-12 gap-2">
