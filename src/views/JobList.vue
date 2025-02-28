@@ -19,10 +19,9 @@ const letter = ref('')
 const resume = ref('')
 const form = ref({ fullName: '', email: '', resume: '', message: '' })
 
-const captureResume = (event) => {
-  alert(event)
-  // resume.value = file
-  // form.value.resume = file
+const captureResume = (file) => {
+  resume.value = file
+  form.value.resume = file
 }
 
 async function fetchJobs() {
@@ -35,8 +34,7 @@ const submitApplication = async () => {
   try {
     const formData = new FormData()
     formData.append('fullName', form.value.fullName)
-    formData.append('email', form.value.email)
-    formData.append('phoneNumber', form.value.phoneNumber)
+    formData.append('email', form.value.email) 
     formData.append('message', form.value.message)
 
     // formData.append('applicationLetter', form.value.applicationLetter)
