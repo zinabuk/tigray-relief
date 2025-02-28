@@ -7,6 +7,7 @@ import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue' // Import your BaseFileInput component
+import RichTextInput from '@/components/base/RichTextInput.vue'
 
 const router = useRouter()
 const errorMessage = ref('')
@@ -21,7 +22,6 @@ const handleFileChange = (event) => {
 const saveJob = async () => {
   try {
     const formData = new FormData()
-
     // Append job data
     Object.keys(job.value).forEach((key) => {
       formData.append(key, job.value[key])
@@ -31,13 +31,6 @@ const saveJob = async () => {
     if (file.value) {
       formData.append('file', file.value)
     }
-
-    // Log FormData to debug
-    // for (let pair of formData.entries()) {
-    //   console.log(`${pair[0]}: ${pair[1]}`)
-    // }
-
-    console.log(formData)
 
     const response = await ApiService.post('/admin/vacancies', formData, {
       headers: {
@@ -50,7 +43,8 @@ const saveJob = async () => {
         title: response.message,
         icon: 'success'
       })
-      router.push({ name: 'admin-jobs' })
+      job.value = {}
+      file.value = ''
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -65,10 +59,13 @@ const saveJob = async () => {
 
 <template>
   <div
-    class="w-[82%] flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto"
+    class="w-[82%] flex flex-col items-center justify-center pt-6 gap-2 shadow rounded-lg modal overflow-auto p-2"
   >
-    <div class="w-1/2 bg-white">
-      <h1 class="text-center text-xl font-semibold">Vacancy form</h1>
+    <div class="self-start">
+      <button @click.prevent="$router.push({ name: 'admin-jobs' })">Go back</button>
+    </div>
+    <div class="w-full md:w-3/4 bg-">
+      <h1 class="text-center text-lg font-semibold">New Job</h1>
       <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 py-4 px-4">
         <div class="grid grid-cols-12 gap-2">
           <div class="col-span-6">
@@ -77,7 +74,7 @@ const saveJob = async () => {
               type="text"
               required
               inputClass="px-8"
-              placeholder="job title"
+              label="Job Title"
             ></BaseInput>
           </div>
           <div class="col-span-6">
@@ -86,7 +83,7 @@ const saveJob = async () => {
               type="text"
               inputClass="px-8"
               required
-              placeholder="employment type"
+              label="Employment Type"
             ></BaseInput>
           </div>
         </div>
@@ -95,47 +92,48 @@ const saveJob = async () => {
           type="text"
           inputClass="px-8"
           required
-          placeholder="location"
+          label="Work Place"
         ></BaseInput>
-        <BaseInput v-model="job.experience" inputClass="px-8" placeholder="experience"></BaseInput>
-        <BaseInput v-model="job.salary" required inputClass="px-8" placeholder="salary"></BaseInput>
+        <BaseInput v-model="job.experience" inputClass="px-8" label="Experience"></BaseInput>
+        <BaseInput v-model="job.salary" required inputClass="px-8" label="Salary"></BaseInput>
         <BaseInput
           type="date"
           v-model="job.deadline"
           required
           inputClass="px-8 py-3"
-          placeholder="deadline"
+          label="Deadline"
         ></BaseInput>
         <BaseTextarea
           v-model="job.qualification"
           rows="4"
           textareaClasses="px-8"
-          placeholder="qualification"
+          label="Qualification"
         ></BaseTextarea>
-        <BaseTextarea
+
+        <!-- <BaseTextarea
           v-model="job.description"
           rows="4"
           textareaClasses="px-8"
-          placeholder="Description"
-        ></BaseTextarea>
-        <BaseFileInput
-          @change="handleFileChange"
-          label="Add File"
-          type="file"
-          inputClass="p-2 border border-gray-300 rounded"
-          accept="*"
-        />
-
+          label="Description"
+        ></BaseTextarea> -->
+        <div class="flex flex-col">
+          <h1>Description</h1>
+          <RichTextInput v-model:content="job.description"></RichTextInput>
+        </div>
+        <div class="flex relative bg-white">
+          <BaseFileInput
+            @change="handleFileChange"
+            label="Attach File"
+            type="file"
+            icon="file"
+            fileClass="py-[2px] cursor-pointer"
+            inputClass="pl-4 px-2 py-[2px] border border-gray-300 rounded"
+            accept="*"
+          />
+        </div>
         <p v-if="errorMessage" class="text-red-700">{{ errorMessage }}</p>
         <div class="flex gap-4">
-          <BaseButton type="submit" class="self-start">Submit</BaseButton>
-          <button
-            type="button"
-            class="bg-gray-600 text-white px-4 py-2"
-            @click="closeModal = false"
-          >
-            Cancel
-          </button>
+          <BaseButton type="submit" class="self-start px-4 py-[2px]">Save</BaseButton>
         </div>
       </form>
     </div>

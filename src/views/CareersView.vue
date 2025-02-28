@@ -165,7 +165,7 @@ onMounted(() => {
                 <h1>{{ career.jobTitle }}</h1>
               </li>
               <li class="md:text-[16px] font-semibolfd">IQ Business Group</li>
-              <!-- <li class="text-gray-700 text-[14px]">Posted 17 Days ago ???</li> -->
+               <li class="text-gray-700 text-[14px]">Posted 17 Days ago ???</li> -->
               <li class="mt-4 bg-gray-500 text-white inline-block text-sm px-2 py-1">
                 {{ career.employmentType }}
               </li>

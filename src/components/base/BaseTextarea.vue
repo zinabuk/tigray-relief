@@ -1,6 +1,6 @@
 <template>
   <div class="input-container relative w-full">
-    <label :for="label" v-if="label" class="font-semibold">{{ label }}</label>
+    <label :for="label" v-if="label" class="font-semibdold">{{ label }}</label>
     <textarea
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
@@ -9,7 +9,7 @@
       :cols="cols"
       :id="label"
       :class="textareaClasses"
-      class="px-4 py-2 w-full border rounded-md border-[#53900F] focus:border-[#260efa] focus:outline-none"
+      class="px-4 py-2 w-full border rounded-md focus:border-[#53900F] focus:outline-none"
     ></textarea>
     <font-awesome-icon
       v-if="icon"

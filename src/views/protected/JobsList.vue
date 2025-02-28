@@ -23,8 +23,7 @@ const tableHeaders = [
   { label: 'Experience', field: 'experience' },
   { label: 'Salary', field: 'salary' },
   { label: 'Deadline', field: 'deadline' },
-  { label: 'Job Requirement', field: 'qualification' },
-  { label: 'Job Description', field: 'description' }
+  { label: 'Qualification', field: 'qualification' }
 ]
 
 const actions = [
@@ -120,7 +119,7 @@ onMounted(() => {
 
 <template>
   <section class="col-span-10 flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <router-link class="bg-[#53900F] text-white rounded-2xl shadow self-end px-2 py-1" :to="{ name: 'create-job' }"
+    <router-link class="bg-[#53900F] text-white rounded-2xl shadow self-end px-4 py-1" :to="{ name: 'create-job' }"
       >New job</router-link
     >
     <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions"></DataTable>

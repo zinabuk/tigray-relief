@@ -1,9 +1,9 @@
 <template>
   <div class="input-container relative w-full flex flex-col">
-    <label for="label" v-if="label" class="font-semibold">{{ label }}</label>
+    <label for="label" v-if="label" class="font-semibaold">{{ label }}</label>
     <input
       v-bind="$attrs"
-      class="px-4 py-2 w-full border border-[#53900F] rounded-md focus:border-[#260efa] focus:outline-none"
+      class="px-4 py-2 w-full border rounded-md focus:border-[#53900F] focus:outline-none"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       @focus="$emit('handleFocus')"
