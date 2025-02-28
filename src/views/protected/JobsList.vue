@@ -23,8 +23,7 @@ const tableHeaders = [
   { label: 'Experience', field: 'experience' },
   { label: 'Salary', field: 'salary' },
   { label: 'Deadline', field: 'deadline' },
-  { label: 'Job Requirement', field: 'qualification' },
-  { label: 'Job Description', field: 'description' }
+  { label: 'Qualification', field: 'qualification' }
 ]
 
 const actions = [

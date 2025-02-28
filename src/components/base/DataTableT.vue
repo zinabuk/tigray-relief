@@ -1,52 +1,77 @@
 <template>
   <section class="w-full">
-    <div class="py-2 px-2 w-full bg-white  flex flex-col gap-2">
+    <div class="py-4 px-4 w-full bg-white zshadow-lg rounded-lg flex flex-col gap-4">
+      <!-- Search Bar -->
       <div class="flex justify-end">
-        <div class="">
-          <input
-            type="text"
-            class="outl border px-2 py-0"
-            v-model="searchQuery"
-            placeholder="Search"
-          />
-        </div>
+        <input
+          type="text"
+          class="border border-gray-300 rounded-md px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          v-model="searchQuery"
+          placeholder="🔍 Search..."
+        />
       </div>
-      <div class="overflow-auto w-full">
-        <caption class="flex justify-start">
+
+      <!-- Table Wrapper -->
+      <div class="overflow-x-auto w-full">
+        <caption class="text-lg font-semibold text-gray-700 mb-2">
           {{
             caption
           }}
         </caption>
-        <table class="border  border-collapse w-full overflow-auto p-8">
-          <thead class="w-full">
-            <tr class="bg-gray-200">
-              <th v-for="(head, i) in tableHeaders" :key="i" class="" @click="sortBy(head.field)">
+
+        <table class="w-full border border-gray-300 rounded-lg overflow-hidden shadow-sm">
+          <thead>
+            <tr class="bg-slate-400 text-white text-left">
+              <th
+                v-for="(head, i) in tableHeaders"
+                :key="i"
+                class="px-4 py-1 cursor-pointer hover:bg-slate-500 transition-all"
+                @click="sortBy(head.field)"
+              >
                 {{ head.label }}
+                <font-awesome-icon
+                  v-if="sortedField === head.field"
+                  :icon="sortOrder === 'asc' ? 'arrow-up' : 'arrow-down'"
+                  class="ml-1"
+                />
               </th>
-              <th>Actions</th>
+              <th class="px-4 py-3">Actions</th>
             </tr>
           </thead>
-          <tbody v-if="paginatedData && paginatedData.length">
-            <tr v-for="(value, i) in paginatedData" :key="i" class="hover:bg-gray-100 border">
-              <td class="" v-for="(header, i) in tableHeaders" :key="i">
+
+          <tbody v-if="paginatedData && paginatedData.length > 0">
+            <tr
+              v-for="(value, i) in paginatedData"
+              :key="i"
+              class="border-b hover:bg-gray-100 transition-all"
+            >
+              <td v-for="(header, j) in tableHeaders" :key="j" class="px-4 py-3 text-gray-800">
                 <span v-if="header !== 'Applicants' && header !== 'Logo'" class="line-clamp-2">
                   {{ value[header.field] }}
                 </span>
 
                 <span v-else-if="header === 'Logo'">
-                  <div class="h-12 w-12 rounded-full overflow-auto">
-                    <img :src="BASE_AVATAR + value[header.field]" alt="" class="w-full h-full" />
+                  <div
+                    class="h-12 w-12 rounded-full overflow-hidden border border-gray-300 shadow-sm"
+                  >
+                    <img
+                      :src="BASE_AVATAR + value[header.field]"
+                      alt="Logo"
+                      class="w-full h-full object-cover"
+                    />
                   </div>
                 </span>
 
                 <span v-else>{{ value['Applicants'.applicantId.length] }}</span>
               </td>
-              <td class="flex">
+
+              <!-- Actions -->
+              <td class="flex gap-2 py-3 px-4">
                 <button
-                  v-for="(action, i) in actions"
+                  v-for="(action, k) in actions"
                   @click="action.action(value)"
-                  :class="action.style"
-                  :key="i"
+                  :class="`px-3 py-1 ztext-white text-sm rounded-md shadow-md transition-all hover:opacity-80 ${action.style}`"
+                  :key="k"
                 >
                   <font-awesome-icon v-if="action.icon" :icon="action.icon"></font-awesome-icon>
                   <span v-else>{{ action.label }}</span>
@@ -54,42 +79,64 @@
               </td>
             </tr>
           </tbody>
+
+          <!-- No Data -->
           <tbody v-else>
-            <tr class="w-full">
-              No data available
+            <tr>
+              <td colspan="100%" class="text-center py-4 text-gray-500">No data available</td>
             </tr>
           </tbody>
         </table>
+
+        <!-- Pagination -->
         <div
-          class="flex justify-end gap-3 items-center py-4"
+          class="flex justify-between items-center py-4 px-2 text-gray-700"
           v-if="paginatedData && paginatedData.length"
         >
-          <button @click="prevPage" class="bg-black text-white rounded" v-if="currentPage != 1">
-            Previous
+          <button
+            @click="prevPage"
+            class="bg-gray-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-800 transition-all"
+            v-if="currentPage !== 1"
+          >
+            ◀ Previous
           </button>
-          <span class="text-gray-600">Page {{ currentPage }} of {{ totalPages }}</span>
+
+          <span class="font-semibold">Page {{ currentPage }} of {{ totalPages }}</span>
+
           <button
             @click="nextPage"
-            class="bg-black text-white rounded"
+            class="bg-gray-700 text-white px-4 py-2 rounded-md shadow-md hover:bg-gray-800 transition-all"
             v-if="currentPage < totalPages"
           >
-            Next
+            Next ▶
           </button>
-          <!-- Dropdown for setting items per page -->
+
+          <!-- Items Per Page -->
           <select
             v-model="itemsPerPage"
             @change="updatePagination"
-            class="border border-gray-300 rounded"
+            class="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500"
           >
-            <option value="Per page" disabled>Per page</option>
-
+            <option value="" disabled>Per page</option>
             <option v-for="option in itemsPerPageOptions" :key="option" :value="option">
               {{ option }}
             </option>
           </select>
-          <!-- Input for go to page -->
-          <input type="number" v-model="goToPage" class="border border-gray-300 rounded" />
-          <button @click="gotoPage" class="bg-gray-600 text-white px-2 rounded">Go</button>
+
+          <!-- Go to Page -->
+          <div class="flex gap-2">
+            <input
+              type="number"
+              v-model="goToPage"
+              class="border border-gray-300 rounded-md px-3 py-1 w-16 focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              @click="gotoPage"
+              class="bg-blue-600/70 text-white px-3 py-1 rounded-md shadow-md hover:bg-blue-700 transition-all"
+            >
+              Go
+            </button>
+          </div>
         </div>
       </div>
     </div>
