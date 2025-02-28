@@ -8,7 +8,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
 
 const histories = ref([])
 const fetchHistories = async () => {
@@ -40,6 +40,13 @@ const form = ref({
   description: { en: '', ti: '', am: '' },
   image: ''
 })
+const searchInput = ref('')
+const currentPage = ref(1)
+const itemsPerPage = ref(3)
+
+
+
+
 
 const logo = ref('')
 const handleFileChange = (file) => {
@@ -60,6 +67,25 @@ const editService = (history) => {
   }
   edit.value = true
   showAddModal.value = true
+}
+
+const filteredHistorie = computed(() => {
+  return histories.value.filter(history =>
+    history.year.toString().includes(searchInput.value.toLowerCase())
+  );
+});
+
+const paginatedHeroes = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  return filteredHistorie.value.slice(start, start + itemsPerPage.value);
+});
+const totalPages = computed(() => {
+  return Math.ceil(filteredHistorie.value.length / itemsPerPage.value)
+})
+const changePage = (page) => {
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page
+  }
 }
 
 const saveService = async () => {
@@ -128,19 +154,28 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="col-span-10 p-4 flex flex-col items-center gap-4 bg-slate-50">
+  <section class="col-span-10 p-4 flex flex-col bg-slate-50">
     <!-- Histories -->
-    <button
+    <div class="flex justify-between">
+    <div class="flex-justify-start">
+      <input type="text" placeholder="search by title" v-model="searchInput" id="" class="px-4 py-0 self-end flex gap-2 items-center border rounded-2xl my-2 shadow">
+    </div>
+    <div class="flex-justify-end">
+      <button
       @click="showAddModal = true"
       class="bg-[#53900F] text-white self-end border flex items-center px-2 rounded-2xl py-1"
     >
       <font-awesome-icon icon="add" class=""></font-awesome-icon>
       Add History
     </button>
+    </div>
+   </div>
+
+
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 place-content-center">
       <div
-        v-for="(service, i) in histories"
+        v-for="(service, i) in paginatedHeroes"
         :key="i"
         class="flex flex-col gap-2 justify-between bg-white shadow"
       >
@@ -255,7 +290,43 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    <div class="flex justify-center mt-4">
+    <nav aria-label="Page navigation">
+      <ul class="inline-flex items-center space-x-1">
+        <li>
+          <button
+            @click="changePage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+          >
+            Previous
+          </button>
+        </li>
+        <li v-for="page in totalPages" :key="page">
+          <button
+            @click="changePage(page)"
+            :class="{
+              'px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg': currentPage === page,
+              'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100': currentPage !== page
+            }"
+          >
+            {{ page }}
+          </button>
+        </li>
+        <li>
+          <button
+            @click="changePage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
   </section>
+  
 </template>
 
 <style>
