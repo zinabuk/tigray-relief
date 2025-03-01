@@ -113,22 +113,15 @@ const saveJob = async () => {
           inputClass="px-8 py-3"
           label="Deadline"
         ></BaseInput>
-        <BaseTextarea
+        <BaseInput
           v-model="job.qualification"
           rows="4"
           textareaClasses="px-8"
           label="Qualification"
-        ></BaseTextarea>
-
-        <!-- <BaseTextarea
-          v-model="job.description"
-          rows="4"
-          textareaClasses="px-8"
-          label="Description"
-        ></BaseTextarea> -->
+        ></BaseInput>
         <div class="flex flex-col">
           <h1>Description</h1>
-          <RichTextInput v-model="job.description"></RichTextInput>
+          <RichTextInput v-model="job.description" class="bg-white"></RichTextInput>
         </div>
         <div class="flex relative bg-white">
           <BaseFileInput
