@@ -153,6 +153,8 @@ const fetchTeams = async () => {
     }
   }
 }
+
+const imageLoad = ref(false)
 onMounted(() => {
   fetchServices(), fetchNews(), fetchPartners(), fetchHeroes(), fetchFaqs(), fetchTeams()
 })
@@ -169,13 +171,15 @@ onMounted(() => {
       loop
       class="w-full h-[calc(100vh_-_120px)] md:h-[calc(100vh_-_80px)]"
     >
-      <swiper-slide v-for="(hero, i) in heroes" :key="i" class="w-full relative h-full"
-        ><img
+      <swiper-slide v-for="(hero, i) in heroes" :key="i" class="w-full relative h-full">
+        <img
           v-if="hero.heroImage"
           alt="Vue logo"
           class="logo absolute h-full object-cover w-full inset-0"
+          loading="lazy"
           :src="`${BASE_AVATAR}${hero.heroImage}`"
         />
+
         <div
           class="relative h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-8 md:gap-6 text-white items-center md:items-start justify-center px-4 bg-black/60 sm:bg-black/70 zmd:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
         >
