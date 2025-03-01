@@ -31,7 +31,7 @@ const tableHeaders = [
 const actions = [
   {
     label: 'edit',
-    action: openEditModal,
+    action: openEditRoute,
     icon: 'edit',
     style: 'hover:cursor-pointer text-blue-500 py-1 px-2'
   },
@@ -61,9 +61,11 @@ const editForm = ref({
 })
 const isEditing = ref(false)
 let formatDate = ref('')
-function openEditModal(jobs) {
-  isEditing.value = true
-  editForm.value = { ...jobs }
+function openEditRoute(job) {
+  // isEditing.value = true
+  // editForm.value = { ...jobs }
+
+  router.push({ name: 'edit-job', params: { id: job.id } })
   formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD')
 }
 
@@ -128,7 +130,7 @@ onMounted(() => {
     >
     <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions"></DataTable>
   </section>
-  <div
+  <!-- <div
     class="w-full modal fixed inset-0 h-screen flex z-50 justify-center items-center bg-black/80"
     v-if="isEditing"
   >
@@ -189,7 +191,7 @@ onMounted(() => {
         </div>
       </form>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>

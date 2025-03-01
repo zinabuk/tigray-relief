@@ -67,6 +67,16 @@ const PROTECTED_ROUTES = [
         }
       },
       {
+        path: 'edit-job/:id',
+        component: () => import('@/views/protected/EditJob.vue'),
+        name: 'edit-job',
+        props: true,
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
+      {
         path: 'all-applicants/:id',
         component: () => import('@/views/protected/CareerApplicants.vue'),
         name: 'jobApplicants',
