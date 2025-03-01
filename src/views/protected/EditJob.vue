@@ -18,15 +18,19 @@ defineProps({
   }
 })
 
+const formattedDate = (date) => {
+  if (date) {
+    return dayjs(date).format('YYYY-MM-DD')
+  }
+}
 const job = ref({})
 const formatDate = ref('')
 async function getJob() {
   try {
-    const response = await ApiService.getCareerById(route.params.id)
+    const response = await ApiService.getCareerById('/admin/vacancies/' + route.params.id)
 
     if (response.success) {
-      job.value = response.data
-      formatDate.value = dayjs(job.value.deadline).format('YYYY-MM-DD')
+      job.value = { ...response.data, deadline: formattedDate(response.data.deadline) }
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
@@ -68,18 +72,12 @@ const saveJob = async () => {
     // }
   }
 }
-
-const formattedDate = (date) => {
-  if (date) {
-    return dayjs(date).format('YYYY-MM-DD')
-  }
-}
 </script>
 
 <template>
   <div class="w-full flex justify-center items-center bg-black/80 p-12">
     <div class="bg-white/100 flex w-full md:w-3/4 flex-col overflow-auto">
-      <form @submit.prevent="UpdateJob" class="w-full flex flex-col gap-2 px-4">
+      <form @submit.prevent="saveJob" class="w-full flex flex-col gap-2 px-4">
         <BaseInput
           v-model="job.jobTitle"
           type="text"
@@ -88,7 +86,7 @@ const formattedDate = (date) => {
           inputClass="px-8 py-3"
         ></BaseInput>
         <BaseInput
-          v-model="job.workplace"
+          v-model="job.location"
           type="text"
           inputClass="px-8 py-3"
           required
@@ -113,6 +111,8 @@ const formattedDate = (date) => {
         ></BaseInput>
         <BaseInput v-model="job.qualification" label="Qualification"></BaseInput>
         <RichTextInput v-model="job.description"></RichTextInput>
+
+        <BaseButton type="submit" class="px-4 py-1">Save Changes</BaseButton>
       </form>
     </div>
   </div>
