@@ -54,7 +54,7 @@ const errorMessage = ref('')
 const successMessage = ref('')
 const saveJob = async () => {
   try {
-    const response = await ApiService.updateCareer(job.value, job.value.id)
+    const response = await ApiService.updateCareer('/admin/vacancies/' + job.value.id, job.value)
     if (response.success) {
       //   successMessage.value = response.message
       swal({
@@ -77,18 +77,18 @@ const saveJob = async () => {
 <template>
   <div class="w-full flex justify-center items-center bg-black/80 p-12">
     <div class="bg-white/100 flex w-full md:w-3/4 flex-col overflow-auto">
-      <form @submit.prevent="saveJob" class="w-full flex flex-col gap-2 px-4">
+      <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 px-4">
         <BaseInput
           v-model="job.jobTitle"
           type="text"
           required
           label="Job Title"
-          inputClass="px-8 py-3"
+          inputClass="px- py-"
         ></BaseInput>
         <BaseInput
           v-model="job.location"
           type="text"
-          inputClass="px-8 py-3"
+          inputClass="job"
           required
           label="Work place"
           autocomplete="true"
@@ -97,16 +97,16 @@ const saveJob = async () => {
           v-model="job.employmentType"
           type="text"
           label="Employmet Type"
-          inputClass="px-8 py-3"
+          inputClass="job"
           required
         ></BaseInput>
-        <BaseInput v-model="job.experience" inputClass="px-8 py-3" label="Experience"></BaseInput>
-        <BaseInput v-model="job.salary" required inputClass="px-8 py-3" label="Salary"></BaseInput>
+        <BaseInput v-model="job.experience" inputClass="job" label="Experience"></BaseInput>
+        <BaseInput v-model="job.salary" required inputClass="job" label="Salary"></BaseInput>
         <BaseInput
           v-model="job.deadline"
           required
           type="date"
-          inputClass="px-8 py-3"
+          inputClass="job"
           label="Deadline"
         ></BaseInput>
         <BaseInput v-model="job.qualification" label="Qualification"></BaseInput>
