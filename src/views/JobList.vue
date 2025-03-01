@@ -34,10 +34,9 @@ const submitApplication = async () => {
   try {
     const formData = new FormData()
     formData.append('fullName', form.value.fullName)
-    formData.append('email', form.value.email) 
+    formData.append('email', form.value.email)
     formData.append('message', form.value.message)
 
-    // formData.append('applicationLetter', form.value.applicationLetter)
     if (resume.value) {
       formData.append('resume', resume.value)
     }
@@ -183,7 +182,12 @@ onMounted(() => {
               </div>
             </div>
           </div>
-          <button @click.prevent="showApplicationModal = true">Easy Apply</button>
+          <button
+            @click.prevent="showApplicationModal = true"
+            class="px-4 py-1 rounded mx-8 bg-[#53900F] text-white"
+          >
+            Easy Apply
+          </button>
           <!-- Social Media Sharing -->
           <div class="bg-white p-4 shadow-sm">
             <h1 class="text-gray-800 font-semibold">Share on Social Media</h1>
@@ -211,6 +215,9 @@ onMounted(() => {
       v-if="showApplicationModal"
     >
       <div class="bg-white w-full md:w-1/2 flex flex-col md:p-12 gap-4 p-6 rounded-lg shadow-lg">
+        <button @click.prevent="showApplicationModal = false" class="self-end">
+          <font-awesome-icon icon="times" class="hover:text-red-600"></font-awesome-icon>
+        </button>
         <div class="flex justify-center">
           <h1 class="text-lg font-semibold text-gray-800">Application Form</h1>
         </div>
