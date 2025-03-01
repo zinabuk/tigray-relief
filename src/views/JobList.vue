@@ -17,7 +17,7 @@ const errorMessage = ref('')
 
 const letter = ref('')
 const resume = ref('')
-const form = ref({ fullName: '', email: '', resume: '', message: '' })
+const form = ref({ fullName: '', email: '', phoneNumber: '', resume: '', message: '' })
 
 const captureResume = (file) => {
   resume.value = file
@@ -240,12 +240,7 @@ onMounted(() => {
               required
             ></BaseInput>
 
-            <BaseInput
-              v-model="form.email"
-              label="Email Address"
-              class="w-full"
-              
-            ></BaseInput>
+            <BaseInput v-model="form.email" label="Email Address" class="w-full"></BaseInput>
 
             <BaseInput
               v-model="form.phoneNumber"

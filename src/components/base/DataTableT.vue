@@ -46,23 +46,21 @@
               class="border-b hover:bg-gray-100 transition-all"
             >
               <td v-for="(header, j) in tableHeaders" :key="j" class="px-4 py-3 text-gray-800">
-                <span v-if="header !== 'Applicants' && header !== 'Logo'" class="line-clamp-2">
+                <span v-if="header.field !== 'resume'" class="line-clamp-2">
                   {{ value[header.field] }}
                 </span>
-
-                <span v-else-if="header === 'Logo'">
-                  <div
-                    class="h-12 w-12 rounded-full overflow-hidden border border-gray-300 shadow-sm"
+                <span v-else>
+                  <a
+                    class="hover:text-blue-500 underline"
+                    :href="BASE_UPLOAD + value[header.field]"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <img
-                      :src="BASE_AVATAR + value[header.field]"
-                      alt="Logo"
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
+                    {{ value[header.field] ? 'View Resume' : 'No Resume' }}
+                  </a>
                 </span>
 
-                <span v-else>{{ value['Applicants'.applicantId.length] }}</span>
+                <!-- <span v-else>{{ value['Applicants'.applicantId.length] }}</span> -->
               </td>
 
               <!-- Actions -->
@@ -145,7 +143,7 @@
 
 <script>
 import { BASE_AVATAR } from '@/config'
-
+import { BASE_UPLOAD } from '@/config'
 export default {
   props: {
     tableHeaders: Array,
@@ -161,7 +159,8 @@ export default {
       goToPage: 1,
       sortByColumn: null,
       sortDirection: 'asc',
-      BASE_AVATAR: BASE_AVATAR
+      BASE_AVATAR: BASE_AVATAR,
+      BASE_UPLOAD: BASE_UPLOAD
     }
   },
 
