@@ -5,6 +5,8 @@ import ApiService from '@/services/apiService'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
+import RichTextInput from '@/components/base/RichTextInput.vue'
+
 import dayjs from 'dayjs'
 import swal from 'sweetalert'
 import { useRouter } from 'vue-router'
@@ -130,7 +132,7 @@ onMounted(() => {
     class="w-full modal fixed inset-0 h-screen flex z-50 justify-center items-center bg-black/80"
     v-if="isEditing"
   >
-    <div class="bg-white/100 flex flex-col overflow-auto ">
+    <div class="bg-white/100 flex flex-col overflow-auto">
       <button @click="closeEditModal" class="self-end text-2xl bg-gray-500 text-white">
         Cancel
       </button>
@@ -180,12 +182,13 @@ onMounted(() => {
           textareaClasses="px-8"
           placeholder="Qualification"
         ></BaseTextarea>
-        <BaseTextarea
+        <RichTextInput v-model="editForm.description"></RichTextInput>
+        <!-- <BaseTextarea
           v-model="editForm.description"
           rows="4"
           textareaClasses="px-8"
           placeholder="Description"
-        ></BaseTextarea>
+        ></BaseTextarea> -->
         <!-- <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput> -->
         <div class="flex gap-4">
           <BaseButton type="submit">Save Changes</BaseButton>
