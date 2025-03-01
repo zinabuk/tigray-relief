@@ -127,14 +127,13 @@ onMounted(() => {
     <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions"></DataTable>
   </section>
   <div
-    class="w-full modal fixed inset-0 flex z-50 justify-center items-center bg-black/80 overflow-auto"
+    class="w-full modal fixed inset-0 h-screen flex z-50 justify-center items-center bg-black/80"
     v-if="isEditing"
   >
-    <div class="bg-white/100 flex flex-col">
+    <div class="bg-white/100 flex flex-col overflow-auto ">
       <button @click="closeEditModal" class="self-end text-2xl bg-gray-500 text-white">
         Cancel
       </button>
-
       <form @submit.prevent="UpdateJob" class="w-full flex flex-col px-4">
         <BaseInput
           v-model="editForm.jobTitle"
