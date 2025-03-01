@@ -176,20 +176,11 @@ onMounted(() => {
           inputClass="px-8 py-3"
           placeholder="Specialize area"
         ></BaseInput>
-        <BaseTextarea
+        <BaseInput
           v-model="editForm.qualification"
-          rows="4"
-          textareaClasses="px-8"
           placeholder="Qualification"
-        ></BaseTextarea>
+        ></BaseInput>
         <RichTextInput v-model="editForm.description"></RichTextInput>
-        <!-- <BaseTextarea
-          v-model="editForm.description"
-          rows="4"
-          textareaClasses="px-8"
-          placeholder="Description"
-        ></BaseTextarea> -->
-        <!-- <BaseFileInput @image-update="handleFileChange($event)" label="Add Logo"></BaseFileInput> -->
         <div class="flex gap-4">
           <BaseButton type="submit">Save Changes</BaseButton>
           <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="closeEditModal">
