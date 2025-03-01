@@ -119,23 +119,23 @@ onMounted(() => {
 
 <template>
   <section class="col-span-10 flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <router-link class="bg-[#53900F] text-white rounded-2xl shadow self-end px-4 py-1" :to="{ name: 'create-job' }"
+    <router-link
+      class="bg-[#53900F] text-white rounded-2xl shadow self-end px-4 py-1"
+      :to="{ name: 'create-job' }"
       >New job</router-link
     >
     <DataTable :tableHeaders="tableHeaders" :tableValues="jobs" :actions="actions"></DataTable>
   </section>
   <div
-    class="w-full modal fixed inset-0 flex z-50 justify-center items-center bg-black/80 overflow-auto md:py-12"
+    class="w-full modal fixed inset-0 flex z-50 justify-center items-center bg-black/80 overflow-auto"
     v-if="isEditing"
   >
-    <div
-      class="bg-white/100 flex flex-col gap-3 justify-center items-center shadow px-[1%] md:px-[6%] py-6 md:py-12 overflow-auto"
-    >
+    <div class="bg-white/100 flex flex-col">
       <button @click="closeEditModal" class="self-end text-2xl bg-gray-500 text-white">
         Cancel
       </button>
 
-      <form @submit.prevent="UpdateJob" class="w-full flex flex-col gap-4 px-4">
+      <form @submit.prevent="UpdateJob" class="w-full flex flex-col px-4">
         <BaseInput
           v-model="editForm.jobTitle"
           type="text"
@@ -198,7 +198,6 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .modal {
