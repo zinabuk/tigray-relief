@@ -1,18 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import DataTable from '@/components/base/DataTableT.vue'
-import ApiService from '@/services/apiService'
-import BaseInput from '@/components/base/BaseInput.vue'
-import BaseTextarea from '@/components/base/BaseTextarea.vue'
-import BaseButton from '@/components/base/BaseButton.vue'
-import RichTextInput from '@/components/base/RichTextInput.vue'
+import ApiService from '@/services/apiService' 
 
-import dayjs from 'dayjs'
-import swal from 'sweetalert'
+import dayjs from 'dayjs' 
 import { useRouter } from 'vue-router'
 
-const router = useRouter()
-const isAdd = ref(false)
+const router = useRouter() 
 // const toggleAdd = () => {
 //   isAdd.value = true
 // }
@@ -58,8 +52,7 @@ const editForm = ref({
   deadline: '',
   qualification: '',
   description: ''
-})
-const isEditing = ref(false)
+}) 
 let formatDate = ref('')
 function openEditRoute(job) {
   // isEditing.value = true
@@ -68,11 +61,7 @@ function openEditRoute(job) {
   router.push({ name: 'edit-job', params: { id: job.id } })
   formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD')
 }
-
-function closeEditModal() {
-  isEditing.value = false
-}
-
+ 
 const jobs = ref([])
 
 async function fetchJobs() {
@@ -86,24 +75,7 @@ async function viewApplicants(career) {
   router.push({ name: 'jobApplicants', params: { id: career.id } })
 }
 
-const UpdateJob = async (id) => {
-  try {
-    const response = await ApiService.patch(`/admin/vacancies/${id}`, editForm.value)
-    if (response.success) {
-      swal({
-        title: response.message,
-        icon: 'success'
-      })
-      router.push({ name: 'admin-jobs' })
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      console.log('')
-    } else {
-      router.push({ name: 'NetworkError' })
-    }
-  }
-}
+ 
 
 async function deleteJob(job) {
   const accept = window.confirm('Undo is not possible')

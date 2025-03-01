@@ -3,7 +3,6 @@ import { ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
-import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import ApiService from '@/services/apiService'
 import RichTextInput from '@/components/base/RichTextInput.vue'
 
@@ -50,8 +49,6 @@ watch(
   },
   { immediate: true }
 )
-const errorMessage = ref('')
-const successMessage = ref('')
 const saveJob = async () => {
   try {
     const response = await ApiService.updateCareer('/admin/vacancies/' + job.value.id, job.value)
@@ -75,45 +72,49 @@ const saveJob = async () => {
 </script>
 
 <template>
-  <div class="w-full flex justify-center items-center bg-black/80 p-12">
-    <div class="bg-white/100 flex w-full md:w-3/4 flex-col overflow-auto">
-      <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 px-4">
-        <BaseInput
-          v-model="job.jobTitle"
-          type="text"
-          required
-          label="Job Title"
-          inputClass="px- py-"
-        ></BaseInput>
-        <BaseInput
-          v-model="job.location"
-          type="text"
-          inputClass="job"
-          required
-          label="Work place"
-          autocomplete="true"
-        ></BaseInput>
-        <BaseInput
-          v-model="job.employmentType"
-          type="text"
-          label="Employmet Type"
-          inputClass="job"
-          required
-        ></BaseInput>
-        <BaseInput v-model="job.experience" inputClass="job" label="Experience"></BaseInput>
-        <BaseInput v-model="job.salary" required inputClass="job" label="Salary"></BaseInput>
-        <BaseInput
-          v-model="job.deadline"
-          required
-          type="date"
-          inputClass="job"
-          label="Deadline"
-        ></BaseInput>
-        <BaseInput v-model="job.qualification" label="Qualification"></BaseInput>
-        <RichTextInput v-model="job.description"></RichTextInput>
+  <section class="w-full">
+    <button class="m-4" @click.prevent="$router.go(-1)">Go back</button>
 
-        <BaseButton type="submit" class="px-4 py-1">Save Changes</BaseButton>
-      </form>
+    <div class="w-full flex justify-center items-center bg-black/8s0 p-12">
+      <div class="bg-white/100 flex w-full md:w-3/4 flex-col overflow-auto">
+        <form @submit.prevent="saveJob" class="w-full flex flex-col gap-4 px-4">
+          <BaseInput
+            v-model="job.jobTitle"
+            type="text"
+            required
+            label="Job Title"
+            inputClass="px- py-"
+          ></BaseInput>
+          <BaseInput
+            v-model="job.location"
+            type="text"
+            inputClass="job"
+            required
+            label="Work place"
+            autocomplete="true"
+          ></BaseInput>
+          <BaseInput
+            v-model="job.employmentType"
+            type="text"
+            label="Employmet Type"
+            inputClass="job"
+            required
+          ></BaseInput>
+          <BaseInput v-model="job.experience" inputClass="job" label="Experience"></BaseInput>
+          <BaseInput v-model="job.salary" required inputClass="job" label="Salary"></BaseInput>
+          <BaseInput
+            v-model="job.deadline"
+            required
+            type="date"
+            inputClass="job"
+            label="Deadline"
+          ></BaseInput>
+          <BaseInput v-model="job.qualification" label="Qualification"></BaseInput>
+          <RichTextInput v-model="job.description"></RichTextInput>
+
+          <BaseButton type="submit" class="px-4 py-1">Save Changes</BaseButton>
+        </form>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
