@@ -30,6 +30,9 @@ async function fetchJobs() {
     jobs.value = response.data
   }
 }
+
+const showApplicationModal = ref(false)
+
 const submitApplication = async () => {
   try {
     const formData = new FormData()
@@ -51,7 +54,9 @@ const submitApplication = async () => {
         text: 'Job Application'
       })
       errorMessage.value = ''
-      setTimeout(() => {}, 5000)
+      setTimeout(() => {
+        showApplicationModal.value = false
+      }, 2000)
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
@@ -100,7 +105,6 @@ function isImage(fileName) {
   }
 }
 
-const showApplicationModal = ref(false)
 function applyNow(data) {
   career.value = data
   showApplicationModal.value = true
@@ -225,7 +229,6 @@ onMounted(() => {
         <div class="flex justify-center">
           <h1 class="text-lg font-semibold text-gray-800">Application Form</h1>
         </div>
-        <h3 class="bg-red-500">{{ career.id }} d</h3>
 
         <form @submit.prevent="submitApplication" class="flex w-full flex-col gap-4">
           <!-- Input Fields -->
