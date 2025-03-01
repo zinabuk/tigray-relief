@@ -174,7 +174,7 @@ onMounted(() => {
           v-if="hero.heroImage"
           alt="Vue logo"
           class="logo absolute h-full object-cover w-full inset-0"
-          :src="BASE_AVATAR + hero.heroImage"
+          :src="`${BASE_AVATAR}${hero.heroImage}`"
         />
         <div
           class="relative h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-8 md:gap-6 text-white items-center md:items-start justify-center px-4 bg-black/60 sm:bg-black/70 zmd:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
@@ -419,7 +419,6 @@ onMounted(() => {
     </swiper>
   </section>
 
- 
   <!-- Embedding Facebook posts -->
   <section class="w-full px-[2%] py-12 flex flex-col gap-4 items-center justify-center">
     <h1 class="text-3xl font-bold">{{ $t('Latest Social Media Posts') }}</h1>
