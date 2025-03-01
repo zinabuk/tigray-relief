@@ -64,7 +64,6 @@ onMounted(() => {
 
 <template>
   <section class="col-span-10 bg-slate-50 flex flex-col flex-wrap gap-2 px-4 py-12">
-    <p>{{ contactUsMessages }}</p>
     <DataTable :tableHeaders="tableHeaders" :tableValues="contactUsMessages" :actions="actions">
     </DataTable>
   </section>

@@ -2,27 +2,19 @@
 import ApiService from '@/services/apiService'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
+import BaseInput from '@/components/base/BaseInput.vue'
 import { useRouter } from 'vue-router'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
 import { BASE_AVATAR } from '@/config'
 const router = useRouter()
 const currentLanguage = ref('en')
 
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
-
-const form = ref({
-  id: null,
-  eventTitle: { en: '', ti: '', am: '' },
-  eventDescription: { en: '', ti: '', am: '' },
-  category: { en: '', ti: '', am: '' },
-  eventDate: '',
-  eventOrganizer: { en: '', ti: '', am: '' },
-  eventImage: null
-})
 
 const blogs = ref([])
+const searchInput = ref('')
+const currentPage = ref(1)
+const itemsPerPage = ref(3)
+
 
 const fetchNews = async () => {
   try {
@@ -131,6 +123,29 @@ const expandedIndex = ref(null)
 function toggleShow(idx) {
   expandedIndex.value = expandedIndex.value === idx ? null : idx
 }
+
+const filteredBlogs = computed(() => {
+  return blogs.value.filter(item =>
+    item.eventTitle[currentLanguage.value].toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.category[currentLanguage.value].toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.eventDate.toString().includes(searchInput.value.toLowerCase())
+  )
+})
+
+const paginatedBlogs = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  return filteredBlogs.value.slice(start, start + itemsPerPage.value)
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredBlogs.value.length / itemsPerPage.value)
+})
+
+const changePage = (page) => {
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
 onMounted(() => {
   fetchNews()
 })
@@ -138,16 +153,29 @@ onMounted(() => {
 
 <template>
   <section class="col-span-10 flex flex-col bg-slate-50 flex-wrap gap-2 p-4">
-    <router-link
-      :to="{ name: 'admin-add-blogs' }"
-      class="bg-[#53900F] self-end text-white rounded-2xl flex items-center px-2"
-    >
-      <font-awesome-icon icon="add"></font-awesome-icon>
-      Add New | Story
-    </router-link>
+    <div class="flex justify-between">
+      <div class="flex-justify-start">
+        <base-input
+          inputClass="border outline-none border-[#288fb2]"
+          type="search"
+          class="px-2 py-1"
+         v-model="searchInput"
+          placeholder="Search  News and storis..."
+      ></base-input>
+      </div>
+      <div class="flex-justify-end">
+        <router-link
+          :to="{ name: 'admin-add-blogs' }"
+          class="bg-[#53900F] self-end text-white rounded-2xl flex items-center px-2"
+        >
+          <font-awesome-icon icon="add"></font-awesome-icon>
+          Add New | Story
+        </router-link>
+      </div>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 px-12">
       <div
-        v-for="(event, i) in blogs"
+        v-for="(event, i) in paginatedBlogs"
         :key="i"
         class="w-full flex flex-col justify-between bg-white gap- p-2"
       >
@@ -194,32 +222,7 @@ onMounted(() => {
         <button @click="closeEditModal" class="bg-gray-500 text-white px-4 py-2 rounded mr-auto">
           Cancel
         </button>
-        <!-- <div class="flex justify-center gap-16 py-2">
-          <BaseButton
-            @click="toggleLanguage('en')"
-            :class="{
-              'bg-green-900 text-white': currentLanguage.value === 'en',
-              'bg-gray-200': currentLanguage.value !== 'en'
-            }"
-            >English</BaseButton
-          >
-          <BaseButton
-            @click="toggleLanguage('am')"
-            :class="{
-              'bg-green-900 text-white': currentLanguage.value === 'am',
-              'bg-gray-200': currentLanguage.value !== 'am'
-            }"
-            >Amharic</BaseButton
-          >
-          <BaseButton
-            @click="toggleLanguage('ti')"
-            :class="{
-              'bg-green-900 text-white': currentLanguage.value === 'ti',
-              'bg-gray-200': currentLanguage.value !== 'ti'
-            }"
-            >Tigrigna</BaseButton
-          >
-        </div> -->
+
         <form @submit.prevent="updateNew" class="grid grid-cols-2 gap-4">
           <div class="col-span-2">
             <label class="block" for="eventTitle">Title</label>
@@ -283,7 +286,43 @@ onMounted(() => {
         </form>
       </div>
     </div>
+    <div class="flex justify-center mt-4">
+      <nav aria-label="Page navigation">
+        <ul class="inline-flex items-center space-x-1">
+          <li>
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Previous
+            </button>
+          </li>
+          <li v-for="page in totalPages" :key="page">
+            <button
+              @click="changePage(page)"
+              :class="{
+                'px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg': currentPage === page,
+                'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100': currentPage !== page
+              }"
+            >
+              {{ page }}
+            </button>
+          </li>
+          <li>
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </section>
+  
 </template>
 
 <style>
