@@ -153,8 +153,7 @@ const fetchTeams = async () => {
     }
   }
 }
-
-const imageLoad = ref(false)
+ 
 onMounted(() => {
   fetchServices(), fetchNews(), fetchPartners(), fetchHeroes(), fetchFaqs(), fetchTeams()
 })

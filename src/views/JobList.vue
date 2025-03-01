@@ -222,7 +222,7 @@ onMounted(() => {
       class="fixed z-50 inset-0 bg-slate-100/40 flex items-center justify-center"
       v-if="showApplicationModal"
     >
-      <div class="bg-white w-full md:w-1/2 flex flex-col md:p-12 gap-4 p-6 rounded-lg shadow-lg">
+      <div class="bg-white w-full md:w-1/2 flex flex-col md:p-12 gap-1 p-6 rounded-lg shadow-lg">
         <button @click.prevent="showApplicationModal = false" class="self-end">
           <font-awesome-icon icon="times" class="hover:text-red-600"></font-awesome-icon>
         </button>
@@ -230,7 +230,7 @@ onMounted(() => {
           <h1 class="text-lg font-semibold text-gray-800">Application Form</h1>
         </div>
 
-        <form @submit.prevent="submitApplication" class="flex w-full flex-col gap-4">
+        <form @submit.prevent="submitApplication" class="flex w-full flex-col gap-2">
           <!-- Input Fields -->
           <div class="w-full space-y-4">
             <BaseInput
