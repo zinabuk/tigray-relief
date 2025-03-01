@@ -12,7 +12,16 @@ import RichTextInput from '@/components/base/RichTextInput.vue'
 // const router = useRouter()
 const errorMessage = ref('')
 // const successMessage = ref('')
-const job = ref({})
+const job = ref({
+  jobTitle: '',
+  employmentType: '',
+  location: '',
+  experience: '',
+  salary: '',
+  deadline: '',
+  qualification: '',
+  description: '' // Ensure this exists
+})
 const file = ref(null) // Define a ref for the file
 
 const handleFileChange = (event) => {
@@ -20,6 +29,7 @@ const handleFileChange = (event) => {
 }
 
 const saveJob = async () => {
+  alert(job.value.description)
   try {
     const formData = new FormData()
     // Append job data
@@ -103,22 +113,15 @@ const saveJob = async () => {
           inputClass="px-8 py-3"
           label="Deadline"
         ></BaseInput>
-        <BaseTextarea
+        <BaseInput
           v-model="job.qualification"
           rows="4"
           textareaClasses="px-8"
           label="Qualification"
-        ></BaseTextarea>
-
-        <!-- <BaseTextarea
-          v-model="job.description"
-          rows="4"
-          textareaClasses="px-8"
-          label="Description"
-        ></BaseTextarea> -->
+        ></BaseInput>
         <div class="flex flex-col">
           <h1>Description</h1>
-          <RichTextInput v-model:content="job.description"></RichTextInput>
+          <RichTextInput v-model="job.description" class="bg-white"></RichTextInput>
         </div>
         <div class="flex relative bg-white">
           <BaseFileInput

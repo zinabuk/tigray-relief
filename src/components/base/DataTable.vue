@@ -1,11 +1,11 @@
 <template>
   <section class="w-full">
-    <div class="py-4 px-4 w-full bg-white shadow-lg rounded-lg flex flex-col gap-4">
+    <div class="py-4 px-4 w-full bg-white zshadow-lg rounded-lg flex flex-col gap-4">
       <!-- Search Bar -->
       <div class="flex justify-end">
         <input
           type="text"
-          class="border border-gray-300 rounded-md px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="border border-gray-300 rounded-md px-3 py-1 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
           v-model="searchQuery"
           placeholder="🔍 Search..."
         />
@@ -21,11 +21,11 @@
 
         <table class="w-full border-collapse rounded-lg shadow-sm overflow-hidden">
           <thead>
-            <tr class="bg-blue-600 text-white text-left">
+            <tr class="bg-slate-400 text-white text-left">
               <th
                 v-for="(head, i) in tableHeaders"
                 :key="i"
-                class="px-4 py-3 cursor-pointer hover:bg-blue-700 transition-all"
+                class="px-4 py-3 cursor-pointer hover:bg-slate-500 transition-all"
                 @click.prevent="sortBy(head.field)"
               >
                 {{ head.label }}
@@ -35,6 +35,7 @@
                   class="ml-1"
                 />
               </th>
+              <th>Actions</th>
             </tr>
           </thead>
 
@@ -69,7 +70,7 @@
                 <button
                   v-for="(action, k) in actions"
                   @click="action.action(value)"
-                  :class="`px-3 py-1 text-white text-sm rounded-md shadow-md transition-all hover:opacity-80 ${action.style}`"
+                  :class="`px-3 py-1   text-sm rounded-md shadow-md transition-all hover:opacity-80 ${action.style}`"
                   :key="k"
                 >
                   <font-awesome-icon v-if="action.icon" :icon="action.icon"></font-awesome-icon>
@@ -127,11 +128,11 @@
             <input
               type="number"
               v-model="goToPage"
-              class="border border-gray-300 rounded-md px-3 py-2 w-16 focus:ring-2 focus:ring-blue-500"
+              class="border border-gray-300 rounded-md px-3 py-1 w-16 focus:ring-2 focus:ring-blue-500"
             />
             <button
               @click="gotoPage"
-              class="bg-blue-600 text-white px-3 py-2 rounded-md shadow-md hover:bg-blue-700 transition-all"
+              class="bg-blue-600 text-white px-3 py-1 rounded-md shadow-md hover:bg-blue-700 transition-all"
             >
               Go
             </button>

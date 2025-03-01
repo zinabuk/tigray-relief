@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-import BaseInput from '@/components/base/BaseInput.vue'
 import ApiService from '@/services/apiService'
 import DataTable from '@/components/base/DataTableT.vue'
 import { BASE_UPLOAD } from '@/config'
@@ -73,22 +72,15 @@ async function deleteJob(applicant) {
     }
   }
 }
-onMounted(getJob)
+onMounted(() => {
+  getJob()
+})
 </script>
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
     <div class="flex justify-between w-full">
       <h2 class="text-xl font-bold">Job Applicants</h2>
-      <div class="self-end">
-        <base-input
-          inputClass="border outline-none border-[#288fb2]"
-          type="search"
-          class="px-2 py-1"
-          v-model="searchApplicants"
-          placeholder="Search ..."
-        ></base-input>
-      </div>
     </div>
 
     <div class="w-full">
@@ -99,24 +91,25 @@ onMounted(getJob)
         createExport="true"
         exportTitle="vacancies"
       >
-        <template #applicationLetter="{ item }">
+        <!-- <template #applicationLetter="{ item }">
           <a
             class="hover:text-primary action-cell"
-            :href="BASE_UPLOAD + `${item.applicationLetter}`"
+            :href="BASE_UPLOAD + `${item.resume}`"
             target="_blank"
             title="download letter"
           >
             {{ item.applicationLetter }}
           </a>
-        </template>
+        </template> -->
         <template #cv="{ item }">
           <a
-            class="hover:text-primary action-cell"
-            :href="BASE_UPLOAD + `${item.cv}`"
+            class="hover:text-primary action-cell underline text-blue-600"
+            :href="BASE_UPLOAD + item.resume"
             target="_blank"
-            title="download cv"
+            rel="noopener noreferrer"
+            title="Download CV"
           >
-            {{ item.cv }}
+            View CV
           </a>
         </template>
       </DataTable>

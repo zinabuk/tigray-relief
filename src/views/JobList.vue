@@ -17,7 +17,7 @@ const errorMessage = ref('')
 
 const letter = ref('')
 const resume = ref('')
-const form = ref({ fullName: '', email: '', resume: '', message: '' })
+const form = ref({ fullName: '', email: '', phoneNumber: '', resume: '', message: '' })
 
 const captureResume = (file) => {
   resume.value = file
@@ -30,6 +30,9 @@ async function fetchJobs() {
     jobs.value = response.data
   }
 }
+
+const showApplicationModal = ref(false)
+
 const submitApplication = async () => {
   try {
     const formData = new FormData()
@@ -51,7 +54,9 @@ const submitApplication = async () => {
         text: 'Job Application'
       })
       errorMessage.value = ''
-      setTimeout(() => {}, 5000)
+      setTimeout(() => {
+        showApplicationModal.value = false
+      }, 2000)
     }
   } catch (error) {
     if (error.response && error.response.status === 404 && error.response.data) {
@@ -100,7 +105,10 @@ function isImage(fileName) {
   }
 }
 
-const showApplicationModal = ref(false)
+function applyNow(data) {
+  career.value = data
+  showApplicationModal.value = true
+}
 
 onMounted(() => {
   fetchJobs()
@@ -154,7 +162,7 @@ onMounted(() => {
           <!-- Job Description -->
           <div class="bg-white w-full p-6 shadow-sm">
             <h1 class="text-lg font-semibold text-gray-800">Job Description</h1>
-            <p class="py-2 text-gray-700">{{ career.description }}</p>
+            <p class="py-2 text-gray-700" v-html="career.description"></p>
           </div>
 
           <!-- Job Requirements -->
@@ -183,7 +191,7 @@ onMounted(() => {
             </div>
           </div>
           <button
-            @click.prevent="showApplicationModal = true"
+            @click.prevent="applyNow(career)"
             class="px-4 py-1 rounded mx-8 bg-[#53900F] text-white"
           >
             Easy Apply
@@ -232,9 +240,11 @@ onMounted(() => {
               required
             ></BaseInput>
 
+            <BaseInput v-model="form.email" label="Email Address" class="w-full"></BaseInput>
+
             <BaseInput
-              v-model="form.email"
-              label="Email Address"
+              v-model="form.phoneNumber"
+              label="Phone Number"
               class="w-full"
               required
             ></BaseInput>
