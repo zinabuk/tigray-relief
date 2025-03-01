@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted ,computed} from 'vue'
 // import { useRouter } from 'vue-router'
 // import { storeToRefs } from 'pinia'
 // import { useAuthStore } from '@/stores/auth'
@@ -15,27 +15,24 @@ import { BASE_AVATAR } from '@/config'
 
 import swal from 'sweetalert'
 
-// import { storeToRefs } from 'pinia'
-// import { useAuthStore } from '@/stores/auth'
-// const { language } = storeToRefs(useAuthStore())
-
-// const router = useRouter()
 const heroData = ref({
   heroTitle: { en: '', ti: '', am: '' },
   heroDescription: { en: '', ti: '', am: '' },
   heroImage: null
 })
 const currentLanguage = ref('en')
-// const toggleLanguage = (lang) => {
-//   currentLanguage.value = lang
-// }
-
 const heroes = ref([])
 const errorMessage = ref('')
 const successMessage = ref('')
 const editMode = ref(false)
 const editId = ref(null)
 const showModal = ref(false)
+
+
+const searchInput = ref('')
+const currentPage = ref(1)
+const itemsPerPage = ref(3)
+
 
 const saveHero = async () => {
   const formData = new FormData()
@@ -66,6 +63,28 @@ const saveHero = async () => {
     }
   }
 }
+
+const filteredHeroes = computed(() => {
+  return heroes.value.filter(hero =>
+    hero.heroTitle[currentLanguage.value].toLowerCase().includes(searchInput.value.toLowerCase())
+  )
+})
+
+const paginatedHeroes = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  return filteredHeroes.value.slice(start, start + itemsPerPage.value)
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredHeroes.value.length / itemsPerPage.value)
+})
+
+const changePage = (page) => {
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+
 
 const captureImage = (event) => {
   heroData.value.heroImage = event.target.files[0]
@@ -153,7 +172,12 @@ onMounted(() => {
       'px-[6%] py-12 flex flex-col items-center gap-4 bg-whitez'
     ]" -->
     <div class="flex flex-col w-full">
-      <h2 class="text-xl font-bold">Hero Section</h2>
+      <h2 class="text-xl font-bold">Hero  Section</h2>
+   <div class="flex justify-between">
+    <div class="flex-justify-start">
+      <input type="text" placeholder="search by title" v-model="searchInput" id="" class="px-4 py-0 self-end flex gap-2 items-center border rounded-2xl my-2 shadow">
+    </div>
+    <div class="flex-justify-end">
       <BaseButton
         @click="showModal = true"
         class="self-end"
@@ -162,10 +186,12 @@ onMounted(() => {
         <font-awesome-icon icon="plus" class="text-sm"></font-awesome-icon> New
       </BaseButton>
     </div>
-    <div v-if="heroes.length" class="col-span-12 w-full">
+   </div>
+    </div>
+    <div v-if="paginatedHeroes.length" class="col-span-12 w-full">
       <div class="w-full mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-          <div v-for="hero in heroes" :key="hero.id" class="w-full flex flex-col justify-between h-full md:w-auto bg-white">
+          <div v-for="hero in paginatedHeroes" :key="hero.id" class="w-full flex flex-col justify-between h-full md:w-auto bg-white">
             <div class="flex flex-col">
               <img
                 v-if="hero.heroImage"
@@ -270,6 +296,10 @@ onMounted(() => {
       </div>
     </div>
 
+
+
+
+
     <div
       v-if="showEditModal"
       class="fixed modal inset-0 bg-black/60 bg-opacity-50 z-50 flex justify-center items-center"
@@ -355,7 +385,45 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <div class="flex justify-center mt-4">
+    <nav aria-label="Page navigation">
+      <ul class="inline-flex items-center space-x-1">
+        <li>
+          <button
+            @click="changePage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+          >
+            Previous
+          </button>
+        </li>
+        <li v-for="page in totalPages" :key="page">
+          <button
+            @click="changePage(page)"
+            :class="{
+              'px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg': currentPage === page,
+              'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100': currentPage !== page
+            }"
+          >
+            {{ page }}
+          </button>
+        </li>
+        <li>
+          <button
+            @click="changePage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+    
   </section>
+  
 </template>
 
 <style scoped>
