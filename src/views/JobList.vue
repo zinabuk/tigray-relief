@@ -244,6 +244,13 @@ onMounted(() => {
               v-model="form.email"
               label="Email Address"
               class="w-full"
+              
+            ></BaseInput>
+
+            <BaseInput
+              v-model="form.phoneNumber"
+              label="Phone Number"
+              class="w-full"
               required
             ></BaseInput>
 
