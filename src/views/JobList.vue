@@ -101,6 +101,10 @@ function isImage(fileName) {
 }
 
 const showApplicationModal = ref(false)
+function applyNow(data) {
+  career.value = data
+  showApplicationModal.value = true
+}
 
 onMounted(() => {
   fetchJobs()
@@ -154,7 +158,7 @@ onMounted(() => {
           <!-- Job Description -->
           <div class="bg-white w-full p-6 shadow-sm">
             <h1 class="text-lg font-semibold text-gray-800">Job Description</h1>
-            <p class="py-2 text-gray-700">{{ career.description }}</p>
+            <p class="py-2 text-gray-700" v-html="career.description"></p>
           </div>
 
           <!-- Job Requirements -->
@@ -183,7 +187,7 @@ onMounted(() => {
             </div>
           </div>
           <button
-            @click.prevent="showApplicationModal = true"
+            @click.prevent="applyNow(career)"
             class="px-4 py-1 rounded mx-8 bg-[#53900F] text-white"
           >
             Easy Apply
@@ -221,6 +225,7 @@ onMounted(() => {
         <div class="flex justify-center">
           <h1 class="text-lg font-semibold text-gray-800">Application Form</h1>
         </div>
+        <h3 class="bg-red-500">{{ career.id }} d</h3>
 
         <form @submit.prevent="submitApplication" class="flex w-full flex-col gap-4">
           <!-- Input Fields -->

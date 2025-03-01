@@ -22,7 +22,7 @@ onMounted(() => {
         ['bold', 'italic', 'underline'],
         [{ header: [1, 2, 3, false] }],
         [{ list: 'ordered' }, { list: 'bullet' }],
-        [{ color: ['blue', 'green', 'red'] }, { background: [] }],
+        [{ color: [] }, { background: [] }],
         ['clean'],
         ['link', 'image', 'video']
       ]
@@ -35,7 +35,8 @@ onMounted(() => {
   })
 
   // Set initial content and ensure LTR direction
-  quill.value.root.innerHTML = props.modelValue || ''
+  const delta = quill.value.clipboard.convert(props.modelValue || '')
+  quill.value.setContents(delta)
   quill.value.root.style.direction = 'ltr'
 
   // **Fix height issue**
@@ -52,9 +53,8 @@ onMounted(() => {
 watch(
   () => props.modelValue,
   (newVal) => {
-    if (quill.value) {
-      quill.value.root.innerHTML = newVal
-      quill.value.root.style.direction = 'ltr'
+    if (quill.value && newVal !== quill.value.root.innerHTML) {
+      quill.value.root.innerHTML = newVal || ''
     }
   }
 )
