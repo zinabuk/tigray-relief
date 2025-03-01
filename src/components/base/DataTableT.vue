@@ -5,7 +5,7 @@
       <div class="flex justify-end">
         <input
           type="text"
-          class="border border-gray-300 rounded-md px-3 py-2 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="border border-gray-300 rounded-md px-3 py-1 w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
           v-model="searchQuery"
           placeholder="🔍 Search..."
         />
