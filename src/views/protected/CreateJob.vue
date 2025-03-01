@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import swal from 'sweetalert'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import ApiService from '@/services/apiService'
 import BaseInput from '@/components/base/BaseInput.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
@@ -9,9 +9,9 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue' // Import your BaseFileInput component
 import RichTextInput from '@/components/base/RichTextInput.vue'
 
-const router = useRouter()
+// const router = useRouter()
 const errorMessage = ref('')
-const successMessage = ref('')
+// const successMessage = ref('')
 const job = ref({})
 const file = ref(null) // Define a ref for the file
 
