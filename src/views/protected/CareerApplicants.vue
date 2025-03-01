@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-import BaseInput from '@/components/base/BaseInput.vue'
 import ApiService from '@/services/apiService'
 import DataTable from '@/components/base/DataTableT.vue'
 import { BASE_UPLOAD } from '@/config'
@@ -13,7 +12,6 @@ const route = useRoute()
 const tableHeaders = [
   { label: 'Name', field: 'fullName' },
   { label: 'Email', field: 'email' },
-
   { label: 'Cover Letter', field: 'message' },
   { label: 'Resume', field: 'resume' }
 ]
@@ -74,7 +72,9 @@ async function deleteJob(applicant) {
     }
   }
 }
-onMounted(getJob)
+onMounted(() => {
+  getJob()
+})
 </script>
 
 <template>
