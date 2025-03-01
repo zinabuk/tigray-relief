@@ -8,10 +8,15 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
+
 
 // let language = ref(localStorage.getItem('lang') || '')
 const services = ref([])
+
+const searchInput = ref('')
+const currentPage = ref(1)
+const itemsPerPage = ref(3)
 const fetchServices = async () => {
   try {
     const response = await ApiService.get('/admin/services')
@@ -42,6 +47,7 @@ const form = ref({
   serviceDescription: { en: '', ti: '', am: '' },
   serviceImage: ''
 })
+
 
 let logo = ref('')
 const handleFileChange = (file) => {
@@ -125,25 +131,54 @@ const closeModal = () => {
   logo.value = ''
 }
 
+
+const filteredService = computed(() => {
+  return services.value.filter(service =>
+    service.serviceTitle[currentLanguage.value].toLowerCase().includes(searchInput.value.toLowerCase())
+  );
+});
+
+const paginatedServices = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  return filteredService.value.slice(start, start + itemsPerPage.value);
+});
+const totalPages = computed(() => {
+  return Math.ceil(filteredService.value.length / itemsPerPage.value)
+})
+const changePage = (page) => {
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
+
 onMounted(() => {
   fetchServices()
 })
 </script>
 
 <template>
-  <section class="col-span-10 p-4 flex flex-col items-center gap-4">
+    <section class="col-span-10 p-4 flex flex-col bg-slate-50">
     <!-- Services -->
-    <button
+    <div class="flex justify-between">
+    <div class="flex-justify-start">
+      <input type="text" placeholder="search by service type" v-model="searchInput" id="" class="px-4 py-0 self-end flex gap-2 items-center border rounded-2xl my-2 shadow">
+    </div>
+    <div class="flex-justify-end">
+      <button
       @click="showAddModal = true"
       class="bg-[#53900F] self-end border flex items-center px-2 py-1 gap-2 text-white rounded-2xl"
     >
       <font-awesome-icon icon="add"></font-awesome-icon>
       Add What We Do
     </button>
+    </div>
+   </div>
+
+   
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
       <div
-        v-for="(service, i) in services"
+        v-for="(service, i) in paginatedServices"
         :key="i"
         class="p-4 flex flex-col gap-2 bg-white justify-between shadow"
       >
@@ -255,6 +290,41 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    <div class="flex justify-center mt-4">
+    <nav aria-label="Page navigation">
+      <ul class="inline-flex items-center space-x-1">
+        <li>
+          <button
+            @click="changePage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+          >
+            Previous
+          </button>
+        </li>
+        <li v-for="page in totalPages" :key="page">
+          <button
+            @click="changePage(page)"
+            :class="{
+              'px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg': currentPage === page,
+              'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100': currentPage !== page
+            }"
+          >
+            {{ page }}
+          </button>
+        </li>
+        <li>
+          <button
+            @click="changePage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
   </section>
 </template>
 
