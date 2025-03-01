@@ -1,9 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
 // import DataTable from '@/components/base/DataTable.vue'
 import ApiService from '@/services/apiService'
 import BaseInput from '@/components/base/BaseInput.vue'
-import BaseTextarea from '@/components/base/BaseTextarea.vue'
+// import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import { BASE_AVATAR } from '@/config'
@@ -12,9 +12,9 @@ import dayjs from 'dayjs'
 
 const currentLanguage = ref('en')
 
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
+// const toggleLanguage = (lang) => {
+//   currentLanguage.value = lang
+// }
 
 // const tableHeaders = [
 //   { label: 'Title', field: 'businessName' },
@@ -23,6 +23,10 @@ const toggleLanguage = (lang) => {
 // ]
 
 const partnerships = ref([])
+const searchInput = ref('')
+const currentPage = ref(1)
+const itemsPerPage = ref(4)
+
 // const actions = [
 //   {
 //     label: 'edit',
@@ -149,18 +153,53 @@ const submitPartner = async () => {
 }
 
 let message = ref('')
+const filteredPartners = computed(() => {
+  return partnerships.value.filter(item =>
+    item.businessName[currentLanguage.value].toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    item.email.toString().includes(searchInput.value.toLowerCase()) ||
+    item.website.toString().includes(searchInput.value.toLowerCase())
+  )
+})
 
+const paginatedPartners = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value
+  return filteredPartners.value.slice(start, start + itemsPerPage.value)
+})
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredPartners.value.length / itemsPerPage.value)
+})
+
+const changePage = (page) => {
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
 onMounted(fetchPartners)
 </script>
 
 <template>
-  <section class="col-span-10 flex flex-col flex-wrap gap-2 p-4 bg-slate-50">
-    <button class="text-white bg-[#53900F] rounded-2xl shadow self-end px-2 py-1" @click="toggleAdd($event)">
+  <section class="col-span-10 flex flex-col bg-slate-50 flex-wrap gap-2 p-4">
+    <div class="flex justify-between">
+      <div class="flex-justify-start">
+        <base-input
+          inputClass="border outline-none border-[#288fb2]"
+          type="search"
+          class="px-2 py-1"
+         v-model="searchInput"
+          placeholder="Search partners..."
+      ></base-input>
+      </div>
+      <div class="flex-justify-end">
+        <button class="text-white bg-[#53900F] rounded-2xl shadow self-end px-2 py-1" @click="toggleAdd($event)">
       Add Partner
     </button>
+      </div>
+    </div>
+   
     <section class="w-full grid grid-cols-4 gap-6">
       <div
-        v-for="(partner, index) in partnerships"
+        v-for="(partner, index) in paginatedPartners"
         :key="index"
         class="bg-white p-2 flex flex-col items-center justify-between"
       >
@@ -193,6 +232,41 @@ onMounted(fetchPartners)
         </div>
       </div>
     </section>
+        <div class="flex justify-center mt-4">
+      <nav aria-label="Page navigation">
+        <ul class="inline-flex items-center space-x-1">
+          <li>
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Previous
+            </button>
+          </li>
+          <li v-for="page in totalPages" :key="page">
+            <button
+              @click="changePage(page)"
+              :class="{
+                'px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg': currentPage === page,
+                'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100': currentPage !== page
+              }"
+            >
+              {{ page }}
+            </button>
+          </li>
+          <li>
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </section>
 
   <div

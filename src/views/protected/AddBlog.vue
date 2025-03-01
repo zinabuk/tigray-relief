@@ -1,4 +1,5 @@
 <template>
+ <section class="col-span-10 p-4 flex flex-col bg-slate-50">
   <div class="w-[82%] flex flex-wrap items-center justify-center">
     <div class="w-1/2">
       <form
@@ -80,6 +81,7 @@
       </form>
     </div>
   </div>
+</section>
   <Footer></Footer>
 </template>
 

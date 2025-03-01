@@ -175,7 +175,13 @@ onMounted(() => {
       <h2 class="text-xl font-bold">Hero  Section</h2>
    <div class="flex justify-between">
     <div class="flex-justify-start">
-      <input type="text" placeholder="search by title" v-model="searchInput" id="" class="px-4 py-0 self-end flex gap-2 items-center border rounded-2xl my-2 shadow">
+      <base-input
+          inputClass="border outline-none border-[#288fb2]"
+          type="search"
+          class="px-2 py-1"
+         v-model="searchInput"
+          placeholder="Search by titele..."
+        ></base-input>
     </div>
     <div class="flex-justify-end">
       <BaseButton

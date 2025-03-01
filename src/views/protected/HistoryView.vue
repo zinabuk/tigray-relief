@@ -75,7 +75,7 @@ const filteredHistorie = computed(() => {
   );
 });
 
-const paginatedHeroes = computed(() => {
+const paginatedHistories = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage.value;
   return filteredHistorie.value.slice(start, start + itemsPerPage.value);
 });
@@ -158,7 +158,13 @@ onMounted(() => {
     <!-- Histories -->
     <div class="flex justify-between">
     <div class="flex-justify-start">
-      <input type="text" placeholder="search by title" v-model="searchInput" id="" class="px-4 py-0 self-end flex gap-2 items-center border rounded-2xl my-2 shadow">
+      <base-input
+          inputClass="border outline-none border-[#288fb2]"
+          type="search"
+          class="px-2 py-1"
+         v-model="searchInput"
+          placeholder="Search  by year..."
+      ></base-input>
     </div>
     <div class="flex-justify-end">
       <button
@@ -175,7 +181,7 @@ onMounted(() => {
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 place-content-center">
       <div
-        v-for="(service, i) in paginatedHeroes"
+        v-for="(service, i) in paginatedHistories"
         :key="i"
         class="flex flex-col gap-2 justify-between bg-white shadow"
       >

@@ -13,13 +13,16 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import swal from 'sweetalert'
 // import { useRouter } from 'vue-router'
 // const router = useRouter()
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
 const currentLanguage = ref('en')
 
 // const toggleLanguage = (lang) => {
 //   currentLanguage.value = lang
 // }
 const teams = ref([])
+const searchInput = ref('')
+const currentPage = ref(1)
+const itemsPerPage = ref(4)
 const fetchTeams = async () => {
   try {
     const response = await ApiService.get('/admin/our-teams')
@@ -138,25 +141,59 @@ const showModal = () => {
     showAddModal.value = true
   }
 }
+const filteredTeams = computed(() => {
+  return teams.value.filter(team =>
+    team.fullName[currentLanguage.value].toLowerCase().includes(searchInput.value.toLowerCase())||
+    team.profession[currentLanguage.value].toLowerCase().includes(searchInput.value.toLowerCase())
+  );
+});
+
+const paginatedTeams = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  return filteredTeams.value.slice(start, start + itemsPerPage.value);
+});
+const totalPages = computed(() => {
+  return Math.ceil(filteredTeams.value.length / itemsPerPage.value)
+})
+const changePage = (page) => {
+  if (page > 0 && page <= totalPages.value) {
+    currentPage.value = page
+  }
+}
 onMounted(() => {
   fetchTeams()
 })
 </script>
 
 <template>
-  <section class="col-span-10 p-4 flex flex-col bg-slate-50 items-center gap-4">
+ <section class="col-span-10 p-4 flex flex-col bg-slate-50">
     <!-- Services -->
-    <button
+ <div class="flex justify-between">
+      <div class="flex-justify-start">
+        <base-input
+          inputClass="border outline-none border-[#288fb2]"
+          type="search"
+          class="px-2 py-1"
+         v-model="searchInput"
+          placeholder="Search  boards..."
+      ></base-input>
+        </div>
+    <div class="flex-justify-end">
+      <button
       @click="showModal()"
       class="bg-[#53900F] self-end border flex items-center px-2 py-1 rounded-2xl text-white gap-2"
     >
       <font-awesome-icon icon="add"></font-awesome-icon>
       Add Director
     </button>
+    </div>
+
+  </div>
+ 
 
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 place-content-center">
       <div
-        v-for="(team, i) in teams"
+        v-for="(team, i) in paginatedTeams"
         :key="i"
         class="flex flex-col gap-2 p-1 justify-between shadow bg-white"
       >
@@ -315,6 +352,41 @@ onMounted(() => {
           </div>
         </form>
       </div>
+    </div>
+    <div class="flex justify-center mt-4">
+      <nav aria-label="Page navigation">
+        <ul class="inline-flex items-center space-x-1">
+          <li>
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Previous
+            </button>
+          </li>
+          <li v-for="page in totalPages" :key="page">
+            <button
+              @click="changePage(page)"
+              :class="{
+                'px-4 py-2 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-lg': currentPage === page,
+                'px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100': currentPage !== page
+              }"
+            >
+              {{ page }}
+            </button>
+          </li>
+          <li>
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   </section>
 </template>
