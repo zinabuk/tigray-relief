@@ -50,7 +50,7 @@ const errorMessage = ref('')
 const successMessage = ref('')
 const saveJob = async () => {
   try {
-    const response = await CareerService.updateCareer(job.value, job.value.id)
+    const response = await ApiService.updateCareer(job.value, job.value.id)
     if (response.success) {
       //   successMessage.value = response.message
       swal({
@@ -77,9 +77,9 @@ const formattedDate = (date) => {
 </script>
 
 <template>
-  <div class="w-full flex justify-center items-center bg-black/80">
-    <div class="bg-white/100 flex w-full md:w-1/2 flex-col overflow-auto">
-      <form @submit.prevent="UpdateJob" class="w-full flex flex-col px-4">
+  <div class="w-full flex justify-center items-center bg-black/80 p-12">
+    <div class="bg-white/100 flex w-full md:w-3/4 flex-col overflow-auto">
+      <form @submit.prevent="UpdateJob" class="w-full flex flex-col gap-2 px-4">
         <BaseInput
           v-model="job.jobTitle"
           type="text"
@@ -113,12 +113,6 @@ const formattedDate = (date) => {
         ></BaseInput>
         <BaseInput v-model="job.qualification" label="Qualification"></BaseInput>
         <RichTextInput v-model="job.description"></RichTextInput>
-        <div class="flex gap-4">
-          <BaseButton type="submit" class="px-4 py-1">Save Changes</BaseButton>
-          <button type="button" class="bg-gray-600 text-white px-4 py-2" @click="closeEditModal">
-            Cancel
-          </button>
-        </div>
       </form>
     </div>
   </div>
