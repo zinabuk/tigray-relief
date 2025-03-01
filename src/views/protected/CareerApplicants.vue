@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch} from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useRouter } from 'vue-router'
@@ -26,7 +26,7 @@ const actions = [
 ]
 const searchApplicants = ref('')
 const jobs = ref([])
-const getJob = async () => {
+const getJApplicants= async () => {
   try {
     const response = await ApiService.get('users/all-applicants/' + route.params.id)
     jobs.value = response.data
@@ -53,36 +53,62 @@ const filteredJobs = computed(() => {
     return jobs.value
   }
 })
+const job = ref({})
+async function getJob() {
+  try {
+    const response = await ApiService.getCareerById('/admin/vacancies/' + route.params.id)
+
+    if (response.success) {
+      job.value = { ...response.data }
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 404 && error.response.data) {
+      return
+    } else {
+      return
+    }
+  }
+}
+
+watch(
+  () => route.params.id,
+  (newId) => {
+    if (newId) {
+      getJob()
+    }
+  },
+  { immediate: true }
+)
 
 async function deleteJob(applicant) {
   try {
     const sure = window.confirm('Are you sure?')
     if (sure) {
-      const response = await ApiService.delete(applicant.id)
+      const response = await ApiService.delete('/users/applications/' + applicant.id)
       if (response.success) {
         alert('Applicant deleted successfully')
-        getJob() // Refresh the list of applicants after deletion
+        getJApplicants() // Refresh the list of applicants after deletion
       }
     }
   } catch (error) {
     if (error.response && error.response.status === 404) {
-      router.push({ name: '404resource', params: { resource: 'Job' } })
+      alert(error)
     } else {
-      router.push({ name: 'NetworkError' })
+      alert(error)
     }
   }
 }
 onMounted(() => {
-  getJob()
+  getJApplicants()
 })
 </script>
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <div class="flex justify-between w-full">
-      <h2 class="text-xl font-bold">Job Applicants</h2>
+    <div class="flex justify-betweenz w-full">
+      {{ job.jobTitle }}
+      <h2 class="text-x ml-4 d">Job Applicants</h2>
     </div>
-
     <div class="w-full">
       <DataTable
         :tableHeaders="tableHeaders"
@@ -91,16 +117,6 @@ onMounted(() => {
         createExport="true"
         exportTitle="vacancies"
       >
-        <!-- <template #applicationLetter="{ item }">
-          <a
-            class="hover:text-primary action-cell"
-            :href="BASE_UPLOAD + `${item.resume}`"
-            target="_blank"
-            title="download letter"
-          >
-            {{ item.applicationLetter }}
-          </a>
-        </template> -->
         <template #cv="{ item }">
           <a
             class="hover:text-primary action-cell underline text-blue-600"

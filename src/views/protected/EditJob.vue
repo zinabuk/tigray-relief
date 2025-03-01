@@ -23,7 +23,6 @@ const formattedDate = (date) => {
   }
 }
 const job = ref({})
-const formatDate = ref('')
 async function getJob() {
   try {
     const response = await ApiService.getCareerById('/admin/vacancies/' + route.params.id)
@@ -62,15 +61,9 @@ const saveJob = async () => {
     }
   } catch (error) {
     alert(error)
-    // if (error.response && error.response.status === 404) {
-    //   errorMessage.value = error.response.data.message
-    // } else {
-    //   router.push({ name: 'NetworkError' })
-    // }
   }
 }
 </script>
-
 <template>
   <section class="w-full">
     <button class="m-4" @click.prevent="$router.go(-1)">Go back</button>
@@ -111,7 +104,6 @@ const saveJob = async () => {
           ></BaseInput>
           <BaseInput v-model="job.qualification" label="Qualification"></BaseInput>
           <RichTextInput v-model="job.description"></RichTextInput>
-
           <BaseButton type="submit" class="px-4 py-1">Save Changes</BaseButton>
         </form>
       </div>
