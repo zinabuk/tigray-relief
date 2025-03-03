@@ -48,7 +48,7 @@
           :key="post.id"
         >
           <h2 class="text-md font-semibold">{{ post.platform }}</h2>
-          <div v-if="post.platform === 'facebook'">
+          <div v-if="post.platform.toLowerCase() === 'facebook'">
             <iframe
               :src="post.post"
               class="w-full h-[400px] rounded-lg"
@@ -56,15 +56,15 @@
               style="border: none"
             ></iframe>
           </div>
-          <div v-else-if="post.platform === 'twitter'" v-html="post.post" class="w-full"></div>
+          <!-- <div v-else-if="post.platform === 'twitter'" v-html="post.post" class="w-full"></div> -->
 
           <div class="flex gap-4 mt-2">
             <button class="bg-blue-500 text-white rounded px-4 py-1" @click="editMedia(post)">
               Edit
             </button>
-            <button class="bg-red-500 text-white rounded px-4 py-1" @click="deleteMedia(post.id)">
+            <!-- <button class="bg-red-500 text-white rounded px-4 py-1" @click="deleteMedia(post.id)">
               Delete
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
@@ -122,6 +122,7 @@
           label="Platform"
           placeholder="facebook or twitter"
         ></base-input>
+
         <base-input
           v-model="embedMedia.post"
           label="Post / Link"
@@ -231,7 +232,8 @@ const embedMedia = ref({
   post: ''
 })
 
-const editMedia = () => {
+const editMedia = (post) => {
+  embedMedia.value = post
   showEmbedModal.value = true
 }
 
