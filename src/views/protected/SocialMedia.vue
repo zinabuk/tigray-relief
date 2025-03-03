@@ -56,10 +56,17 @@
               style="border: none"
             ></iframe>
           </div>
-          <!-- <div v-else-if="post.platform === 'twitter'" v-html="post.post" class="w-full"></div> -->
+          <div
+            v-else-if="post.platform.toLowerCase() === 'twitter'"
+            v-html="post.post"
+            class="w-full"
+          ></div>
 
           <div class="flex gap-4 mt-2">
-            <button class="bg-blue-500 text-white rounded px-4 py-1" @click="editMedia(post)">
+            <button
+              class="bg-blue-500 text-white rounded px-4 py-1"
+              @click.prevent="editMedia(post)"
+            >
               Edit
             </button>
             <!-- <button class="bg-red-500 text-white rounded px-4 py-1" @click="deleteMedia(post.id)">
@@ -70,9 +77,37 @@
       </div>
 
       <!-- Add New Post Button -->
-      <!-- <button class="bg-green-500 text-white px-4 py-2 rounded mt-4" @click="showEmbedModal = true">
+      <button class="bg-green-500 text-white px-4 py-2 rounded mt-4" @click="showEmbedModal = true">
         Add New Post
-      </button> -->
+      </button>
+
+      <div
+        class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
+        v-if="showNewEmbedModal"
+      >
+        <form
+          @submit.prevent="saveEmbededMedia"
+          class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg"
+        >
+          <button class="self-end text-red-500" type="button" @click="showEmbedModal = false">
+            &times;
+          </button>
+          <label class="block mb-2 text-lg font-semibold">Platform</label>
+          <select v-model="embedMedia.platform" class="w-full p-2 border rounded mb-4">
+            <option value="facebook">Facebook</option>
+            <option value="twitter">Twitter</option>
+          </select>
+
+          <label class="block mb-2 text-lg font-semibold">Source / Link</label>
+          <input
+            v-model="embedMedia.post"
+            class="w-full p-2 border rounded mb-4"
+            placeholder="Paste iframe link for Facebook or Twitter embed code"
+          />
+
+          <button class="bg-blue-500 text-white px-4 py-2 rounded" type="submit">Save</button>
+        </form>
+      </div>
       <!-- Edit/Add Social Media Post Modal -->
     </div>
 
@@ -227,6 +262,7 @@ const closeModal = () => {
 }
 
 const showEmbedModal = ref(false)
+const showNewEmbedModal = ref(false)
 const embedMedia = ref({
   platform: '',
   post: ''
