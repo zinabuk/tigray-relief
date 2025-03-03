@@ -1,5 +1,7 @@
 <template>
-  <section class="col-span-10 px-[6%] py-12 flex flex-col items-center gap-4 bg-slate-50 r">
+  <section
+    class="col-span-10 w-full px-[6%] py-12 flex flex-col items-center gap-4 bg-slate-50 flex-wrap break-words"
+  >
     <!-- Add Contact Button -->
     <button
       @click="showAddModal = true"
@@ -8,29 +10,60 @@
       Add social media
     </button>
 
-    <!-- Contact Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 place-content-center">
-      <div
-        v-for="(contact, i) in contacts"
-        :key="i"
-        class="p-4 flex flex-col gap-2 bg-white justify-between shadow"
-      >
-        <p class="text-xl font-semibold">{{ contact.platform }}</p>
-        <a :href="contact.link" target="_blank" class="text-black/80 underline">{{
-          contact.link
-        }}</a>
-        <div class="flex gap-8">
-          <button @click="editContact(contact)" title="Edit">
-            <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
-          </button>
-          <button @click="deleteContact(contact.id)" title="Delete">
-            <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
-          </button>
+    <!-- Start of social media pages -->
+
+    <div class="w-full">
+      <h1>Social Media pages</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 place-content-center">
+        <div
+          v-for="(contact, i) in contacts"
+          :key="i"
+          class="p-4 flex flex-col gap-2 bg-white justify-between shadow-sm"
+        >
+          <p class="text-xl font-semibold">{{ contact.platform }}</p>
+          <a :href="contact.link" target="_blank" class="text-black/80 underline">{{
+            contact.link
+          }}</a>
+          <div class="flex gap-8">
+            <button @click="editContact(contact)" title="Edit">
+              <font-awesome-icon icon="edit" class="text-blue-500"></font-awesome-icon>
+            </button>
+            <button @click="deleteContact(contact.id)" title="Delete">
+              <font-awesome-icon icon="trash" class="text-red-500"></font-awesome-icon>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    <!-- End of social media pages -->
 
-    <div class="w-full">Latest Social Media Posts</div>
+    <div class="w-full px-%]">
+      <h1 class="text-lg font-semibold">Twitter and Facebook latest posts</h1>
+
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div class="w-full flex flex-wrap">
+          <h1>Facebook</h1>
+          <a
+            href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
+            target="_blank"
+            style="max-width: 100% ;"   
+          >
+            https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true
+          </a>
+        </div>
+
+        <div class="w-full flex flex-wrap break-words">
+          <h1>Twitter</h1>
+          <a
+            href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
+            target="_blank"
+            style="max-width: 100%;"
+          >
+            https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true
+          </a>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal -->
     <div
