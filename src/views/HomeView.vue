@@ -461,42 +461,40 @@ onMounted(() => {
     <h1 class="text-3xl font-bold text-gray-800">{{ $t('Latest Social Media Posts') }}</h1>
 
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Facebook Embed 1 -->
-      <div class="w-full flex justify-center" v-for="(post, i) in posts" :key="i">
-        <div class="w-full max-w-[500px] bg-white shadow-lg rounded-lg overflow-hidden p-2">
+      <!-- Social Media Post Card -->
+      <div
+        class="relative flex flex-col p-4 bg-white bg-opacity-75 backdrop-blur-lg shadow rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300"
+        v-for="post in posts"
+        :key="post.id"
+      >
+        <!-- Platform Name -->
+        <h2 class="text-lg font-semibold text-gray-700 flex items-center">
+          <span v-if="post.platform.toLowerCase() === 'facebook'" class="text-blue-600 mr-2">
+            <font-awesome-icon :icon="['fab', 'facebook']" />
+          </span>
+          <span v-if="post.platform.toLowerCase() === 'twitter'" class="text-blue-400 mr-2">
+            <font-awesome-icon :icon="['fab', 'twitter']" />
+          </span>
+          {{ post.platform }}
+        </h2>
+
+        <!-- Facebook Embed -->
+        <div v-if="post.platform.toLowerCase() === 'facebook'" class="mt-3">
           <iframe
             :src="post.post"
-            class="w-full h-[400px] rounded-lg"
+            class="w-full h-[300px] rounded-lg border border-gray-300"
             loading="lazy"
             style="border: none"
           ></iframe>
         </div>
-      </div>
-      <div class="w-full px-4   flex flex-col items-center max-h-[500px] object-contain" >
-        <!-- <h1 class="text-3xl font-bold mb-4">Latest Twitter Post</h1> -->
 
+        <!-- Twitter Embed -->
         <div
-          ref="twitterEmbed"
-          class="w-full max-w-2xl object-contain bg-white shadow-lg rounded-lg overflow-hidden p-4"
-        >
-          <blockquote class="twitter-tweet">
-            <p lang="en" dir="ltr">
-              🌟 Dream come true in RAYA Azebo Woreda! 🌾 Our irrigation water drilling under the
-              <a href="https://twitter.com/WFP_Ethiopia?ref_src=twsrc%5Etfw">@WFP_Ethiopia</a>
-              Assisted Livelihood Recovery project is going great. Soon, 400 farmers will benefit
-              from 200 hectares of irrigated land. 🙌💧
-              <a href="https://t.co/9jryfRLgQE">pic.twitter.com/9jryfRLgQE</a>
-            </p>
-            &mdash; RELIEF SOCIETY OF TIGRAY (REST) (@ReliefTigray)
-            <a
-              href="https://twitter.com/ReliefTigray/status/1896561893491527823?ref_src=twsrc%5Etfw"
-            >
-              March 3, 2025
-            </a>
-          </blockquote>
-        </div>
+          v-else-if="post.platform.toLowerCase() === 'twitter'"
+          v-html="post.post"
+          class="w-full h-[300px] overflow-hidden rounded-lg mt-3"
+        ></div>
       </div>
-       
     </div>
   </section>
 </template>

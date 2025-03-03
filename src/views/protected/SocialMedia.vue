@@ -36,7 +36,7 @@
       </div>
     </div>
     <!-- End of social media pages -->
-
+    <hr class="my-2 h-[2px] bg-black/60 w-full" />
     <div class="w-full px-4">
       <h1 class="text-lg font-semibold mb-4">Twitter and Facebook Latest Posts</h1>
 
@@ -76,38 +76,6 @@
         </div>
       </div>
 
-      <!-- Add New Post Button -->
-      <button class="bg-green-500 text-white px-4 py-2 rounded mt-4" @click="showEmbedModal = true">
-        Add New Post
-      </button>
-
-      <div
-        class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
-        v-if="showNewEmbedModal"
-      >
-        <form
-          @submit.prevent="saveEmbededMedia"
-          class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg"
-        >
-          <button class="self-end text-red-500" type="button" @click="showEmbedModal = false">
-            &times;
-          </button>
-          <label class="block mb-2 text-lg font-semibold">Platform</label>
-          <select v-model="embedMedia.platform" class="w-full p-2 border rounded mb-4">
-            <option value="facebook">Facebook</option>
-            <option value="twitter">Twitter</option>
-          </select>
-
-          <label class="block mb-2 text-lg font-semibold">Source / Link</label>
-          <input
-            v-model="embedMedia.post"
-            class="w-full p-2 border rounded mb-4"
-            placeholder="Paste iframe link for Facebook or Twitter embed code"
-          />
-
-          <button class="bg-blue-500 text-white px-4 py-2 rounded" type="submit">Save</button>
-        </form>
-      </div>
       <!-- Edit/Add Social Media Post Modal -->
     </div>
 
@@ -260,9 +228,7 @@ const closeModal = () => {
   errorMessage.value = ''
   successMessage.value = ''
 }
-
 const showEmbedModal = ref(false)
-const showNewEmbedModal = ref(false)
 const embedMedia = ref({
   platform: '',
   post: ''
