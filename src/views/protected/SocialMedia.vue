@@ -69,8 +69,18 @@
             https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true
           </a>
           <div class="flex gap-4">
-            <button class="bg-white rounded shadow px-4 py-1 text-blue-500">Edit</button>
-            <button class="bg-white rounded shadow px-4 py-1 text-red-500">Delete</button>
+            <button
+              class="bg-white rounded shadow px-4 py-1 text-blue-500"
+              @click.prevent="editMedia()"
+            >
+              Edit
+            </button>
+            <button
+              class="bg-white rounded shadow px-4 py-1 text-red-500"
+              @click.prevent="deleteMedia()"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
