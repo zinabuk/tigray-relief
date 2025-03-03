@@ -37,8 +37,6 @@
     </div>
     <!-- End of social media pages -->
 
-
-
     <div class="w-full px-4">
       <h1 class="text-lg font-semibold mb-4">Twitter and Facebook Latest Posts</h1>
 
@@ -72,38 +70,10 @@
       </div>
 
       <!-- Add New Post Button -->
-      <button class="bg-green-500 text-white px-4 py-2 rounded mt-4" @click="showEmbedModal = true">
+      <!-- <button class="bg-green-500 text-white px-4 py-2 rounded mt-4" @click="showEmbedModal = true">
         Add New Post
-      </button>
-
+      </button> -->
       <!-- Edit/Add Social Media Post Modal -->
-      <div
-        class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
-        v-if="showEmbedModal"
-      >
-        <form
-          @submit.prevent="saveEmbededMedia"
-          class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg"
-        >
-          <button class="self-end text-red-500" type="button" @click="showEmbedModal = false">
-            &times;
-          </button>
-          <label class="block mb-2 text-lg font-semibold">Platform</label>
-          <select v-model="embedMedia.platform" class="w-full p-2 border rounded mb-4">
-            <option value="facebook">Facebook</option>
-            <option value="twitter">Twitter</option>
-          </select>
-
-          <label class="block mb-2 text-lg font-semibold">Source / Link</label>
-          <input
-            v-model="embedMedia.post"
-            class="w-full p-2 border rounded mb-4"
-            placeholder="Paste iframe link for Facebook or Twitter embed code"
-          />
-
-          <button class="bg-blue-500 text-white px-4 py-2 rounded" type="submit">Save</button>
-        </form>
-      </div>
     </div>
 
     <!-- Modal -->
@@ -140,18 +110,21 @@
       class="fixed modal inset-0 z-50 bg-black/40 p-8 flex flex-col items-center justify-center w-full"
       v-if="showEmbedModal"
     >
-      <form @submit.prevent="saveEmbededMedia" class="w-full flex flex-col md:w-1/2 bg-white p-4">
+      <form
+        @submit.prevent="saveEmbededMedia"
+        class="w-full flex flex-col md:w-1/2 bg-white p-4 gap-2 shadow rounded-md"
+      >
         <button class="self-end" type="button" @click.prevent="showEmbedModal = false">
           <font-awesome-icon icon="times" class="hover:text-red-700"></font-awesome-icon>
         </button>
         <base-input
           v-model="embedMedia.platform"
-          label="Media"
+          label="Platform"
           placeholder="facebook or twitter"
         ></base-input>
         <base-input
           v-model="embedMedia.post"
-          label="Source / Link"
+          label="Post / Link"
           placeholder="'https://...'"
         ></base-input>
         <base-button type="submit" class="px-4 py-1">Save</base-button>
