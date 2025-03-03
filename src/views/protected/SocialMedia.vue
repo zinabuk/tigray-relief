@@ -11,7 +11,6 @@
     </button>
 
     <!-- Start of social media pages -->
-
     <div class="w-full">
       <h1>Social Media pages</h1>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 place-content-center">
