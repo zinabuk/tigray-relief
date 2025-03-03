@@ -46,10 +46,16 @@
           <a
             href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
             target="_blank"
-            style="max-width: 100% ;"   
+            style="max-width: 100%"
+            class="break-all"
           >
             https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true
           </a>
+
+          <div class="flex gap-4">
+            <button class="bg-white rounded shadow px-4 py-1 text-blue-500">Edit</button>
+            <button class="bg-white rounded shadow px-4 py-1 text-red-500">Delete</button>
+          </div>
         </div>
 
         <div class="w-full flex flex-wrap break-words">
@@ -57,10 +63,15 @@
           <a
             href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
             target="_blank"
-            style="max-width: 100%;"
+            style="max-width: 100%"
+            class="break-all"
           >
             https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true
           </a>
+          <div class="flex gap-4">
+            <button class="bg-white rounded shadow px-4 py-1 text-blue-500">Edit</button>
+            <button class="bg-white rounded shadow px-4 py-1 text-red-500">Delete</button>
+          </div>
         </div>
       </div>
     </div>
@@ -92,6 +103,15 @@
           </form>
         </div>
       </div>
+    </div>
+
+    <!-- Edit social media post modal -->
+    <div class="fixed modal z-50" v-if="showEmbedModal">
+      <form @submit.prevent="saveEmbededMedia">
+        <base-input v-model="embedMedia.media" label="Media"></base-input>
+        <base-input v-model="embedMedia.src" label="Source / Link"></base-input>
+        <base-button type="submit">Save</base-button>
+      </form>
     </div>
   </section>
 </template>
@@ -186,6 +206,25 @@ const closeModal = () => {
   edit.value = false
   errorMessage.value = ''
   successMessage.value = ''
+}
+
+const showEmbedModal = ref(false)
+const embedMedia = ref({
+  media: '',
+  src: ''
+})
+
+const saveEmbededMedia = async () => {
+  try {
+    const response = await ApiService.post('/admin/media', embedMedia.value)
+    if (response.success) {
+      alert('Media saved successfully!') // Handle success feedback
+      showEmbedModal.value = false // Close modal if needed
+      embedMedia.value = {} // Reset form
+    }
+  } catch (error) {
+    alert('Failed to save media. Please try again.')
+  }
 }
 
 onMounted(() => {
