@@ -37,52 +37,138 @@
     </div>
     <!-- End of social media pages -->
 
-    <div class="w-full px-%]">
-      <h1 class="text-lg font-semibold">Twitter and Facebook latest posts</h1>
+    <script setup>
+      import { ref, onMounted } from 'vue'
+      import ApiService from '@/services/ApiService' // Make sure ApiService is configured
 
-      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-2">
-        <div class="w-full flex flex-wrap">
-          <h1>Facebook</h1>
-          <a
-            href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
-            target="_blank"
-            style="max-width: 100%"
-            class="break-all"
-          >
-            https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true
-          </a>
+      const showEmbedModal = ref(false)
+      const embedMedia = ref({
+        id: null, // For editing purposes
+        platform: '',
+        post: ''
+      })
+      const posts = ref([])
 
-          <div class="flex gap-4">
-            <button class="bg-white rounded shadow px-4 py-1 text-blue-500">Edit</button>
-            <button class="bg-white rounded shadow px-4 py-1 text-red-500">Delete</button>
+      // Fetch social media posts from the backend
+      const fetchSocialMediaPosts = async () => {
+        try {
+          const response = await ApiService.get('/social-media-posts')
+          posts.value = response.data
+        } catch (error) {
+          console.error('Failed to fetch posts', error)
+        }
+      }
+
+      // Open modal for editing
+      const editMedia = (post) => {
+        embedMedia.value = { ...post } // Load the selected post into the form
+        showEmbedModal.value = true
+      }
+
+      // Save or update the social media post
+      const saveEmbededMedia = async () => {
+        try {
+          if (embedMedia.value.id) {
+            // Update existing post
+            await ApiService.put(
+              `/admin/social-media-posts/${embedMedia.value.id}`,
+              embedMedia.value
+            )
+          } else {
+            // Create new post
+            await ApiService.post('/admin/social-media-posts', embedMedia.value)
+          }
+
+          alert('Media saved successfully!')
+          showEmbedModal.value = false
+          embedMedia.value = { platform: '', post: '' }
+          fetchSocialMediaPosts()
+        } catch (error) {
+          alert('Failed to save media. Please try again.')
+        }
+      }
+
+      // Delete a social media post
+      const deleteMedia = async (id) => {
+        if (!confirm('Are you sure you want to delete this post?')) return
+
+        try {
+          await ApiService.delete(`/admin/social-media-posts/${id}`)
+          alert('Post deleted successfully!')
+          fetchSocialMediaPosts()
+        } catch (error) {
+          alert('Failed to delete media. Please try again.')
+        }
+      }
+
+      // Fetch posts on component mount
+      onMounted(fetchSocialMediaPosts)
+    </script>
+
+    <div class="w-full px-4">
+      <h1 class="text-lg font-semibold mb-4">Twitter and Facebook Latest Posts</h1>
+
+      <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Loop through posts -->
+        <div
+          class="w-full flex flex-col p-2 bg-white shadow-lg rounded-lg"
+          v-for="post in posts"
+          :key="post.id"
+        >
+          <h2 class="text-md font-semibold">{{ post.platform }}</h2>
+          <div v-if="post.platform === 'facebook'">
+            <iframe
+              :src="post.post"
+              class="w-full h-[400px] rounded-lg"
+              loading="lazy"
+              style="border: none"
+            ></iframe>
           </div>
-        </div>
+          <div v-else-if="post.platform === 'twitter'" v-html="post.post" class="w-full"></div>
 
-        <div class="w-full flex flex-wrap break-words">
-          <h1>Twitter</h1>
-          <a
-            href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
-            target="_blank"
-            style="max-width: 100%"
-            class="break-all"
-          >
-            https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true
-          </a>
-          <div class="flex gap-4">
-            <button
-              class="bg-white rounded shadow px-4 py-1 text-blue-500"
-              @click.prevent="editMedia"
-            >
+          <div class="flex gap-4 mt-2">
+            <button class="bg-blue-500 text-white rounded px-4 py-1" @click="editMedia(post)">
               Edit
             </button>
-            <button
-              class="bg-white rounded shadow px-4 py-1 text-red-500"
-              @click.prevent="deleteMedia()"
-            >
+            <button class="bg-red-500 text-white rounded px-4 py-1" @click="deleteMedia(post.id)">
               Delete
             </button>
           </div>
         </div>
+      </div>
+
+      <!-- Add New Post Button -->
+      <button class="bg-green-500 text-white px-4 py-2 rounded mt-4" @click="showEmbedModal = true">
+        Add New Post
+      </button>
+
+      <!-- Edit/Add Social Media Post Modal -->
+      <div
+        class="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
+        v-if="showEmbedModal"
+      >
+        <form
+          @submit.prevent="saveEmbededMedia"
+          class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg"
+        >
+          <button class="self-end text-red-500" type="button" @click="showEmbedModal = false">
+            &times;
+          </button>
+          <label class="block mb-2 text-lg font-semibold">Platform</label>
+          <select v-model="embedMedia.platform" class="w-full p-2 border rounded mb-4">
+            <option value="facebook">Facebook</option>
+            <option value="twitter">Twitter</option>
+          </select>
+
+          <label class="block mb-2 text-lg font-semibold">Source / Link</label>
+          <input
+            v-model="embedMedia.post"
+            class="w-full p-2 border rounded mb-4"
+            placeholder="Paste iframe link for Facebook or Twitter embed code"
+          />
+
+          <button class="bg-blue-500 text-white px-4 py-2 rounded" type="submit">Save</button>
+        </form>
       </div>
     </div>
 
@@ -117,12 +203,23 @@
 
     <!-- Edit social media post modal -->
     <div
-      class="fixed modal inset-0 z-50 bg-black/40 p-8 flex items-center justify-center w-full"
+      class="fixed modal inset-0 z-50 bg-black/40 p-8 flex flex-col items-center justify-center w-full"
       v-if="showEmbedModal"
     >
-      <form @submit.prevent="saveEmbededMedia" class="w-full md:w-1/2 bg-white p-4">
-        <base-input v-model="embedMedia.platform" label="Media"></base-input>
-        <base-input v-model="embedMedia.post" label="Source / Link"></base-input>
+      <form @submit.prevent="saveEmbededMedia" class="w-full flex flex-col md:w-1/2 bg-white p-4">
+        <button class="self-end" type="button" @click.prevent="showEmbedModal = false">
+          <font-awesome-icon icon="times" class="hover:text-red-700"></font-awesome-icon>
+        </button>
+        <base-input
+          v-model="embedMedia.platform"
+          label="Media"
+          placeholder="facebook or twitter"
+        ></base-input>
+        <base-input
+          v-model="embedMedia.post"
+          label="Source / Link"
+          placeholder="'https://...'"
+        ></base-input>
         <base-button type="submit" class="px-4 py-1">Save</base-button>
       </form>
     </div>
@@ -233,11 +330,25 @@ const editMedia = () => {
 
 const saveEmbededMedia = async () => {
   try {
-    const response = await ApiService.post('/admin//social-media-posts', embedMedia.value)
+    const response = await ApiService.post('/admin/social-media-posts', embedMedia.value)
     if (response.success) {
       alert('Media saved successfully!') // Handle success feedback
       showEmbedModal.value = false // Close modal if needed
       embedMedia.value = {} // Reset form
+      fetchSocialMediaPosts()
+    }
+  } catch (error) {
+    alert('Failed to save media. Please try again.')
+  }
+}
+
+const posts = ref([])
+
+const fetchSocialMediaPosts = async () => {
+  try {
+    const response = await ApiService.get('/admin/social-media-posts')
+    if (response.success) {
+      posts.value = response.data
     }
   } catch (error) {
     alert('Failed to save media. Please try again.')
@@ -245,7 +356,7 @@ const saveEmbededMedia = async () => {
 }
 
 onMounted(() => {
-  fetchContacts()
+  fetchContacts(), fetchSocialMediaPosts()
 })
 </script>
 

@@ -154,8 +154,40 @@ const fetchTeams = async () => {
   }
 }
 
+const posts = ref([])
+
+const fetchSocialMediaPosts = async () => {
+  try {
+    const response = await ApiService.get('/admin/social-media-posts')
+    if (response.success) {
+      posts.value = response.data
+    }
+  } catch (error) {
+    alert('Failed to fetch media.')
+  }
+}
+
+const twitterEmbed = ref(null)
+
 onMounted(() => {
-  fetchServices(), fetchNews(), fetchPartners(), fetchHeroes(), fetchFaqs(), fetchTeams()
+  fetchServices(),
+    fetchNews(),
+    fetchPartners(),
+    fetchHeroes(),
+    fetchFaqs(),
+    fetchTeams(),
+    fetchSocialMediaPosts()
+
+  // Ensure Twitter script is loaded
+  if (window.twttr) {
+    window.twttr.widgets.load(twitterEmbed.value)
+  } else {
+    const script = document.createElement('script')
+    script.src = 'https://platform.twitter.com/widgets.js'
+    script.async = true
+    script.charset = 'utf-8'
+    document.body.appendChild(script)
+  }
 })
 
 //const originalText = 'Relief Society of Tigray'
@@ -430,28 +462,41 @@ onMounted(() => {
 
     <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- Facebook Embed 1 -->
-      <div class="w-full flex justify-center">
+      <div class="w-full flex justify-center" v-for="(post, i) in posts" :key="i">
         <div class="w-full max-w-[500px] bg-white shadow-lg rounded-lg overflow-hidden p-2">
           <iframe
-            src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid0nCkkcn3n5iSbW1mVe7rQNVSUvGRy7SMGnKA6qL677H3n7jv3saLbXegay27Fo5MKl&show_text=true&width=500&appId&show_faces=true&share=true"
+            :src="post.post"
             class="w-full h-[400px] rounded-lg"
             loading="lazy"
             style="border: none"
           ></iframe>
         </div>
       </div>
+      <div class="w-full px-4   flex flex-col items-center max-h-[500px] object-contain" >
+        <!-- <h1 class="text-3xl font-bold mb-4">Latest Twitter Post</h1> -->
 
-      <!-- Facebook Embed 2 -->
-      <div class="w-full flex justify-center">
-        <div class="w-full max-w-[500px] bg-white shadow-lg rounded-lg overflow-hidden p-2">
-          <iframe
-            src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FRESTigray1978%2Fposts%2Fpfbid032L3kwyAsGyy72ZjSu4EFe87ALKWUFqczztAJRiZLs8py5eu61WaGwCEgq9QyizDPl&show_text=true&width=500&appId&show_faces=true&share=true"
-            class="w-full h-[400px] rounded-lg"
-            loading="lazy"
-            style="border: none"
-          ></iframe>
+        <div
+          ref="twitterEmbed"
+          class="w-full max-w-2xl object-contain bg-white shadow-lg rounded-lg overflow-hidden p-4"
+        >
+          <blockquote class="twitter-tweet">
+            <p lang="en" dir="ltr">
+              🌟 Dream come true in RAYA Azebo Woreda! 🌾 Our irrigation water drilling under the
+              <a href="https://twitter.com/WFP_Ethiopia?ref_src=twsrc%5Etfw">@WFP_Ethiopia</a>
+              Assisted Livelihood Recovery project is going great. Soon, 400 farmers will benefit
+              from 200 hectares of irrigated land. 🙌💧
+              <a href="https://t.co/9jryfRLgQE">pic.twitter.com/9jryfRLgQE</a>
+            </p>
+            &mdash; RELIEF SOCIETY OF TIGRAY (REST) (@ReliefTigray)
+            <a
+              href="https://twitter.com/ReliefTigray/status/1896561893491527823?ref_src=twsrc%5Etfw"
+            >
+              March 3, 2025
+            </a>
+          </blockquote>
         </div>
       </div>
+       
     </div>
   </section>
 </template>
