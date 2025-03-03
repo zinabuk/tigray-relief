@@ -71,7 +71,7 @@
           <div class="flex gap-4">
             <button
               class="bg-white rounded shadow px-4 py-1 text-blue-500"
-              @click.prevent="editMedia()"
+              @click.prevent="editMedia"
             >
               Edit
             </button>
@@ -116,10 +116,10 @@
     </div>
 
     <!-- Edit social media post modal -->
-    <div class="fixed modal z-50" v-if="showEmbedModal">
+    <div class="fixed modal z-50 bg-black" v-if="showEmbedModal">
       <form @submit.prevent="saveEmbededMedia">
-        <base-input v-model="embedMedia.media" label="Media"></base-input>
-        <base-input v-model="embedMedia.src" label="Source / Link"></base-input>
+        <base-input v-model="embedMedia.platform" label="Media"></base-input>
+        <base-input v-model="embedMedia.post" label="Source / Link"></base-input>
         <base-button type="submit">Save</base-button>
       </form>
     </div>
@@ -220,13 +220,13 @@ const closeModal = () => {
 
 const showEmbedModal = ref(false)
 const embedMedia = ref({
-  media: '',
-  src: ''
+  platform: '',
+  post: ''
 })
 
 const saveEmbededMedia = async () => {
   try {
-    const response = await ApiService.post('/admin/media', embedMedia.value)
+    const response = await ApiService.post('/admin//social-media-posts', embedMedia.value)
     if (response.success) {
       alert('Media saved successfully!') // Handle success feedback
       showEmbedModal.value = false // Close modal if needed
@@ -237,6 +237,9 @@ const saveEmbededMedia = async () => {
   }
 }
 
+const editMedia = () => {
+  showEmbedModal.value = false
+}
 onMounted(() => {
   fetchContacts()
 })
