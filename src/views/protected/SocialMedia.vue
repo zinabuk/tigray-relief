@@ -3,8 +3,8 @@
     <!-- Add Contact Button -->
     <button
       @click="showAddModal = true"
-      class="bg-[#53900F] text-white self-end shadow rounded-2xl flex items-center px-2 py-1"
-    > 
+      class="bg-[#53900F] text-white self-end shadow-sm rounded-xl flex items-center px-2 py-1"
+    >
       Add social media
     </button>
 
@@ -29,6 +29,8 @@
         </div>
       </div>
     </div>
+
+    <div class="w-full">Latest Social Media Posts</div>
 
     <!-- Modal -->
     <div
