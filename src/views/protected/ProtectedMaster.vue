@@ -64,24 +64,23 @@ onUnmounted(() => {
 <template>
   <section class="w-full bg-[#53900F]/5">
     <header
-      class="flex items-center justify-between sticky shadow zbg-white/100 z-20 top-0 px-2 zbg-[#53900F] bg-white"
+      class="flex items-center justify-between sticky shadow zbg-white/100 z-20 top-0 px-2 zbg-[#53900F] bg-white py-2"
     >
       <div z:class="[!minimize ? 'w-[18%]' : 'w-[2%] gap-2', 'flex items-center justify-between ']">
-        <img src="@/assets/rest-logo.png" alt="" srcset="" class="h-16" v-if="!minimize" />
         <img
-          src="@/assets/rest-logo.png"
+          src="@/assets/rest.jpg"
           alt=""
           srcset=""
-          class="h-16 w-16 object-contain"
-          v-else
+          class="h-12 object-contain"
+          v-if="!minimize"
         />
+        <img src="@/assets/rest.jpg" alt="" srcset="" class="h-16c w-16 object-contain" v-else />
 
         <!-- <button @click="minimize = !minimize">
           <font-awesome-icon icon="bars" class="text-yellow-300"></font-awesome-icon>
         </button> -->
       </div>
       <div class="flex zjustify-center items-center gap-8">
-         
         <div class="relative text-center">
           <font-awesome-icon icon="bell" class="text-blue-500 text-xl"></font-awesome-icon>
         </div>

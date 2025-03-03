@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, watch} from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useRouter } from 'vue-router'
@@ -26,7 +26,7 @@ const actions = [
 ]
 const searchApplicants = ref('')
 const jobs = ref([])
-const getJApplicants= async () => {
+const getJApplicants = async () => {
   try {
     const response = await ApiService.get('users/all-applicants/' + route.params.id)
     jobs.value = response.data
@@ -105,17 +105,19 @@ onMounted(() => {
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <div class="flex justify-betweenz w-full">
-      {{ job.jobTitle }}
-      <h2 class="text-x ml-4 d">Job Applicants</h2>
+    <button @click.prevent="$router.go(-1)" class="self-start bg-white text-sm px-2 text-[#53900F] font-bold">
+      Back
+    </button>
+    <div class="flex justify-betweenz w-full gap-4">
+      <h2 class="text-x d">Applicants:</h2>
+      <h1 class="underline underline-offset-4">{{ job.jobTitle }}</h1>
     </div>
     <div class="w-full">
       <DataTable
         :tableHeaders="tableHeaders"
-        :tableValues="jobs"
+        :tableValues="filteredJobs"
         :actions="actions"
         createExport="true"
-        exportTitle="vacancies"
       >
         <template #cv="{ item }">
           <a

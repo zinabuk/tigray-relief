@@ -46,7 +46,10 @@
               class="border-b hover:bg-gray-100 transition-all"
             >
               <td v-for="(header, j) in tableHeaders" :key="j" class="px-4 py-3 text-gray-800">
-                <span v-if="header.field !== 'resume' && header.field !== 'document'" class="line-clamp-2">
+                <span
+                  v-if="header.field !== 'resume' && header.field !== 'document'"
+                  class="line-clamp-2"
+                >
                   {{ value[header.field] }}
                 </span>
                 <span v-else-if="header.field === 'resume'">
