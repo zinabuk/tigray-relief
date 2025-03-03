@@ -46,10 +46,10 @@
               class="border-b hover:bg-gray-100 transition-all"
             >
               <td v-for="(header, j) in tableHeaders" :key="j" class="px-4 py-3 text-gray-800">
-                <span v-if="header.field !== 'resume'" class="line-clamp-2">
+                <span v-if="header.field !== 'resume' && header.field !== 'document'" class="line-clamp-2">
                   {{ value[header.field] }}
                 </span>
-                <span v-else>
+                <span v-else-if="header.field === 'resume'">
                   <a
                     class="hover:text-blue-500 underline"
                     :href="BASE_UPLOAD + value[header.field]"
@@ -59,6 +59,17 @@
                     {{ value[header.field] ? 'View Resume' : 'No Resume' }}
                   </a>
                 </span>
+
+                <span v-else
+                  ><a
+                    class="hover:text-blue-500 underline"
+                    :href="BASE_UPLOAD + value[header.field]"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{ value[header.field] ? 'View Document' : 'No Document' }}
+                  </a></span
+                >
 
                 <!-- <span v-else>{{ value['Applicants'.applicantId.length] }}</span> -->
               </td>

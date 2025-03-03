@@ -20,6 +20,10 @@ const captureDocument = (file) => {
   form.value.document = file
 }
 
+function applyForTender(data) {
+  tender.value = data
+  isApply.value = true
+}
 const errorMessage = ref('')
 const submitApplication = async () => {
   try {
@@ -138,7 +142,7 @@ onMounted(() => {
           </div>
           <div class="flex justify-between items-center mt-auto">
             <button
-              @click="isApply = true"
+              @click="applyForTender(tender)"
               class="bg-[#53900F] text-white px-5 py-2 rounded-lg hover:bg-[#53900F]/90 transition-all duration-300"
             >
               Apply Now

@@ -58,6 +58,11 @@ class ApiService {
     })
     return response.data
   }
+
+  async deleteApplicationTender(endpoint) {
+    const response = await api.delete(endpoint)
+    return response.data
+  }
   setHeader(token) {
     if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`

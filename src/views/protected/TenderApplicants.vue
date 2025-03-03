@@ -14,11 +14,10 @@ const tableHeaders = [
   { label: 'Name', field: 'fullName' },
   { label: 'Email', field: 'email' },
   { label: 'Phone Number', field: 'phoneNumber' },
-  { label: 'Document', field: 'document' },
+  { label: 'Document', field: 'document' }
 ]
 
 const actions = [
-  
   {
     label: 'delete',
     action: deleteTender,
@@ -29,9 +28,8 @@ const actions = [
 const searchApplicants = ref('')
 const tenders = ref([])
 const getTender = async () => {
-  
   try {
-    const response = await ApiService.get('users/all-tender-applicants/'+route.params.id)
+    const response = await ApiService.get('users/all-tender-applicants/' + route.params.id)
     tenders.value = response.data
   } catch (error) {
     if (error.response && error.response.status === 404) {
@@ -57,44 +55,47 @@ const filteredTenders = computed(() => {
   }
 })
 
-async function deleteTender  (applicant) {
+async function deleteTender(applicant) {
   try {
     const sure = window.confirm('Are you sure?')
     if (sure) {
-      const response = await ApiService.delete(applicant.id)
+      const response = await ApiService.deleteApplicationTender(
+        '/users/application-tenders/' + applicant.id
+      )
       if (response.success) {
         alert('Applicant deleted successfully')
-        getTender()  // Refresh the list of applicants after deletion
+        getTender() // Refresh the list of applicants after deletion
       }
     }
   } catch (error) {
-    if (error.response && error.response.status === 404) {
-      router.push({ name: '404resource', params: { resource: 'Tender' } })
-    } else {
-      router.push({ name: 'NetworkError' })
-    }
+    alert(error)
   }
 }
 onMounted(getTender)
 </script>
 
 <template>
- <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
+  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
     <div class="flex justify-between w-full">
       <h2 class="text-xl font-bold">Tender Applicants</h2>
-       
     </div>
-    
-     <div class="w-full">
-      <DataTable :tableHeaders="tableHeaders" :tableValues="tenders" :actions="actions" createExport=true exportTitle="vacancies" >
-       <template #document ="{ item }" >
+
+    <div class="w-full">
+      <DataTable
+        :tableHeaders="tableHeaders"
+        :tableValues="tenders"
+        :actions="actions"
+        createExport="true"
+        exportTitle="vacancies"
+      >
+        <!-- <template #document ="{ item }" >
           <a  class="hover:text-primary action-cell" :href="BASE_UPLOAD + `${item.document }`" target="_blank" title="download letter">
              {{ item.document  }}
           </a>
-      </template>
+      </template> -->
       </DataTable>
     </div>
-<!--     
+    <!--     
     <div class="overflow-x-auto">
       <table class="min-w-full bg-white">
         <thead>
