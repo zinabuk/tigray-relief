@@ -82,15 +82,7 @@ onMounted(getTender)
  <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
     <div class="flex justify-between w-full">
       <h2 class="text-xl font-bold">Tender Applicants</h2>
-      <div class="self-end">
-        <base-input
-          inputClass="border outline-none border-[#288fb2]"
-          type="search"
-          class="px-2 py-1"
-          v-model="searchApplicants"
-          placeholder="Search ..."
-        ></base-input>
-      </div>
+       
     </div>
     
      <div class="w-full">

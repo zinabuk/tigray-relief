@@ -232,7 +232,7 @@
           <router-link
             :to="{ name: 'jobs' }"
             class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('tenders') }]"
+            :class="[{ 'text-[#53900F]': isActive('jobs') }]"
           >
             {{ $t('Get Involved') }}</router-link
           >
@@ -262,8 +262,7 @@
               <hr class="text-[#53900F]" />
             </router-link>
             <router-link
-              :to="{ name: 'tenders' }"
-              href="#structure_section"
+              :to="{ name: 'tenders' }" 
               class="hover:text-[#288FB2]z"
             >
               <!-- @click="scrollToSection(el.id)" -->
@@ -503,7 +502,7 @@
               :to="{ name: 'jobs' }"
               class="relative parent-item"
               @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('tenders') }]"
+              :class="[{ 'text-[#53900F]': isActive('jobs') }]"
             >
               {{ $t('Get Involved') }}</router-link
             >

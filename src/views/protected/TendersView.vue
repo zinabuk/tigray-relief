@@ -18,26 +18,26 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const tenders = ref([])
-// const actions = [
-//   {
-//     label: 'edit',
-//     action: editContact,
-//     icon: 'edit',
-//     style: 'hover:cursor-pointer text-blue-500 py-1 px-2'
-//   },
-//   {
-//     label: 'delete',
-//     action: deleteContact,
-//     icon: 'trash',
-//     style: 'hover:cursor-pointer text-red-500 py-1 px-2'
-//   },
-//   {
-//     label: 'verify',
-//     action: viewApplicants,
-//     icon: 'eye',
-//     style: 'hover:cursor-pointer text-green-500 py-1 px-2'
-//   }
-// ]
+const actions = [
+  {
+    label: 'edit',
+    action: editTender,
+    icon: 'edit',
+    style: 'hover:cursor-pointer text-blue-500 py-1 px-2'
+  },
+  {
+    label: 'delete',
+    action: deleteTender,
+    icon: 'trash',
+    style: 'hover:cursor-pointer text-red-500 py-1 px-2'
+  },
+  {
+    label: 'verify',
+    action: viewApplicants,
+    icon: 'eye',
+    style: 'hover:cursor-pointer text-green-500 py-1 px-2'
+  }
+]
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
@@ -64,7 +64,7 @@ const editForm = ref({
   file: null
 })
 let formatDate = ref('')
-function editContact(career) {
+function editTender(career) {
   isEditing.value = true
   editForm.value = { ...career }
   formatDate.value = dayjs(editForm.value.eventDate).format('YYYY-MM-DD')
@@ -83,10 +83,10 @@ let tender = ref({
 
 let imageName = ref('')
 function handleFileChange(file) {
-  tender.value.file = file.name
+  tender.value.file = file
   imageName.value = file.name
 }
-async function deleteContact(tender) {
+async function deleteTender(tender) {
   const accept = window.confirm('Undo is not possible')
   if (accept) {
     const response = await ApiService.delete('/admin/tenders/' + tender.id)
@@ -125,7 +125,6 @@ const saveTender = async () => {
   formData.append('organization', tender.value.organization)
   formData.append('deadline', tender.value.deadline)
   formData.append('description', tender.value.description)
-
   if (tender.value.file) {
     formData.append('file', tender.value.file)
   }
@@ -158,9 +157,8 @@ onMounted(() => {
       class="bg-[#539000] text-white rounded-2xl shadow self-end px-2 py-1"
     >
       Add Tender
-    </button> 
-    <DataTable :table-values="tenders" :table-headers="tableHeaders"></DataTable>
-    <div v-for="(tender, i) in tenders" :key="i">{{ tender.title }}</div>
+    </button>
+    <DataTable :table-values="tenders" :table-headers="tableHeaders" :actions="actions"></DataTable>
   </section>
 
   <div

@@ -34,11 +34,13 @@ async function fetchJobs() {
 const showApplicationModal = ref(false)
 
 const submitApplication = async () => {
+  alert(form.value.phoneNumber)
   try {
     const formData = new FormData()
     formData.append('fullName', form.value.fullName)
     formData.append('email', form.value.email)
     formData.append('message', form.value.message)
+    formData.append('phoneNumber', form.value.phoneNumber)
 
     if (resume.value) {
       formData.append('resume', resume.value)
@@ -229,9 +231,7 @@ onMounted(() => {
         <div class="flex justify-center">
           <h1 class="text-lg font-semibold text-gray-800">Application Form</h1>
         </div>
-
         <form @submit.prevent="submitApplication" class="flex w-full flex-col gap-2">
-          <!-- Input Fields -->
           <div class="w-full space-y-4">
             <BaseInput
               v-model="form.fullName"

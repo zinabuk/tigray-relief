@@ -4,7 +4,6 @@
 // const BASE_UPLOAD = 'https://restapi.iq-businesses.com/api/v1/uploads/'
 
 // Development
-
 const BASE_URL = 'http://localhost:5000/api/v1/'
 const BASE_AVATAR = 'http://localhost:5000/api/v1/images/'
 const BASE_UPLOAD = 'http://localhost:5000/api/v1/uploads/'

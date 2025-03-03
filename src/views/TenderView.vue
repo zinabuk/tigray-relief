@@ -76,7 +76,6 @@ import { useAuthStore } from '@/stores/auth'
 const { currentLanguage } = storeToRefs(useAuthStore())
 
 const tenders = ref([])
-
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
@@ -115,43 +114,42 @@ onMounted(() => {
     </div>
   </section>
   <section
-    class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#53900F]/10"
-    v-if="tenders && tenders.length > 0"
+    class="w-full px-[2%] py-12 flex flex-col items-center gap-6 bg-gradient-to-b from-[#53900F]/10 to-[#ffffff]"
+    v-if="tenders.length"
   >
-    <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 shadow-xl">
-      <div v-for="(tender, i) in tenders" :key="i" class="gap-4 bg-white shadow w-full h-auto p-4">
-        <div class="flex flex-col w-full h-full gap-2 justify-between">
-          <div class="flex flex-col w-full h-auto gap-1">
-            <div class="flex gap-2">
-              <h1 class="text-lg zfont-bold">Title</h1>
-              <h1 class="text-lg font-bold">{{ tender.title[currentLanguage] }}</h1>
-            </div>
-            <div class="flex gap-2">
-              <h1 class="text-lg zfont-bold">Bid By</h1>
-              <p class="font-bold">{{ tender.organization[currentLanguage] }}</p>
-            </div>
-            <div class="flex gap-2">
-              <h1 class="text-lg zfont-bold">Deadline</h1>
-              <p class="font-bold">{{ tender.deadline }}</p>
-            </div>
-            <div class="flex gap-2">
-              <h1 class="text-lg zfont-bold">Description</h1>
-              <p class="text-break">{{ tender.description[currentLanguage] }}</p>
-            </div>
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        v-for="(tender, i) in tenders"
+        :key="i"
+        class="bg-white shadow-lg rounded-xl overflow-hidden p-6 hover:shadow-2xl transition-all duration-300"
+      >
+        <div class="flex flex-col h-full gap-4">
+          <div class="flex flex-col gap-2">
+            <h1 class="text-xl font-bold text-gray-800">{{ tender.title }}</h1>
+            <p class="text-gray-600 text-sm">
+              By <span class="font-semibold">{{ tender.organization }}</span>
+            </p>
+            <p class="text-gray-500 text-sm">
+              Deadline: <span class="font-semibold text-red-600">{{ tender.deadline }}</span>
+            </p>
+            <p class="text-gray-700 text-sm leading-relaxed">
+              {{ tender.description }}
+            </p>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between items-center mt-auto">
             <button
               @click="isApply = true"
-              class="self-start bg-[#53900F] text-white px-4 py-1 border rounded-md"
+              class="bg-[#53900F] text-white px-5 py-2 rounded-lg hover:bg-[#53900F]/90 transition-all duration-300"
             >
-              Apply
+              Apply Now
             </button>
 
             <a
+              v-if="tender.file"
               :href="BASE_UPLOAD + tender.file"
               target="_blank"
-              v-if="tender.file"
-              class="bg-white border-[#53900F] p-1 border rounded-md text-[#53900F]"
+              rel="noopener noreferrer"
+              class="text-[#53900F] border border-[#53900F] px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-[#53900F] hover:text-white transition-all duration-300"
             >
               <font-awesome-icon icon="eye"></font-awesome-icon> <span>View Document</span>
             </a>
@@ -160,61 +158,79 @@ onMounted(() => {
       </div>
     </div>
   </section>
+
   <section v-else class="w-full px-[2%] py-4 text-center">No content for the moment</section>
+
   <div
-    class="fixed items-center justify-center rounded-lg inset-0 z-50 bg-[#53900F]/40 flex flex-col gap-4 overflow-auto modal"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[#53900F]/40 backdrop-blur-sm px-4"
     v-if="isApply"
   >
     <div
-      class="bg-white flex items-center justify-center border rounded-md md:w-[40%] flex-col md:px-12 md:py-2 gap-2 overflow-auto"
+      class="bg-white shadow-lg border rounded-lg w-full md:w-[40%] p-6 flex flex-col gap-4 relative transition-all duration-300"
     >
-      <div class="flex justify-between">
-        <h1 class="text-center font-semibold text-2xl">Application Page</h1>
+      <div class="flex justify-between items-center border-b pb-3">
+        <h1 class="text-xl font-semibold text-gray-800">Application Page</h1>
+        <button @click="isApply = false" class="text-gray-500 hover:text-gray-800 transition">
+          ✖
+        </button>
       </div>
-      <hr />
-      <!-- <p v-if="successMessage" class="text-green-500">{{ successMessage }}</p> -->
-      <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
-        <div class="flex gap-6">
-          <div>
-            <BaseInput
-              v-model="form.fullName"
-              inputClass="px-4 py-2  outline-none border-iq-color1"
-              label="Full Name"
-              type="text"
-              required
-            ></BaseInput>
-            <BaseInput
-              v-model="form.email"
-              inputClass="px-4 py-2  outline-none "
-              label="Email"
-              type="email"
-              required
-            ></BaseInput>
-            <BaseInput
-              v-model="form.phoneNumber"
-              inputClass="px-4 "
-              label="Phone Number"
-              required
-            ></BaseInput>
-          </div>
-        </div>
-        <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
-        <div class="flex flex-col gap-2 justify-between">
-          <div class="flex">
-            <BaseFileInput
-              @image-update="captureDocument($event)"
-              label="Attach document"
-              type="file"
-              accept="application/pdf"
-            ></BaseFileInput>
-          </div>
-          <span v-if="form.document.name">{{ form.document.name }}</span>
-          <span v-else class="text-sm text-blue-600">*Only pdf files</span>
 
-          <div class="flex gap-8 items-center zjustify-center">
-            <BaseButton type="submit">Apply</BaseButton>
-            <button class="px-4 py-2 border rounded-md" @click="isApply = !isApply">Cancel</button>
-          </div>
+      <form @submit.prevent="submitApplication" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-3">
+          <BaseInput
+            v-model="form.fullName"
+            inputClass="px-4 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+            label="Full Name"
+            type="text"
+            required
+          ></BaseInput>
+
+          <BaseInput
+            v-model="form.email"
+            inputClass="px-4 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+            label="Email"
+            type="email"
+            required
+          ></BaseInput>
+
+          <BaseInput
+            v-model="form.phoneNumber"
+            inputClass="px-4 py-2 border rounded-md focus:ring-2 focus:ring-green-500"
+            label="Phone Number"
+            required
+          ></BaseInput>
+        </div>
+
+        <p class="text-red-700" v-if="errorMessage">{{ errorMessage }}</p>
+
+        <div class="flex flex-col gap-2">
+          <BaseFileInput
+            @image-update="captureDocument($event)"
+            label="Attach document"
+            type="file"
+            accept="application/pdf"
+          ></BaseFileInput>
+
+          <span v-if="form.document.name" class="text-gray-600 text-sm">{{
+            form.document.name
+          }}</span>
+          <span v-else class="text-sm text-blue-600">*Only PDF files allowed</span>
+        </div>
+
+        <div class="flex gap-4 justify-cente">
+          <button
+            type="submit"
+            class="bg-[#53900F] px-4 py-1 text-white rounded-lg hover:bg-green-700 transition-all duration-300"
+          >
+            Apply
+          </button>
+
+          <button
+            @click.prevent="isApply = false"
+            class="border border-gray-400 px-4 py-1 rounded-lg hover:bg-gray-100 transition-all duration-300"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

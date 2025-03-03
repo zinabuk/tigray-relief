@@ -279,23 +279,36 @@ const PROTECTED_ROUTES = [
       {
         path: 'messages',
         component: () => import('@/views/protected/ContactUs.vue'),
-        name: 'messages'
+        name: 'messages',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
       },
       {
         path: 'tenders',
         component: () => import('@/views/protected/TendersView.vue'),
-        name: 'admin-tenders'
+        name: 'admin-tenders',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+
       },
       {
         path: 'gallery',
         component: () => import('@/views/protected/GalleryView.vue'),
-        name: 'admin-gallery'
+        name: 'admin-gallery',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
       },
-      {
-        path: 'quill',
-        name: 'quill',
-        component: () => import('@/views/QUILLJS.vue')
-      }
+      // {
+      //   path: 'quill',
+      //   name: 'quill',
+      //   component: () => import('@/views/QUILLJS.vue')
+      // }
     ]
   }
 ]
