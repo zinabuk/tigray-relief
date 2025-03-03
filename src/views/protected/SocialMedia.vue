@@ -116,11 +116,14 @@
     </div>
 
     <!-- Edit social media post modal -->
-    <div class="fixed modal z-50 bg-black" v-if="showEmbedModal">
-      <form @submit.prevent="saveEmbededMedia">
+    <div
+      class="fixed modal inset-0 z-50 bg-black/40 p-8 flex items-center justify-center w-full"
+      v-if="showEmbedModal"
+    >
+      <form @submit.prevent="saveEmbededMedia" class="w-full md:w-1/2 bg-white p-4">
         <base-input v-model="embedMedia.platform" label="Media"></base-input>
         <base-input v-model="embedMedia.post" label="Source / Link"></base-input>
-        <base-button type="submit">Save</base-button>
+        <base-button type="submit" class="px-4 py-1">Save</base-button>
       </form>
     </div>
   </section>
@@ -224,6 +227,10 @@ const embedMedia = ref({
   post: ''
 })
 
+const editMedia = () => {
+  showEmbedModal.value = true
+}
+
 const saveEmbededMedia = async () => {
   try {
     const response = await ApiService.post('/admin//social-media-posts', embedMedia.value)
@@ -237,9 +244,6 @@ const saveEmbededMedia = async () => {
   }
 }
 
-const editMedia = () => {
-  showEmbedModal.value = false
-}
 onMounted(() => {
   fetchContacts()
 })
