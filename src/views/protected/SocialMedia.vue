@@ -37,73 +37,7 @@
     </div>
     <!-- End of social media pages -->
 
-    <script setup>
-      import { ref, onMounted } from 'vue'
-      import ApiService from '@/services/ApiService' // Make sure ApiService is configured
 
-      const showEmbedModal = ref(false)
-      const embedMedia = ref({
-        id: null, // For editing purposes
-        platform: '',
-        post: ''
-      })
-      const posts = ref([])
-
-      // Fetch social media posts from the backend
-      const fetchSocialMediaPosts = async () => {
-        try {
-          const response = await ApiService.get('/social-media-posts')
-          posts.value = response.data
-        } catch (error) {
-          console.error('Failed to fetch posts', error)
-        }
-      }
-
-      // Open modal for editing
-      const editMedia = (post) => {
-        embedMedia.value = { ...post } // Load the selected post into the form
-        showEmbedModal.value = true
-      }
-
-      // Save or update the social media post
-      const saveEmbededMedia = async () => {
-        try {
-          if (embedMedia.value.id) {
-            // Update existing post
-            await ApiService.put(
-              `/admin/social-media-posts/${embedMedia.value.id}`,
-              embedMedia.value
-            )
-          } else {
-            // Create new post
-            await ApiService.post('/admin/social-media-posts', embedMedia.value)
-          }
-
-          alert('Media saved successfully!')
-          showEmbedModal.value = false
-          embedMedia.value = { platform: '', post: '' }
-          fetchSocialMediaPosts()
-        } catch (error) {
-          alert('Failed to save media. Please try again.')
-        }
-      }
-
-      // Delete a social media post
-      const deleteMedia = async (id) => {
-        if (!confirm('Are you sure you want to delete this post?')) return
-
-        try {
-          await ApiService.delete(`/admin/social-media-posts/${id}`)
-          alert('Post deleted successfully!')
-          fetchSocialMediaPosts()
-        } catch (error) {
-          alert('Failed to delete media. Please try again.')
-        }
-      }
-
-      // Fetch posts on component mount
-      onMounted(fetchSocialMediaPosts)
-    </script>
 
     <div class="w-full px-4">
       <h1 class="text-lg font-semibold mb-4">Twitter and Facebook Latest Posts</h1>
