@@ -42,25 +42,26 @@
       <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Loop through posts -->
         <div
-          class="w-full flex flex-col p-2 bg-white shadow-lg rounded-lg"
+          class="w-full flex flex-col p-2 bg-white shadow-lg justify-between rounded-lg"
           v-for="post in posts"
           :key="post.id"
         >
-          <h2 class="text-md font-semibold">{{ post.platform }}</h2>
-          <div v-if="post.platform.toLowerCase() === 'facebook'">
-            <iframe
-              :src="post.post"
-              class="w-full h-[400px] rounded-lg"
-              loading="lazy"
-              style="border: none"
-            ></iframe>
+          <div>
+            <h2 class="text-md font-semibold">{{ post.platform }}</h2>
+            <div v-if="post.platform.toLowerCase() === 'facebook'">
+              <iframe
+                :src="post.post"
+                class="w-full h-[400px] rounded-lg"
+                loading="lazy"
+                style="border: none"
+              ></iframe>
+            </div>
+            <div
+              v-else-if="post.platform.toLowerCase() === 'twitter'"
+              v-html="post.post"
+              class="w-full"
+            ></div>
           </div>
-          <div
-            v-else-if="post.platform.toLowerCase() === 'twitter'"
-            v-html="post.post"
-            class="w-full"
-          ></div>
-
           <div class="flex gap-4 mt-2">
             <button
               class="bg-blue-500 text-white rounded px-4 py-1"
@@ -240,7 +241,10 @@ const editMedia = (post) => {
 
 const saveEmbededMedia = async () => {
   try {
-    const response = await ApiService.post('/admin/social-media-posts', embedMedia.value)
+    const response = await ApiService.patch(
+      '/admin/social-media-posts/' + embedMedia.value.id,
+      embedMedia.value
+    )
     if (response.success) {
       alert('Media saved successfully!') // Handle success feedback
       showEmbedModal.value = false // Close modal if needed
