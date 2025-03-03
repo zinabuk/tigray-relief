@@ -8,12 +8,7 @@ import BaseButton from '@/components/base/BaseButton.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
 import dayjs from 'dayjs'
 import { onMounted, ref } from 'vue'
-const currentLanguage = ref('en')
-
-const toggleLanguage = (lang) => {
-  currentLanguage.value = lang
-}
-
+ 
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
