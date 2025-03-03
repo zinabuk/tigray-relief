@@ -79,12 +79,16 @@ import { storeToRefs } from 'pinia'
 import { useAuthStore } from '@/stores/auth'
 const { currentLanguage } = storeToRefs(useAuthStore())
 
+const str = ref('')
+const obj = ref({})
+const undef = ref(undefined)
 const tenders = ref([])
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
     if (response) {
       tenders.value = response.data
+      alert( obj.value === undef.value)
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {

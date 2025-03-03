@@ -38,11 +38,13 @@ const actions = [
     style: 'hover:cursor-pointer text-green-500 py-1 px-2'
   }
 ]
+
 const fetchTenders = async () => {
   try {
     const response = await ApiService.get('/admin/tenders')
     if (response) {
       tenders.value = response.data
+     
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {
@@ -145,6 +147,7 @@ const tableHeaders = [
   { label: 'Description', field: 'description' },
   { label: 'Deadline', field: 'deadline' }
 ]
+
 onMounted(() => {
   fetchTenders()
 })
