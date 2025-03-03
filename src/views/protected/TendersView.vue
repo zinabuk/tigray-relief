@@ -44,7 +44,6 @@ const fetchTenders = async () => {
     const response = await ApiService.get('/admin/tenders')
     if (response) {
       tenders.value = response.data
-     
     }
   } catch (error) {
     if (error.response && error.response.data && error.response.status === 404) {

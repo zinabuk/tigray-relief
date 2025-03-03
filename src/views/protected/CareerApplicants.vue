@@ -12,6 +12,7 @@ const route = useRoute()
 const tableHeaders = [
   { label: 'Name', field: 'fullName' },
   { label: 'Email', field: 'email' },
+  { label: 'Phone Number', field: 'phoneNumber' },
   { label: 'Cover Letter', field: 'message' },
   { label: 'Resume', field: 'resume' }
 ]
@@ -105,7 +106,10 @@ onMounted(() => {
 
 <template>
   <section class="w-[82%] flex flex-col flex-wrap gap-2 px-[1%] py-12">
-    <button @click.prevent="$router.go(-1)" class="self-start bg-white text-sm px-2 text-[#53900F] font-bold">
+    <button
+      @click.prevent="$router.go(-1)"
+      class="self-start bg-white text-sm px-2 text-[#53900F] font-bold"
+    >
       Back
     </button>
     <div class="flex justify-betweenz w-full gap-4">

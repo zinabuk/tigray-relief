@@ -125,7 +125,6 @@ onMounted(() => {
     <div v-if="policies.length" class="w-full">
       <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-
       <div class="w-full bg-[#F5F5F5]">
         <div v-for="policy in policies" :key="policy.id" class="w-full">
           <div class="shadow p-4 bg-white">
