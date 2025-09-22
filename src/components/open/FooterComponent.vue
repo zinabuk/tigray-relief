@@ -67,7 +67,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="w-full px-[2%] bg-[#53900F] font-bodld text-white py-12 text-[12px]">
+
+  <section class="w-full px-[2%] bg-[#148C4E] font-bodld text-white py-12 text-[12px]">
     <div class="w-full grid grid-cols-1 md:grid-cols-4 py-8 gap-4">
       <div class="flex flex-col gap-2">
         <h1 class="text-xl">{{ $t('Contacts') }}</h1>
@@ -195,13 +196,13 @@ onMounted(() => {
     </div>
   </section>
   <!-- bg-[#53900F]/10  -->
-  <div class="w-full bg-[#53900F]/10 text-black flex flex-col md:flex-row justify-between px-[2%]">
+  <div class="w-full bg-white text-[#148C4E] flex flex-col md:flex-row justify-between px-[2%]">
     <p class="text-center p-2 text-sm">
-      ©{{ new Date().getFullYear() }} REST. All rights reserved.
+      ©{{ new Date().getFullYear() }} Tigray Biotechnology Center. All rights reserved.
     </p>
     <div class="flex gap-2 items-center justify-center text-sm">
       <h1>Powered by</h1>
-      <a href="https://iq-businesses.com/" target="_blank" class="text-gray-600"
+      <a href="https://iq-businesses.com/" target="_blank" class="text-white"
         >IQ Business Group PLC</a
       >
     </div>
