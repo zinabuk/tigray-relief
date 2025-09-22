@@ -15,8 +15,8 @@ let form = ref({
   message: ''
 })
 
-import { useRouter } from 'vue-router'
-const router = useRouter()
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
 let success = ref('')
 const submitContact = async () => {
   try {
@@ -60,7 +60,7 @@ onMounted(fetchInfography)
 <template>
   <section class="w-full">
     <div class="w-full relative hidden md:block">
-      <img src="@/assets/hero-o.jpg" alt="" class="w-full max-h-[222px] object-cover" />
+      <img src="@/assets/img/4.jpg" alt="" class="w-full max-h-[222px] object-cover" />
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
@@ -135,7 +135,7 @@ onMounted(fetchInfography)
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 py-12 gap-4">
         <div class="w-full shadow-xl p-4">
-          <img src="@/assets/contact.png" alt="" class="w-full h-[90%]" />
+          <img src="@/assets/img/images.jpeg" alt="" class="w-full h-[90%]" />
         </div>
         <div class="w-full flex flex-col gap-4 shadow-xl zborder zrounded-xl p-4">
           <h1 v-if="success" class="text-green-500 bg-white">{{ success }}</h1>
@@ -179,7 +179,7 @@ onMounted(fetchInfography)
   </section>
   <section class="w-full">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3642.8835664230915!2d39.46931181830917!3d13.48513923952096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m3!3m2!1d13.4838516!2d39.472198399999996!4m5!1s0x166afd3bdb7f3623%3A0x1c7f010ff4c99e3e!2z4YuL4YqTIOGJpOGJtSDhjYXhiJXhjYjhibUg4Yib4YiV4Ymg4Yir4YuKIOGIqOGLteGKpOGJtSDhibXhjI3hiKvhi60gKOGIm-GIqOGJtSkgfCBSZWxpZWYgU29jaWV0eSBvZiBUaWdyYXkgKFJFU1QpIEhlYWQgT2ZmaWNlLCBGRlBGK1AyVywgTWVrZWxl!3m2!1d13.486872!2d39.4725871!5e0!3m2!1sen!2set!4v1709274199476!5m2!1sen!2set"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3879.1095627141435!2d39.50642587579328!3d13.528867202414492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x166b1de8ad586c59%3A0x99a44a2984be29b1!2sTigrai%20Biotechnology%20Center!5e0!3m2!1sen!2set!4v1757929104353!5m2!1sen!2set"
       width="600"
       height="450"
       style="border: 0"
