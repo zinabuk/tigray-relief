@@ -35,7 +35,7 @@ onMounted(() => {
   <section class="w-full">
     <div class="w-full relative hidden md:block">
       <img
-        src="@/assets/hero-o.jpg"
+        src="@/assets/img/1.jpg"
         alt=""
         class="w-full hidden md:flex md:max-h-[222px] object-cover"
       />
