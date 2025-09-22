@@ -194,49 +194,47 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="w-full h-full flex flex-col" v-if="hasHeros && !isLoading">
+ <main class="w-full h-full flex flex-col" v-if="hasHeros && !isLoading && heroes.length">
     <Swiper
       :slides-per-view="1"
       :modules="[Autoplay, Pagination, Navigation]"
-      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: false }"
-      loop
-      class="w-full h-[calc(100vh_-_120px)] md:h-[calc(100vh_-_80px)]"
+      :autoplay="{ delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: false, reverseDirection: true }"
+      :loop="true"
+      :speed="1000"
+      class="w-full h-[calc(100vh_-_90px)] bg-white md:h-[calc(100vh_-_80px)] flex items-center justify-center"
     >
-      <swiper-slide v-for="(hero, i) in heroes" :key="i" class="w-full relative h-full">
-        <img
-          v-if="hero.heroImage"
-          alt="Vue logo"
-          class="logo absolute h-full object-cover w-full inset-0"
-          loading="lazy"
-          :src="`${BASE_AVATAR}${hero.heroImage}`"
-        />
-
+      <swiper-slide v-for="(hero, i) in heroes" :key="i" class="w-full relative h-full flex items-center justify-center">
+        <div class="absolute inset-0 flex items-center justify-center w-full h-full">
+          <img
+            v-if="hero.heroImage"
+            alt="Hero image"
+            class="max-w-full max-h-full object-cover"
+            loading="lazy"
+            :src="`${BASE_AVATAR}${hero.heroImage}`"
+          />
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
         <div
-          class="relative h-full z-translate-y-1/4 w-full md:w-1/2 lg:w-2/5 h-d py-6 flex flex-col gap-8 md:gap-6 text-white items-center md:items-start justify-center px-4 bg-black/60 sm:bg-black/70 zmd:left-4 hover:scale-[1.025] transition-transform duration-700 delay-150"
+          class="relative z-10 flex flex-col items-center justify-end h-full pb-8 px-4 md:px-8 text-center max-w-3xl mx-auto"
         >
-          <!-- Custom Shape -->
-          <div
-            class="absolute top-0 left-0 z-10 w-16 h-full bg-gradient-to-b from-[#53900F]/70 to-transparent clip-shape"
-          ></div>
-          <div class="wave-container w-full" zdata-aos="fade-left">
-            <p class="zwave-text font-bold text-3xl md:text-5xl flex-wrap break-words">
-              {{ hero.heroTitle[currentLanguage] }}
-            </p>
-          </div>
-          <h6 class="font- line-clamp-3 text-xl">
+          <h1
+            class="text-2xl md:text-4xl font-extrabold text-white mb-4 leading-tight tracking-tight"
+          >
+            {{ hero.heroTitle[currentLanguage] }}
+          </h1>
+          <p
+            class="text-base md:text-lg text-white/90 mb-6 max-w-xl mx-auto leading-relaxed line-clamp-3"
+          >
             {{ hero.heroDescription[currentLanguage] }}
-          </h6>
-          <div class="flex w-full gap-8 md:gap-6">
-            <router-link
-              class="bg-[#53900F] hover:bg-[#53900F]/80 w-1/2 md:w-[32%] border rounded-md border-yellow-400 hover:bg-[#53900F] text-yellow-400 shadow ztext-yellow-400 px-4 py-2 self-start font-bold"
-              to="/donate"
-              >Donate Now</router-link
-            >
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+         
             <router-link
               to="/who-we-are"
-              class="bg-white hover:bg-white/80 border w-1/2 md:w-[32%] border-yellow-400 hover:text-yellow-400 rounded-md text-yellow-400 px-4 py-2 self-start font-bold"
-              >{{ $t('Learn More') }}</router-link
+              class="mb-6 max-w-xl mx-auto bg-transparent border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-[#53900F] py-3 px-8 rounded-lg font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
+              {{ $t('Learn More') }}
+            </router-link>
           </div>
         </div>
       </swiper-slide>
