@@ -89,11 +89,11 @@ onMounted(() => {
 <template>
   <section class="w-full">
     <div class="w-full relative hidden md:block">
-      <img src="@/assets/wwa.jpg" alt="" class="w-full max-h-[222px] object-cover object-center" />
+      <img src="@/assets/img/5.jpg" alt="" class="w-full max-h-[222px] object-cover object-center" />
       <div
         class="absolute inset-0 w-full text-center bg-black/80 text-white flex flex-col items-center justify-center gap-2"
       >
-        <h1 class="text-4xl font-bold">{{ $t('About REST') }}</h1>
+        <h1 class="text-4xl font-bold">{{ $t('About TBC') }}</h1>
         <div class="flex gap-4 justify-between items-center">
           <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold"
             >{{ $t('Home') }}
@@ -123,7 +123,7 @@ onMounted(() => {
       > -->
     </div>
     <img
-      src="@/assets/d.jpg"
+      src="@/assets/tbc.png"
       alt=""
       class="w-full object-cover h-auto shadow-xl"
       data-aos="fade-left"
