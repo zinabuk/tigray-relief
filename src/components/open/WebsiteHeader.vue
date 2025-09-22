@@ -1,737 +1,433 @@
 <template>
-  <header class="w-full hidden md:flex md:flex-col sticky top-0 z-50 shadow-4xl rounded-xl">
-    <div class="w-full bg-[#53900F] flex justify-between text-white px-[2%] py-1">
-      <div class="flex items-center justify-center">
+  <header class="w-full sticky top-0 z-50 bg-gray-900 text-white shadow-lg">
+    <!-- Top Bar (Social Media & Contact Info) -->
+    <div class="w-full bg-gradient-to-r text-green-900 from-white to-white flex justify-between items-center px-4 py-2 md:px-8">
+      <div class="flex items-center gap-3">
         <a
           :href="social.link"
           target="_blank"
           v-for="(social, index) in medias"
           :key="index"
-          class="flex items-center justify-center"
+          class="hover:scale-110 transition-transform duration-200"
         >
           <font-awesome-icon
-            :icon="['fab', 'facebook']"
-            class="text-white hover:text-white/80 p-2"
             v-if="social.platform.toLowerCase() === 'facebook'"
-          >
-          </font-awesome-icon>
-
+            :icon="['fab', 'facebook']"
+            class="text-white hover:text-indigo-200"
+          />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'twitter'"
             :icon="['fab', 'twitter']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-indigo-200"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'youtube'"
             :icon="['fab', 'youtube']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-indigo-200"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'telegram'"
             :icon="['fab', 'telegram']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-indigo-200"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'linkedin'"
             :icon="['fab', 'linkedin']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-indigo-200"
           />
           <font-awesome-icon
             v-else-if="social.platform.toLowerCase() === 'instagram'"
             :icon="['fab', 'instagram']"
-            class="text-white hover:text-white/80 p-2 rounded"
+            class="text-white hover:text-indigo-200"
           />
           <font-awesome-icon
             v-else
             :icon="['fab', 'whatsapp']"
-            class="text-white p-2 rounded hover:text-white/80"
+            class="text-white hover:text-indigo-200"
           />
         </a>
       </div>
-      <div
-        v-for="(contact, index) in infoG"
-        :key="index"
-        class="flex gap-2 items-center justify-center"
-      >
-        <div>
-          <h1 class="flex gap-1 items-center justify-center">
-            <font-awesome-icon icon="phone"></font-awesome-icon>{{ contact.contactNumber }}
+      <div class="hidden md:flex items-center gap-4 text-sm">
+        <div v-for="(contact, index) in infoG" :key="index" class="flex gap-3">
+          <h1 class="flex items-center gap-1">
+            <font-awesome-icon icon="phone" class="text-indigo-200" />
+            {{ contact.contactNumber }}
           </h1>
-        </div>
-
-        <div>
-          <h1 class="flex gap-1 items-center justify-center">
-            <font-awesome-icon icon="envelope"></font-awesome-icon>{{ contact.mail }}
+          <h1 class="flex items-center gap-1">
+            <font-awesome-icon icon="envelope" class="text-indigo-200" />
+            {{ contact.mail }}
           </h1>
-        </div>
-        <div>
-          <h1 class="flex gap-1 items-center justify-center">
-            <font-awesome-icon icon="map-marker-alt"></font-awesome-icon>{{ contact.address }}
+          <h1 class="flex items-center gap-1">
+            <font-awesome-icon icon="map-marker-alt" class="text-indigo-200" />
+            {{ contact.address }}
           </h1>
         </div>
       </div>
     </div>
-    <nav
-      class="w-full px-[1%] flex justify-between items-center py- zfont-bold bg-white/100 shadow-2xl"
-    >
-      <router-link to="/" class="flex items-center hover:border-b-0 py-1" title="REST">
-        <img src="@/assets/rest.jpg" alt="Logo of REST" class="rounded-fullz h-24 object-contain" />
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex w-full px-8 py-4 items-center justify-between bg-[#148C4E]">
+      <router-link to="/" class="flex items-center" title="REST">
+        <img src="@/assets/tbc.jpg" alt="Logo of REST" class="h-16 object-contain rounded-full" />
+        <h2 class="text-2xl font-bold ml-2">Tigray Biotechnology Center</h2>
       </router-link>
-      <ul class="flex gap-4 font-bold zuppercase">
-        <li>
+      <ul class="flex gap-6 text-lg font-sans">
+        <li class="relative group">
           <router-link
             :to="{ name: 'home' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('home') }]"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('home') }]"
           >
-            {{ $t('Home') }}</router-link
-          >
+            {{ $t('Home') }}
+          </router-link>
         </li>
         <li class="relative group">
           <router-link
             :to="{ name: 'about' }"
-            class="relative parent-item h-full w-full"
-            :class="[{ 'text-[#53900F]': isActive('about') }]"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('about') }]"
           >
-            {{ $t('Who We Are') }}</router-link
-          >
+            {{ $t('Who We Are') }}
+          </router-link>
           <div
-            class="absolute hidden group-hover:flex bg-white p-6 flex-col gap-4 min-w-96 child top-[100%] border rounded-xl"
-            data-aos="fade-left"
+            class="absolute hidden group-hover:flex flex-col bg-[#148C4E] p-4 rounded-lg shadow-xl min-w-[200px] top-full left-0"
           >
-            <router-link :to="{ name: 'about' }" :class="[{ 'text-[#53900F]': isActive('about') }]">
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Mission / Vision /Strategy') }} </span>
-              <hr class="text-[#000]" />
-            </router-link>
-
             <router-link
-              :to="{ name: 'history' }"
-              :class="[{ 'text-[#53900F]': isActive('history') }]"
+              v-for="item in aboutSubItems"
+              :key="item.name"
+              :to="{ name: item.name }"
+              class="py-2 px-4 hover:bg-[#A30001] hover:text-white rounded transition-colors"
+              :class="[{ 'text-[#A30001]': isActive(item.name) }]"
             >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
-              <hr class="text-[#000]" />
-            </router-link>
-            <router-link
-              :to="{ name: 'board-members' }"
-              :class="[{ 'text-[#53900F]': isActive('board-members') }]"
-            >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> {{ $t('Managing Directors') }} </span>
-              <hr class="text-[#000]" />
-            </router-link>
-            <router-link
-              :to="{ name: 'partners-open' }"
-              class="relative parent-item"
-              :class="[{ 'text-[#53900F]': isActive('partners-open') }]"
-            >
-              <span class="hover:text-[#53900F]">{{ $t('Partners') }}</span>
-              <hr class="text-[#000]" />
-            </router-link>
-
-            <router-link
-              :to="{ name: 'contact' }"
-              class="relative parent-item"
-              @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('contact') }]"
-            >
-              <span> {{ $t('Contact Us') }}</span>
-              <hr class="text-[#000]"
-            /></router-link>
-            <router-link
-              :to="{ name: 'faqs' }"
-              :class="[{ 'text-[#53900F]': isActive('faqs') }]"
-              class="hover:text-[#288FB2]z"
-            >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('FAQs') }}
-              </span>
-              <hr class="text-[#000]" />
+              {{ $t(item.label) }}
             </router-link>
           </div>
         </li>
         <li class="relative group">
           <router-link
             :to="{ name: 'services' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('services') }]"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('services') }]"
           >
-            {{ $t('What We Do') }}</router-link
-          >
+            {{ $t('What We Do') }}
+          </router-link>
           <div
-            class="absolute hidden group-hover:flex bg-white p-6 flex-col gap-4 min-w-96 child shadow-xl border rounded-xl"
-            data-aos="fade-left"
+            class="absolute hidden group-hover:flex flex-col bg-gray-800 p-4 rounded-lg shadow-xl min-w-[200px] top-full left-0"
           >
-            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
             <router-link
-              class="hover:text-[#288FB2]z"
               v-for="(service, i) in services"
               :key="i"
-              :to="{
-                name: 'service-detail',
-                params: {
-                  title: service.serviceTitle[currentLanguage]
-                }
-              }"
+              :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
+              class="py-2 px-4 hover:bg-indigo-600 hover:text-white rounded transition-colors"
             >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t(`${service.serviceTitle[currentLanguage]}`) }}
-              </span>
-              <hr class="text-[#001F3F]" />
+              {{ $t(service.serviceTitle[currentLanguage]) }}
             </router-link>
           </div>
         </li>
-        <li class="relative group">
-          <router-link
-            :to="{ name: 'blogs' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('blogs') }]"
-          >
-            {{ $t('News & Stories') }}</router-link
-          >
-        </li>
-
-        <!-- resources -->
-        <li class="relative group">
-          <router-link
-            :to="{ name: 'documents' }"
-            class="relative parent-item h-full w-full"
-            :class="[{ 'text-[#53900F]': isActive('documents') }]"
-          >
-            {{ $t('Resources & Reports') }}</router-link
-          >
-          <div
-            class="absolute hidden group-hover:flex bg-white p-6 flex-col left-0 gap-4 min-w-56 overflow-auto child top-[100%] border rounded-xl"
-            data-aos="fade-left"
-          >
-            <router-link
-              :to="{ name: 'documents' }"
-              :class="[{ 'text-[#53900F]': isActive('documents') }]"
-            >
-              <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
-              <hr class="text-[#001F3F]" />
-            </router-link>
-
-            <router-link
-              :to="{ name: 'gallery' }"
-              class="relative parent-item"
-              :class="[{ 'text-[#53900F]': isActive('gallery') }]"
-            >
-              <span class="hover:text-[#53900F]">
-                {{ $t('Gallery') }}
-              </span>
-              <hr />
-            </router-link>
-          </div>
-        </li>
-
-        <li class="relative group">
-          <router-link
-            :to="{ name: 'jobs' }"
-            class="relative parent-item"
-            :class="[{ 'text-[#53900F]': isActive('jobs') }]"
-          >
-            {{ $t('Get Involved') }}</router-link
-          >
-          <div
-            class="absolute hidden group-hover:flex bg-[#53900F]Z bg-white p-6 flex-col gap-4 min-w-56 child top-[100%] border rounded-xl"
-            data-aos="fade-left"
-          >
-            <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-            <router-link
-              :to="{ name: 'jobs' }"
-              :class="[{ 'text-[#53900F]': isActive('jobs') }]"
-              class="hover:text-[#288FB2]z"
-            >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]"> Careers </span>
-              <hr class="text-[#53900F]" />
-            </router-link>
-            <router-link
-              :to="{ name: 'volunteer' }"
-              :class="[{ 'text-[#53900F]': isActive('volunteer') }]"
-              class="hover:text-[#288FB2]z"
-            >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('Volunteers') }}
-              </span>
-              <hr class="text-[#53900F]" />
-            </router-link>
-            <router-link
-              :to="{ name: 'tenders' }" 
-              class="hover:text-[#288FB2]z"
-            >
-              <!-- @click="scrollToSection(el.id)" -->
-              <span class="hover:text-[#53900F]">
-                {{ $t('Tenders') }}
-              </span>
-              <hr class="text-[#53900F]" />
-            </router-link>
-          </div>
-        </li>
-
         <li>
           <router-link
-            :to="{ name: 'donate' }"
-            class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse rounded-md"
-            ><font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon
-            >{{ $t('Donate') }}
+            :to="{ name: 'blogs' }"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('blogs') }]"
+          >
+            {{ $t('News & Stories') }}
           </router-link>
         </li>
+        <li class="relative group">
+          <router-link
+            :to="{ name: 'gallery' }"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('documents') }]"
+          >
+            {{ $t('Gallery') }}
+          </router-link>
+          <!-- <div
+            class="absolute hidden group-hover:flex flex-col bg-gray-800 p-4 rounded-lg shadow-xl min-w-[200px] top-full left-0"
+          >
+            <router-link
+              v-for="item in resourceSubItems"
+              :key="item.name"
+              :to="{ name: item.name }"
+              class="py-2 px-4 hover:bg-[#A30001] hover:text-white rounded transition-colors"
+              :class="[{ 'text-[#A30001]': isActive(item.name) }]"
+            >
+              {{ $t(item.label) }}
+            </router-link>
+          </div> -->
+        </li>
+        <li class="relative group">
+          <router-link
+            :to="{ name: 'contact' }"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('contact') }]"
+          >
+            {{ $t('Contact Us') }}
+          </router-link>  
+        </li>
+        <!-- <li class="relative group">
+          <router-link
+            :to="{ name: 'jobs' }"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('jobs') }]"
+          >
+            {{ $t('Get Involved') }}
+          </router-link>
+          <div
+            class="absolute hidden group-hover:flex flex-col bg-gray-800 p-4 rounded-lg shadow-xl min-w-[200px] top-full left-0"
+          >
+            <router-link
+              v-for="item in getInvolvedSubItems"
+              :key="item.name"
+              :to="{ name: item.name }"
+              class="py-2 px-4 hover:bg-indigo-600 hover:text-white rounded transition-colors"
+              :class="[{ 'text-[#A30001]': isActive(item.name) }]"
+            >
+              {{ $t(item.label) }}
+            </router-link>
+          </div>
+        </li> -->
+
       </ul>
     </nav>
-  </header>
 
-  <header
-    class="w-full bg-white flex md:hidden px-[1%] md:px-[2%] sticky top-0 bottom-0 zbg-white/100 z-50"
-  >
-    <nav class="w-full h-full flex justify-between py-4 bg-white">
-      <router-link to="/" class="flex items-center hover:border-b-0" title="REST">
-        <img
-          src="@/assets/rest.jpg"
-          alt="Logo of REST"
-          width="20"
-          height="20"
-          class="h-12 w-12 px-0 object-contain"
-        />
+    <!-- Mobile Navigation -->
+    <header class="md:hidden w-full bg-gray-900 px-4 py-3 flex justify-between items-center sticky top-0 z-50">
+      <router-link to="/" class="flex items-center" title="REST">
+        <img src="@/assets/rest.jpg" alt="Logo of REST" class="h-12 w-12 object-contain" />
       </router-link>
-      <button @click.prevent="showSmallDeviceNavigation">
-        <font-awesome-icon icon="bars"></font-awesome-icon>
+      <button @click.prevent="showSmallDeviceNavigation" class="text-white">
+        <font-awesome-icon icon="bars" class="text-2xl" />
       </button>
-    </nav>
-
+    </header>
     <div
       v-if="isSmall"
-      class="w-full h-screen flex justify-between fixed inset-0 py-6 z-50 bg-white zbg-[#53900F]"
-      data-aos="fade-left"
+      class="md:hidden fixed inset-0 bg-gray-900 text-white z-50 flex flex-col px-6 py-4"
+      data-aos="fade-right"
     >
-      <button
-        @click="isSmall = !isSmall"
-        class="self-start mx-4 text-blue-40z0 font-semibold text-gray-700 text-2xl"
-      >
-        <font-awesome-icon icon="times" class="text-3xl"></font-awesome-icon>
+      <button @click="isSmall = !isSmall" class="self-end text-3xl">
+        <font-awesome-icon icon="times" />
       </button>
-
-      <nav
-        class="w-full px-[1%] flex flex-col justify-between items-center pb-12 zfont-bold Zbg-yellow-400 ztext-white h-screen overflow-auto"
-      >
-        <ul class="flex flex-col gap-2 font-bold zuppercase">
-          <li>
-            <router-link
-              :to="{ name: 'home' }"
-              @click="toggleShowDropDown"
-              class="relative parent-item"
-              :class="[{ 'text-[#53900F]': isActive('home') }]"
-            >
-              {{ $t('Home') }}</router-link
-            >
-          </li>
-          <hr />
-          <li class="relative group">
-            <router-link
-              :to="{ name: 'about' }"
-              @click="toggleShowDropDown"
-              class="relative parent-item h-full w-full"
-              :class="[{ 'text-[#53900F]': isActive('about') }]"
-            >
-              {{ $t('Who We Are') }}</router-link
-            >
-
-            <hr />
-
-            <div class="px-4 flex flex-col" zdata-aos="fade-left">
-              <router-link
-                :to="{ name: 'beneficiaries' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('beneficiaries') }]"
-              >
-                <span class="hover:text-[#53900F]">
-                  {{ $t('Mission / Vision / Strategy') }}
-                </span>
-              </router-link>
-              <router-link
-                :to="{ name: 'board-members' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('board-members') }]"
-              >
-                <!-- @click="scrollToSection(el.id)" -->
-                <span class="hover:text-[#53900F]"> {{ $t('Managing Directors') }} </span>
-              </router-link>
-              <router-link
-                :to="{ name: 'history' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('history') }]"
-              >
-                <!-- @click="scrollToSection(el.id)" -->
-                <span class="hover:text-[#53900F]"> {{ $t('History') }} </span>
-              </router-link>
-              <router-link
-                :to="{ name: 'faqs' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('faqs') }]"
-                class="hover:text-[#288FB2]z"
-              >
-                <span class="hover:text-[#53900F]">
-                  {{ $t('FAQs') }}
-                </span>
-              </router-link>
-              <router-link
-                :to="{ name: 'contact' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('contact') }]"
-                class="hover:text-[#288FB2]z"
-              >
-                <span class="hover:text-[#53900F]">
-                  {{ $t('Contact Us') }}
-                </span>
-              </router-link>
-              <router-link
-                :to="{ name: 'partners' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('partners') }]"
-                class="hover:text-[#288FB2]z"
-              >
-                <span class="hover:text-[#53900F]">
-                  {{ $t('Partners') }}
-                </span>
-              </router-link>
-            </div>
-          </li>
-          <hr />
-
-          <li class="relative group">
-            <router-link
-              :to="{ name: 'services' }"
-              class="relative parent-item"
-              @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('services') }]"
-            >
-              {{ $t('What We Do') }}</router-link
-            >
-            <hr />
-
-            <div class="px-4 flex flex-col" zdata-aos="fade-left">
-              <router-link
-                :to="{
-                  name: 'service-detail',
-                  params: { title: service.serviceTitle[currentLanguage] }
-                }"
-                class="hover:text-[#288FB2]z"
-                v-for="(service, i) in services"
-                :key="i"
-                @click="toggleShowDropDown"
-              >
-                <span class="hover:text-[#53900F]">
-                  {{ $t(`${service.serviceTitle[currentLanguage]}`) }}
-                </span>
-              </router-link>
-            </div>
-          </li>
-          <hr />
-          <li class="relative group">
-            <router-link
-              :to="{ name: 'blogs' }"
-              class="relative parent-item"
-              @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('blogs') }]"
-            >
-              {{ $t('News & Stories') }}</router-link
-            >
-          </li>
-          <hr />
-          <!-- resources -->
-          <li class="relative group">
-            <router-link
-              :to="{ name: 'documents' }"
-              @click="toggleShowDropDown"
-              class="relative parent-item h-full w-full"
-              :class="[{ 'text-[#53900F]': isActive('documents') }]"
-            >
-              {{ $t('Resources') }}</router-link
-            >
-            <hr />
-
-            <div class="px-4 flex flex-col" zdata-aos="fade-left">
-              <router-link
-                :to="{ name: 'documents' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('documents') }]"
-                class="w-full"
-              >
-                <span class="hover:text-[#53900F]"> {{ $t('Documents') }} </span>
-              </router-link>
-
-              <!-- <router-link
-                :to="{ name: 'publications' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('publications') }]"
-              >
-                <span class="hover:text-[#53900F]"> {{ $t('Publications') }} </span>
-              </router-link> -->
-
-              <!-- <router-link
-                :to="{ name: 'strategy' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('Strategy') }]"
-                class="hover:text-[#288FB2]z"
-              >
-                <span class="hover:text-[#53900F]">
-                  {{ $t('Strategy') }}
-                </span>
-              </router-link> -->
-
-              <router-link
-                :to="{ name: 'gallery' }"
-                class="relative parent-item"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('gallery') }]"
-              >
-                <span class="hover:text-[#53900F]">
-                  {{ $t('Gallery') }}
-                </span>
-              </router-link>
-            </div>
-          </li>
-          <hr />
-          <li class="relative group">
-            <router-link
-              :to="{ name: 'jobs' }"
-              class="relative parent-item"
-              @click="toggleShowDropDown"
-              :class="[{ 'text-[#53900F]': isActive('jobs') }]"
-            >
-              {{ $t('Get Involved') }}</router-link
-            >
-
-            <hr />
-
-            <div class="px-4 flex flex-col" zdata-aos="fade-left">
-              <!-- group-hover:flex rounded-xlz p-4 child z-50 min-w-80 space-y-2  -->
-              <router-link
-                :to="{ name: 'jobs' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('jobs') }]"
-                class="hover:text-[#288FB2]z"
-              >
-                <!-- @click="scrollToSection(el.id)" -->
-                <span class="hover:text-[#53900F]"> Careers </span>
-                <!-- <hr class="text-[#53900F]" /> -->
-              </router-link>
-              <router-link
-                :to="{ name: 'volunteer' }"
-                @click="toggleShowDropDown"
-                :class="[{ 'text-[#53900F]': isActive('volunteer') }]"
-                class="hover:text-[#288FB2]z"
-              >
-                <!-- @click="scrollToSection(el.id)" -->
-                <span class="hover:text-[#53900F]">
-                  {{ $t('Volunteers') }}
-                </span>
-              </router-link>
-              <router-link
-                :to="{ name: 'tenders' }"
-                href="#structure_section"
-                @click="toggleShowDropDown"
-                class="hover:text-[#288FB2]z"
-              >
-                <!-- @click="scrollToSection(el.id)" -->
-                <span class="hover:text-[#53900F]">
-                  {{ $t('Tenders') }}
-                </span>
-              </router-link>
-            </div>
-          </li>
-          <hr />
-
-          <li>
-            <router-link
-              :to="{ name: 'donate' }"
-              @click="toggleShowDropDown"
-              class="bg-[#53900F] zrounded-xl text-yellow-400 px-4 py-2 pulse rounded-md"
-            >
-              <font-awesome-icon icon="heart" class="animate-pulse text-sm"></font-awesome-icon>
-              {{ $t('Donate') }}
-            </router-link>
-          </li>
-        </ul>
-
-        <!-- <div class="relative group">
-        
-        <font-awesome-icon icon="globe" class="text-xl relative group"
-          ><font-awesome-icon icon="chervon-down absolute right-0"></font-awesome-icon
-        ></font-awesome-icon>
-        <div
-          class="absolute hidden shadow space-y-2 group-hover:block right-0 p-6 bg-white"
-          id="languageDropdown"
-          v-if="showDropdown"
-          :class="{ 'text-black': changeBackground }"
+      <nav class="flex flex-col gap-4 text-lg font-sans">
+        <router-link
+          :to="{ name: 'home' }"
+          @click="toggleShowDropDown"
+          class="hover:text-[#A30001]"
+          :class="[{ 'text-[#A30001]': isActive('home') }]"
         >
-          <button
-            @click="changeLang('en')"
-            class="hover:text-green-500"
-            :class="{ 'text-green-500': locale === 'en' }"
+          {{ $t('Home') }}
+        </router-link>
+        <div class="flex flex-col">
+          <router-link
+            :to="{ name: 'about' }"
+            @click="toggleShowDropDown"
+            class="hover:text-[#A30001]"
+            :class="[{ 'text-[#A30001]': isActive('about') }]"
           >
-            English
-          </button>
-          <button
-            @click="changeLang('tig')"
-            class="hover:text-green-500"
-            :class="{ 'text-green-500': locale === 'tig' }"
-          >
-            ትግርኛ
-          </button>
+            {{ $t('Who We Are') }}
+          </router-link>
+          <div class="pl-4 flex flex-col gap-2 mt-2">
+            <router-link
+              v-for="item in aboutSubItems"
+              :key="item.name"
+              :to="{ name: item.name }"
+              @click="toggleShowDropDown"
+              class="hover:text-[#A30001]"
+              :class="[{ 'text-[#A30001]': isActive(item.name) }]"
+            >
+              {{ $t(item.label) }}
+            </router-link>
+          </div>
         </div>
-      </div> -->
+        <div class="flex flex-col">
+          <router-link
+            :to="{ name: 'services' }"
+            @click="toggleShowDropDown"
+            class="hover:text-[#A30001]"
+            :class="[{ 'text-[#A30001]': isActive('services') }]"
+          >
+            {{ $t('What We Do') }}
+          </router-link>
+          <!-- <div class="pl-4 flex flex-col gap-2 mt-2">
+            <router-link
+              v-for="(service, i) in services"
+              :key="i"
+              :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
+              @click="toggleShowDropDown"
+              class="hover:text-[#A30001]"
+            >
+              {{ $t(service.serviceTitle[currentLanguage]) }}
+            </router-link>
+          </div> -->
+        </div>
+        <router-link
+          :to="{ name: 'blogs' }"
+          @click="toggleShowDropDown"
+          class="hover:text-[#A30001]"
+          :class="[{ 'text-[#A30001]': isActive('blogs') }]"
+        >
+          {{ $t('News & Stories') }}
+        </router-link>
+        <div class="flex flex-col">
+          <router-link
+            :to="{ name: 'documents' }"
+            @click="toggleShowDropDown"
+            class="hover:text-[#A30001]"
+            :class="[{ 'text-[#A30001]': isActive('documents') }]"
+          >
+            {{ $t('Resources & Reports') }}
+          </router-link>
+          <div class="pl-4 flex flex-col gap-2 mt-2">
+            <router-link
+              v-for="item in resourceSubItems"
+              :key="item.name"
+              :to="{ name: item.name }"
+              @click="toggleShowDropDown"
+              class="hover:text-[#A30001]"
+              :class="[{ 'text-[#A30001]': isActive(item.name) }]"
+            >
+              {{ $t(item.label) }}
+            </router-link>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <router-link
+            :to="{ name: 'jobs' }"
+            @click="toggleShowDropDown"
+            class="hover:text-[#A30001]"
+            :class="[{ 'text-[#A30001]': isActive('jobs') }]"
+          >
+            {{ $t('Get Involved') }}
+          </router-link>
+          <div class="pl-4 flex flex-col gap-2 mt-2">
+            <router-link
+              v-for="item in getInvolvedSubItems"
+              :key="item.name"
+              :to="{ name: item.name }"
+              @click="toggleShowDropDown"
+              class="hover:text-[#A30001]"
+              :class="[{ 'text-[#A30001]': isActive(item.name) }]"
+            >
+              {{ $t(item.label) }}
+            </router-link>
+          </div>
+        </div>
+        <router-link
+          :to="{ name: 'donate' }"
+          @click="toggleShowDropDown"
+          class="bg-indigo-600 text-white px-4 py-2 rounded-full hover:bg-indigo-500 text-center"
+        >
+          <font-awesome-icon icon="heart" class="animate-pulse mr-2" />
+          {{ $t('Donate') }}
+        </router-link>
       </nav>
     </div>
   </header>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import apiService from '@/services/apiService';
 
-import apiService from '@/services/apiService'
-const currentLanguage = ref(localStorage.getItem('lang') || 'en')
-// import { useI18n } from 'vue-i18n'
-let showDropdown = ref(true)
-// const { locale } = useI18n()
+const currentLanguage = ref(localStorage.getItem('lang') || 'en');
+const isSmall = ref(false);
+const showDropdown = ref(true);
+const route = useRoute();
+const infoG = ref([]);
+const medias = ref([]);
+const services = ref([]);
 
-defineProps({
-  items: {
-    type: Array,
-    required: true
-  }
-})
-const isSmall = ref(false)
+const aboutSubItems = [
+  { name: 'about', label: 'Mission / Vision / Values' },
+  { name: 'history', label: 'History' },
+  { name: 'board-members', label: 'Managing Directors' },
+  { name: 'partners-open', label: 'Partners' },
+  { name: 'contact', label: 'Contact Us' },
+  { name: 'faqs', label: 'FAQs' },
+];
+
+// const resourceSubItems = [
+//   { name: 'documents', label: 'Documents' },
+//   { name: 'gallery', label: 'Gallery' },
+// ];
+
+// const getInvolvedSubItems = [
+//   { name: 'jobs', label: 'Careers' },
+//   { name: 'volunteer', label: 'Volunteers' },
+//   { name: 'tenders', label: 'Tenders' },
+// ];
+
 function showSmallDeviceNavigation() {
-  isSmall.value = !isSmall.value
+  isSmall.value = !isSmall.value;
 }
-// let showModal = ref(true)
-
-// const showOnSmallDevice = computed(() => {
-//   return isSmall.value && showDropdown.value
-// })
 
 function toggleShowDropDown() {
-  isSmall.value = false
-  showDropdown.value = false
+  isSmall.value = false;
+  showDropdown.value = false;
 }
-const route = useRoute()
 
 function isActive(item) {
-  return route.name === item
+  return route.name === item;
 }
 
-let infoG = ref([])
 const fetchInfography = async () => {
   try {
-    const response = await apiService.get('/admin/contact-address')
+    const response = await apiService.get('/admin/contact-address');
     if (response.success) {
-      infoG.value = response.data.splice(0, 1)
+      infoG.value = response.data.splice(0, 1);
     }
   } catch (error) {
-    alert(error)
+    alert(error);
   }
-}
+};
 
-let medias = ref([])
 const fetchMedia = async () => {
   try {
-    const response = await apiService.get('/admin/social-medias')
-
+    const response = await apiService.get('/admin/social-medias');
     if (response.success) {
-      medias.value = response.data
+      medias.value = response.data;
     }
   } catch (error) {
-    alert(error)
+    alert(error);
   }
-}
+};
 
-// const changeBackground = ref(false)
-
-// const scroll = true
-// const handleScroll = () => {
-//   changeBackground.value = window.scrollY > 80 && window.scrollY < 3600
-// }
-
-const services = ref([])
 const fetchServices = async () => {
   try {
-    const response = await apiService.get('/admin/services')
+    const response = await apiService.get('/admin/services');
     if (response.success) {
       services.value = response.data.map((item) => ({
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
-        serviceDescription: JSON.parse(item.serviceDescription)
-      }))
+        serviceDescription: JSON.parse(item.serviceDescription),
+      }));
     }
   } catch (error) {
-    alert('error')
+    alert('error');
   }
-}
+};
 
-// {
-//     // getSettings()
-//     window.addEventListener('scroll', handleScroll)
-//   },
 onMounted(() => {
-  fetchServices(), fetchInfography(), fetchMedia()
-})
+  fetchServices();
+  fetchInfography();
+  fetchMedia();
+});
 </script>
 
 <style scoped>
-.iq-active-menu {
-  color: #53900f;
-}
-a {
-  transition: border 0.6s;
+/* Smooth hover transitions for dropdowns */
+.group:hover .group-hover\:flex {
+  animation: slideDown 0.3s ease-in-out;
 }
 
-.child {
-  animation-name: slideUp;
-  animation-duration: 0.3s;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: both;
-}
-
-@keyframes slideUp {
+@keyframes slideDown {
   0% {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateY(-10px);
   }
   100% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0);
   }
-}
-
-/* Show the dropdown content when its parent is hovered */
-.parent-item:hover > .child {
-  display: flex;
-  flex-direction: column;
-  gap: 1;
-  opacity: 1;
-}
-
-.parent-item:hover > .child {
-  display: flex;
-  flex-direction: column;
-  gap: 1;
-  opacity: 1;
-}
-
-/* Hide the sub_items by default */
-.child {
-  display: none;
-}
-
-/* Hide the sub_items when their parent is not hovered */
-.parent-item:not(:hover) > .child {
-  display: none;
 }
 </style>
