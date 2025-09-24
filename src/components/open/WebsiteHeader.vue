@@ -247,7 +247,7 @@
           >
             {{ $t('What We Do') }}
           </router-link>
-          <!-- <div class="pl-4 flex flex-col gap-2 mt-2">
+          <div class="pl-4 flex flex-col gap-2 mt-2">
             <router-link
               v-for="(service, i) in services"
               :key="i"
@@ -257,7 +257,7 @@
             >
               {{ $t(service.serviceTitle[currentLanguage]) }}
             </router-link>
-          </div> -->
+          </div>
         </div>
         <router-link
           :to="{ name: 'blogs' }"
