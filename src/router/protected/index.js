@@ -1,6 +1,6 @@
 const PROTECTED_ROUTES = [
   {
-    path: '/rest',
+    path: '/tbc',
     component: () => import('@/views/protected/ProtectedMaster.vue'),
     children: [
       {
