@@ -68,13 +68,13 @@ onUnmounted(() => {
     >
       <div z:class="[!minimize ? 'w-[18%]' : 'w-[2%] gap-2', 'flex items-center justify-between ']">
         <img
-          src="@/assets/rest.jpg"
+          src="@/assets/tbc.jpg"
           alt=""
           srcset=""
           class="h-12 object-contain"
           v-if="!minimize"
         />
-        <img src="@/assets/rest.jpg" alt="" srcset="" class="h-16c w-16 object-contain" v-else />
+        <img src="@/assets/tbc.jpg" alt="" srcset="" class="h-16c w-16 object-contain" v-else />
 
         <!-- <button @click="minimize = !minimize">
           <font-awesome-icon icon="bars" class="text-yellow-300"></font-awesome-icon>
