@@ -192,8 +192,8 @@
 
     <!-- Mobile Navigation -->
     <header class="md:hidden w-full bg-gray-900 px-4 py-3 flex justify-between items-center sticky top-0 z-50">
-      <router-link to="/" class="flex items-center" title="REST">
-        <img src="@/assets/rest.jpg" alt="Logo of REST" class="h-12 w-12 object-contain" />
+      <router-link to="/" class="flex items-center" title="TBC">
+        <img src="@/assets/tbc.jpg" alt="Logo of TBC" class="h-12 w-12 object-contain" />
       </router-link>
       <button @click.prevent="showSmallDeviceNavigation" class="text-white">
         <font-awesome-icon icon="bars" class="text-2xl" />
