@@ -214,9 +214,18 @@ const PROTECTED_ROUTES = [
         }
       },
       {
-        path: 'services',
+        path: 'products',
         component: () => import('@/views/protected/ServicesView.vue'),
         name: 'admin-services',
+        meta: {
+          requiresAuth: true,
+          role: ['admin']
+        }
+      },
+        {
+        path: 'departments',
+        component: () => import('@/views/protected/DepartmentsView.vue'),
+        name: 'admin-departments',
         meta: {
           requiresAuth: true,
           role: ['admin']
