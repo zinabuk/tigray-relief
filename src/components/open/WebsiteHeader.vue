@@ -103,7 +103,7 @@
             </router-link>
           </div>
         </li>
-        <li class="relative group">
+        <!-- <li class="relative group">
           <router-link
             :to="{ name: 'services' }"
             class="hover:text-[#A30001] transition-colors"
@@ -121,6 +121,47 @@
               class="py-2 px-4 hover:bg-indigo-600 hover:text-white rounded transition-colors"
             >
               {{ $t(service.serviceTitle[currentLanguage]) }}
+            </router-link>
+          </div>
+        </li> -->
+         <li class="relative group">
+          <router-link
+            :to="{ name: 'services' }"
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('services') }]"
+          >
+            {{ $t('Our Products') }}
+          </router-link>
+          <div
+            class="absolute hidden group-hover:flex flex-col bg-gray-800 p-4 rounded-lg shadow-xl min-w-[200px] top-full left-0"
+          >
+            <router-link
+              v-for="(service, i) in services"
+              :key="i"
+              :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
+              class="py-2 px-4 hover:bg-indigo-600 hover:text-white rounded transition-colors"
+            >
+              {{ $t(service.serviceTitle[currentLanguage]) }}
+            </router-link>
+          </div>
+        </li>
+         <li class="relative group">
+          <div
+            class="hover:text-[#A30001] transition-colors"
+            :class="[{ 'text-[#A30001]': isActive('departments') }]"
+          >
+            {{ $t('Departments') }}
+         </div>
+          <div
+            class="absolute hidden group-hover:flex flex-col bg-gray-800 p-4 rounded-lg shadow-xl min-w-[200px] top-full left-0"
+          >
+            <router-link
+              v-for="(department, i) in departments"
+              :key="i"
+              :to="{ name: 'department-detail', params: { title: department.departmentTitle[currentLanguage] } }"
+              class="py-2 px-4 hover:bg-indigo-600 hover:text-white rounded transition-colors"
+            >
+              {{ $t(department.departmentTitle[currentLanguage]) }}
             </router-link>
           </div>
         </li>
@@ -240,12 +281,12 @@
         </div>
         <div class="flex flex-col">
           <router-link
-            :to="{ name: 'services' }"
+            :to="{ name: 'products' }"
             @click="toggleShowDropDown"
             class="hover:text-[#A30001]"
             :class="[{ 'text-[#A30001]': isActive('services') }]"
           >
-            {{ $t('What We Do') }}
+            {{ $t('Products') }}
           </router-link>
           <div class="pl-4 flex flex-col gap-2 mt-2">
             <router-link
@@ -259,6 +300,30 @@
             </router-link>
           </div>
         </div>
+
+        <div class="flex flex-col">
+          <router-link
+            :to="{ name: 'departments' }"
+            @click="toggleShowDropDown"
+            class="hover:text-[#A30001]"
+            :class="[{ 'text-[#A30001]': isActive('departments') }]"
+          >
+            {{ $t('Departments') }}
+          </router-link>
+        
+          <div class="pl-4 flex flex-col gap-2 mt-2">
+            <router-link
+              v-for="(department, i) in departments"
+              :key="i"
+              :to="{ name: 'department-detail', params: { title: department.departmentTitle[currentLanguage] } }"
+              @click="toggleShowDropDown"
+              class="hover:text-[#A30001]"
+            >
+              {{ $t(department.departmentTitle[currentLanguage]) }}
+            </router-link>
+          </div>
+        </div>
+
         <router-link
           :to="{ name: 'blogs' }"
           @click="toggleShowDropDown"
@@ -328,6 +393,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import apiService from '@/services/apiService';
+// import router from '@/router';
 
 const currentLanguage = ref(localStorage.getItem('lang') || 'en');
 const isSmall = ref(false);
@@ -336,6 +402,7 @@ const route = useRoute();
 const infoG = ref([]);
 const medias = ref([]);
 const services = ref([]);
+const departments = ref([]);
 
 const aboutSubItems = [
   { name: 'about', label: 'Mission / Vision / Values' },
@@ -395,6 +462,7 @@ const fetchMedia = async () => {
 const fetchServices = async () => {
   try {
     const response = await apiService.get('/admin/services');
+
     if (response.success) {
       services.value = response.data.map((item) => ({
         ...item,
@@ -407,8 +475,24 @@ const fetchServices = async () => {
   }
 };
 
+const fetchDepartments = async () => {
+  try {
+    const response = await apiService.get('/admin/departments');
+    if (response.success) {
+      departments.value = response.data.map((item) => ({
+        ...item,
+        departmentTitle: JSON.parse(item.departmentTitle),
+        departmentDescription: JSON.parse(item.departmentDescription),
+      }));
+    }
+  } catch (error) {
+    alert('error', error);
+  }
+};
+
 onMounted(() => {
   fetchServices();
+  fetchDepartments();
   fetchInfography();
   fetchMedia();
 });
