@@ -53,7 +53,7 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: 'what-we-do',
+        path: 'products',
         name: 'services',
         component: () => import('@/views/ServicesView.vue'),
         meta: {
@@ -85,13 +85,33 @@ const OPEN_ROUTES = [
         }
       },
       {
-        path: '/services/:title',
+        path: '/products/:title',
         name: 'service-detail',
         props: true,
         component: () => import('@/views/ServiceDetail.vue'),
         meta: {
           requiresAuth: false,
           title: 'Service Detail'
+        }
+      },
+         {
+        path: '/departments',
+        name: 'departments',
+        props: true,
+        component: () => import('@/views/DepartmentsView.vue'),
+        meta: {
+          requiresAuth: false,
+          title: 'Department'
+        }
+      },
+        {
+        path: '/departments/:title',
+        name: 'department-detail',
+        props: true,
+        component: () => import('@/views/DepartmentDetail.vue'),
+        meta: {
+          requiresAuth: false,
+          title: 'Department Detail'
         }
       },
       {
