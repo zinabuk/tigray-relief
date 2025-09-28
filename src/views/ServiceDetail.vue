@@ -86,11 +86,11 @@ onMounted(getService)
       >
         <h1 class="text-4xl font-bold">{{ serve.serviceTitle[currentLanguage] }}</h1>
         <div class="flex gap-4 items-center justify-center">
-          <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">{{
+          <!-- <router-link to="/" class="px-4 py-2 rounded-xl text-white font-bold">{{
             $t('Home')
           }}</router-link>
-          <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
-          <router-link to="/what-we-do" class="px-4 py-2">{{ $t('What We Do') }}</router-link>
+          <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span> -->
+          <router-link to="/products" class="px-4 py-2">{{ $t('Products') }}</router-link>
 
           <span><font-awesome-icon icon="chevron-right"></font-awesome-icon></span>
 
@@ -126,7 +126,7 @@ onMounted(getService)
         <div class="flex flex-col gap-2 py-6 bg-white translation-all duration-1000 px-4 relative">
           <div class="flex flex-col gap-4 py-2">
             <p class="text-gray-700">
-              <span> </span> {{ serve.serviceDescription[currentLanguage] }}
+              <span v-html=" serve.serviceDescription[currentLanguage] "> </span>
             </p>
           </div>
         </div>
