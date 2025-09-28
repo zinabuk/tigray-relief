@@ -22,7 +22,7 @@ const fetchServices = async () => {
       }))
     }
   } catch (error) {
-    // alert(error)
+    alert(error)
   }
 }
 
@@ -44,12 +44,12 @@ onMounted(() => {
       >
         <h1 class="text-4xl font-bold">{{ $t('Services we provide') }}</h1>
         <div class="flex gap-4 max-sm:self-start items-center justify-center">
-          <router-link to="/" class="px-4 py-2 rounded-xl md:text-white font-bold">{{
+          <!-- <router-link to="/" class="px-4 py-2 rounded-xl md:text-white font-bold">{{
             $t('Home')
           }}</router-link>
-          <span>></span>
-          <router-link to="/what-we-do" class="text-[#539000] px-4 py-2">{{
-            $t('What We Do')
+          <span>></span> -->
+          <router-link to="/products" class="text-[#539000] px-4 py-2">{{
+            $t('Products')
           }}</router-link>
         </div>
       </div>
@@ -96,8 +96,7 @@ onMounted(() => {
             <span class="w-1/4 absolute z-40 inset-0 h-[2px] bg-[#53900F]"></span>
             <hr class="h-[2px] absolute inset-0 bg-gray-200" />
           </div>
-          <p class="line-clamp-5z">
-            {{ service.serviceDescription[currentLanguage] }}
+          <p class="line-clamp-5z" v-html="service.serviceDescription[currentLanguage]">
           </p>
 
           <router-link
