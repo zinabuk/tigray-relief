@@ -7,6 +7,7 @@ import BaseInput from '@/components/base/BaseInput.vue'
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseTextarea from '@/components/base/BaseTextarea.vue'
 import BaseFileInput from '@/components/base/BaseFileInput.vue'
+import RichTextInput from '@/components/base/RichTextInput.vue'
 
 import { ref, onMounted,computed } from 'vue'
 
@@ -47,6 +48,8 @@ const form = ref({
   serviceDescription: { en: '', ti: '', am: '' },
   serviceImage: ''
 })
+
+
 
 
 let logo = ref('')
@@ -119,17 +122,30 @@ const deleteService = async (id) => {
   }
 }
 
+// const closeModal = () => {
+//   showAddModal.value = false
+//   form.value = {
+//     id: null,
+//     serviceTitle: { en: '', ti: '', am: '' },
+//     serviceDescription: { en: '', ti: '', am: '' },
+//     serviceImage: ''
+//   }
+//   edit.value = false
+//   logo.value = ''
+// }
+
 const closeModal = () => {
   showAddModal.value = false
   form.value = {
     id: null,
-    serviceTitle: { en: '', ti: '', am: '' },
-    serviceDescription: { en: '', ti: '', am: '' },
-    serviceImage: ''
+    serviceTitle: { en: "", ti: "", am: "" },
+    serviceDescription: { en: "", ti: "", am: "" },
+    serviceImage: ""
   }
   edit.value = false
-  logo.value = ''
+  logo.value = ""
 }
+
 
 
 const filteredService = computed(() => {
@@ -175,7 +191,7 @@ onMounted(() => {
       class="bg-[#53900F] self-end border flex items-center px-2 py-1 gap-2 text-white rounded-2xl"
     >
       <font-awesome-icon icon="add"></font-awesome-icon>
-      Add What We Do
+      Add Products
     </button>
     </div>
    </div>
@@ -271,11 +287,10 @@ onMounted(() => {
                   :placeholder="$t('Service Title')"
                 ></BaseInput>
 
-                <BaseTextarea
+                <RichTextInput
                   v-model="form.serviceDescription[currentLanguage]"
-                  inputClass="p-2 border border-gray-300 rounded"
                   placeholder="Service Description"
-                ></BaseTextarea>
+                ></RichTextInput>
               </div>
               <div class="flex justify-end gap-2 flex-col">
                 <BaseFileInput
