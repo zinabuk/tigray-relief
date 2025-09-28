@@ -10,9 +10,11 @@ import 'swiper/swiper-bundle.css'
 const currentLanguage = 'en'
 import { ref, onMounted, computed } from 'vue'
 
+
 const heroes = ref([])
 const errorMessage = ref('')
 const isLoading = ref(false)
+const departments = ref([])
 const fetchHeroes = async () => {
   isLoading.value = true
   try {
@@ -42,6 +44,27 @@ const fetchServices = async () => {
         ...item,
         serviceTitle: JSON.parse(item.serviceTitle),
         serviceDescription: JSON.parse(item.serviceDescription)
+      }))
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.status === 404) {
+      return
+    } else {
+      setTimeout(() => {
+        // router.push({ name: 'NetworkError' })
+      }, 2000)
+    }
+  }
+}
+
+const fetchDepartments = async () => {
+  try {
+    const response = await ApiService.get('/admin/departments')
+    if (response) {
+      departments.value = response.data.map((item) => ({
+        ...item,
+        departmentTitle: JSON.parse(item.departmentTitle),
+        departmentDescription: JSON.parse(item.departmentDescription)
       }))
     }
   } catch (error) {
@@ -171,6 +194,7 @@ const twitterEmbed = ref(null)
 
 onMounted(() => {
   fetchServices(),
+    fetchDepartments(),
     fetchNews(),
     fetchPartners(),
     fetchHeroes(),
@@ -249,11 +273,13 @@ onMounted(() => {
 
   <!-- Services -->
   <section class="w-full bg-[#53900F]/5 px-[2%] flex flex-col gap-4 py-12">
-    <h1 class="text-center text-4xl font-semibold">{{ $t('What We Do') }}</h1>
+    <h1 class="text-center text-4xl font-semibold">{{ $t('Our Products') }}</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center" data-aos="fade-up">
-      <div
+      <router-link
         v-for="(service, i) in services"
         :key="i"
+        :to="{ name: 'service-detail', params: { title: service.serviceTitle[currentLanguage] } }"
+
         class="flex flex-col gap-2 relative group shadow-xl bg-white h-64 border rounded-xl overflow-hidden"
       >
         <img
@@ -273,18 +299,55 @@ onMounted(() => {
           </h1>
           <p
             class="hidden group-hover:block text-white transition-transform duration-500 ease-in-out transform zgroup-hover:translate-y-[-10%] line-clamp-4 text-justify"
-          >
-            {{ service.serviceDescription[currentLanguage] }}
+            v-html="service.serviceDescription[currentLanguage]"
+            >
           </p>
         </div>
-      </div>
+      </router-link>
     </div>
   </section>
+
+    <!-- Services -->
+  <section class="w-full bg-[#53900F]/5 px-[2%] flex flex-col gap-4 py-12">
+    <h1 class="text-center text-4xl font-semibold">{{ $t('Our Departments') }}</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center" data-aos="fade-up">
+      <router-link
+        v-for="(service, i) in departments"
+        :key="i"
+        :to="{ name: 'department-detail', params: { title: service.departmentTitle[currentLanguage] } }"
+        class="flex flex-col gap-2 relative group shadow-xl bg-white h-64 border rounded-xl overflow-hidden"
+      >
+        <img
+          v-if="service.departmentImage"
+          :src="BASE_AVATAR + service.departmentImage"
+          alt=""
+          class="w-full h-full absolute inset-0 border rounded-xl object-cover group"
+        />
+
+        <div
+          class="absolute inset-0 flex flex-col justify-center bg-black/40 p-4 transition-all duration-500 ease-in-out group-hover:bg-black/60"
+        >
+          <h1
+            class="text-2xl font-bold text-white line-clamp-2 mt-auto transition-transform duration-500 ease-in-out transform group-hover:translate-y-[-20%]"
+          >
+            {{ service.departmentTitle[currentLanguage] }}
+          </h1>
+          <p
+            class="hidden group-hover:block text-white transition-transform duration-500 ease-in-out transform zgroup-hover:translate-y-[-10%] line-clamp-4 text-justify"
+            v-html="service.departmentDescription[currentLanguage]"
+            >
+          </p>
+        </div>
+      </router-link>
+    </div>
+  </section>
+
+
 
   <!-- history -->
   <section class="w-full px-[2%] relative grid grid-cols-1 gap-4 py-12 bg-[#53900F]">
     <div class="flex flex-col gap-2 py-8 top-0 z-30">
-      <h1 class="text-4xl font-light text-center">{{ $t('Our Impact') }}</h1>
+      <h1 class="text-4xl font-light text-center">{{ $t('Our Impact in Numbers') }}</h1>
       <!-- <p>
         Rest is a highly acclaimed non-profit organization dedicated to supporting the international
         Tigrai community in overcoming the broad range of conditions ...
@@ -294,16 +357,16 @@ onMounted(() => {
           class="font-bold px-4 py-2 flex flex-col gap-2 items-center shadow-2xlz"
           data-aos="fade-right"
         >
-          <h1 class="text-yellow-400 text-5xl md:text-6xl">1978</h1>
-          <p class="text-xl font-light">{{ $t('A decades of expertise') }}</p>
+          <h1 class="text-yellow-400 text-5xl md:text-6xl">2006 G.C</h1>
+          <p class="text-xl font-light">{{ $t('Established') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-up">
-          <h1 class="text-yellow-400 text-5xl md:text-6xl">1,000 +</h1>
-          <p class="text-xl text-ce font-light">{{ $t('Completed Projects') }}</p>
+          <h1 class="text-yellow-400 text-5xl md:text-6xl">3-5 million +</h1>
+          <p class="text-xl text-ce font-light">{{ $t('plantlets per annum') }}</p>
         </div>
         <div class="font-bold px-4 py-2 flex flex-col gap-4 items-center" data-aos="fade-left">
-          <h1 class="text-yellow-400 text-5xl md:text-6xl">3,000,000 +</h1>
-          <p class="text-xl font-light">{{ $t('Impacted Beneficiaries') }}</p>
+          <h1 class="text-yellow-400 text-5xl md:text-6xl">16  +</h1>
+          <p class="text-xl font-light">{{ $t('growth rooms') }}</p>
         </div>
       </div>
       <!-- <router-link to="/about" class="border rounded-xl px-4 py-2 border-black font-bold self-start"
@@ -316,44 +379,12 @@ onMounted(() => {
   <section
     class="w-full px-[2%] py-12 flex flex-col items-center gap-4 bg-[#539000]/5 overflow-hidden"
   >
-    <h1 class="text-3xl font-bold">Engage with us</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 place-content-center">
-      <div class="p-4 flex flex-col gap-2 bg-white" data-aos="fade-right">
+    <!-- <h1 class="text-3xl font-bold">Engage with us</h1> -->
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-4 place-content-center">
+     
+      <div class="p-1 flex flex-col gap-2 bg-white" data-aos="fade-left">
         <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
-        <img src="@/assets/download.jpg" alt="" class="h-24 object-cover" />
-        <h1 class="text-2xl font-bold">{{ $t('Become a volunteer') }}</h1>
-        <p class="line-clamp-4">
-          {{
-            $t(
-              'Volunteering is a wonderful way to give back to your community and make a real difference. At our organization, we rely on the generosity and dedication of our volunteers to help us achieve our mission. Whether you have a few hours a week or just a few times a year, there are plenty of ways you can get involved.'
-            )
-          }}
-        </p>
-
-        <router-link to="/volunteer" class="text-[#53900F] underline font-bold">
-          {{ $t('Join Now') }}</router-link
-        >
-      </div>
-      <div class="p-4 flex flex-col gap-2 bg-white" data-aos="fade-up">
-        <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
-        <img src="@/assets/donation.png" alt="" class="h-24 object-cover" />
-        <h1 class="text-2xl font-bold">{{ $t('Send donation') }}</h1>
-
-        <p>
-          {{
-            $t(
-              'Your generous donations are critical to supporting our programs and services for the community. There are several convenient ways you can contribute:'
-            )
-          }}
-        </p>
-
-        <router-link to="/donate" class="text-[#53900F] underline font-bold">{{
-          $t('Send Now')
-        }}</router-link>
-      </div>
-      <div class="p-4 flex flex-col gap-2 bg-white" data-aos="fade-left">
-        <!-- <font-awesome-icon icon="user" class="text-green-600 mr-auto text-4xl"></font-awesome-icon> -->
-        <img src="@/assets/contact.png" alt="" class="h-24 object-cover" />
+        <img src="@/assets/img/images.jpeg" alt="" class="h-34 object-cover" />
         <h1 class="text-2xl font-bold">{{ $t('Contact Us') }}</h1>
 
         <p>
@@ -452,49 +483,7 @@ onMounted(() => {
     </swiper>
   </section>
 
-  <!-- Embedding social media posts -->
-  <section
-    class="w-full px-4 md:px-8 py-12 flex flex-col gap-6 items-center justify-center bg-gray-50"
-  >
-    <h1 class="text-3xl font-bold text-gray-800">{{ $t('Latest Social Media Posts') }}</h1>
 
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Social Media Post Card -->
-      <div
-        class="relative flex flex-col p-4 bg-white bg-opacity-75 backdrop-blur-lg shadow rounded-xl border border-gray-200 hover:shadow-lg transition-all duration-300"
-        v-for="post in posts"
-        :key="post.id"
-      >
-        <!-- Platform Name -->
-        <h2 class="text-lg font-semibold text-gray-700 flex items-center">
-          <span v-if="post.platform.toLowerCase() === 'facebook'" class="text-blue-600 mr-2">
-            <font-awesome-icon :icon="['fab', 'facebook']" />
-          </span>
-          <span v-if="post.platform.toLowerCase() === 'twitter'" class="text-blue-400 mr-2">
-            <font-awesome-icon :icon="['fab', 'twitter']" />
-          </span>
-          {{ post.platform }}
-        </h2>
-
-        <!-- Facebook Embed -->
-        <div v-if="post.platform.toLowerCase() === 'facebook'" class="mt-3">
-          <iframe
-            :src="post.post"
-            class="w-full h-[300px] rounded-lg border border-gray-300"
-            loading="lazy"
-            style="border: none"
-          ></iframe>
-        </div>
-
-        <!-- Twitter Embed -->
-        <div
-          v-else-if="post.platform.toLowerCase() === 'twitter'"
-          v-html="post.post"
-          class="w-full h-[300px] overflow-hidden rounded-lg mt-3"
-        ></div>
-      </div>
-    </div>
-  </section>
 </template>
 
 <style>
